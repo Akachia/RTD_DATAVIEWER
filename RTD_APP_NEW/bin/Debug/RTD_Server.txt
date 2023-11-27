@@ -1,0 +1,13 @@
+Data Source=10.95.9.45,7433;Initial catalog=ESGM_BMES_ELTR_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=EI;Plant ID=U1
+Data Source=10.95.9.52,7433;Initial catalog=ESGM_BMES_CELL_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AB;Plant ID=U1
+Data Source=10.95.9.59,7433;Initial catalog=ESGM_BMES_FORM_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AB;Plant ID=U1
+Data Source=10.61.7.37,7433;Initial catalog=CNB_BMES_ELTR_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=EF;Plant ID=N3
+Data Source=10.61.13.33,7433;Initial catalog=CNB_BMES_CELL_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AA;Plant ID=N3
+Data Source=10.61.13.37,7433;Initial catalog=CNB_BMES_FORM_P02;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AA;Plant ID=N3
+Data Source=10.99.92.201,7433;Initial catalog=ESHM_BMES_ELTR_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=EN;Plant ID=B1
+Data Source=10.99.92.202,7433;Initial catalog=ESHM_BMES_CELL_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AD;Plant ID=B1
+Data Source=10.99.92.203,7433;Initial catalog=ESHM_BMES_FORM_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AD;Plant ID=B1
+Data Source=10.32.169.171,7433;Initial catalog=CWA_BMES_ELTR_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=EJ;Plant ID=W3
+Data Source=10.32.169.204,7433;Initial catalog=CWA_BMES_CELL_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AC;Plant ID=W4
+Data Source=10.32.169.209,7433;Initial catalog=CWA_BMES_FORM_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AC;Plant ID=W4
+Data Source=10.95.9.59,7433;Initial catalog=ESGM_BMES_FORM_P01;User ID=rtd_app;Password =##r51T1980D@!;Area ID=AB;Plant ID=U1

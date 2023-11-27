@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.24" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.120" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomUtills\CustomUtills.csproj" />
+    <ProjectReference Include="..\DBManagement\DBManagement.csproj" />
+    <ProjectReference Include="..\UserWinfromControl\UserWinfromControl.csproj" />
+    <ProjectReference Include="..\XmlManagement\XmlManagement.csproj" />
+  </ItemGroup>
+
+</Project>
