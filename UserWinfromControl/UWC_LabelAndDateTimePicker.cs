@@ -12,13 +12,13 @@ namespace UserWinfromControl
 {
     public partial class UWC_LabelAndDateTimePicker : UserControl
     {
-        public string lb_Txt
+        public string Lb_Text
         {
             get { return lb_txt.Text; }
             set { lb_txt.Text = value; }
         }
 
-        public DateTime dtp_Value
+        public DateTime Dtp_Value
         {
             get { return dtp_date.Value; }
             set { dtp_date.Value = value; }

@@ -24,14 +24,21 @@ namespace RTD_DataViewer
         {
             InitializeComponent();
             new ReqInfomation(this);
+            new TransportList(this);
             SettingInit();
 
-            tAbt_ReqInfo_Search.bt_Search.Click += bt_Search_Click;
+            tAbt_ReqInfo_Search.bt_Search.Click += bt_ReqInfo_Search_Click;
+            tAbt_TransList_Search.bt_Search.Click += bt_TransList_Search_Click;
         }
 
-        private void bt_Search_Click(object sender, EventArgs e)
+        private void bt_ReqInfo_Search_Click(object sender, EventArgs e)
         {
             new ReqInfomation(this).Btn_Click();
+        }
+
+        private void bt_TransList_Search_Click(object sender, EventArgs e)
+        {
+            new TransportList(this).Btn_Click();
         }
 
         private void SettingInit()
@@ -67,6 +74,9 @@ namespace RTD_DataViewer
             ComboBox comboBox = sender as ComboBox;
 
             if (comboBox.Text != string.Empty) new WinformUtils(this).ChangeDBConn(comboBox.Text);
+
+            correntConnectionStringSetting = strs[cb_DBString.Text];
         }
+
     }
 }

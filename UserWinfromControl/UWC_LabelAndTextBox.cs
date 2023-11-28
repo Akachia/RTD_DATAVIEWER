@@ -15,13 +15,29 @@ namespace UserWinfromControl
     {
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
+        public string Lb_Text
+        {
+            get
+            { return this.lb_Txt.Text; }
+            set { this.lb_Txt.Text = value; }
+
+        }
+
+        public string Tb_Text
+        {
+            get
+            { return this.textBox.Text; }
+            set { this.textBox.Text = value; }
+
+        }
+
         public UWC_LabelAndTextBox()
         {
             InitializeComponent();
             this.textBox.AutoCompleteCustomSource = source;
             this.textBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             this.textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            
+
         }
 
         private void textBox_Click(object sender, EventArgs e)
@@ -41,13 +57,12 @@ namespace UserWinfromControl
 
         private void textBox_Leave(object sender, EventArgs e)
         {
-
-
             if (this.textBox.Text == string.Empty)
             {
                 lb_Txt.Visible = true;
                 lb_Txt.Enabled = true;
-            }else
+            }
+            else
             {
                 if (!source.Contains(this.textBox.Text))
                 {

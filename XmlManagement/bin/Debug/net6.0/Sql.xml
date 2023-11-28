@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SqlList>
-	<btnOK_Click>
+	<TransportList>
 		<MainSQL>
 				SELECT CC.CSTID
 					, H.FROM_PORT_iD AS 요청포트
@@ -21,7 +21,7 @@
 					, CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
 					, (CASE WHEN (DATEDIFF(minute, H.INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK 
 					, H.RSPN_CODE AS RSPN
-				, C.CMCDNAME AS ERR_MSG AS MSG
+				, C.CMCDNAME AS ERR_MSG
 				FROM CARRIER CC with(nolock)
 		</MainSQL>
 		<Option>
@@ -99,12 +99,12 @@
         CSTID
       </CARRIER_COLUMN>
     </ColumnOption>
-	</btnOK_Click>
-	<ReqList>
+	</TransportList>
+	<ReqInfomation>
 		<MainSQL>
 				SELECT
 				   REQ.REQ_SEQNO
-				 , REQ.CSTID AS CSTID_R
+				 , REQ.CSTID AS CSTID
 				 , REQ.CSTSTAT AS CSTSTAT_R
 				 , REQ.EQPTID AS EQPTID_R
 				 , REQ.PORT_ID AS PORT_ID_R
@@ -151,7 +151,7 @@
         WA.FORM_SPCL_GR_ID,         W.PROCID,                       C.TRAY_TYPE_CODE,
         CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM,                WA.DFCT_OCCR_EQPTID, CONVERT(CHAR(23),WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM ,
         WA.SCRP_TRAY_FLAG,          WA.TRAY_CNVR_BCR_SCAN_COUNT
-        FROM Carrier C with(nolock) ";
+        FROM Carrier C with(nolock)
         LEFT JOIN WIP W WITH(NOLOCK) ON C.CURR_LOTID = W.LOTID
         LEFT JOIN WIPATTR WA WITH(NOLOCK) ON WA.LOTID = W.LOTID
         LEFT JOIN LOT L WITH(NOLOCK) ON L.LOTID = WA.LOTID
@@ -159,7 +159,7 @@
         ORDER BY UPDDTTM DESC,CST_LOAD_LOCATION_CODE DESC
       </Option7>
 		</Option>
-	</ReqList>
+	</ReqInfomation>
 	<ErrList>
 		<MainSQL>
 				select 
@@ -281,4 +281,6 @@
 		</MainSQL>
 		<Option></Option>
 	</CST_Hist>
+
+
 </SqlList>

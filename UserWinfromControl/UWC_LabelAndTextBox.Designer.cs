@@ -66,8 +66,7 @@
         }
 
         #endregion
-
-        public TextBox textBox;
-        public Label lb_Txt;
+        private Label lb_Txt;
+        private TextBox textBox;
     }
 }

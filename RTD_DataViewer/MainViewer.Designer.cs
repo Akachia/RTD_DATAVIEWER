@@ -34,31 +34,31 @@
             tableLayoutPanel4 = new TableLayoutPanel();
             reqInfo_dgvReq = new UserWinfromControl.UWC_DataGridView();
             reqInfo_DgvCarrier = new UserWinfromControl.UWC_DataGridView();
-            lAtb_ReqInfo_Cstid = new UserWinfromControl.UWC_LabelAndTextBox();
+            tAbt_ReqInfo_Search = new UserWinfromControl.UWC_TimerAndBtn();
             lAtb_ReqInfo_RuleText = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_ReqInfo_ReqEqp = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_ReqInfo_Cstid = new UserWinfromControl.UWC_LabelAndTextBox();
             lAdtp_ReqInfo_StartDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_ReqInfo_EndDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            lAtb_ReqInfo_ReqEqp = new UserWinfromControl.UWC_LabelAndTextBox();
-            tAbt_ReqInfo_Search = new UserWinfromControl.UWC_TimerAndBtn();
             tp_TransportList = new TabPage();
             tableLayoutPanel5 = new TableLayoutPanel();
-            uwC_TimerAndBtn1 = new UserWinfromControl.UWC_TimerAndBtn();
-            uwC_LabelAndTextBox1 = new UserWinfromControl.UWC_LabelAndTextBox();
-            uwC_LabelAndTextBox2 = new UserWinfromControl.UWC_LabelAndTextBox();
-            uwC_LabelAndTextBox3 = new UserWinfromControl.UWC_LabelAndTextBox();
-            uwC_LabelAndTextBox4 = new UserWinfromControl.UWC_LabelAndTextBox();
-            uwC_LabelAndDateTimePicker1 = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            uwC_LabelAndDateTimePicker2 = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            comboBox1 = new ComboBox();
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
-            checkBox4 = new CheckBox();
-            uwC_DataGridView2 = new UserWinfromControl.UWC_DataGridView();
+            cb_Cststat = new ComboBox();
+            ckb_IsValidTransfer = new CheckBox();
+            ckb_IsAbnormal = new CheckBox();
+            ckb_IsExceptDelete = new CheckBox();
+            ckb_IsFaulty = new CheckBox();
+            lAdtp_TransList_StartDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
+            lAdtp_TransList_EndDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
+            tAbt_TransList_Search = new UserWinfromControl.UWC_TimerAndBtn();
+            lAtb_TransList_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_TransList_ReqEqp = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_TransList_LaneId = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_TransList_ToEqp = new UserWinfromControl.UWC_LabelAndTextBox();
+            transList_dgvReq = new UserWinfromControl.UWC_DataGridView();
+            transList_CstHist = new UserWinfromControl.UWC_DataGridView();
             tc_LogBox = new TabPage();
             tableLayoutPanel3 = new TableLayoutPanel();
-            uwC_TextBox2 = new UserWinfromControl.UWC_TextBox();
-            uwC_DataGridView1 = new UserWinfromControl.UWC_DataGridView();
+            uwC_TextBox1 = new UserWinfromControl.UWC_TextBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             lb_ServerIP = new Label();
             lb_ServerName = new Label();
@@ -71,7 +71,6 @@
             menuToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
-            uwC_DataGridView3 = new UserWinfromControl.UWC_DataGridView();
             tableLayoutPanel1.SuspendLayout();
             tc_RtdDataViewer.SuspendLayout();
             tp_ReqInfomation.SuspendLayout();
@@ -137,12 +136,12 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13F));
             tableLayoutPanel4.Controls.Add(reqInfo_dgvReq, 0, 2);
             tableLayoutPanel4.Controls.Add(reqInfo_DgvCarrier, 0, 3);
-            tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_Cstid, 5, 0);
+            tableLayoutPanel4.Controls.Add(tAbt_ReqInfo_Search, 7, 0);
             tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_RuleText, 6, 0);
+            tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_ReqEqp, 6, 1);
+            tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_Cstid, 5, 0);
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_StartDate, 4, 0);
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_EndDate, 4, 1);
-            tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_ReqEqp, 6, 1);
-            tableLayoutPanel4.Controls.Add(tAbt_ReqInfo_Search, 7, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(3, 3);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -172,50 +171,6 @@
             reqInfo_DgvCarrier.Size = new Size(1408, 74);
             reqInfo_DgvCarrier.TabIndex = 1;
             // 
-            // lAtb_ReqInfo_Cstid
-            // 
-            lAtb_ReqInfo_Cstid.Dock = DockStyle.Fill;
-            lAtb_ReqInfo_Cstid.Location = new Point(884, 3);
-            lAtb_ReqInfo_Cstid.Name = "lAtb_ReqInfo_Cstid";
-            lAtb_ReqInfo_Cstid.Size = new Size(170, 24);
-            lAtb_ReqInfo_Cstid.TabIndex = 3;
-            // 
-            // lAtb_ReqInfo_RuleText
-            // 
-            lAtb_ReqInfo_RuleText.Dock = DockStyle.Fill;
-            lAtb_ReqInfo_RuleText.Location = new Point(1060, 3);
-            lAtb_ReqInfo_RuleText.Name = "lAtb_ReqInfo_RuleText";
-            lAtb_ReqInfo_RuleText.Size = new Size(163, 24);
-            lAtb_ReqInfo_RuleText.TabIndex = 4;
-            // 
-            // lAdtp_ReqInfo_StartDate
-            // 
-            lAdtp_ReqInfo_StartDate.Dock = DockStyle.Fill;
-            lAdtp_ReqInfo_StartDate.dtp_Value = new DateTime(2023, 11, 26, 21, 58, 21, 486);
-            lAdtp_ReqInfo_StartDate.lb_Txt = "label1";
-            lAdtp_ReqInfo_StartDate.Location = new Point(602, 3);
-            lAdtp_ReqInfo_StartDate.Name = "lAdtp_ReqInfo_StartDate";
-            lAdtp_ReqInfo_StartDate.Size = new Size(276, 24);
-            lAdtp_ReqInfo_StartDate.TabIndex = 6;
-            // 
-            // lAdtp_ReqInfo_EndDate
-            // 
-            lAdtp_ReqInfo_EndDate.Dock = DockStyle.Fill;
-            lAdtp_ReqInfo_EndDate.dtp_Value = new DateTime(2023, 11, 26, 21, 58, 24, 67);
-            lAdtp_ReqInfo_EndDate.lb_Txt = "label1";
-            lAdtp_ReqInfo_EndDate.Location = new Point(602, 33);
-            lAdtp_ReqInfo_EndDate.Name = "lAdtp_ReqInfo_EndDate";
-            lAdtp_ReqInfo_EndDate.Size = new Size(276, 24);
-            lAdtp_ReqInfo_EndDate.TabIndex = 7;
-            // 
-            // lAtb_ReqInfo_ReqEqp
-            // 
-            lAtb_ReqInfo_ReqEqp.Dock = DockStyle.Fill;
-            lAtb_ReqInfo_ReqEqp.Location = new Point(1060, 33);
-            lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
-            lAtb_ReqInfo_ReqEqp.Size = new Size(163, 24);
-            lAtb_ReqInfo_ReqEqp.TabIndex = 5;
-            // 
             // tAbt_ReqInfo_Search
             // 
             tAbt_ReqInfo_Search.Dock = DockStyle.Fill;
@@ -225,7 +180,57 @@
             tAbt_ReqInfo_Search.Name = "tAbt_ReqInfo_Search";
             tableLayoutPanel4.SetRowSpan(tAbt_ReqInfo_Search, 2);
             tAbt_ReqInfo_Search.Size = new Size(182, 54);
-            tAbt_ReqInfo_Search.TabIndex = 8;
+            tAbt_ReqInfo_Search.TabIndex = 2;
+            // 
+            // lAtb_ReqInfo_RuleText
+            // 
+            lAtb_ReqInfo_RuleText.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_RuleText.Lb_Text = "요청 설비";
+            lAtb_ReqInfo_RuleText.Location = new Point(1060, 3);
+            lAtb_ReqInfo_RuleText.Name = "lAtb_ReqInfo_RuleText";
+            lAtb_ReqInfo_RuleText.Size = new Size(163, 24);
+            lAtb_ReqInfo_RuleText.TabIndex = 3;
+            lAtb_ReqInfo_RuleText.Tb_Text = "";
+            // 
+            // lAtb_ReqInfo_ReqEqp
+            // 
+            lAtb_ReqInfo_ReqEqp.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_ReqEqp.Lb_Text = "Rule Name";
+            lAtb_ReqInfo_ReqEqp.Location = new Point(1060, 33);
+            lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
+            lAtb_ReqInfo_ReqEqp.Size = new Size(163, 24);
+            lAtb_ReqInfo_ReqEqp.TabIndex = 4;
+            lAtb_ReqInfo_ReqEqp.Tb_Text = "";
+            // 
+            // lAtb_ReqInfo_Cstid
+            // 
+            lAtb_ReqInfo_Cstid.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_Cstid.Lb_Text = "Carrier ID";
+            lAtb_ReqInfo_Cstid.Location = new Point(884, 3);
+            lAtb_ReqInfo_Cstid.Name = "lAtb_ReqInfo_Cstid";
+            lAtb_ReqInfo_Cstid.Size = new Size(170, 24);
+            lAtb_ReqInfo_Cstid.TabIndex = 5;
+            lAtb_ReqInfo_Cstid.Tb_Text = "";
+            // 
+            // lAdtp_ReqInfo_StartDate
+            // 
+            lAdtp_ReqInfo_StartDate.Dock = DockStyle.Fill;
+            lAdtp_ReqInfo_StartDate.Dtp_Value = new DateTime(2023, 11, 27, 9, 43, 47, 506);
+            lAdtp_ReqInfo_StartDate.Lb_Text = "시작 시간 ";
+            lAdtp_ReqInfo_StartDate.Location = new Point(602, 3);
+            lAdtp_ReqInfo_StartDate.Name = "lAdtp_ReqInfo_StartDate";
+            lAdtp_ReqInfo_StartDate.Size = new Size(276, 24);
+            lAdtp_ReqInfo_StartDate.TabIndex = 6;
+            // 
+            // lAdtp_ReqInfo_EndDate
+            // 
+            lAdtp_ReqInfo_EndDate.Dock = DockStyle.Fill;
+            lAdtp_ReqInfo_EndDate.Dtp_Value = new DateTime(2023, 11, 27, 9, 43, 50, 385);
+            lAdtp_ReqInfo_EndDate.Lb_Text = "종료 시간";
+            lAdtp_ReqInfo_EndDate.Location = new Point(602, 33);
+            lAdtp_ReqInfo_EndDate.Name = "lAdtp_ReqInfo_EndDate";
+            lAdtp_ReqInfo_EndDate.Size = new Size(276, 24);
+            lAdtp_ReqInfo_EndDate.TabIndex = 7;
             // 
             // tp_TransportList
             // 
@@ -249,20 +254,20 @@
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13F));
-            tableLayoutPanel5.Controls.Add(uwC_TimerAndBtn1, 7, 0);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndTextBox1, 5, 0);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndTextBox2, 5, 1);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndTextBox3, 6, 0);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndTextBox4, 6, 1);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndDateTimePicker1, 1, 0);
-            tableLayoutPanel5.Controls.Add(uwC_LabelAndDateTimePicker2, 1, 1);
-            tableLayoutPanel5.Controls.Add(comboBox1, 4, 0);
-            tableLayoutPanel5.Controls.Add(checkBox1, 2, 0);
-            tableLayoutPanel5.Controls.Add(checkBox2, 3, 0);
-            tableLayoutPanel5.Controls.Add(checkBox3, 2, 1);
-            tableLayoutPanel5.Controls.Add(checkBox4, 3, 1);
-            tableLayoutPanel5.Controls.Add(uwC_DataGridView2, 0, 2);
-            tableLayoutPanel5.Controls.Add(uwC_DataGridView3, 6, 2);
+            tableLayoutPanel5.Controls.Add(cb_Cststat, 4, 0);
+            tableLayoutPanel5.Controls.Add(ckb_IsValidTransfer, 2, 0);
+            tableLayoutPanel5.Controls.Add(ckb_IsAbnormal, 3, 0);
+            tableLayoutPanel5.Controls.Add(ckb_IsExceptDelete, 2, 1);
+            tableLayoutPanel5.Controls.Add(ckb_IsFaulty, 3, 1);
+            tableLayoutPanel5.Controls.Add(lAdtp_TransList_StartDate, 1, 0);
+            tableLayoutPanel5.Controls.Add(lAdtp_TransList_EndDate, 1, 1);
+            tableLayoutPanel5.Controls.Add(tAbt_TransList_Search, 7, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_CarrierId, 5, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_ReqEqp, 6, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_LaneId, 5, 1);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_ToEqp, 6, 1);
+            tableLayoutPanel5.Controls.Add(transList_dgvReq, 0, 2);
+            tableLayoutPanel5.Controls.Add(transList_CstHist, 6, 2);
             tableLayoutPanel5.Dock = DockStyle.Fill;
             tableLayoutPanel5.Location = new Point(3, 3);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -274,140 +279,158 @@
             tableLayoutPanel5.Size = new Size(1414, 597);
             tableLayoutPanel5.TabIndex = 0;
             // 
-            // uwC_TimerAndBtn1
+            // cb_Cststat
             // 
-            uwC_TimerAndBtn1.Dock = DockStyle.Fill;
-            uwC_TimerAndBtn1.Interval = 20;
-            uwC_TimerAndBtn1.IsUseTimer = false;
-            uwC_TimerAndBtn1.Location = new Point(1230, 3);
-            uwC_TimerAndBtn1.Name = "uwC_TimerAndBtn1";
-            tableLayoutPanel5.SetRowSpan(uwC_TimerAndBtn1, 2);
-            uwC_TimerAndBtn1.Size = new Size(181, 54);
-            uwC_TimerAndBtn1.TabIndex = 0;
+            cb_Cststat.Dock = DockStyle.Fill;
+            cb_Cststat.FormattingEnabled = true;
+            cb_Cststat.Items.AddRange(new object[] { "모두 : ALL", "공트레이 : E", "실트레이 : U" });
+            cb_Cststat.Location = new Point(779, 3);
+            cb_Cststat.Name = "cb_Cststat";
+            cb_Cststat.Size = new Size(107, 23);
+            cb_Cststat.TabIndex = 7;
             // 
-            // uwC_LabelAndTextBox1
+            // ckb_IsValidTransfer
             // 
-            uwC_LabelAndTextBox1.Dock = DockStyle.Fill;
-            uwC_LabelAndTextBox1.Location = new Point(892, 3);
-            uwC_LabelAndTextBox1.Name = "uwC_LabelAndTextBox1";
-            uwC_LabelAndTextBox1.Size = new Size(163, 24);
-            uwC_LabelAndTextBox1.TabIndex = 1;
+            ckb_IsValidTransfer.AutoSize = true;
+            ckb_IsValidTransfer.Checked = true;
+            ckb_IsValidTransfer.CheckState = CheckState.Checked;
+            ckb_IsValidTransfer.Dock = DockStyle.Fill;
+            ckb_IsValidTransfer.Location = new Point(553, 3);
+            ckb_IsValidTransfer.Name = "ckb_IsValidTransfer";
+            ckb_IsValidTransfer.RightToLeft = RightToLeft.Yes;
+            ckb_IsValidTransfer.Size = new Size(107, 24);
+            ckb_IsValidTransfer.TabIndex = 8;
+            ckb_IsValidTransfer.Text = "유효반송";
+            ckb_IsValidTransfer.UseVisualStyleBackColor = true;
             // 
-            // uwC_LabelAndTextBox2
+            // ckb_IsAbnormal
             // 
-            uwC_LabelAndTextBox2.Dock = DockStyle.Fill;
-            uwC_LabelAndTextBox2.Location = new Point(892, 33);
-            uwC_LabelAndTextBox2.Name = "uwC_LabelAndTextBox2";
-            uwC_LabelAndTextBox2.Size = new Size(163, 24);
-            uwC_LabelAndTextBox2.TabIndex = 2;
+            ckb_IsAbnormal.AutoSize = true;
+            ckb_IsAbnormal.Dock = DockStyle.Fill;
+            ckb_IsAbnormal.Location = new Point(666, 3);
+            ckb_IsAbnormal.Name = "ckb_IsAbnormal";
+            ckb_IsAbnormal.RightToLeft = RightToLeft.Yes;
+            ckb_IsAbnormal.Size = new Size(107, 24);
+            ckb_IsAbnormal.TabIndex = 9;
+            ckb_IsAbnormal.Text = "Abnormal";
+            ckb_IsAbnormal.UseVisualStyleBackColor = true;
             // 
-            // uwC_LabelAndTextBox3
+            // ckb_IsExceptDelete
             // 
-            uwC_LabelAndTextBox3.Dock = DockStyle.Fill;
-            uwC_LabelAndTextBox3.Location = new Point(1061, 3);
-            uwC_LabelAndTextBox3.Name = "uwC_LabelAndTextBox3";
-            uwC_LabelAndTextBox3.Size = new Size(163, 24);
-            uwC_LabelAndTextBox3.TabIndex = 3;
+            ckb_IsExceptDelete.AutoSize = true;
+            ckb_IsExceptDelete.Checked = true;
+            ckb_IsExceptDelete.CheckState = CheckState.Checked;
+            ckb_IsExceptDelete.Dock = DockStyle.Fill;
+            ckb_IsExceptDelete.Location = new Point(553, 33);
+            ckb_IsExceptDelete.Name = "ckb_IsExceptDelete";
+            ckb_IsExceptDelete.RightToLeft = RightToLeft.Yes;
+            ckb_IsExceptDelete.Size = new Size(107, 24);
+            ckb_IsExceptDelete.TabIndex = 10;
+            ckb_IsExceptDelete.Text = "DELETE 제외";
+            ckb_IsExceptDelete.UseVisualStyleBackColor = true;
             // 
-            // uwC_LabelAndTextBox4
+            // ckb_IsFaulty
             // 
-            uwC_LabelAndTextBox4.Dock = DockStyle.Fill;
-            uwC_LabelAndTextBox4.Location = new Point(1061, 33);
-            uwC_LabelAndTextBox4.Name = "uwC_LabelAndTextBox4";
-            uwC_LabelAndTextBox4.Size = new Size(163, 24);
-            uwC_LabelAndTextBox4.TabIndex = 4;
+            ckb_IsFaulty.AutoSize = true;
+            ckb_IsFaulty.Dock = DockStyle.Fill;
+            ckb_IsFaulty.Location = new Point(666, 33);
+            ckb_IsFaulty.Name = "ckb_IsFaulty";
+            ckb_IsFaulty.RightToLeft = RightToLeft.Yes;
+            ckb_IsFaulty.Size = new Size(107, 24);
+            ckb_IsFaulty.TabIndex = 11;
+            ckb_IsFaulty.Text = "불량적재";
+            ckb_IsFaulty.UseVisualStyleBackColor = true;
             // 
-            // uwC_LabelAndDateTimePicker1
+            // lAdtp_TransList_StartDate
             // 
-            uwC_LabelAndDateTimePicker1.Dock = DockStyle.Fill;
-            uwC_LabelAndDateTimePicker1.dtp_Value = new DateTime(2023, 11, 26, 23, 22, 9, 939);
-            uwC_LabelAndDateTimePicker1.lb_Txt = "label1";
-            uwC_LabelAndDateTimePicker1.Location = new Point(271, 3);
-            uwC_LabelAndDateTimePicker1.Name = "uwC_LabelAndDateTimePicker1";
-            uwC_LabelAndDateTimePicker1.Size = new Size(276, 24);
-            uwC_LabelAndDateTimePicker1.TabIndex = 5;
+            lAdtp_TransList_StartDate.Dock = DockStyle.Fill;
+            lAdtp_TransList_StartDate.Dtp_Value = new DateTime(2023, 11, 27, 10, 20, 54, 324);
+            lAdtp_TransList_StartDate.Lb_Text = "시작 시간";
+            lAdtp_TransList_StartDate.Location = new Point(271, 3);
+            lAdtp_TransList_StartDate.Name = "lAdtp_TransList_StartDate";
+            lAdtp_TransList_StartDate.Size = new Size(276, 24);
+            lAdtp_TransList_StartDate.TabIndex = 12;
             // 
-            // uwC_LabelAndDateTimePicker2
+            // lAdtp_TransList_EndDate
             // 
-            uwC_LabelAndDateTimePicker2.Dock = DockStyle.Fill;
-            uwC_LabelAndDateTimePicker2.dtp_Value = new DateTime(2023, 11, 26, 23, 22, 12, 582);
-            uwC_LabelAndDateTimePicker2.lb_Txt = "label1";
-            uwC_LabelAndDateTimePicker2.Location = new Point(271, 33);
-            uwC_LabelAndDateTimePicker2.Name = "uwC_LabelAndDateTimePicker2";
-            uwC_LabelAndDateTimePicker2.Size = new Size(276, 24);
-            uwC_LabelAndDateTimePicker2.TabIndex = 6;
+            lAdtp_TransList_EndDate.Dock = DockStyle.Fill;
+            lAdtp_TransList_EndDate.Dtp_Value = new DateTime(2023, 11, 27, 10, 20, 56, 692);
+            lAdtp_TransList_EndDate.Lb_Text = "종료 시간";
+            lAdtp_TransList_EndDate.Location = new Point(271, 33);
+            lAdtp_TransList_EndDate.Name = "lAdtp_TransList_EndDate";
+            lAdtp_TransList_EndDate.Size = new Size(276, 24);
+            lAdtp_TransList_EndDate.TabIndex = 13;
             // 
-            // comboBox1
+            // tAbt_TransList_Search
             // 
-            comboBox1.Dock = DockStyle.Fill;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "모두 : ALL", "공트레이 : E", "실트레이 : U" });
-            comboBox1.Location = new Point(779, 3);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(107, 23);
-            comboBox1.TabIndex = 7;
+            tAbt_TransList_Search.Dock = DockStyle.Fill;
+            tAbt_TransList_Search.Interval = 20;
+            tAbt_TransList_Search.IsUseTimer = false;
+            tAbt_TransList_Search.Location = new Point(1230, 3);
+            tAbt_TransList_Search.Name = "tAbt_TransList_Search";
+            tableLayoutPanel5.SetRowSpan(tAbt_TransList_Search, 2);
+            tAbt_TransList_Search.Size = new Size(181, 54);
+            tAbt_TransList_Search.TabIndex = 14;
             // 
-            // checkBox1
+            // lAtb_TransList_CarrierId
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Checked = true;
-            checkBox1.CheckState = CheckState.Checked;
-            checkBox1.Dock = DockStyle.Fill;
-            checkBox1.Location = new Point(553, 3);
-            checkBox1.Name = "checkBox1";
-            checkBox1.RightToLeft = RightToLeft.Yes;
-            checkBox1.Size = new Size(107, 24);
-            checkBox1.TabIndex = 8;
-            checkBox1.Text = "유효반송";
-            checkBox1.UseVisualStyleBackColor = true;
+            lAtb_TransList_CarrierId.Dock = DockStyle.Fill;
+            lAtb_TransList_CarrierId.Lb_Text = "Carrier ID";
+            lAtb_TransList_CarrierId.Location = new Point(892, 3);
+            lAtb_TransList_CarrierId.Name = "lAtb_TransList_CarrierId";
+            lAtb_TransList_CarrierId.Size = new Size(163, 24);
+            lAtb_TransList_CarrierId.TabIndex = 15;
+            lAtb_TransList_CarrierId.Tb_Text = "";
             // 
-            // checkBox2
+            // lAtb_TransList_ReqEqp
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Dock = DockStyle.Fill;
-            checkBox2.Location = new Point(666, 3);
-            checkBox2.Name = "checkBox2";
-            checkBox2.RightToLeft = RightToLeft.Yes;
-            checkBox2.Size = new Size(107, 24);
-            checkBox2.TabIndex = 9;
-            checkBox2.Text = "Abnormal";
-            checkBox2.UseVisualStyleBackColor = true;
+            lAtb_TransList_ReqEqp.Dock = DockStyle.Fill;
+            lAtb_TransList_ReqEqp.Lb_Text = "출발지 설비";
+            lAtb_TransList_ReqEqp.Location = new Point(1061, 3);
+            lAtb_TransList_ReqEqp.Name = "lAtb_TransList_ReqEqp";
+            lAtb_TransList_ReqEqp.Size = new Size(163, 24);
+            lAtb_TransList_ReqEqp.TabIndex = 16;
+            lAtb_TransList_ReqEqp.Tb_Text = "";
             // 
-            // checkBox3
+            // lAtb_TransList_LaneId
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Checked = true;
-            checkBox3.CheckState = CheckState.Checked;
-            checkBox3.Dock = DockStyle.Fill;
-            checkBox3.Location = new Point(553, 33);
-            checkBox3.Name = "checkBox3";
-            checkBox3.RightToLeft = RightToLeft.Yes;
-            checkBox3.Size = new Size(107, 24);
-            checkBox3.TabIndex = 10;
-            checkBox3.Text = "DELETE 제외";
-            checkBox3.UseVisualStyleBackColor = true;
+            lAtb_TransList_LaneId.Dock = DockStyle.Fill;
+            lAtb_TransList_LaneId.Lb_Text = "Lane ID";
+            lAtb_TransList_LaneId.Location = new Point(892, 33);
+            lAtb_TransList_LaneId.Name = "lAtb_TransList_LaneId";
+            lAtb_TransList_LaneId.Size = new Size(163, 24);
+            lAtb_TransList_LaneId.TabIndex = 17;
+            lAtb_TransList_LaneId.Tb_Text = "";
             // 
-            // checkBox4
+            // lAtb_TransList_ToEqp
             // 
-            checkBox4.AutoSize = true;
-            checkBox4.Dock = DockStyle.Fill;
-            checkBox4.Location = new Point(666, 33);
-            checkBox4.Name = "checkBox4";
-            checkBox4.RightToLeft = RightToLeft.Yes;
-            checkBox4.Size = new Size(107, 24);
-            checkBox4.TabIndex = 11;
-            checkBox4.Text = "불량적재";
-            checkBox4.UseVisualStyleBackColor = true;
+            lAtb_TransList_ToEqp.Dock = DockStyle.Fill;
+            lAtb_TransList_ToEqp.Lb_Text = "목적지 설비";
+            lAtb_TransList_ToEqp.Location = new Point(1061, 33);
+            lAtb_TransList_ToEqp.Name = "lAtb_TransList_ToEqp";
+            lAtb_TransList_ToEqp.Size = new Size(163, 24);
+            lAtb_TransList_ToEqp.TabIndex = 18;
+            lAtb_TransList_ToEqp.Tb_Text = "";
             // 
-            // uwC_DataGridView2
+            // transList_dgvReq
             // 
-            tableLayoutPanel5.SetColumnSpan(uwC_DataGridView2, 6);
-            uwC_DataGridView2.Dock = DockStyle.Fill;
-            uwC_DataGridView2.Location = new Point(3, 63);
-            uwC_DataGridView2.Name = "uwC_DataGridView2";
-            tableLayoutPanel5.SetRowSpan(uwC_DataGridView2, 2);
-            uwC_DataGridView2.Size = new Size(1052, 531);
-            uwC_DataGridView2.TabIndex = 12;
+            tableLayoutPanel5.SetColumnSpan(transList_dgvReq, 6);
+            transList_dgvReq.Dock = DockStyle.Fill;
+            transList_dgvReq.Location = new Point(3, 63);
+            transList_dgvReq.Name = "transList_dgvReq";
+            tableLayoutPanel5.SetRowSpan(transList_dgvReq, 2);
+            transList_dgvReq.Size = new Size(1052, 531);
+            transList_dgvReq.TabIndex = 19;
+            // 
+            // transList_CstHist
+            // 
+            tableLayoutPanel5.SetColumnSpan(transList_CstHist, 2);
+            transList_CstHist.Dock = DockStyle.Fill;
+            transList_CstHist.Location = new Point(1061, 63);
+            transList_CstHist.Name = "transList_CstHist";
+            tableLayoutPanel5.SetRowSpan(transList_CstHist, 2);
+            transList_CstHist.Size = new Size(350, 531);
+            transList_CstHist.TabIndex = 20;
             // 
             // tc_LogBox
             // 
@@ -425,8 +448,7 @@
             tableLayoutPanel3.ColumnCount = 2;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.77778F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2222214F));
-            tableLayoutPanel3.Controls.Add(uwC_TextBox2, 0, 0);
-            tableLayoutPanel3.Controls.Add(uwC_DataGridView1, 1, 0);
+            tableLayoutPanel3.Controls.Add(uwC_TextBox1, 0, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -436,22 +458,14 @@
             tableLayoutPanel3.Size = new Size(1414, 597);
             tableLayoutPanel3.TabIndex = 1;
             // 
-            // uwC_TextBox2
+            // uwC_TextBox1
             // 
-            uwC_TextBox2.Dock = DockStyle.Fill;
-            uwC_TextBox2.Location = new Point(3, 3);
-            uwC_TextBox2.Name = "uwC_TextBox2";
-            tableLayoutPanel3.SetRowSpan(uwC_TextBox2, 2);
-            uwC_TextBox2.Size = new Size(1093, 591);
-            uwC_TextBox2.TabIndex = 0;
-            // 
-            // uwC_DataGridView1
-            // 
-            uwC_DataGridView1.Dock = DockStyle.Fill;
-            uwC_DataGridView1.Location = new Point(1102, 3);
-            uwC_DataGridView1.Name = "uwC_DataGridView1";
-            uwC_DataGridView1.Size = new Size(309, 292);
-            uwC_DataGridView1.TabIndex = 1;
+            uwC_TextBox1.Dock = DockStyle.Fill;
+            uwC_TextBox1.Location = new Point(3, 3);
+            uwC_TextBox1.Name = "uwC_TextBox1";
+            tableLayoutPanel3.SetRowSpan(uwC_TextBox1, 2);
+            uwC_TextBox1.Size = new Size(1093, 591);
+            uwC_TextBox1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
@@ -583,16 +597,6 @@
             toolStripStatusLabel1.Size = new Size(121, 17);
             toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // uwC_DataGridView3
-            // 
-            tableLayoutPanel5.SetColumnSpan(uwC_DataGridView3, 2);
-            uwC_DataGridView3.Dock = DockStyle.Fill;
-            uwC_DataGridView3.Location = new Point(1061, 63);
-            uwC_DataGridView3.Name = "uwC_DataGridView3";
-            tableLayoutPanel5.SetRowSpan(uwC_DataGridView3, 2);
-            uwC_DataGridView3.Size = new Size(350, 531);
-            uwC_DataGridView3.TabIndex = 13;
-            // 
             // MainViewer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -641,8 +645,6 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private TableLayoutPanel tableLayoutPanel3;
         private ComboBox cb_DBString;
-        public UserWinfromControl.UWC_DataGridView reqInfo_dgvReq;
-        public UserWinfromControl.UWC_DataGridView reqInfo_DgvCarrier;
         internal Label lb_ServerIP;
         internal Label lb_ServerName;
         internal UserWinfromControl.UWC_LabelAndTextBox lAtb_ReqInfo_Cstid;
@@ -652,23 +654,26 @@
         internal UserWinfromControl.UWC_LabelAndTextBox lAtb_ReqInfo_ReqEqp;
         internal TableLayoutPanel tableLayoutPanel4;
         internal UserWinfromControl.UWC_TimerAndBtn tAbt_ReqInfo_Search;
-        internal UserWinfromControl.UWC_TextBox uwC_TextBox2;
-        private UserWinfromControl.UWC_DataGridView uwC_DataGridView1;
         private Button bt_DataRefresh;
         private TableLayoutPanel tableLayoutPanel5;
-        private UserWinfromControl.UWC_TimerAndBtn uwC_TimerAndBtn1;
-        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox1;
-        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox2;
-        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox3;
-        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox4;
-        private UserWinfromControl.UWC_LabelAndDateTimePicker uwC_LabelAndDateTimePicker1;
-        private UserWinfromControl.UWC_LabelAndDateTimePicker uwC_LabelAndDateTimePicker2;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
-        private CheckBox checkBox4;
         private UserWinfromControl.UWC_DataGridView uwC_DataGridView2;
-        internal ComboBox comboBox1;
-        private UserWinfromControl.UWC_DataGridView uwC_DataGridView3;
+        internal ComboBox cb_Cststat;
+        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_TransList_CarrierId;
+        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_TransList_LaneId;
+        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_TransList_ReqEqp;
+        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_TransList_ToEqp;
+        internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_TransList_StartDate;
+        internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_TransList_EndDate;
+        internal CheckBox ckb_IsValidTransfer;
+        internal CheckBox ckb_IsAbnormal;
+        internal CheckBox ckb_IsExceptDelete;
+        internal CheckBox ckb_IsFaulty;
+        internal UserWinfromControl.UWC_TimerAndBtn tAbt_TransList_Search;
+        internal UserWinfromControl.UWC_DataGridView transList_dgvCstHist;
+        internal UserWinfromControl.UWC_DataGridView reqInfo_dgvReq;
+        internal UserWinfromControl.UWC_DataGridView reqInfo_DgvCarrier;
+        internal UserWinfromControl.UWC_DataGridView transList_CstHist;
+        internal UserWinfromControl.UWC_DataGridView transList_dgvReq;
+        internal UserWinfromControl.UWC_TextBox uwC_TextBox1;
     }
 }

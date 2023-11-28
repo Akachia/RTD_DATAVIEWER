@@ -9,3 +9,15 @@ C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtil
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\refint\CustomUtills.dll
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.pdb
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\ref\CustomUtills.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\bin\Debug\net6.0\CustomUtills.deps.json
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\bin\Debug\net6.0\CustomUtills.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\bin\Debug\net6.0\CustomUtills.pdb
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.csproj.AssemblyReference.cache
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.AssemblyInfoInputs.cache
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.AssemblyInfo.cs
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.csproj.CoreCompileInputs.cache
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\refint\CustomUtills.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.pdb
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\ref\CustomUtills.dll

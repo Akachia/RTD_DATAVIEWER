@@ -27,19 +27,13 @@ namespace RTD_DataViewer
 
         public void InitControlText(MainViewer main)
         {
-            main.lAtb_ReqInfo_ReqEqp.lb_Txt.Text = "요청설비";
-            main.lAtb_ReqInfo_RuleText.lb_Txt.Text = "Rule Name";
-            main.lAtb_ReqInfo_Cstid.lb_Txt.Text = "Carrier ID";
-            main.lAdtp_ReqInfo_StartDate.lb_Txt = "시작 일시";
-            main.lAdtp_ReqInfo_EndDate.lb_Txt = "종료 일시";
-
             main.tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
             main.reqInfo_dgvReq.DgvData.CellClick += SearchCstId;
         }
 
         private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
         {
-            XmlOptionData sqldata = main.sqlList["ReqList"];
+            XmlOptionData sqldata = main.sqlList["ReqInfomation"];
             DynamicParameters parameters = new DynamicParameters();
             string cquery = string.Empty;
             WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 6);
@@ -52,7 +46,7 @@ namespace RTD_DataViewer
 
             new WinformUtils(main).ShowSqltoDGV(main.reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.uwC_TextBox2.ApeendText(cquery, "@CSTID", cstId);
+            main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstId);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -92,15 +86,15 @@ namespace RTD_DataViewer
 
         public void ReqList()
         {
-            this.cstid = main.lAtb_ReqInfo_Cstid.textBox.Text;
-            this.startDate = main.lAdtp_ReqInfo_StartDate.dtp_Value.ToString("yyyy-MM-dd");
-            this.endDate = main.lAdtp_ReqInfo_EndDate.dtp_Value.ToString("yyyy-MM-dd");
-            this.EqpId = main.lAtb_ReqInfo_ReqEqp.textBox.Text;
-            this.ruleId = main.lAtb_ReqInfo_RuleText.textBox.Text;
+            this.cstid = main.lAtb_ReqInfo_Cstid.Tb_Text;
+            this.startDate = main.lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            this.endDate = main.lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            this.EqpId = main.lAtb_ReqInfo_ReqEqp.Tb_Text;
+            this.ruleId = main.lAtb_ReqInfo_RuleText.Tb_Text;
 
             try
             {
-                XmlOptionData sqldata = main.sqlList["ReqList"];
+                XmlOptionData sqldata = main.sqlList["ReqInfomation"];
                 DynamicParameters parameters = new DynamicParameters();
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
                 //using (var connection = new OracleConnection(cstr))
@@ -138,7 +132,7 @@ namespace RTD_DataViewer
 
                 new WinformUtils(main).ShowSqltoDGV(main.reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox2.ApeendText(cquery, parameterDic);
+                main.uwC_TextBox1.ApeendText(cquery, parameterDic);
             }
             catch (Exception ex)
             {
