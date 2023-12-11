@@ -85,7 +85,6 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
-
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
         {
             cquery += string.Concat("\n", sqldata.optionSqls[seq].sql);
@@ -189,7 +188,5 @@ namespace RTD_DataViewer
                 MessageBox.Show(ex.Message);
             }
         }
-
-
     }
 }

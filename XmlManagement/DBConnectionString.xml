@@ -46,7 +46,7 @@
 		<PlantID>C1</PlantID>
 	</ESGM2_BMES_FORM_P01>	
 	<ESGM_BMES_CELL_P01>
-		<Server>10.95.9.45,7433;</Server>
+		<Server>10.95.9.52,7433;</Server>
 		<Database>ESGM_BMES_CELL_P01</Database>
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
@@ -64,7 +64,7 @@
 		<PlantID>U1</PlantID>
 	</ESGM_BMES_FORM_P01>
 	<ESGM_BMES_ELTR_P01>
-		<Server>10.95.9.45,7433;</Server>
+		<Server>10.95.9.59,7433;</Server>
 		<Database>ESGM_BMES_ELTR_P01</Database>
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>

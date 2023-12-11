@@ -73,5 +73,11 @@ namespace UserWinfromControl
                 lb_Txt.Enabled = false;
             }
         }
+
+        private void UWC_LabelAndTextBox_MouseHover(object sender, EventArgs e)
+        {
+            lb_Txt.Visible = false;
+            lb_Txt.Enabled = false;
+        }
     }
 }

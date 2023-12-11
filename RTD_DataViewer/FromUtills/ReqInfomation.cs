@@ -89,8 +89,8 @@ namespace RTD_DataViewer
             this.cstid = main.lAtb_ReqInfo_Cstid.Tb_Text;
             this.startDate = main.lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
             this.endDate = main.lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
-            this.EqpId = main.lAtb_ReqInfo_ReqEqp.Tb_Text;
             this.ruleId = main.lAtb_ReqInfo_RuleText.Tb_Text;
+            this.EqpId = main.lAtb_ReqInfo_ReqEqp.Tb_Text;
 
             try
             {

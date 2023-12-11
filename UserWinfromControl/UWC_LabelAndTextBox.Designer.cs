@@ -61,6 +61,7 @@
             Controls.Add(textBox);
             Name = "UWC_LabelAndTextBox";
             Size = new Size(200, 25);
+            MouseHover += UWC_LabelAndTextBox_MouseHover;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -54,3 +54,4 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\refint\UserWinfromControl.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.pdb
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\ref\UserWinfromControl.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_LabelAndComboBox.resources

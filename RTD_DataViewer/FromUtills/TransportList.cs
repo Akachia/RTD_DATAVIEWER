@@ -1,10 +1,14 @@
 ﻿using Dapper;
+using DBManagemnet;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using XmlManagement;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace RTD_DataViewer
 {
@@ -20,48 +24,87 @@ namespace RTD_DataViewer
 
         public void InitControlText(MainViewer main)
         {
-            main.tAbt_TransList_Search.timer.Tick += Timer_Tick;
-            main.reqInfo_dgvReq.DgvData.CellClick += SearchCstId;
-
             main.cb_Cststat.SelectedIndex = 0;
+
+            main.tAbt_TransList_Search.timer.Tick += Timer_Tick;
+            main.transList_dgvReq.DgvData.CellClick += SearchCstId;
+            main.transList_dgvReq.DgvData.CellClick += SearchTrf;
+        }
+
+        private void SearchTrf(object? sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["TransportList"];
+                DynamicParameters parameters = new DynamicParameters();
+                string cquery = string.Empty;
+                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 16);
+
+                //DataGridView dataGrid = sender as DataGridView;
+
+                string trf_Code = (sender as DataGridView).CurrentRow.Cells["TRF_CODE"].Value.ToString();
+
+                parameters.Add("@TRF_CODE", trf_Code);
+
+                new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+                main.uwC_TextBox1.ApeendText(cquery, "@TRF_CODE", trf_Code);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
         {
-            XmlOptionData sqldata = main.sqlList["TransportList"];
-            DynamicParameters parameters = new DynamicParameters();
-            string cquery = string.Empty;
-            WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 6);
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["TransportList"];
+                DynamicParameters parameters = new DynamicParameters();
+                string cquery = string.Empty;
+                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 17);
 
-            //DataGridView dataGrid = sender as DataGridView;
+                //DataGridView dataGrid = sender as DataGridView;
 
-            string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+                string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
 
-            parameters.Add("@CSTID", cstId);
+                parameters.Add("@CSTID", cstId);
 
-            new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(main.transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                
+                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstId);
+            }
+            catch (Exception)
+            {
 
-            main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstId);
+                throw;
+            }
+
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            int interval = main.tAbt_ReqInfo_Search.Interval;
+            int interval = main.tAbt_TransList_Search.Interval;
             
             if (currNum == 0)
             {
                 SearchTransportReq();
-                currNum = main.tAbt_ReqInfo_Search.Interval;
+                currNum = main.tAbt_TransList_Search.Interval;
             }
             else
             {
-                main.tAbt_ReqInfo_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
+                main.tAbt_TransList_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
                 currNum--;
             }
         }
 
         internal void Btn_Click()
         {
+
+
             if (main.tAbt_TransList_Search.IsUseTimer)
             {
                 main.tAbt_TransList_Search.timer.Interval = 1000;
