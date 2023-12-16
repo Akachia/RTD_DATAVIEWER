@@ -1,34 +1,75 @@
 ﻿using Dapper;
-using DBManagemnet;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlManagement;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace RTD_DataViewer
+namespace RTD_DataViewer.View
 {
-    internal class TransportList
+    public partial class TransportList : UserControl
     {
         MainViewer main;
         int currNum = 0;
         public TransportList(MainViewer main)
         {
+            InitializeComponent();
             this.main = main;
             InitControlText(main);
         }
 
         public void InitControlText(MainViewer main)
         {
-            main.cb_Cststat.SelectedIndex = 0;
+            cb_Cststat.SelectedIndex = 0;
 
-            main.tAbt_TransList_Search.timer.Tick += Timer_Tick;
-            main.transList_dgvReq.DgvData.CellClick += SearchCstId;
-            main.transList_dgvReq.DgvData.CellClick += SearchTrf;
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            DateTime yesterday = DateTime.Today.AddDays(-1);
+            this.main = main;
+            tAbt_TransList_Search.timer.Tick += Timer_Tick;
+            tAbt_TransList_Search.bt_Search.Click += Bt_Search_Click;
+            lAdtp_TransList_EndDate.Dtp_Value = tomorrow;
+            lAdtp_TransList_StartDate.Dtp_Value = yesterday;
+            transList_dgvReq.DgvData.CellClick += SearchCstId;
+            transList_dgvReq.DgvData.CellClick += SearchTrf;
+
+            transList_dgvReq.DgvData.CellDoubleClick += SearchCarrier;
+        }
+
+        private void SearchCarrier(object? sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["TransportList"];
+                DynamicParameters parameters = new DynamicParameters();
+                string cquery = string.Empty;
+                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 16);
+
+                //DataGridView dataGrid = sender as DataGridView;
+
+                string trf_Code = (sender as DataGridView).CurrentRow.Cells["TRF_CODE"].Value.ToString();
+
+                parameters.Add("@TRF_CODE", trf_Code);
+
+                new WinformUtils(main).ShowSqltoDGV(transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void Bt_Search_Click(object? sender, EventArgs e)
+        {
+            Btn_Click();
         }
 
         private void SearchTrf(object? sender, DataGridViewCellEventArgs e)
@@ -46,9 +87,9 @@ namespace RTD_DataViewer
 
                 parameters.Add("@TRF_CODE", trf_Code);
 
-                new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox1.ApeendText(cquery, "@TRF_CODE", trf_Code);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
             }
             catch (Exception)
             {
@@ -73,9 +114,9 @@ namespace RTD_DataViewer
 
                 parameters.Add("@CSTID", cstId);
 
-                new WinformUtils(main).ShowSqltoDGV(main.transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-                
-                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstId);
+                new WinformUtils().ShowSqltoDGV(transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstId);
             }
             catch (Exception)
             {
@@ -87,35 +128,33 @@ namespace RTD_DataViewer
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            int interval = main.tAbt_TransList_Search.Interval;
-            
+            int interval = tAbt_TransList_Search.Interval;
+
             if (currNum == 0)
             {
                 SearchTransportReq();
-                currNum = main.tAbt_TransList_Search.Interval;
+                currNum = tAbt_TransList_Search.Interval;
             }
             else
             {
-                main.tAbt_TransList_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
+                tAbt_TransList_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
                 currNum--;
             }
         }
 
         internal void Btn_Click()
         {
-
-
-            if (main.tAbt_TransList_Search.IsUseTimer)
+            if (tAbt_TransList_Search.IsUseTimer)
             {
-                main.tAbt_TransList_Search.timer.Interval = 1000;
-                if (main.tAbt_TransList_Search.timer.Enabled)
+                tAbt_TransList_Search.timer.Interval = 1000;
+                if (tAbt_TransList_Search.timer.Enabled)
                 {
-                    main.tAbt_TransList_Search.timer.Stop();
-                    main.tAbt_TransList_Search.bt_Search.Text = "Search";
+                    tAbt_TransList_Search.timer.Stop();
+                    tAbt_TransList_Search.bt_Search.Text = "Search";
                 }
                 else
                 {
-                    main.tAbt_TransList_Search.timer.Start();
+                    tAbt_TransList_Search.timer.Start();
                 }
             }
             else
@@ -126,19 +165,19 @@ namespace RTD_DataViewer
 
         private void SearchTransportReq()
         {
-            bool isValidTransfer = main.ckb_IsValidTransfer.Checked;
-            bool isAbnormal = main.ckb_IsAbnormal.Checked;
-            bool isExceptDelete = main.ckb_IsExceptDelete.Checked;
-            bool isFaulty = main.ckb_IsFaulty.Checked;
+            bool isValidTransfer = ckb_IsValidTransfer.Checked;
+            bool isAbnormal = ckb_IsAbnormal.Checked;
+            bool isExceptDelete = ckb_IsExceptDelete.Checked;
+            bool isFaulty = ckb_IsFaulty.Checked;
 
-            string cstid = main.lAtb_TransList_CarrierId.Tb_Text;
-            string toEqpId = main.lAtb_TransList_ToEqp.Tb_Text;
-            string reqEqpId = main.lAtb_TransList_ReqEqp.Tb_Text;
-            string laneId = main.lAtb_TransList_LaneId.Tb_Text;
-            string startDate = main.lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string cstid = lAtb_TransList_CarrierId.Tb_Text;
+            string toEqpId = lAtb_TransList_ToEqp.Tb_Text;
+            string reqEqpId = lAtb_TransList_ReqEqp.Tb_Text;
+            string laneId = lAtb_TransList_LaneId.Tb_Text;
+            string startDate = lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
 
-            int cb_Num = main.cb_Cststat.SelectedIndex;
+            int cb_Num = cb_Cststat.SelectedIndex;
 
             try
             {
@@ -234,9 +273,9 @@ namespace RTD_DataViewer
                 //cquery += " ORDER BY H.INSDTTM DESC ";
 
 
-                new WinformUtils(main).ShowSqltoDGV(main.transList_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(transList_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstid);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
             }
             catch (Exception ex)
             {

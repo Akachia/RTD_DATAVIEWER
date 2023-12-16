@@ -18,6 +18,10 @@ namespace RTD_DataViewer
     {
         MainViewer main;
 
+        public WinformUtils()
+        {
+        }
+
         public WinformUtils(MainViewer mainViewer)
         {
             main = mainViewer;
@@ -129,6 +133,7 @@ namespace RTD_DataViewer
             }
             else { MessageBox.Show("Check DatabaseProvier into DBConnectionString.xml file "); }
         }
+
 
         private void ShowSqltoDGV_ORACLE(DataGridView dataGridView, string cquery, DynamicParameters parameters, string connectionString)
         {

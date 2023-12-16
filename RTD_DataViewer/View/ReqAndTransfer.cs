@@ -1,61 +1,69 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using System.Windows.Forms;
 using XmlManagement;
 
-namespace RTD_DataViewer
+namespace RTD_DataViewer.View
 {
-    internal class ReqAndTransfer
+    public partial class ReqAndTransfer : UserControl
     {
-
         MainViewer main;
         int currNum = 0;
         public ReqAndTransfer(MainViewer main)
         {
+            InitializeComponent();
             this.main = main;
-            InitControlText(main);
+
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            DateTime yesterday = DateTime.Today.AddDays(-1);
+            this.main = main;
+            bt_ReqATransfer_Search.Click += Bt_ReqATransfer_Search_Click;
+            lAdtp_ReqATransfer_EndDate.Dtp_Value = tomorrow;
+            lAdtp_ReqATransfer_StartDate.Dtp_Value = yesterday;
+
+            cb_ReqATransfer_CstStat.SelectedIndex = 0;
+            cb_ReqATransfer_MovingState.SelectedIndex = 0;
+
         }
 
-        public void InitControlText(MainViewer main)
+        private void Bt_ReqATransfer_Search_Click(object? sender, EventArgs e)
         {
-            //main.cb_ReqATransfer_CstStat.SelectedIndex = 0;
-            //main.cb_ReqATransfer_MovingState.SelectedIndex = 0;
+            Btn_Click();
         }
 
         internal void Btn_Click()
         {
-            if (main.ckb_IsDeleteTransfer.Checked == true) SearchDeleteTransfer();
-            else if (main.rb_ReqHist.Checked) { SearchReq(); }
+            if (ckb_IsDeleteTransfer.Checked == true) SearchDeleteTransfer();
+            else if (rb_ReqHist.Checked) { SearchReq(); }
             else { SearchTransfer(); }
         }
 
         private void SearchTransfer()
         {
-            string cstid = main.lAtb_ReqATransfer_CarrierId.Tb_Text;
-            string toEqpId = main.lAtb_ReqATransfer_ArrPort.Tb_Text;
-            string reqEqpId = main.lAtb_ReqATransfer_StartPort.Tb_Text;
-            string ruleId = main.lAtb_ReqATransfer_RuleId.Tb_Text;
-            string startDate = main.lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string cstid = lAtb_ReqATransfer_CarrierId.Tb_Text;
+            string toEqpId = lAtb_ReqATransfer_ArrPort.Tb_Text;
+            string reqEqpId = lAtb_ReqATransfer_StartPort.Tb_Text;
+            string ruleId = lAtb_ReqATransfer_RuleId.Tb_Text;
+            string startDate = lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
 
-            int cb_CstStat_Num = main.cb_ReqATransfer_CstStat.SelectedIndex;
-            int cb_Moving_Num = main.cb_ReqATransfer_MovingState.SelectedIndex;
+            int cb_CstStat_Num = cb_ReqATransfer_CstStat.SelectedIndex;
+            int cb_Moving_Num = cb_ReqATransfer_MovingState.SelectedIndex;
             try
             {
                 XmlOptionData sqldata = main.sqlList["SearchTransfer"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
                 string cquery = sqldata.sql;
                 var parameters = new DynamicParameters();
-                parameters.Add("@StartDate",  startDate);
-                parameters.Add("@EndDate",  endDate);
+                parameters.Add("@StartDate", startDate);
+                parameters.Add("@EndDate", endDate);
                 //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
 
                 if (cstid != string.Empty)
@@ -64,13 +72,13 @@ namespace RTD_DataViewer
                     parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
                     //cquery += " AND CSTID LIKE '%" + txtID.Text + "%'";
                 }
-                if (reqEqpId != string.Empty) 
+                if (reqEqpId != string.Empty)
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
                     parameters.Add("@ReqEQP", string.Concat("%", reqEqpId, "%"));
                     //cquery += " AND FROM_PORT_ID LIKE '%" + txtFromPort.Text + "%'"; 
                 }
-                if (toEqpId != string.Empty) 
+                if (toEqpId != string.Empty)
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
                     parameters.Add("@ToEQP", string.Concat("%", toEqpId, "%"));
@@ -84,22 +92,22 @@ namespace RTD_DataViewer
                     //cquery += " AND CSTSTAT = 'U'"
                     //cquery += " AND CSTSTAT = 'E'"
                 }
-                if (cb_Moving_Num != 0) 
+                if (cb_Moving_Num != 0)
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 4);
-                    parameters.Add("@MovingState", main.cb_ReqATransfer_MovingState.Text);
+                    parameters.Add("@MovingState", cb_ReqATransfer_MovingState.Text);
                     //if (cobStat.SelectedIndex != 0) { cquery += " AND CMD_STAT_CODE = '" + cobStat.Text + "'"
                 }
-                if (ruleId != string.Empty) 
+                if (ruleId != string.Empty)
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
                     parameters.Add("@RuleId", string.Concat("%", ruleId, "%"));
                     //if(txtRuleList.Text.Trim() != "") { cquery += " AND RTD_RULE_ID = '" + txtRuleList.Text + "'"
                 }
 
-                new WinformUtils(main).ShowSqltoDGV(main.reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstid);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
             }
             catch (Exception ex)
             {
@@ -109,10 +117,10 @@ namespace RTD_DataViewer
 
         private void SearchDeleteTransfer()
         {
-            string startDate = main.lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string toEqpId = main.lAtb_ReqATransfer_ArrPort.Tb_Text;
-            string reqEqpId = main.lAtb_ReqATransfer_StartPort.Tb_Text;
+            string startDate = lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string toEqpId = lAtb_ReqATransfer_ArrPort.Tb_Text;
+            string reqEqpId = lAtb_ReqATransfer_StartPort.Tb_Text;
 
             try
             {
@@ -122,7 +130,7 @@ namespace RTD_DataViewer
                 var parameters = new DynamicParameters();
                 parameters.Add("@ReqEQP", string.Concat("%", reqEqpId, "%"));
                 parameters.Add("@ToEQP", string.Concat("%", toEqpId, "%"));
-                new WinformUtils(main).ShowSqltoDGV(main.reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {
@@ -132,12 +140,12 @@ namespace RTD_DataViewer
 
         private void SearchReq()
         {
-            string cstid = main.lAtb_ReqATransfer_CarrierId.Tb_Text;
-            string toEqpId = main.lAtb_ReqATransfer_StartPort.Tb_Text;
-            string startDate = main.lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string cstid = lAtb_ReqATransfer_CarrierId.Tb_Text;
+            string toEqpId = lAtb_ReqATransfer_StartPort.Tb_Text;
+            string startDate = lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
 
-            int cb_CstStat_Num = main.cb_ReqATransfer_CstStat.SelectedIndex;
+            int cb_CstStat_Num = cb_ReqATransfer_CstStat.SelectedIndex;
 
             try
             {
@@ -172,12 +180,13 @@ namespace RTD_DataViewer
                     //cquery += " AND CSTSTAT = 'E'"
                 }
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
-                new WinformUtils(main).ShowSqltoDGV(main.reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message} : SearchReq");
             }
         }
+
     }
 }

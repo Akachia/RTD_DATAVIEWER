@@ -1,28 +1,31 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using XmlManagement;
 
-namespace RTD_DataViewer.FromUtills
+namespace RTD_DataViewer.View
 {
-    internal class CstHist
+    public partial class CstHist : UserControl
     {
         MainViewer main;
         int currNum = 0;
         public CstHist(MainViewer main)
         {
+            InitializeComponent();
             this.main = main;
-            InitControlText(main);
-        }
 
-        public void InitControlText(MainViewer main)
-        {
-            main.transList_dgvReq.DgvData.CellClick += SearchCstId;
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            DateTime yesterday = DateTime.Today.AddDays(-1);
 
-            main.cb_Cststat.SelectedIndex = 0;
+            lAdtp_CstHist_EndDate.Dtp_Value = tomorrow;
+            lAdtp_CstHist_StartDate.Dtp_Value = yesterday;
         }
 
         private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
@@ -38,15 +41,15 @@ namespace RTD_DataViewer.FromUtills
 
             parameters.Add("@TRF_CODE", trf_Code);
 
-            new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+            // new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.uwC_TextBox1.ApeendText(cquery, "@TRF_CODE", trf_Code);
+            main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
         }
 
         internal void Btn_Click()
         {
-            bool isTrayActHist = main.rb_IsTrayActHist.Checked;
-            bool isEventHist = main.rb_IsEventHist.Checked;
+            bool isTrayActHist = rb_IsTrayActHist.Checked;
+            bool isEventHist = rb_IsEventHist.Checked;
 
             if (isTrayActHist == true)
             {
@@ -60,13 +63,13 @@ namespace RTD_DataViewer.FromUtills
 
         private void CstActHistSearch()
         {
-            string cstid = main.lAtb_CstHist_CarrierId.Tb_Text;
-            string toPortId = main.lAtb_CstHist_ToPort.Tb_Text;
+            string cstid = lAtb_CstHist_CarrierId.Tb_Text;
+            string toPortId = lAtb_CstHist_ToPort.Tb_Text;
 
-            string startDate = main.lAdtp_CstHist_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_CstHist_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string startDate = lAdtp_CstHist_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_CstHist_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
 
-            int cb_Num = main.cb_Cststat.SelectedIndex;
+            //int cb_Num = main.cb_Cststat.SelectedIndex;
 
             try
             {
@@ -91,9 +94,9 @@ namespace RTD_DataViewer.FromUtills
                 parameters.Add("@StartDate", startDate);
                 parameters.Add("@EndDate", endDate);
 
-                new WinformUtils(main).ShowSqltoDGV(main.cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstid);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
             }
             catch (Exception ex)
             {
@@ -103,13 +106,13 @@ namespace RTD_DataViewer.FromUtills
 
         private void CstEventHistSearch()
         {
-            string cstid = main.lAtb_CstHist_CarrierId.Tb_Text;
-            string toEqpId = main.lAtb_CstHist_ToPort.Tb_Text;
+            string cstid = lAtb_CstHist_CarrierId.Tb_Text;
+            string toEqpId = lAtb_CstHist_ToPort.Tb_Text;
 
-            string startDate = main.lAdtp_CstHist_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = main.lAdtp_CstHist_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string startDate = lAdtp_CstHist_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            string endDate = lAdtp_CstHist_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
 
-            int cb_Num = main.cb_Cststat.SelectedIndex;
+            //  int cb_Num = main.cb_Cststat.SelectedIndex;
 
             try
             {
@@ -123,15 +126,20 @@ namespace RTD_DataViewer.FromUtills
 
                 parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
 
-                new WinformUtils(main).ShowSqltoDGV(main.cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstid);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message} : CstEventHistSearch");
             }
 
+        }
+
+        private void bt_CstHist_Search_Click(object sender, EventArgs e)
+        {
+            Btn_Click();
         }
     }
 }

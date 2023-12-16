@@ -3,9 +3,10 @@ using Dapper;
 using DBManagemnet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RTD_DataViewer.FromUtills;
+using RTD_DataViewer.View;
 using System.Data;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml;
 using UserWinfromControl;
 using XmlManagement;
@@ -29,40 +30,27 @@ namespace RTD_DataViewer
         public MainViewer()
         {
             InitializeComponent();
-            new ReqInfomation(this);
-            new TransportList(this);
             SettingInit();
 
-            tAbt_ReqInfo_Search.bt_Search.Click += bt_ReqInfo_Search_Click;
-            tAbt_TransList_Search.bt_Search.Click += bt_TransList_Search_Click;
-            bt_ReqATransfer_Search.Click += bt_ReqATransfer_Search_Click;
+            ReqInfomation reqInfomation = new ReqInfomation(this);
+            tp_ReqInfomation.Controls.Add(reqInfomation);
+            reqInfomation.Dock = DockStyle.Fill;
 
-            DateTime tomorrow = DateTime.Today.AddDays(1);
-            DateTime yesterday = DateTime.Today.AddDays(-1);
+            TransportList transportList = new TransportList(this);
+            tp_TransportList.Controls.Add(transportList);
+            transportList.Dock = DockStyle.Fill;
 
-            lAdtp_ReqATransfer_EndDate.Dtp_Value = tomorrow;
-            lAdtp_ReqATransfer_StartDate.Dtp_Value = yesterday;
+            ReqAndTransfer reqAndTransfer = new ReqAndTransfer(this);
+            tp_ReqAndTransfer.Controls.Add(reqAndTransfer);
+            reqAndTransfer.Dock = DockStyle.Fill;
 
-            lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
-            lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
+            CstHist cstHist = new CstHist(this);
+            tp_CstHist.Controls.Add(cstHist);
+            cstHist.Dock = DockStyle.Fill;
 
-            lAdtp_TransList_EndDate.Dtp_Value = tomorrow;
-            lAdtp_TransList_StartDate.Dtp_Value = yesterday;
-
-            lAdtp_CstHist_EndDate.Dtp_Value = tomorrow;
-            lAdtp_CstHist_StartDate.Dtp_Value = yesterday;
-
-            cb_ReqATransfer_CstStat.SelectedIndex = 0;
-            cb_ReqATransfer_MovingState.SelectedIndex = 0;
-        }
-        private void bt_ReqInfo_Search_Click(object sender, EventArgs e)
-        {
-            new ReqInfomation(this).Btn_Click();
-        }
-
-        private void bt_TransList_Search_Click(object sender, EventArgs e)
-        {
-            new TransportList(this).Btn_Click();
+            LnsPkgState lnsPkgState = new LnsPkgState(this);
+            tp_LnsPkgState.Controls.Add(lnsPkgState);
+            lnsPkgState.Dock = DockStyle.Fill;
         }
 
         private void SettingInit()
@@ -102,21 +90,11 @@ namespace RTD_DataViewer
             correntConnectionStringSetting = strs[cb_DBString.Text];
         }
 
-        private void bt_ReqATransfer_Search_Click(object sender, EventArgs e)
-        {
-            new ReqAndTransfer(this).Btn_Click();
-        }
-
-        private void bt_CstHist_Search_Click(object sender, EventArgs e)
-        {
-            new CstHist(this).Btn_Click();
-        }
-
         private void bt_beautifierJson_Click(object sender, EventArgs e)
         {
             try
             {
-                string jsonStr = uwC_TextBox2.Text;
+                string jsonStr = utb_RtdMessageText.Text;
                 string xmlStr = jsonStr;
 
                 jsonStr = jsonStr.Replace(@"\r\n", "");
@@ -130,7 +108,8 @@ namespace RTD_DataViewer
                         var jsonReader = new JsonTextReader(stringReader);
                         var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Newtonsoft.Json.Formatting.Indented };
                         jsonWriter.WriteToken(jsonReader);
-                        uwC_TextBox1.ApeendText("\n" + stringWriter.ToString());
+                        utb_RtdMessageText.Text = string.Empty;
+                        utb_RtdMessageText.ApeendText("\n" + stringWriter.ToString());
                     }
                     //var jsonWriter = new JsonTextWriter(jsonStr) { Formatting = Formatting.Indented };
                     //xmlOj = JsonConvert.DeserializeXmlNode(jsonOj.ToString(), "message");
@@ -148,7 +127,7 @@ namespace RTD_DataViewer
         {
             try
             {
-                string jsonStr = uwC_TextBox2.Text;
+                string jsonStr = utb_RtdMessageText.Text;
                 string xmlStr = jsonStr;
 
                 jsonStr = jsonStr.Replace(@"\r\n", "");
@@ -158,13 +137,27 @@ namespace RTD_DataViewer
                 if (jsonOj != null)
                 {
                     xmlOj = JsonConvert.DeserializeXmlNode(jsonOj.ToString(), "NewDataSet");
-                    uwC_TextBox1.ApeendText("\n" + System.Xml.Linq.XDocument.Parse(xmlOj.InnerXml).ToString());
+                    utb_RtdMessageText.Text = string.Empty;
+                    utb_RtdMessageText.ApeendText("\n" + System.Xml.Linq.XDocument.Parse(xmlOj.InnerXml).ToString());
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void bt_Clear_Click(object sender, EventArgs e)
+        {
+            utb_RtdDataViewerLog.Text = string.Empty;
+        }
+
+        private void bt_RtdEditerLogConvert_Click(object sender, EventArgs e)
+        {
+            string prevText = utb_RtdEditerText.Text;
+
+            utb_RtdEditerText.Text = string.Empty;
+            utb_RtdEditerText.ApeendText(prevText.Replace(",", "\n"));
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using XmlManagement;
 
-namespace RTD_DataViewer
+namespace RTD_DataViewer.View
 {
-    public class ReqInfomation
+    public partial class ReqInfomation : UserControl
     {
         MainViewer main;
         string cstid = string.Empty;
@@ -21,14 +24,20 @@ namespace RTD_DataViewer
 
         public ReqInfomation(MainViewer main)
         {
+            InitializeComponent();
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            DateTime yesterday = DateTime.Today.AddDays(-1);
             this.main = main;
-            InitControlText(main);
+            tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
+            tAbt_ReqInfo_Search.bt_Search.Click += Bt_Search_Click;
+            reqInfo_dgvReq.DgvData.CellClick += SearchCstId;
+            lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
+            lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
         }
 
-        public void InitControlText(MainViewer main)
+        private void Bt_Search_Click(object? sender, EventArgs e)
         {
-            main.tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
-            main.reqInfo_dgvReq.DgvData.CellClick += SearchCstId;
+            Btn_Click();
         }
 
         private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
@@ -44,38 +53,40 @@ namespace RTD_DataViewer
 
             parameters.Add("@CSTID", cstId);
 
-            new WinformUtils(main).ShowSqltoDGV(main.reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+            new WinformUtils().ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.uwC_TextBox1.ApeendText(cquery, "@CSTID", cstId);
+            main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstId);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            int interval = main.tAbt_ReqInfo_Search.Interval;         
+            int interval = tAbt_ReqInfo_Search.Interval;
 
-            if (currNum == 0) {
+            if (currNum == 0)
+            {
                 ReqList();
-                currNum = main.tAbt_ReqInfo_Search.Interval;
+                currNum = tAbt_ReqInfo_Search.Interval;
             }
-            else {
-                main.tAbt_ReqInfo_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
+            else
+            {
+                tAbt_ReqInfo_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
                 currNum--;
             }
         }
 
         internal void Btn_Click()
         {
-            if (main.tAbt_ReqInfo_Search.IsUseTimer)
+            if (tAbt_ReqInfo_Search.IsUseTimer)
             {
-                main.tAbt_ReqInfo_Search.timer.Interval = 1000;
-                if (main.tAbt_ReqInfo_Search.timer.Enabled)
+                tAbt_ReqInfo_Search.timer.Interval = 1000;
+                if (tAbt_ReqInfo_Search.timer.Enabled)
                 {
-                    main.tAbt_ReqInfo_Search.timer.Stop();
-                    main.tAbt_ReqInfo_Search.bt_Search.Text = "Search";
+                    tAbt_ReqInfo_Search.timer.Stop();
+                    tAbt_ReqInfo_Search.bt_Search.Text = "Search";
                 }
                 else
                 {
-                    main.tAbt_ReqInfo_Search.timer.Start();
+                    tAbt_ReqInfo_Search.timer.Start();
                 }
             }
             else
@@ -86,11 +97,11 @@ namespace RTD_DataViewer
 
         public void ReqList()
         {
-            this.cstid = main.lAtb_ReqInfo_Cstid.Tb_Text;
-            this.startDate = main.lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            this.endDate = main.lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
-            this.ruleId = main.lAtb_ReqInfo_RuleText.Tb_Text;
-            this.EqpId = main.lAtb_ReqInfo_ReqEqp.Tb_Text;
+            this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
+            this.startDate = lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
+            this.endDate = lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            this.ruleId = lAtb_ReqInfo_RuleText.Tb_Text;
+            this.EqpId = lAtb_ReqInfo_ReqEqp.Tb_Text;
 
             try
             {
@@ -130,14 +141,14 @@ namespace RTD_DataViewer
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
                 // cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
 
-                new WinformUtils(main).ShowSqltoDGV(main.reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                main.uwC_TextBox1.ApeendText(cquery, parameterDic);
+                new WinformUtils().ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                main.utb_RtdDataViewerLog.ApeendText(cquery, parameterDic);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message} : ReqList");
             }
+
         }
     }
 }
