@@ -55,7 +55,7 @@ namespace RTD_DataViewer.View
 
             new WinformUtils().ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstId);
+            main.AppendLog(cquery, parameters);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -107,42 +107,36 @@ namespace RTD_DataViewer.View
             {
                 XmlOptionData sqldata = main.sqlList["ReqInfomation"];
                 DynamicParameters parameters = new DynamicParameters();
-                Dictionary<string, string> parameterDic = new Dictionary<string, string>();
                 //using (var connection = new OracleConnection(cstr))
 
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 if (cstid != "")
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                    parameterDic.Add("@CSTID", string.Concat(@"%", cstid, "%"));
                     parameters.Add("@CSTID", string.Concat(@"%", cstid, "%"));
                     //cquery += "   AND REQ.CSTID = '" + txtReqCSTID.Text + "' ";
                 }
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                parameterDic.Add("@StartDate", startDate);
                 parameters.Add("@StartDate", startDate, dbType: DbType.DateTime);
-                parameterDic.Add("@EndDate", endDate);
                 parameters.Add("@EndDate", endDate, dbType: DbType.DateTime);
                 //cquery += "   AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN '" + txtReqsDate.Text + "' AND '" + txtReqeDate.Text + "' ";
                 if (EqpId != "")
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
                     parameters.Add("@EQPTID", string.Concat("%", EqpId, "%"));
-                    parameterDic.Add("@EQPTID", string.Concat("%", EqpId, "%"));
                     //cquery += "   AND REQ.EQPTID LIKE '" + txtReqEqpt.Text + "' ";
                 }
                 if (ruleId != "")
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
                     parameters.Add("@RULEID", string.Concat("%", ruleId, "%"));
-                    parameterDic.Add("@RULEID", string.Concat("%", ruleId, "%"));
                     //cquery += "   AND REQ.RTD_RULE_ID LIKE '%" + txtRule.Text + "%' ";
                 }
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
                 // cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
 
                 new WinformUtils().ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-                main.utb_RtdDataViewerLog.ApeendText(cquery, parameterDic);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception ex)
             {

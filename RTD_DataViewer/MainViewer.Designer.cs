@@ -41,17 +41,7 @@
             label1 = new Label();
             eqpState_DgvEqpList = new UserWinfromControl.UWC_DataGridView();
             eqpState_DgvEqpPortList = new UserWinfromControl.UWC_DataGridView();
-            tc_LogBox = new TabPage();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            utb_RtdDataViewerLog = new UserWinfromControl.UWC_TextBox();
-            utb_RtdMessageText = new UserWinfromControl.UWC_TextBox();
-            bt_Clear = new Button();
-            bt_beautifierJson = new Button();
-            bt_beautifierXml = new Button();
-            utb_RtdEditerText = new UserWinfromControl.UWC_TextBox();
-            bt_RtdEditerLogConvert = new Button();
-            label2 = new Label();
-            label3 = new Label();
+            tp_LogBox = new TabPage();
             tp_LnsPkgState = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
             lb_ServerIP = new Label();
@@ -63,18 +53,18 @@
             cb_DBString = new ComboBox();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
-            statusStrip1 = new StatusStrip();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            ss_selectionCount = new StatusStrip();
+            ColumnCount = new ToolStripStatusLabel();
+            RowCount = new ToolStripStatusLabel();
+            tp_CstInfo = new TabPage();
             tableLayoutPanel1.SuspendLayout();
             reqATransfer_dgvReq.SuspendLayout();
             tp_EqpState.SuspendLayout();
             tableLayoutPanel8.SuspendLayout();
-            tc_LogBox.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
             menuStrip1.SuspendLayout();
-            statusStrip1.SuspendLayout();
+            ss_selectionCount.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -97,10 +87,11 @@
             reqATransfer_dgvReq.Controls.Add(tp_ReqInfomation);
             reqATransfer_dgvReq.Controls.Add(tp_TransportList);
             reqATransfer_dgvReq.Controls.Add(tp_ReqAndTransfer);
+            reqATransfer_dgvReq.Controls.Add(tp_CstInfo);
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
-            reqATransfer_dgvReq.Controls.Add(tc_LogBox);
             reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
+            reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
             reqATransfer_dgvReq.Location = new Point(3, 43);
             reqATransfer_dgvReq.Name = "reqATransfer_dgvReq";
@@ -234,138 +225,15 @@
             eqpState_DgvEqpPortList.Size = new Size(495, 556);
             eqpState_DgvEqpPortList.TabIndex = 4;
             // 
-            // tc_LogBox
+            // tp_LogBox
             // 
-            tc_LogBox.Controls.Add(tableLayoutPanel3);
-            tc_LogBox.Location = new Point(4, 24);
-            tc_LogBox.Name = "tc_LogBox";
-            tc_LogBox.Padding = new Padding(3);
-            tc_LogBox.Size = new Size(1420, 603);
-            tc_LogBox.TabIndex = 2;
-            tc_LogBox.Text = "LogBox";
-            tc_LogBox.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.ColumnCount = 8;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.Controls.Add(utb_RtdDataViewerLog, 0, 1);
-            tableLayoutPanel3.Controls.Add(utb_RtdMessageText, 2, 1);
-            tableLayoutPanel3.Controls.Add(bt_Clear, 1, 0);
-            tableLayoutPanel3.Controls.Add(bt_beautifierJson, 3, 0);
-            tableLayoutPanel3.Controls.Add(bt_beautifierXml, 4, 0);
-            tableLayoutPanel3.Controls.Add(utb_RtdEditerText, 5, 1);
-            tableLayoutPanel3.Controls.Add(bt_RtdEditerLogConvert, 7, 0);
-            tableLayoutPanel3.Controls.Add(label2, 5, 0);
-            tableLayoutPanel3.Controls.Add(label3, 2, 0);
-            tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 3);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 3;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.Size = new Size(1414, 597);
-            tableLayoutPanel3.TabIndex = 1;
-            // 
-            // utb_RtdDataViewerLog
-            // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdDataViewerLog, 2);
-            utb_RtdDataViewerLog.Dock = DockStyle.Fill;
-            utb_RtdDataViewerLog.Location = new Point(3, 33);
-            utb_RtdDataViewerLog.Name = "utb_RtdDataViewerLog";
-            tableLayoutPanel3.SetRowSpan(utb_RtdDataViewerLog, 2);
-            utb_RtdDataViewerLog.Size = new Size(581, 561);
-            utb_RtdDataViewerLog.TabIndex = 0;
-            // 
-            // utb_RtdMessageText
-            // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdMessageText, 3);
-            utb_RtdMessageText.Dock = DockStyle.Fill;
-            utb_RtdMessageText.Location = new Point(590, 33);
-            utb_RtdMessageText.Name = "utb_RtdMessageText";
-            tableLayoutPanel3.SetRowSpan(utb_RtdMessageText, 2);
-            utb_RtdMessageText.Size = new Size(407, 561);
-            utb_RtdMessageText.TabIndex = 1;
-            // 
-            // bt_Clear
-            // 
-            bt_Clear.Location = new Point(510, 3);
-            bt_Clear.Name = "bt_Clear";
-            bt_Clear.Size = new Size(74, 23);
-            bt_Clear.TabIndex = 4;
-            bt_Clear.Text = "Clear";
-            bt_Clear.UseVisualStyleBackColor = true;
-            bt_Clear.Click += bt_Clear_Click;
-            // 
-            // bt_beautifierJson
-            // 
-            bt_beautifierJson.Location = new Point(843, 3);
-            bt_beautifierJson.Name = "bt_beautifierJson";
-            bt_beautifierJson.Size = new Size(74, 23);
-            bt_beautifierJson.TabIndex = 2;
-            bt_beautifierJson.Text = "Convert_J";
-            bt_beautifierJson.UseVisualStyleBackColor = true;
-            bt_beautifierJson.Click += bt_beautifierJson_Click;
-            // 
-            // bt_beautifierXml
-            // 
-            bt_beautifierXml.Location = new Point(923, 3);
-            bt_beautifierXml.Name = "bt_beautifierXml";
-            bt_beautifierXml.Size = new Size(74, 23);
-            bt_beautifierXml.TabIndex = 3;
-            bt_beautifierXml.Text = "Convert_X";
-            bt_beautifierXml.UseVisualStyleBackColor = true;
-            bt_beautifierXml.Click += bt_beautifierXml_Click;
-            // 
-            // utb_RtdEditerText
-            // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdEditerText, 3);
-            utb_RtdEditerText.Dock = DockStyle.Fill;
-            utb_RtdEditerText.Location = new Point(1003, 33);
-            utb_RtdEditerText.Name = "utb_RtdEditerText";
-            tableLayoutPanel3.SetRowSpan(utb_RtdEditerText, 2);
-            utb_RtdEditerText.Size = new Size(408, 561);
-            utb_RtdEditerText.TabIndex = 5;
-            // 
-            // bt_RtdEditerLogConvert
-            // 
-            bt_RtdEditerLogConvert.Location = new Point(1336, 3);
-            bt_RtdEditerLogConvert.Name = "bt_RtdEditerLogConvert";
-            bt_RtdEditerLogConvert.Size = new Size(75, 23);
-            bt_RtdEditerLogConvert.TabIndex = 6;
-            bt_RtdEditerLogConvert.Text = "Convert";
-            bt_RtdEditerLogConvert.UseVisualStyleBackColor = true;
-            bt_RtdEditerLogConvert.Click += bt_RtdEditerLogConvert_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(1003, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(247, 30);
-            label2.TabIndex = 7;
-            label2.Text = "RTD Editer Text Converter";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Dock = DockStyle.Fill;
-            label3.Location = new Point(590, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(247, 30);
-            label3.TabIndex = 8;
-            label3.Text = "RTD Massge Text Converter";
-            label3.TextAlign = ContentAlignment.MiddleCenter;
+            tp_LogBox.Location = new Point(4, 24);
+            tp_LogBox.Name = "tp_LogBox";
+            tp_LogBox.Padding = new Padding(3);
+            tp_LogBox.Size = new Size(1420, 603);
+            tp_LogBox.TabIndex = 2;
+            tp_LogBox.Text = "LogBox";
+            tp_LogBox.UseVisualStyleBackColor = true;
             // 
             // tp_LnsPkgState
             // 
@@ -492,27 +360,42 @@
             menuToolStripMenuItem.Size = new Size(50, 20);
             menuToolStripMenuItem.Text = "Menu";
             // 
-            // statusStrip1
+            // ss_selectionCount
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 679);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1434, 22);
-            statusStrip1.TabIndex = 2;
-            statusStrip1.Text = "statusStrip1";
+            ss_selectionCount.Items.AddRange(new ToolStripItem[] { ColumnCount, RowCount });
+            ss_selectionCount.Location = new Point(0, 679);
+            ss_selectionCount.Name = "ss_selectionCount";
+            ss_selectionCount.Size = new Size(1434, 22);
+            ss_selectionCount.TabIndex = 2;
+            ss_selectionCount.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // ColumnCount
             // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(121, 17);
-            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            ColumnCount.Name = "ColumnCount";
+            ColumnCount.Size = new Size(121, 17);
+            ColumnCount.Text = "toolStripStatusLabel1";
+            // 
+            // RowCount
+            // 
+            RowCount.Name = "RowCount";
+            RowCount.Size = new Size(121, 17);
+            RowCount.Text = "toolStripStatusLabel2";
+            // 
+            // tp_CstInfo
+            // 
+            tp_CstInfo.Location = new Point(4, 24);
+            tp_CstInfo.Name = "tp_CstInfo";
+            tp_CstInfo.Size = new Size(1420, 603);
+            tp_CstInfo.TabIndex = 7;
+            tp_CstInfo.Text = "tabPage1";
+            tp_CstInfo.UseVisualStyleBackColor = true;
             // 
             // MainViewer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1434, 701);
-            Controls.Add(statusStrip1);
+            Controls.Add(ss_selectionCount);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -523,16 +406,13 @@
             tp_EqpState.ResumeLayout(false);
             tableLayoutPanel8.ResumeLayout(false);
             tableLayoutPanel8.PerformLayout();
-            tc_LogBox.ResumeLayout(false);
-            tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel3.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             panel1.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            ss_selectionCount.ResumeLayout(false);
+            ss_selectionCount.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -547,11 +427,11 @@
         private Label lb_CurLocTime;
         private Label lb_KorTime;
         private Panel panel1;
-        private TabPage tc_LogBox;
+        private TabPage tp_LogBox;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
-        private StatusStrip statusStrip1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
+        private StatusStrip ss_selectionCount;
+        private ToolStripStatusLabel ColumnCount;
         private TableLayoutPanel tableLayoutPanel3;
         private ComboBox cb_DBString;
         internal Label lb_ServerIP;
@@ -577,5 +457,7 @@
         private Button bt_RtdEditerLogConvert;
         private Label label2;
         private Label label3;
+        private ToolStripStatusLabel RowCount;
+        private TabPage tp_CstInfo;
     }
 }

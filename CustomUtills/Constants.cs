@@ -17,12 +17,43 @@ namespace CustomUtils
         }
     }
 
+    public static class SqlVal 
+    {
+        public static string CstStat = "CstStat";
+        public static string CstId = "CstId";
+        public static string ReqPortId = "ReqPortId";
+        public static string ToPortId = "ToPortId";
+        public static string RuleId = "RuleId";
+        public static string EqptId = "EqptId";
+        public static string StartDate = "StartDate";
+        public static string EndDate = "EndDate";
+        public static string LaneId = "LaneId";
+
+    }
+
     public static class CommonXml
     {
         public static string type = "type";
+
+        public static class Type
+        {
+            public static string If = "if";
+            public static string none = "none";
+            public static string cststat = "cststat";
+        }
+
+        public static string dataType = "dataType";
+        public static string condition = "condition";
+
+        public static class Condition
+        {
+            public static string not_equal = "not_equal";
+            public static string equal = "equal";
+        }   
+
+        public static string key = "key";
         public static string value = "value";
-        public static string convert = "convert";
-        public static string Option = "Option";
+        public static string Default = "default";
     }
 
     public static class CSTErrMsg

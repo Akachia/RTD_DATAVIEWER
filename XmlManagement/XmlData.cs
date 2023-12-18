@@ -62,10 +62,10 @@ namespace XmlManagement
             {
                 foreach (XmlNode cnode in node.ChildNodes)
                 {
-                    if(cnode.Name.Contains(CommonXml.Option)) {   
+                    //if(cnode.Name.Contains(CommonXml.Option)) {   
 
-                       // result.Add(cnode.Name, new XmlOptionData(cnode));
-                    }
+                    //   // result.Add(cnode.Name, new XmlOptionData(cnode));
+                    //}
                 }
             }
             return result;

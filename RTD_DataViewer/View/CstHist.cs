@@ -15,7 +15,7 @@ namespace RTD_DataViewer.View
     public partial class CstHist : UserControl
     {
         MainViewer main;
-        int currNum = 0;
+
         public CstHist(MainViewer main)
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace RTD_DataViewer.View
 
             // new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
+            main.AppendLog(cquery, parameters);
         }
 
         internal void Btn_Click()
@@ -74,8 +74,7 @@ namespace RTD_DataViewer.View
             try
             {
                 XmlOptionData sqldata = main.sqlList["CstActHistSearch"];
-                Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
 
                 if (toPortId != string.Empty)
@@ -96,7 +95,7 @@ namespace RTD_DataViewer.View
 
                 new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception ex)
             {
@@ -118,7 +117,7 @@ namespace RTD_DataViewer.View
             {
                 XmlOptionData sqldata = main.sqlList["CstEventHistSearch"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
 
                 parameters.Add("@StartDate", startDate);
@@ -128,13 +127,12 @@ namespace RTD_DataViewer.View
 
                 new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message} : CstEventHistSearch");
             }
-
         }
 
         private void bt_CstHist_Search_Click(object sender, EventArgs e)

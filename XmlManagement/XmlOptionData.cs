@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml;
 
 namespace XmlManagement
@@ -12,38 +13,80 @@ namespace XmlManagement
         public XmlOptionData(XmlNode xmlNode) {
             try
             {
-                optionSqls = new List<XmlOptionSql>();
-                name = xmlNode.Name;
-                sql = xmlNode.ChildNodes[0].InnerText;
+                OptionSqls = new ();
+                Name = xmlNode.Name;
+                Sql = xmlNode.ChildNodes[0].InnerText;
 
                 foreach (XmlNode childNode in xmlNode.ChildNodes[1].ChildNodes)
                 {
-                    optionSqls.Add(new XmlOptionSql(childNode));
+                    OptionSqls.Add(new XmlOptionSql(childNode));
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
-        public string name { get; set; }
-        public string sql { get; set; }
-        public List<XmlOptionSql> optionSqls { get; set; }
+        public string Name { get; set; }
+        public string Sql { get; set; }
+        public List<XmlOptionSql>? OptionSqls { get; set; }
     }
 
     public class XmlOptionSql
     {
         public XmlOptionSql(XmlNode xmlNode) {
 
-            name = xmlNode.Name;
-            sql = xmlNode.InnerText.Trim();
+            Name = xmlNode.Name;
+            Sql = xmlNode.InnerText.Trim();
+
+            try { this.Type = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.type).Value;}catch (Exception){this.Type = "";}
+            try { this.Condition = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.condition).Value; } catch (Exception) { this.Condition = "";}
+            try { this.Key = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.key).Value; } catch (Exception) { this.Key = "";}
+            try
+            {
+                this.DataType = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.dataType).Value;
+            }
+            catch (Exception) { this.DataType = "string"; }
+            try
+            {
+                this.Default = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Default).Value;
+            }
+            catch (Exception) { this.Default = ""; }
+
         }
 
-        public string name { get; set; }
-        public string sql { get; set; }
+        public string? Name { get; set; }
+        public string? Sql { get; set; }
+
+        public string? Type { get; set; }
+        public string? Condition { get; set; }
+        public string? Key { get; set; }
+        public string? DataType { get; set; }
+        public string? Default { get; set; }
     }
+
+    //public class Variable
+    //{
+    //    public Variable(XmlNode xmlNode)
+    //    {
+    //        try
+    //        {
+    //            Name = xmlNode.Name;
+
+
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            throw ex;
+    //        }
+    //    }
+
+    //    public string Name { get; set; }
+    //    public string Type { get; set; }
+    //    public string Value { get; set; }
+
+    //}   
     //public XmlOptionData(XmlNode node)
     //{
     //    // Tag Name

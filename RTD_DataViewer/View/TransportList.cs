@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,6 +41,45 @@ namespace RTD_DataViewer.View
             transList_dgvReq.DgvData.CellDoubleClick += SearchCarrier;
         }
 
+        private string MakeCmdStatCodeList()
+        {
+            string CmdStatCodeList = string.Empty;
+
+            if (ckb_Send.Checked)
+            {
+                CmdStatCodeList += @"'SEND'";
+            }
+
+            if (ckb_Receive.Checked)
+            {
+                CmdStatCodeList += @",'RECEIVE'";
+            }
+
+            if (ckb_Moving.Checked)
+            {
+                CmdStatCodeList += "MOVING";
+            }
+
+            if (ckb_Delete.Checked)
+            {
+                CmdStatCodeList += "DELETE";
+            }
+
+            if (ckb_Abnormal.Checked)
+            {
+                CmdStatCodeList += "ABNORMAL_END";
+            }
+
+            if (ckb_Cancel.Checked)
+            {
+                CmdStatCodeList += "CANCEL";
+            }
+
+            return CmdStatCodeList;
+        }
+
+
+
         private void SearchCarrier(object? sender, DataGridViewCellEventArgs e)
         {
             try
@@ -57,7 +97,7 @@ namespace RTD_DataViewer.View
 
                 new WinformUtils(main).ShowSqltoDGV(transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception)
             {
@@ -76,7 +116,7 @@ namespace RTD_DataViewer.View
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["TransportList"];
+                XmlOptionData sqldata = main.sqlList["SearchTrf"];
                 DynamicParameters parameters = new DynamicParameters();
                 string cquery = string.Empty;
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 16);
@@ -89,7 +129,7 @@ namespace RTD_DataViewer.View
 
                 new WinformUtils(main).ShowSqltoDGV(transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@TRF_CODE", trf_Code);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception)
             {
@@ -103,7 +143,7 @@ namespace RTD_DataViewer.View
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["TransportList"];
+                XmlOptionData sqldata = main.sqlList["SearchCstId"];
                 DynamicParameters parameters = new DynamicParameters();
                 string cquery = string.Empty;
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 17);
@@ -116,14 +156,13 @@ namespace RTD_DataViewer.View
 
                 new WinformUtils().ShowSqltoDGV(transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstId);
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception)
             {
 
                 throw;
             }
-
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -163,125 +202,25 @@ namespace RTD_DataViewer.View
             }
         }
 
+        /// <summary>
+        /// 현재 반송 현황을 보여주는 함수
+        /// </summary>
         private void SearchTransportReq()
         {
-            bool isValidTransfer = ckb_IsValidTransfer.Checked;
-            bool isAbnormal = ckb_IsAbnormal.Checked;
-            bool isExceptDelete = ckb_IsExceptDelete.Checked;
-            bool isFaulty = ckb_IsFaulty.Checked;
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
-            string cstid = lAtb_TransList_CarrierId.Tb_Text;
-            string toEqpId = lAtb_TransList_ToEqp.Tb_Text;
-            string reqEqpId = lAtb_TransList_ReqEqp.Tb_Text;
-            string laneId = lAtb_TransList_LaneId.Tb_Text;
-            string startDate = lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            string endDate = lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+            paramaterDic.Add("CMD_STAT_CODE_LIST", MakeCmdStatCodeList());
+            paramaterDic.Add("LaneId", lAtb_TransList_LaneId.Tb_Text);
+            paramaterDic.Add("CstStat", $"{cb_Cststat.SelectedIndex}");
+            paramaterDic.Add("CstId", lAtb_TransList_CarrierId.Tb_Text);
+            paramaterDic.Add("ReqPortId", lAtb_TransList_ReqEqp.Tb_Text);
+            paramaterDic.Add("ToPortId", lAtb_TransList_ToEqp.Tb_Text);
+            paramaterDic.Add("isFaulty", $"{ckb_IsFaulty.Checked}");
+            paramaterDic.Add("StartDate", lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd"));
+            paramaterDic.Add("EndDate", lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd"));
 
-            int cb_Num = cb_Cststat.SelectedIndex;
-
-            try
-            {
-                XmlOptionData sqldata = main.sqlList["TransportList"];
-                Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
-                var parameters = new DynamicParameters();
-                if (isValidTransfer == false)        // 유효반송이 아니면
-                {   // 이력 조회
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                    //cquery += " INNER JOIN TB_MHS_TRF_CMD_HIST H with(nolock) ON H.CSTID = CC.CSTID  ";
-                }
-                else
-                {   // 유효반송 조회
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                    //cquery += " INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID  ";
-                }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                //cquery += " LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID ";
-                //cquery += " LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID ";
-                //cquery += " LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE";
-                if (cstid != string.Empty || isValidTransfer)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
-                    //cquery += " WHERE  1=1 ";
-                }
-                else //if (chk24.Checked)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 4);
-                    parameters.Add("@StartDate", string.Concat("%", startDate, "%"));
-                    parameters.Add("@EndDate", string.Concat("%", endDate, "%"));
-                    //cquery += " WHERE CONVERT(CHAR(10), H.INSDTTM, 20) BETWEEN '" + txtsDate.Text + "' AND '" + txteDate.Text + "' ";
-                }
-                if (laneId != string.Empty)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
-                    parameters.Add("@LANE_ID", string.Concat("%", laneId, "%"));
-                    //cquery += " AND WA.LANE_ID LIKE '" + cobCmdLane.Text + "%'";
-                }
-                if (isAbnormal && isValidTransfer)        // 유효반송 비정상종료
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 6);
-                    //cquery += " AND H.CMD_STAT_CODE IN ('MOVING','RECEIVE','ABNORMAL_END')";
-                    //cquery += " AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S') ";
-                }
-                else if (isAbnormal) // 비정상종료
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 7);
-                    //cquery += " AND H.CMD_STAT_CODE IN ('ABNORMAL_END')";
-                }
-                else if (isValidTransfer) //유효반송
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 8);
-                    //cquery += " AND H.CMD_STAT_CODE IN ('MOVING','RECEIVE')";
-                    //cquery += " AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S') ";
-                }
-                if (isExceptDelete)         // 삭제 이력
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 9);
-                    //cquery += " AND H.CMD_STAT_CODE <> 'DELETE' ";
-                }
-                if (cb_Num != 0)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 10);
-                    if (cb_Num == 1) parameters.Add("@CSTSTAT", string.Concat("U")); ;    // 실트레이
-                    if (cb_Num == 2) parameters.Add("@CSTSTAT", string.Concat("E")); ;    // 공트레이
-                }
-                if (cstid != string.Empty)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 11);
-                    parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                    //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
-                }
-                if (reqEqpId != string.Empty)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 12);
-                    parameters.Add("@ReqPortId", string.Concat("%", reqEqpId, "%"));
-                    //cquery += " AND H.FROM_PORT_ID LIKE '%" + txtReqPort.Text + "%'";
-                }
-                if (toEqpId != string.Empty)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 13);
-                    parameters.Add("@ToPortId", string.Concat("%", toEqpId, "%"));
-                    //cquery += " AND H.TO_PORT_ID LIKE '%" + txtPort.Text + "%'";
-                }
-                if (isAbnormal)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 14);
-                    //cquery += " AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR' ";
-                }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 15);
-                //cquery += "  AND H.INSUSER <> 'MCS(SYNC)' ";
-                //cquery += " ORDER BY H.INSDTTM DESC ";
-
-
-                new WinformUtils(main).ShowSqltoDGV(transList_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex.Message} : SearchTransportReq");
-            }
-
+            new WinformUtils(main).ExcuteSql(paramaterDic, transList_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            
         }
     }
 }

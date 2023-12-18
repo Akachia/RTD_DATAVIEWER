@@ -6,10 +6,12 @@ using Newtonsoft.Json.Linq;
 using RTD_DataViewer.View;
 using System.Data;
 using System.IO;
+using System.Web;
 using System.Windows.Forms;
 using System.Xml;
 using UserWinfromControl;
 using XmlManagement;
+using static RTD_DataViewer.View.LogBox;
 
 namespace RTD_DataViewer
 {
@@ -26,6 +28,10 @@ namespace RTD_DataViewer
         private XmlData xml;
         public Dictionary<string, XmlOptionData> sqlList;
         public DBConnectionString correntConnectionStringSetting;
+
+        AppendTextCallback appendTextCallback;
+        AppendLogWithParameterCallback appendLogWithParameterCallback;
+        AppendLogWithKeyValueCallback appendLogWithKeyValueCallback;
 
         public MainViewer()
         {
@@ -48,9 +54,36 @@ namespace RTD_DataViewer
             tp_CstHist.Controls.Add(cstHist);
             cstHist.Dock = DockStyle.Fill;
 
+            CstInfo cstInfo = new CstInfo(this);
+            tp_CstInfo.Controls.Add(cstInfo);
+            cstInfo.Dock = DockStyle.Fill;
+
+            LogBox logBox = new LogBox(this);
+            tp_LogBox.Controls.Add(logBox);
+            logBox.Dock = DockStyle.Fill;
+
+            appendTextCallback = logBox.appendTextCallback;
+            appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
+            appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
+
             LnsPkgState lnsPkgState = new LnsPkgState(this);
             tp_LnsPkgState.Controls.Add(lnsPkgState);
             lnsPkgState.Dock = DockStyle.Fill;
+        }
+
+        public void AppendLog(string text)
+        {
+            appendTextCallback(text);
+        }
+
+        public void AppendLog(string text, DynamicParameters paramaters)
+        {
+            appendLogWithParameterCallback(text, paramaters);
+        }
+
+        public void AppendLog(string text, string key, string value)
+        {
+            appendLogWithKeyValueCallback(text, key, value);
         }
 
         private void SettingInit()
@@ -88,76 +121,6 @@ namespace RTD_DataViewer
             if (comboBox.Text != string.Empty) new WinformUtils(this).ChangeDBConn(comboBox.Text);
 
             correntConnectionStringSetting = strs[cb_DBString.Text];
-        }
-
-        private void bt_beautifierJson_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string jsonStr = utb_RtdMessageText.Text;
-                string xmlStr = jsonStr;
-
-                jsonStr = jsonStr.Replace(@"\r\n", "");
-                jsonStr = jsonStr.Replace(@"\", "");
-                JObject jsonOj = JObject.Parse(jsonStr);
-                if (jsonOj != null)
-                {
-                    using (var stringReader = new StringReader(jsonStr))
-                    using (var stringWriter = new StringWriter())
-                    {
-                        var jsonReader = new JsonTextReader(stringReader);
-                        var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Newtonsoft.Json.Formatting.Indented };
-                        jsonWriter.WriteToken(jsonReader);
-                        utb_RtdMessageText.Text = string.Empty;
-                        utb_RtdMessageText.ApeendText("\n" + stringWriter.ToString());
-                    }
-                    //var jsonWriter = new JsonTextWriter(jsonStr) { Formatting = Formatting.Indented };
-                    //xmlOj = JsonConvert.DeserializeXmlNode(jsonOj.ToString(), "message");
-                    //uwC_TextBox2.Text = System.Xml.Linq.XDocument.Parse(xmlOj.InnerXml).ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void bt_beautifierXml_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string jsonStr = utb_RtdMessageText.Text;
-                string xmlStr = jsonStr;
-
-                jsonStr = jsonStr.Replace(@"\r\n", "");
-                jsonStr = jsonStr.Replace(@"\", "");
-                JObject jsonOj = JObject.Parse(jsonStr);
-                XmlDocument xmlOj;
-                if (jsonOj != null)
-                {
-                    xmlOj = JsonConvert.DeserializeXmlNode(jsonOj.ToString(), "NewDataSet");
-                    utb_RtdMessageText.Text = string.Empty;
-                    utb_RtdMessageText.ApeendText("\n" + System.Xml.Linq.XDocument.Parse(xmlOj.InnerXml).ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void bt_Clear_Click(object sender, EventArgs e)
-        {
-            utb_RtdDataViewerLog.Text = string.Empty;
-        }
-
-        private void bt_RtdEditerLogConvert_Click(object sender, EventArgs e)
-        {
-            string prevText = utb_RtdEditerText.Text;
-
-            utb_RtdEditerText.Text = string.Empty;
-            utb_RtdEditerText.ApeendText(prevText.Replace(",", "\n"));
         }
     }
 }

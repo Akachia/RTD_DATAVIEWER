@@ -34,13 +34,13 @@ namespace RTD_DataViewer
             {
                 XmlOptionData sqldata = mainViewer.sqlList["SearchLnsPkgLot"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
                 //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
 
                 new WinformUtils().ShowSqltoDGV(this.dgv_LnsPkgLot.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
 
-                mainViewer.utb_RtdDataViewerLog.ApeendText(cquery);
+                mainViewer.AppendLog(cquery);
             }
             catch (Exception ex)
             {
@@ -53,13 +53,13 @@ namespace RTD_DataViewer
             {
                 XmlOptionData sqldata = mainViewer.sqlList["SearchLnsPkgEqp"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
                 //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
 
                 new WinformUtils().ShowSqltoDGV(this.dgv_lnsPkgEqp.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
 
-                mainViewer.utb_RtdDataViewerLog.ApeendText(cquery);
+                mainViewer.AppendLog(cquery);
             }
             catch (Exception ex)
             {

@@ -15,7 +15,7 @@ namespace RTD_DataViewer.View
     public partial class ReqAndTransfer : UserControl
     {
         MainViewer main;
-        int currNum = 0;
+
         public ReqAndTransfer(MainViewer main)
         {
             InitializeComponent();
@@ -60,7 +60,7 @@ namespace RTD_DataViewer.View
             {
                 XmlOptionData sqldata = main.sqlList["SearchTransfer"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
                 parameters.Add("@StartDate", startDate);
                 parameters.Add("@EndDate", endDate);
@@ -126,7 +126,7 @@ namespace RTD_DataViewer.View
             {
                 XmlOptionData sqldata = main.sqlList["SearchDeleteTransfer"];
                 Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 var parameters = new DynamicParameters();
                 parameters.Add("@ReqEQP", string.Concat("%", reqEqpId, "%"));
                 parameters.Add("@ToEQP", string.Concat("%", toEqpId, "%"));
@@ -157,7 +157,7 @@ namespace RTD_DataViewer.View
                 parameters.Add("@EndDate", endDate, dbType: DbType.Date);
                 //cquery += "       WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'";
 
-                string cquery = sqldata.sql;
+                string cquery = sqldata.Sql;
                 if (cstid != string.Empty)
                 {
                     WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);

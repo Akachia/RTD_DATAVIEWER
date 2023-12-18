@@ -4,6 +4,9 @@
     <Compile Update="View\CstHist.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="View\CstInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="View\EqpState.cs">
       <SubType>UserControl</SubType>
     </Compile>

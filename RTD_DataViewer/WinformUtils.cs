@@ -9,6 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XmlManagement;
+using System.ComponentModel;
+using System.Windows.Forms;
+using SortOrder = System.Windows.Forms.SortOrder;
+using System.Data;
 
 namespace RTD_DataViewer
 {
@@ -89,21 +93,26 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
+        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionSql sqldata)
+        {
+            cquery += string.Concat("\n", sqldata.Sql);
+        }
+
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
         {
-            cquery += string.Concat("\n", sqldata.optionSqls[seq].sql);
+            cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql);
         }
 
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, string parameterName,  string parameterValue)
         {
-            cquery += string.Concat("\n", sqldata.optionSqls[seq].sql.Replace(parameterName, parameterValue));
+            cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql.Replace(parameterName, parameterValue));
         }
 
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, Dictionary<string, string> parameters)
         {
             foreach (KeyValuePair<string, string> item in parameters)
             {
-                sqldata.optionSqls[seq].sql.Replace(item.Key, item.Value);
+                sqldata.OptionSqls[seq].Sql.Replace(item.Key, item.Value);
             }
 
             cquery += string.Concat("\n", sqldata);
@@ -119,6 +128,70 @@ namespace RTD_DataViewer
             main.lb_ServerIP.Text = main.strs[dbString].Server.ToString();
             main.lb_ServerName.Text = main.strs[dbString].Database.ToString();
             main.cstr = main.strs[dbString].ConnectionString();
+        }
+
+
+        public void ExcuteSql(Dictionary<string,string> paramaterDic, DataGridView dataGridView, DBConnectionString dBConnectionString, string mathodName)
+        {
+            try
+            {
+                XmlOptionData sqldata = main.sqlList[mathodName];
+                string cquery = sqldata.Sql;
+                DynamicParameters parameters = new DynamicParameters();
+
+                //추가 변수에 관한 로직 추가 필요.
+
+                parameters.Add(SqlVal.StartDate, paramaterDic[SqlVal.StartDate]);
+                parameters.Add(SqlVal.EndDate, paramaterDic[SqlVal.EndDate]);
+
+
+
+                foreach (XmlOptionSql item in sqldata.OptionSqls)
+                {
+                    if (item.Type == CommonXml.Type.If)
+                    {
+                        if (item.Condition == CommonXml.Condition.not_equal)
+                        {
+                            if (paramaterDic[item.Key] != item.Default)
+                            {
+                                AddToOptionalSqlSyntax(ref cquery, item);
+                                parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
+                                //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
+                            }
+                        }
+                        else if (item.Condition == CommonXml.Condition.equal)
+                        {
+                            if (paramaterDic[item.Key] == item.Default)
+                            {
+                                AddToOptionalSqlSyntax(ref cquery, item);
+                                parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
+                                //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
+                            }
+                        }
+                    }
+
+                    if (item.Type == CommonXml.Type.cststat)
+                    {
+                        if (paramaterDic[SqlVal.CstStat] != item.Default)
+                        {
+                            AddToOptionalSqlSyntax(ref cquery, item);
+                            if (paramaterDic[SqlVal.CstStat] == "1") parameters.Add($"@{item.Key}", string.Concat("U")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.CstStat] == "2") parameters.Add($"@{item.Key}", string.Concat("E")); ;    // 공트레이
+                        }
+                    }
+
+                    if (item.Type == CommonXml.Type.none)
+                    {
+                        AddToOptionalSqlSyntax(ref cquery, item);
+                    }
+                }
+                ShowSqltoDGV(dataGridView, cquery, parameters, dBConnectionString);
+                main.AppendLog(cquery, parameters);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message} : SearchTransportReq");
+            }
         }
 
         public void ShowSqltoDGV(DataGridView dataGridView, string cquery, DynamicParameters parameters, DBConnectionString dBConnectionString)
@@ -142,12 +215,12 @@ namespace RTD_DataViewer
                 cquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
 
                 dataGridView.DataSource = null;
+                dataGridView.Rows.Clear();
+                dataGridView.Columns.Clear();
                 //dgv_test.AutoGenerateColumns = false;
                 //using (var connection = new OracleConnection(cstr))
                 using (var connection = new OracleConnection(connectionString))
                 {
-                    
-
                     if (parameters != null)
                     {
                         dataGridView.DataSource = connection.Query(cquery, parameters).ToList();
@@ -157,8 +230,12 @@ namespace RTD_DataViewer
                         dataGridView.DataSource = connection.Query(cquery).ToList();
                     }
                 }
+                dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
+
                 dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
                 dataGridView.AutoResizeColumns();
+
+                dataGridView.RowPostPaint += DataGridView_RowPostPaint;
             }
             catch (Exception ex)
             {
@@ -171,6 +248,8 @@ namespace RTD_DataViewer
             try
             {
                 dataGridView.DataSource = null;
+                dataGridView.Rows.Clear();
+                dataGridView.Columns.Clear();
                 //dgv_test.AutoGenerateColumns = false;
                 //using (var connection = new OracleConnection(cstr))
                 using (var connection = new SqlConnection(connectionString))
@@ -184,14 +263,40 @@ namespace RTD_DataViewer
                         dataGridView.DataSource = connection.Query(cquery).ToList();
                     }
                 }
+                dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
+
                 dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
                 dataGridView.AutoResizeColumns();
-                dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
+
+                dataGridView.RowPostPaint += DataGridView_RowPostPaint;
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void DataGridView_MouseMove(object? sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DataGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+
+            var grid = sender as DataGridView;
+            var rowIdx = (e.RowIndex + 1).ToString();
+
+            var centerFormat = new StringFormat()
+            {
+                // 오른쪽 정렬을 위해 Alignment를 Far로 설정
+                Alignment = StringAlignment.Far,
+                LineAlignment = StringAlignment.Center
+            };
+
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+            e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }
