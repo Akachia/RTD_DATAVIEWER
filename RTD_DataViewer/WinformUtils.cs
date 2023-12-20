@@ -140,11 +140,21 @@ namespace RTD_DataViewer
                 DynamicParameters parameters = new DynamicParameters();
 
                 //추가 변수에 관한 로직 추가 필요.
+                foreach (KeyValuePair<string, AdditionalVariable> item in sqldata.AdditionalVarDic)
+                {
+                    if (paramaterDic.ContainsKey(item.Key))
+                    {
+                        //CustomUtills.CustomUtill.RexReplace(ref cquery, @$"@{item.Key}", paramaterDic[item.Key]);
+                        cquery = cquery.Replace(@$"@{item.Key}", paramaterDic[item.Key]);
+                    }
+                    else
+                    {
+                        cquery = cquery.Replace(@$"@{item.Key}", @$"'%{item.Value.DefaultValue}%'");
+                    }
+                }
 
-                parameters.Add(SqlVal.StartDate, paramaterDic[SqlVal.StartDate]);
-                parameters.Add(SqlVal.EndDate, paramaterDic[SqlVal.EndDate]);
-
-
+                //parameters.Add(SqlVal.StartDate, paramaterDic[SqlVal.StartDate]);
+                //parameters.Add(SqlVal.EndDate, paramaterDic[SqlVal.EndDate]);
 
                 foreach (XmlOptionSql item in sqldata.OptionSqls)
                 {
@@ -186,7 +196,7 @@ namespace RTD_DataViewer
                     }
                 }
                 ShowSqltoDGV(dataGridView, cquery, parameters, dBConnectionString);
-                main.AppendLog(cquery, parameters);
+                
             }
             catch (Exception ex)
             {
@@ -217,17 +227,18 @@ namespace RTD_DataViewer
                 dataGridView.DataSource = null;
                 dataGridView.Rows.Clear();
                 dataGridView.Columns.Clear();
-                //dgv_test.AutoGenerateColumns = false;
-                //using (var connection = new OracleConnection(cstr))
+                dataGridView.RowPostPaint -= DataGridView_RowPostPaint;
                 using (var connection = new OracleConnection(connectionString))
                 {
                     if (parameters != null)
                     {
                         dataGridView.DataSource = connection.Query(cquery, parameters).ToList();
+                        main.AppendLog(cquery, parameters);
                     }
                     else
                     {
                         dataGridView.DataSource = connection.Query(cquery).ToList();
+                        main.AppendLog(cquery);
                     }
                 }
                 dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
@@ -236,6 +247,7 @@ namespace RTD_DataViewer
                 dataGridView.AutoResizeColumns();
 
                 dataGridView.RowPostPaint += DataGridView_RowPostPaint;
+                main.AppendLog(cquery, parameters);
             }
             catch (Exception ex)
             {
@@ -250,17 +262,19 @@ namespace RTD_DataViewer
                 dataGridView.DataSource = null;
                 dataGridView.Rows.Clear();
                 dataGridView.Columns.Clear();
-                //dgv_test.AutoGenerateColumns = false;
-                //using (var connection = new OracleConnection(cstr))
+                dataGridView.RowPostPaint -= DataGridView_RowPostPaint;
+
                 using (var connection = new SqlConnection(connectionString))
                 {
                     if (parameters != null)
                     {
                         dataGridView.DataSource = connection.Query(cquery, parameters).ToList();
+                        main.AppendLog(cquery, parameters);
                     }
                     else
                     {
                         dataGridView.DataSource = connection.Query(cquery).ToList();
+                        main.AppendLog(cquery);
                     }
                 }
                 dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
@@ -269,7 +283,7 @@ namespace RTD_DataViewer
                 dataGridView.AutoResizeColumns();
 
                 dataGridView.RowPostPaint += DataGridView_RowPostPaint;
-
+                
             }
             catch (Exception ex)
             {
@@ -285,18 +299,18 @@ namespace RTD_DataViewer
         private void DataGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
 
-            var grid = sender as DataGridView;
-            var rowIdx = (e.RowIndex + 1).ToString();
+            //var grid = sender as DataGridView;
+            //var rowIdx = (e.RowIndex + 1).ToString();
 
-            var centerFormat = new StringFormat()
-            {
-                // 오른쪽 정렬을 위해 Alignment를 Far로 설정
-                Alignment = StringAlignment.Far,
-                LineAlignment = StringAlignment.Center
-            };
+            //var centerFormat = new StringFormat()
+            //{
+            //    // 오른쪽 정렬을 위해 Alignment를 Far로 설정
+            //    Alignment = StringAlignment.Far,
+            //    LineAlignment = StringAlignment.Center
+            //};
 
-            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
-            e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+            //var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+            //e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }

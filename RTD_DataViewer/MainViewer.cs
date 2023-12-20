@@ -38,6 +38,14 @@ namespace RTD_DataViewer
             InitializeComponent();
             SettingInit();
 
+            LogBox logBox = new LogBox(this);
+            tp_LogBox.Controls.Add(logBox);
+            logBox.Dock = DockStyle.Fill;
+
+            appendTextCallback = logBox.appendTextCallback;
+            appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
+            appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
+
             ReqInfomation reqInfomation = new ReqInfomation(this);
             tp_ReqInfomation.Controls.Add(reqInfomation);
             reqInfomation.Dock = DockStyle.Fill;
@@ -58,17 +66,17 @@ namespace RTD_DataViewer
             tp_CstInfo.Controls.Add(cstInfo);
             cstInfo.Dock = DockStyle.Fill;
 
-            LogBox logBox = new LogBox(this);
-            tp_LogBox.Controls.Add(logBox);
-            logBox.Dock = DockStyle.Fill;
-
-            appendTextCallback = logBox.appendTextCallback;
-            appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
-            appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
+            EqpState eqpState = new EqpState(this);
+            tp_EqpState.Controls.Add(eqpState);
+            eqpState.Dock = DockStyle.Fill;
 
             LnsPkgState lnsPkgState = new LnsPkgState(this);
             tp_LnsPkgState.Controls.Add(lnsPkgState);
             lnsPkgState.Dock = DockStyle.Fill;
+
+            StockerInventory stockerInventory = new StockerInventory(this);
+            tp_StockerInventory.Controls.Add(stockerInventory);
+            stockerInventory.Dock = DockStyle.Fill;
         }
 
         public void AppendLog(string text)

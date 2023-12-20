@@ -28,7 +28,7 @@ namespace CustomUtils
         public static string StartDate = "StartDate";
         public static string EndDate = "EndDate";
         public static string LaneId = "LaneId";
-
+        public static string EQGRID = "EQGRID";
     }
 
     public static class CommonXml
@@ -54,6 +54,15 @@ namespace CustomUtils
         public static string key = "key";
         public static string value = "value";
         public static string Default = "default";
+
+        /// <summary>
+        /// Option
+        /// </summary>
+        public static string Option = "Option";
+        /// <summary>
+        /// AdditionalVariable
+        /// </summary>
+        public static string AdditionalVariable = "AdditionalVariable";
     }
 
     public static class CSTErrMsg

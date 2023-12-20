@@ -148,5 +148,38 @@ namespace RTD_DataViewer.View
             utb_RtdEditerText.Text = string.Empty;
             utb_RtdEditerText.ApeendText(prevText.Replace(",", "\n"));
         }
+
+        private void bt_beautifierJson_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string jsonStr = utb_RtdMessageText.Text;
+                string xmlStr = jsonStr;
+
+                jsonStr = jsonStr.Replace(@"\r\n", "");
+                jsonStr = jsonStr.Replace(@"\", "");
+                JObject jsonOj = JObject.Parse(jsonStr);
+                if (jsonOj != null)
+                {
+                    using (var stringReader = new StringReader(jsonStr))
+                    using (var stringWriter = new StringWriter())
+                    {
+                        var jsonReader = new JsonTextReader(stringReader);
+                        var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Newtonsoft.Json.Formatting.Indented };
+                        jsonWriter.WriteToken(jsonReader);
+                        utb_RtdMessageText.Text = string.Empty;
+                        utb_RtdMessageText.ApeendText("\n" + stringWriter.ToString());
+                    }
+                    //var jsonWriter = new JsonTextWriter(jsonStr) { Formatting = Formatting.Indented };
+                    //xmlOj = JsonConvert.DeserializeXmlNode(jsonOj.ToString(), "message");
+                    //uwC_TextBox2.Text = System.Xml.Linq.XDocument.Parse(xmlOj.InnerXml).ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace RTD_DataViewer.View
             this.main = main;
             tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
             tAbt_ReqInfo_Search.bt_Search.Click += Bt_Search_Click;
-            reqInfo_dgvReq.DgvData.CellClick += SearchCstId;
+            reqInfo_dgvReq.DgvData.CellClick += SearchCstInfo;
             lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
             lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
         }
@@ -40,22 +40,17 @@ namespace RTD_DataViewer.View
             Btn_Click();
         }
 
-        private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
+        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
         {
-            XmlOptionData sqldata = main.sqlList["ReqInfomation"];
+            XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
             DynamicParameters parameters = new DynamicParameters();
-            string cquery = string.Empty;
-            WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 6);
-
-            //DataGridView dataGrid = sender as DataGridView;
+            string cquery = sqldata.Sql;
 
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
 
             parameters.Add("@CSTID", cstId);
 
-            new WinformUtils().ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-            main.AppendLog(cquery, parameters);
+            new WinformUtils(main).ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -135,8 +130,7 @@ namespace RTD_DataViewer.View
                 WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
                 // cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
 
-                new WinformUtils().ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-                main.AppendLog(cquery, parameters);
+                new WinformUtils(main).ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {

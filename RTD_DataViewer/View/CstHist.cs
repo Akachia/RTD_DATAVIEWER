@@ -28,9 +28,9 @@ namespace RTD_DataViewer.View
             lAdtp_CstHist_StartDate.Dtp_Value = yesterday;
         }
 
-        private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
+        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
         {
-            XmlOptionData sqldata = main.sqlList["TransportList"];
+            XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
             DynamicParameters parameters = new DynamicParameters();
             string cquery = string.Empty;
             WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 16);

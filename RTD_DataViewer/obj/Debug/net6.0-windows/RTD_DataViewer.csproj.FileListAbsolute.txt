@@ -125,7 +125,6 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.LnsPkgState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CstHist.resources
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.EqpState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.LogBox.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.ReqAndTransfer.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.ReqInfomation.resources
@@ -140,3 +139,6 @@ C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportList.resources
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.sourcelink.json
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CstInfo.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CstInfo.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.EqpState.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.StockerInventory.resources

@@ -6,8 +6,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>AE</AreaID>
-		<PlantID>C1</PlantID>
+		<AreaID>C1</AreaID>
+		<PlantID>AE</PlantID>
+		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM2_BMES_FORM_R01>
 	<ORACLE>
 		<Server>218.235.203.61:49157</Server>
@@ -15,8 +16,9 @@
 		<DatabaseProvider>ORACLE</DatabaseProvider>
 		<UserId>system</UserId>
 		<Password>oracle</Password>
-		<AreaID>EO</AreaID>
-		<PlantID>U2</PlantID>
+		<AreaID>C1</AreaID>
+		<PlantID>EO</PlantID>
+		<SystemTypeCode>F</SystemTypeCode>
 	</ORACLE>
 	<ESGM2_BMES_ELTR_P01>
 		<Server>10.95.105.161,7433</Server>
@@ -24,8 +26,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>AE</AreaID>
-		<PlantID>C1</PlantID>
+		<AreaID>C1</AreaID>
+		<PlantID>EO</PlantID>
+		<SystemTypeCode>E</SystemTypeCode>
 	</ESGM2_BMES_ELTR_P01>
 	<ESGM2_BMES_CELL_P01>
 		<Server>10.95.105.171,7433</Server>
@@ -33,8 +36,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>AE</AreaID>
-		<PlantID>C1</PlantID>
+		<AreaID>C1</AreaID>
+		<PlantID>AE</PlantID>
+		<SystemTypeCode>C</SystemTypeCode>
 	</ESGM2_BMES_CELL_P01>
 	<ESGM2_BMES_FORM_P01>
 		<Server>10.95.105.181,7433</Server>
@@ -42,8 +46,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>AE</AreaID>
-		<PlantID>C1</PlantID>
+		<AreaID>C1</AreaID>
+		<PlantID>AE</PlantID>
+		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM2_BMES_FORM_P01>	
 	<ESGM_BMES_CELL_P01>
 		<Server>10.95.9.52,7433;</Server>
@@ -51,8 +56,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>EI</AreaID>
-		<PlantID>U1</PlantID>
+		<AreaID>U1</AreaID>
+		<PlantID>EI</PlantID>
+		<SystemTypeCode>C</SystemTypeCode>
 	</ESGM_BMES_CELL_P01>
 	<ESGM_BMES_FORM_P01>
 		<Server>10.95.9.45,7433;</Server>
@@ -60,8 +66,9 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>EI</AreaID>
-		<PlantID>U1</PlantID>
+		<AreaID>U1</AreaID>
+		<PlantID>AB</PlantID>
+		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM_BMES_FORM_P01>
 	<ESGM_BMES_ELTR_P01>
 		<Server>10.95.9.59,7433;</Server>
@@ -69,7 +76,8 @@
 		<DatabaseProvider>MSSQL</DatabaseProvider>
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
-		<AreaID>EI</AreaID>
-		<PlantID>U1</PlantID>
+		<AreaID>U1</AreaID>
+		<PlantID>AB</PlantID>
+		<SystemTypeCode>E</SystemTypeCode>
 	</ESGM_BMES_ELTR_P01>
 </ConnectionStrings>

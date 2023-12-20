@@ -106,8 +106,6 @@ namespace RTD_DataViewer.View
                 }
 
                 new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                main.utb_RtdDataViewerLog.ApeendText(cquery, "@CSTID", cstid);
             }
             catch (Exception ex)
             {

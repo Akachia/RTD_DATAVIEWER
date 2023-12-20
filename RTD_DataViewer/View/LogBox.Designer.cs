@@ -99,6 +99,7 @@
             bt_Clear.TabIndex = 4;
             bt_Clear.Text = "Clear";
             bt_Clear.UseVisualStyleBackColor = true;
+            bt_Clear.Click += bt_Clear_Click;
             // 
             // bt_beautifierJson
             // 
@@ -108,6 +109,7 @@
             bt_beautifierJson.TabIndex = 2;
             bt_beautifierJson.Text = "Convert_J";
             bt_beautifierJson.UseVisualStyleBackColor = true;
+            bt_beautifierJson.Click += bt_beautifierJson_Click;
             // 
             // bt_beautifierXml
             // 
@@ -117,6 +119,7 @@
             bt_beautifierXml.TabIndex = 3;
             bt_beautifierXml.Text = "Convert_X";
             bt_beautifierXml.UseVisualStyleBackColor = true;
+            bt_beautifierXml.Click += bt_beautifierXml_Click;
             // 
             // utb_RtdEditerText
             // 
@@ -136,6 +139,7 @@
             bt_RtdEditerLogConvert.TabIndex = 6;
             bt_RtdEditerLogConvert.Text = "Convert";
             bt_RtdEditerLogConvert.UseVisualStyleBackColor = true;
+            bt_RtdEditerLogConvert.Click += bt_RtdEditerLogConvert_Click;
             // 
             // label2
             // 

@@ -14,23 +14,31 @@ namespace XmlManagement
             try
             {
                 OptionSqls = new ();
+                AdditionalVarDic = new Dictionary<string, AdditionalVariable>();
                 Name = xmlNode.Name;
                 Sql = xmlNode.ChildNodes[0].InnerText;
 
-                foreach (XmlNode childNode in xmlNode.ChildNodes[1].ChildNodes)
+                foreach (XmlNode childNode in xmlNode[CustomUtils.CommonXml.Option].ChildNodes)
                 {
                     OptionSqls.Add(new XmlOptionSql(childNode));
+                }
+
+                foreach (XmlNode childNode in xmlNode[CustomUtils.CommonXml.AdditionalVariable].ChildNodes)
+                {
+                    AdditionalVarDic.Add(childNode.Name, new AdditionalVariable(childNode));
                 }
             }
             catch (Exception ex)
             {
+                ex.Source = $"{Name} Xml에 이상이 있습니다. \n" + ex.Source;
                 throw ex;
             }
         }
 
-        public string Name { get; set; }
-        public string Sql { get; set; }
+        public string? Name { get; set; }
+        public string? Sql { get; set; }
         public List<XmlOptionSql>? OptionSqls { get; set; }
+        public Dictionary<string, AdditionalVariable>? AdditionalVarDic { get; set; }
     }
 
     public class XmlOptionSql
@@ -66,27 +74,35 @@ namespace XmlManagement
         public string? Default { get; set; }
     }
 
-    //public class Variable
-    //{
-    //    public Variable(XmlNode xmlNode)
-    //    {
-    //        try
-    //        {
-    //            Name = xmlNode.Name;
+    public class AdditionalVariable
+    {
+        public AdditionalVariable(XmlNode xmlNode)
+        {
+            try
+            {
+                Name = xmlNode.Name;
+                try
+                {
+                    this.DataType = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.dataType).Value;
+                }
+                catch (Exception) { this.DataType = "string"; }
+                try
+                {
+                    this.DefaultValue = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Default).Value;
+                }
+                catch (Exception) { this.DataType = ""; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
+        public string Name { get; set; }
+        public string DataType { get; set; }
+        public string DefaultValue { get; set; }
 
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            throw ex;
-    //        }
-    //    }
-
-    //    public string Name { get; set; }
-    //    public string Type { get; set; }
-    //    public string Value { get; set; }
-
-    //}   
+    }
     //public XmlOptionData(XmlNode node)
     //{
     //    // Tag Name

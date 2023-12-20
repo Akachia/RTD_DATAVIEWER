@@ -35,6 +35,7 @@
             bt_CstInfoSearch = new Button();
             latb_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
             ckb_ValidNgHist = new CheckBox();
+            lb_MismatchMessage = new Label();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,6 +56,7 @@
             tableLayoutPanel1.Controls.Add(bt_CstInfoSearch, 7, 0);
             tableLayoutPanel1.Controls.Add(latb_CarrierId, 6, 0);
             tableLayoutPanel1.Controls.Add(ckb_ValidNgHist, 5, 0);
+            tableLayoutPanel1.Controls.Add(lb_MismatchMessage, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -125,6 +127,16 @@
             ckb_ValidNgHist.Text = "입고 불허 조회";
             ckb_ValidNgHist.UseVisualStyleBackColor = true;
             // 
+            // lb_MismatchMessage
+            // 
+            lb_MismatchMessage.AutoSize = true;
+            lb_MismatchMessage.Dock = DockStyle.Fill;
+            lb_MismatchMessage.Location = new Point(3, 0);
+            lb_MismatchMessage.Name = "lb_MismatchMessage";
+            lb_MismatchMessage.Size = new Size(169, 30);
+            lb_MismatchMessage.TabIndex = 6;
+            lb_MismatchMessage.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // CstInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -146,5 +158,6 @@
         private UserWinfromControl.UWC_LabelAndTextBox latb_CarrierId;
         private Button bt_CstInfoSearch;
         private CheckBox ckb_ValidNgHist;
+        private Label lb_MismatchMessage;
     }
 }

@@ -25,6 +25,9 @@
     <Compile Update="View\ReqInfomation.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="View\StockerInventory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="View\TransportList.cs">
       <SubType>UserControl</SubType>
     </Compile>

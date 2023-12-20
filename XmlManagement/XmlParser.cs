@@ -55,7 +55,8 @@ namespace XmlManagement
                     node["UserId"].InnerText,
                     node["Password"].InnerText,
                     node["AreaID"].InnerText,
-                    node["PlantID"].InnerText)
+                    node["PlantID"].InnerText,
+                    node["SystemTypeCode"].InnerText)
                     );
             }
             return result;

@@ -1,42 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SqlList>
   <SearchTransportReq>
-		<MainSQL>
-      SELECT CC.CSTID
-      , H.FROM_PORT_iD AS 요청포트
-      , H.TO_PORT_ID AS 목적포트
-      , H.CSTSTAT AS 상태
-      , CC.ABNORM_TRF_RSN_CODE AS ATRC
-      , CC.CURR_LOTID AS LOTID
-      , WA.LANE_ID AS LANE_ID
-      , CONVERT(CHAR(23), H.INSDTTM, 20) AS 요청시각
-      , CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
-      , H.TRF_CODE
-      , W.ROUTID AS ROUT
-      , W.PROCID AS PROCID
-      , W.WIPSTAT AS WIP
-      , H.RTD_RULE_ID
-      , H.CMD_STAT_CODE AS 진행상태
-      , H.INSUSER AS 요청
-      , H.REQ_SEQNO AS 순번
-      , H.CNCL_REQ_FLAG AS 취소
-      , (CASE WHEN (DATEDIFF(minute, H.INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
-      , H.RSPN_CODE AS RSPN
-      , C.CMCDNAME AS ERR_MSG
-      FROM CARRIER CC with(nolock)
-      INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
-      LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
-      LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
-      LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
-      WHERE
-      AND H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
-      AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
-    </MainSQL>
-    <Option>
+	<MainSQL>
+		SELECT CC.CSTID
+		, H.FROM_PORT_iD AS 요청포트
+		, H.TO_PORT_ID AS 목적포트
+		, H.CSTSTAT AS 상태
+		, CC.CURR_LOTID AS LOTID
+		, WA.LANE_ID AS LANE_ID
+		, H.CMD_STAT_CODE AS 진행상태
+		, W.ROUTID AS ROUT
+		, W.PROCID AS PROCID
+		, W.WIPSTAT AS WIP
+		, CONVERT(CHAR(23), H.INSDTTM, 20) AS 요청시각
+		, CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
+		, CC.ABNORM_TRF_RSN_CODE AS ATRC
+		, H.RTD_RULE_ID
+		, H.TRF_CODE
+		, H.INSUSER AS 요청
+		, H.REQ_SEQNO AS 순번
+		, H.CNCL_REQ_FLAG AS 취소
+		, (CASE WHEN (DATEDIFF(minute, H.INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
+		, H.RSPN_CODE AS RSPN
+		, C.CMCDNAME AS ERR_MSG
+		FROM CARRIER CC with(nolock)
+		INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
+		LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
+		LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
+		LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
+		WHERE H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
+		AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
+		</MainSQL>
+		<Option>
 			<Option1 type="if" condition="not_equal" key="LaneId" dataType="string" default="">
 				AND WA.LANE_ID LIKE @LANE_ID
 			</Option1>
-			<Option2 type="cststat"  condition="cststat" key="CstStat" dataType="string" default="">
+			<Option2 type="cststat"  condition="not_equal" key="CstStat" dataType="int" default="0">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option2>
 			<Option3 type="if" condition="not_equal" key="CstId" dataType="string" default="">
@@ -55,6 +54,9 @@
 				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
 			</Option7>
 		</Option>
+	  <AdditionalVariable>
+		  <CMD_STAT_CODE_LIST dataType="List" default=""/>
+	  </AdditionalVariable>
 	</SearchTransportReq>
   <SearchTrf>
     <MainSQL>
@@ -69,6 +71,9 @@
     </MainSQL>
     <Option>
     </Option>
+	  <AdditionalVariable>
+		  <CMD_STAT_CODE_LIST dataType="List" default=""/>
+	  </AdditionalVariable>
   </SearchTrf>
   <ReqInfomation>
 		<MainSQL>
@@ -113,6 +118,8 @@
 				ORDER BY REQ.CSTID, REQ.UPDDTTM DESC 
 			</Option6>
 		</Option>
+	  <AdditionalVariable>
+	  </AdditionalVariable>
 	</ReqInfomation>
 	<SearchTransfer>
 		<MainSQL>
@@ -133,25 +140,27 @@
 			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
 		</MainSQL>
 		<Option>
-      <Option1 type="none" condition="" key="" dataType="" default="">
+			<Option1 type="none" condition="" key="" dataType="" default="">
 				AND CSTID LIKE @CSTID
 			</Option1>
-      <Option2 type="none" condition="" key="" dataType="" default="">
+			<Option2 type="none" condition="" key="" dataType="" default="">
 				AND FROM_PORT_ID LIKE @ReqEQP
 			</Option2>
-      <Option3 type="none" condition="" key="" dataType="" default="">
+			<Option3 type="none" condition="" key="" dataType="" default="">
 				AND TO_PORT_ID LIKE @ToEQP
 			</Option3>
-      <Option4 type="none" condition="" key="" dataType="" default="">
+			<Option4 type="none" condition="" key="" dataType="" default="">
 				AND CSTSTAT = @CSTSTAT
 			</Option4>
-      <Option5 type="none" condition="" key="" dataType="" default="">
+			<Option5 type="none" condition="" key="" dataType="" default="">
 				AND CMD_STAT_CODE = @MovingState
 			</Option5>
-      <Option6 type="none" condition="" key="" dataType="" default="">
+            <Option6 type="none" condition="" key="" dataType="" default="">
 				AND RTD_RULE_ID = @RuleId
 			</Option6>			
 		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
 	</SearchTransfer>
 	<SearchReq>
 		<MainSQL>
@@ -184,18 +193,23 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="none" condition="" key="" dataType="" default="">
-				AND CSTID LIKE @CSTIDV
+				AND CSTID LIKE @CstId
 			</Option1>
 			<Option2 type="none" condition="" key="" dataType="" default="">
-        AND PORT_ID LIKE @PORT_ID
-      </Option2>
-      <Option3 type="none" condition="" key="" dataType="" default="">
-        AND CSTSTAT = @CSTSTAT
-      </Option3>
-      <Option4 type="none" condition="" key="" dataType="" default="">
+				AND PORT_ID LIKE @PortId
+			</Option2>
+			<Option3 type="none" condition="" key="" dataType="" default="">
+				AND CSTSTAT = @CstStat
+			</Option3>
+			<Option4 type="none" condition="" key="" dataType="" default="">
 				ORDER BY INSDTTM DESC
 			</Option4>
 		</Option>
+		<AdditionalVariable>
+			<StartDate dataType="DateTime" default=""/>
+			<EndDate dataType="DateTime" default=""/>
+			<PRCS_TYPE_CODE dataType="string" default=""/>
+		</AdditionalVariable>
 	</SearchReq>
 	<SearchDeleteTransfer>
 		<MainSQL>
@@ -225,6 +239,8 @@
 				ORDER BY INSDTTM DESC
 			</Option2>
 		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
 	</SearchDeleteTransfer>
 	<CstActHistSearch>
 		<MainSQL>
@@ -259,6 +275,8 @@
 				ORDER BY ACTDTTM DESC
 			</Option3>
 		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
 	</CstActHistSearch>
 	<CstEventHistSearch>
 		<MainSQL>
@@ -285,6 +303,8 @@
 		</MainSQL>
 		<Option>
 		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
 	</CstEventHistSearch>
 	<SearchLnsPkgLot>
 		<MainSQL>
@@ -340,6 +360,8 @@
 		</MainSQL>
 		<Option>
 		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
 	</SearchLnsPkgLot>
 	<SearchLnsPkgEqp>
 		<MainSQL>
@@ -359,43 +381,321 @@
 		</MainSQL>
 		<Option>
 		</Option>
+		<AdditionalVariable>
+			<CMD_STAT_CODE_LIST dataType="List" default=""/>
+		</AdditionalVariable>
 	</SearchLnsPkgEqp>
   <SearchCstInfo>
     <MainSQL>
       SELECT C.CSTID
-      , C.CSTSTAT
-      , C.LOAD_REP_CSTID
-      , C.CST_LOAD_LOCATION_CODE
-      , C.CURR_RACK_ID
-      , C.CURR_LOTID
-      , C.ABNORM_TRF_RSN_CODE
-      , C.EQPT_CUR AS EQPTID
-      , C.PORT_CUR AS PORT_ID
-      , W.ROUTID
-      , W.WIPSTAT
-      , L.LOTTYPE
-      , WA.DAY_GR_LOTID AS ASSY_LOTID
-      , WA.SPCL_FLAG
-      , WA.SMPL_ISS_TYPE_CODE
-      , WA.LOT_DETL_TYPE_CODE
-      , WA.DFCT_LIMIT_OVER_FLAG
-      , WA.SPCL_NOTE
-      , WA.FORM_SPCL_GR_ID
-      , W.PROCID
-      , C.TRAY_TYPE_CODE
-      , CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM
-      , WA.DFCT_OCCR_EQPTID
-      , CONVERT(CHAR(23),WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM 
-      , WA.SCRP_TRAY_FLAG
-      , WA.TRAY_CNVR_BCR_SCAN_COUNT
+	      , C.CSTSTAT AS 상태
+	      , C.LOAD_REP_CSTID AS 대표CST
+	      , C.CST_LOAD_LOCATION_CODE AS 단위치
+	      , C.CURR_RACK_ID AS Rack위치
+	      , C.CURR_LOTID AS LOT_ID
+	      , C.ABNORM_TRF_RSN_CODE AS 이상코드
+	      , C.EQPT_CUR AS EQPTID
+	      , C.PORT_CUR AS PORT_ID
+	      , W.ROUTID
+	      , W.WIPSTAT
+	      , L.LOTTYPE
+	      , WA.DAY_GR_LOTID AS ASSY_LOTID
+	      , WA.SPCL_FLAG
+	      , WA.SMPL_ISS_TYPE_CODE AS 샘플코드
+	      , WA.LOT_DETL_TYPE_CODE 
+	      , WA.DFCT_LIMIT_OVER_FLAG
+	      , WA.SPCL_NOTE
+	      , WA.FORM_SPCL_GR_ID
+	      , W.PROCID
+	      , C.TRAY_TYPE_CODE
+	      , CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM
+	      , WA.DFCT_OCCR_EQPTID
+	      , CONVERT(CHAR(23),WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM 
+	      , WA.SCRP_TRAY_FLAG
+	      , WA.TRAY_CNVR_BCR_SCAN_COUNT
       FROM Carrier C with(nolock)
-      LEFT JOIN WIP W WITH(NOLOCK) ON C.CURR_LOTID = W.LOTID
-      LEFT JOIN WIPATTR WA WITH(NOLOCK) ON WA.LOTID = W.LOTID
-      LEFT JOIN LOT L WITH(NOLOCK) ON L.LOTID = WA.LOTID
+	      LEFT JOIN WIP W WITH(NOLOCK) ON C.CURR_LOTID = W.LOTID
+	      LEFT JOIN WIPATTR WA WITH(NOLOCK) ON WA.LOTID = W.LOTID
+	      LEFT JOIN LOT L WITH(NOLOCK) ON L.LOTID = WA.LOTID
       WHERE (LOAD_REP_CSTID LIKE @CSTID or C.CSTID LIKE @CSTID )
       ORDER BY UPDDTTM DESC,CST_LOAD_LOCATION_CODE DESC
     </MainSQL>
     <Option>
     </Option>
+	  <AdditionalVariable>
+	  </AdditionalVariable>
   </SearchCstInfo>
+	<SearchEqpState>
+		<MainSQL>
+			WITH TT_BUF_SUM AS (
+			SELECT
+			P.EQPTID,
+			ISNULL(sum(CP.MAX_TRF_QTY),0) AS MAX_QTY
+			FROM TB_MCS_PORT(NOLOCK) P
+			INNER JOIN TB_MCS_CURR_PORT(NOLOCK) CP     ON P.PORT_ID = CP.PORT_ID
+			where p.EQPTID like 'C1%'
+			GROUP  BY P.EQPTID
+			HAVING ISNULL(sum(CP.MAX_TRF_QTY), 0) >= 0
+			),
+			TT_USING_QTY AS (
+			SELECT
+			TO_EQPTID
+			, ISNULL(COUNT(CSTID),0) AS CMD_USING_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND CSTSTAT = 'U'
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_EQPTID
+			),
+			TT_EMPTY_QTY AS (
+			SELECT
+			TO_EQPTID
+			, ISNULL(COUNT(CSTID),0) AS CMD_EMPTY_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND CSTSTAT = 'E'
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_EQPTID
+			)
+			,
+			TT_TOTAL_QTY AS (
+			SELECT
+			TOT.EQPTID
+			, TOT.MAX_QTY
+			, CU.CMD_USING_QTY
+			, CE.CMD_EMPTY_QTY
+			FROM TT_BUF_SUM  TOT
+			LEFT JOIN TT_USING_QTY CU ON TOT.EQPTID = CU.TO_EQPTID
+			LEFT JOIN TT_EMPTY_QTY CE ON TOT.EQPTID = CE.TO_EQPTID
+			)
+			SELECT
+			e.EQPTID 
+			, e.EQGRID
+			, e.EQPTIUSE AS 사용
+			, ei.EIOSTAT
+			, ei.EIOIFMODE
+			, ea.S71 AS LANE_ID
+			, CONVERT(VARCHAR(23), ei.UPDDTTM, 20) AS UPDDTTM
+			, ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+			, ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+			, ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+			FROM EQUIPMENT e with(nolock)
+			INNER JOIN EQUIPMENTATTR ea with(nolock) ON E.EQPTID = ea.EQPTID
+			INNER JOIN EIO ei with(nolock) ON e.EQPTID = ei.EQPTID
+			LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+			WHERE 1 = 1
+			--AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND (E.EQPTIUSE = 'Y'
+			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND E.EQPTID like @AREA_ID
+			AND E.EQGRID IN ('CNV','STO','PKG','EOL','FOR')
+			and LEN(E.EQPTID) = 11)
+			OR
+			(E.EQPTIUSE = 'Y'
+			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND E.EQPTID like @AREA_ID
+			AND E.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV')
+			and LEN(E.EQPTID) = 9)
+			Order by E.EQPTID
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+			<EQP_GROUP_ID_LIST dataType="List" default=""/>
+			<AREA_ID dataType="strig" default=""/>
+		</AdditionalVariable>
+	</SearchEqpState>
+
+	<SearchEqpGroup>
+		<MainSQL>
+			SELECT DISTINCT 
+				EQGRID
+			FROM EQUIPMENT E (NOLOCK)
+				INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+			ON E.EQSGID = ESA.EQSGID
+			WHERE E.EQSGID like @PLANT_ID
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+			<PLANT_ID dataType="List" default=""/>
+	</AdditionalVariable>
+	</SearchEqpGroup>
+	<SearchPortState>
+		<MainSQL>
+			select TMCP.PORT_ID
+			, TMCP.PORT_STAT_CODE AS 요청
+			, E.EIOSTAT
+			, MAX_TRF_QTY AS Buffer
+			, E.EIOIFMODE
+			from TB_MCS_CURR_PORT TMCP (NOLOCK)
+			INNER JOIN EIO E (NOLOCK) on e.EQPTID = TMCP.PORT_ID
+			INNER JOIN EQUIPMENT EM (NOLOCK) on e.EQPTID = em.EQPTID
+		</MainSQL>
+		<Option>
+			<Option1 type="if" condition="not_equal" key="EQPTID" dataType="string" default="%%">
+				where E.EQPTID like @EQPTID
+			</Option1>
+			<Option2 type="if" condition="not_equal" key="AREA_ID" dataType="string" default="">
+				AND E.EQPTID like @AREA_ID
+			</Option2>
+			<Option3 type="none"  condition="" key="" dataType="" default="">
+				Order by TMCP.PORT_ID
+			</Option3>
+		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
+	</SearchPortState>
+	<SearchPortStateHist>
+		<MainSQL>
+			select TOP 20
+			PORT_ID
+			, PORT_STAT_CODE AS 상태
+			, ACTDTTM
+			, ACTID
+			from TB_MCS_PORT_STAT_HIST with (NOLOCK)
+			where PORT_ID like @PORT_ID
+			ORDER BY ACTDTTM desc
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+			<PORT_ID dataType="string" default=""/>
+		</AdditionalVariable>
+	</SearchPortStateHist>
+	<SearchPortEioHist>
+		<MainSQL>
+			SELECT TOP 20 EIO.EQPTID, EIO.EIOSTAT, CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM, MP.MAX_TRF_QTY, CE.CMD_QTY
+			FROM EIO EIO WITH(NOLOCK)
+			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
+			LEFT JOIN(
+			SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_EQPTID, TO_PORT_ID
+			) CE ON EIO.EQPTID = CE.TO_PORT_ID
+			WHERE EIO.EQPTID like @PORT_ID
+			ORDER BY EIO_DTTM desc
+		</MainSQL>
+		<Option>
+			
+		</Option>
+		<AdditionalVariable>
+			<PORT_ID dataType="string" default=""/>
+		</AdditionalVariable>
+	</SearchPortEioHist>
+	<SearchStkComCode>
+		<MainSQL>
+			SELECT DISTINCT S70 AS Code,
+			CASE
+			WHEN S70 = '1' THEN 'CDC STO'
+			WHEN S70 = '3' THEN 'HIGH AGING STO'
+			WHEN S70 = '4' THEN 'NORM AGING STO'
+			WHEN S70 = '7' THEN 'SHIP AGING STO'
+			WHEN S70 = '9' THEN 'PRE AGING STO'
+			WHEN S70 = 'E' THEN '2nd Empty STO'
+			WHEN S70 = 'J' THEN 'JIG STO'
+			WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
+			WHEN S70 = 'NPW' THEN 'NND PROD STO'
+			WHEN S70 = 'NWW' THEN 'NND WAIT STO'
+			WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
+			WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
+			WHEN S70 = 'PCW' THEN 'PROD COMP STO'
+			ELSE 'ETC'
+			END AS Sto_Desc
+			FROM EQUIPMENT E (NOLOCK)
+			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+			ON E.EQSGID = ESA.EQSGID
+			INNER JOIN EquipmentAttr EA
+			ON E.EQPTID = EA.EQPTID
+			WHERE E.EQSGID like @PLANT_ID
+			and E.EQGRID = 'STO'
+			and ESA.S38 = @SYSTEM_TYPE_CODE
+			and EA.S70 is not NULL
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+			<PLANT_ID dataType="string" default=""/>
+			<SYSTEM_TYPE_CODE dataType="string" default=""/>
+		</AdditionalVariable>
+	</SearchStkComCode>
+	<SearchStkInventory>
+		<MainSQL>
+			SELECT
+			C.CSTID
+			, (CASE WHEN C.LOAD_REP_CSTID IS NULL THEN C.CSTID ELSE C.LOAD_REP_CSTID END) AS 대표CST
+			, CST_LOAD_LOCATION_CODE AS 단
+			, CSTSTAT
+			, C.EQPT_CUR
+			, W.LOTID
+			, W.WIPSTAT
+			, W.ROUTID
+			, W.PROCID
+			, ISNULL(RP2.PROCID, '')  AS NEXT_PROCID
+			, ISNULL(RP2.LANE_ID, '')  AS NEXT_LANEID
+			, C.PORT_CUR
+			, R.RACK_ID
+			, R.RACK_STAT_CODE
+			, R.ABNORM_STAT_CODE
+			, WA.SMPL_ISS_TYPE_CODE
+			, CONVERT(CHAR(23), WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM
+			, CONVERT(CHAR(23), r.UPDDTTM, 20) AS UPDDTTM_S
+			, CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM_C
+			, AGING_ISS_PRIORITY_NO
+			, CASE WHEN DATEDIFF(minute, GETDATE(), AGING_ISS_SCHD_DTTM)> 0 THEN '0' ELSE '1' END AS OUTFLAG
+			FROM  (
+			SELECT
+			C1.CSTID
+			, C1.LOAD_REP_CSTID
+			, C2.CURR_LOTID
+			, C1.CSTSTAT
+			, C1.EQPT_CUR
+			, C1.PORT_CUR
+			, C1.CST_LOAD_LOCATION_CODE
+			, C1.UPDDTTM
+			FROM  (
+			SELECT C.CSTID
+			, ISNULL(C.LOAD_REP_CSTID, C.CSTID) AS LOAD_REP_CSTID
+			, C.CURR_LOTID
+			, C.CSTSTAT
+			, C.EQPT_CUR
+			, C.PORT_CUR
+			, C.CST_LOAD_LOCATION_CODE
+			, C.UPDDTTM
+			FROM Carrier C WITH(NOLOCK)
+			INNER JOIN EQUIPMENTATTR EA WITH(NOLOCK)  ON C.EQPT_CUR =  EA.EQPTID
+			WHERE C.CURR_AREAID = @PLANT_ID AND EA.S70 = @STO_CODE
+			) AS C1
+			INNER JOIN CARRIER C2 WITH(NOLOCK) ON C1.LOAD_REP_CSTID = C2.CSTID
+			) AS C
+			LEFT JOIN TB_MCS_RACK R WITH(NOLOCK)
+			ON R.MCS_CST_ID = C.LOAD_REP_CSTID
+			LEFT JOIN WIP W WITH(NOLOCK)
+			ON C.CURR_LOTID = W.LOTID
+			LEFT JOIN WIPATTR WA WITH(NOLOCK)
+			ON WA.LOTID = W.LOTID
+			LEFT JOIN TB_MMD_FORM_ROUT_PROC RP WITH(NOLOCK)
+			ON RP.ROUTID = W.ROUTID AND RP.PROCID = W.PROCID
+			AND RP.USE_FLAG = 'Y'
+			LEFT JOIN TB_MMD_FORM_ROUT_PROC RP2 WITH(NOLOCK)
+			ON RP2.ROUTID = RP.ROUTID
+			AND RP2.PROC_SEQNO = RP.PROC_SEQNO+1
+			AND RP2.USE_FLAG = 'Y'
+			WHERE 1=1
+			ORDER BY
+			CASE
+			WHEN ISNULL(W.LOTID,'') ='' THEN '1'
+			WHEN R.RACK_STAT_CODE ='DISABLE' THEN '2'
+			WHEN (AGING_ISS_PRIORITY_NO='8' OR AGING_ISS_PRIORITY_NO='9') THEN '3'
+			ELSE '4' END ASC, WA.AGING_ISS_SCHD_DTTM,  (CASE WHEN C.LOAD_REP_CSTID IS NULL THEN C.CSTID ELSE C.LOAD_REP_CSTID END), CST_LOAD_LOCATION_CODE
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+			<PLANT_ID dataType="string" default=""/>
+			<STO_CODE dataType="string" default=""/>
+		</AdditionalVariable>
+	</SearchStkInventory>
 </SqlList>

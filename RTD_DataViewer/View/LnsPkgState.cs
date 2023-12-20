@@ -38,9 +38,7 @@ namespace RTD_DataViewer
                 var parameters = new DynamicParameters();
                 //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
 
-                new WinformUtils().ShowSqltoDGV(this.dgv_LnsPkgLot.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
-
-                mainViewer.AppendLog(cquery);
+                new WinformUtils(mainViewer).ShowSqltoDGV(this.dgv_LnsPkgLot.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {
@@ -57,9 +55,7 @@ namespace RTD_DataViewer
                 var parameters = new DynamicParameters();
                 //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
 
-                new WinformUtils().ShowSqltoDGV(this.dgv_lnsPkgEqp.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
-
-                mainViewer.AppendLog(cquery);
+                new WinformUtils(mainViewer).ShowSqltoDGV(this.dgv_lnsPkgEqp.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {

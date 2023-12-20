@@ -8,7 +8,7 @@ namespace DBManagemnet
 {
     public  class DBConnectionString
     {
-        public DBConnectionString(string Server, string Database, string DatabaseProvider, string UserId, string Password, string AreaID, string PlantID)
+        public DBConnectionString(string Server, string Database, string DatabaseProvider, string UserId, string Password, string AreaID, string PlantID, string SystemTypeCode)
         {
             this.Server = Server;
             this.Database = Database;
@@ -17,6 +17,7 @@ namespace DBManagemnet
             this.Password = Password;
             this.AreaID = AreaID;
             this.PlantID = PlantID;
+            this.SystemTypeCode = SystemTypeCode;
         }
 
         public string Server { get;  }
@@ -26,6 +27,8 @@ namespace DBManagemnet
         public string Password { get;  }
         public string AreaID { get;  }
         public string PlantID { get;  }
+
+        public string SystemTypeCode { get; }
 
         public string ConnectionString()
         {

@@ -30,7 +30,8 @@ namespace RTD_DataViewer.View
             {
                 CstActHistSearch();
             }
-            else {
+            else
+            {
                 CstActHistSearch();
             }
         }
@@ -44,9 +45,8 @@ namespace RTD_DataViewer.View
 
             parameters.Add("@CSTID", cstid);
 
-            new WinformUtils().ShowSqltoDGV(dgv_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+            new WinformUtils(main).ShowSqltoDGV(dgv_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-            main.AppendLog(cquery, "@CSTID", cstid);
         }
 
         private void CstActHistSearch()
@@ -79,8 +79,6 @@ namespace RTD_DataViewer.View
                     parameters.Add("@EndDate", endDate);
 
                     new WinformUtils(main).ShowSqltoDGV(dgv_CstActHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                    main.AppendLog(cquery, parameters);
                 }
             }
             catch (Exception ex)
@@ -115,7 +113,6 @@ namespace RTD_DataViewer.View
 
                     new WinformUtils(main).ShowSqltoDGV(dgv_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
 
-                    main.AppendLog(cquery, parameters);
                 }
             }
             catch (Exception ex)
