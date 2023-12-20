@@ -24,6 +24,7 @@ namespace RTD_DataViewer.View
             this.main = main;
             SearchStkComCode();
             FillComboBox();
+            cb_Cststat.SelectedIndex = 0;
         }
 
         private void SearchStkComCode()
@@ -78,34 +79,84 @@ namespace RTD_DataViewer.View
 
             paramaterDic.Add("PLANT_ID", $"'{plantId}'");
             paramaterDic.Add("STO_CODE", $"'{stoCode}'");
+            paramaterDic.Add("CstStat", $"{cb_Cststat.SelectedIndex}");
 
-            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StoInventory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StoInventory, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
 
             DateTime date1 = DateTime.Now;
 
-            int rowCount = dgv_StoInventory.DgvData.RowCount - 1;
+            int rowCount = dgv_StoInventory.RowCount;
+
+            foreach (DataGridViewRow row in dgv_StoInventory.Rows)
+            {
+                row.Cells["AGING_ISS_SCHD_DTTM"].Style.BackColor = Color.FromArgb(222, 245, 229); // 색상 변경
+            }
 
             for (int i = 0; i < rowCount; i++)
             {
-                string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
-
-                if (agingDttm != string.Empty)
+                try
                 {
-                    DateTime dateTime = DateTime.Parse(agingDttm);
+                    string agingDttm = dgv_StoInventory.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+                    string trf_Stat_Code = dgv_StoInventory.Rows[i].Cells["TRF_STAT_CODE"].Value.ToString();
 
-                    if (dateTime > date1)
+                    if (agingDttm != string.Empty)
                     {
-                        dgv_StoInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                        DateTime dateTime = DateTime.Parse(agingDttm);
+
+                        if (dateTime < date1)
+                        {
+                            //FFD4D4
+                            dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                        }
+                    }
+
+                    if (trf_Stat_Code != string.Empty)
+                    {
+                        if (trf_Stat_Code == "RESERVED")
+                        {
+                            //F8FFDB
+                            dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(248, 255, 219);
+                        }
+                        if (trf_Stat_Code == "MOVING")
+                        {
+                            //B3FFAE
+                            dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                        }
                     }
                 }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("SQL 문 점검이 필요합니다.");
+                }
+
+                //string eioIfMode = dgv_StoInventory.DgvData.Rows[i].Cells["EIOIFMODE"].Value.ToString();
+                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
 
             }
+        }
+        private void SearchStockerCurrState()
+        {
+            WinformUtils winformUtils = new WinformUtils(main);
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+
+            string plantId = main.correntConnectionStringSetting.PlantID;
+            string stoCode = stkComCodeList[cb_StockerGroupList.Text];
+            string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+
+            paramaterDic.Add("STO_CODE", $"'{stoCode}'");
+            paramaterDic.Add("PLANT_ID", @$"'{plantId}%'");
+            paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
+
+            winformUtils.ExcuteSql(paramaterDic, dgv_StoStatus, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            winformUtils.DataGridView_EioColoring(dgv_StoStatus);
         }
 
         private void bt_Search_Click(object sender, EventArgs e)
         {
             SearchStkInventory();
+            SearchStockerCurrState();
         }
     }
 

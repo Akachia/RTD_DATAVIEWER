@@ -41,6 +41,7 @@ namespace RTD_DataViewer.View
         {
             try
             {
+                WinformUtils winformUtils = new WinformUtils(main);
                 string eqptId = (sender as DataGridView).CurrentRow.Cells["EQPTID"].Value.ToString();
                 string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
 
@@ -51,10 +52,9 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("EQGRID", "%%");
                 paramaterDic.Add("AREA_ID", areaID);
 
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_PortState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                winformUtils.ExcuteSql(paramaterDic, dgv_PortState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
-                dgv_PortState.DgvData.Columns[2].DefaultCellStyle.BackColor = Color.IndianRed;
-                dgv_PortState.DgvData.Columns[4].DefaultCellStyle.BackColor = Color.GreenYellow;
+                winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
             }
             catch (Exception)
             {
@@ -166,29 +166,17 @@ namespace RTD_DataViewer.View
 
         private void SearchEqpState()
         {
+            WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
             string _EQP_GROUP_LIST = MakeEqpGroup();
             string areaID = main.correntConnectionStringSetting.AreaID;
             paramaterDic.Add("EQP_GROUP_ID_LIST", _EQP_GROUP_LIST);
             paramaterDic.Add("AREA_ID", @$"'{areaID}%'");
 
-            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_EqpState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            winformUtils.ExcuteSql(paramaterDic, dgv_EqpState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
-            int columnCount = dgv_EqpState.DgvData.Columns.Count - 1;
-            int rowCount = dgv_EqpState.DgvData.Rows.Count - 1;
-
-            //for (int i = 0; i < rowCount; i++)
-            //{
-            //    for (int j = 0; j < columnCount; j++)
-            //    {
-            //        string value = dgv_PortState.DgvData.Rows[i].Cells[j].Value.ToString();
-            //        if (value.Equals("OFF"))
-            //        {
-            //            dgv_PortState.DgvData.Rows[i].Cells[j].Style.BackColor = Color.IndianRed;
-            //        }
-
-            //    }
-            //}
+            int columnCount = dgv_EqpState.DgvData.Columns.Count;
+            winformUtils.DataGridView_EioColoring(dgv_EqpState.DgvData);
         }
 
 

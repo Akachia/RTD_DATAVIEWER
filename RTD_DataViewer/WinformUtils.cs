@@ -200,7 +200,7 @@ namespace RTD_DataViewer
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : SearchTransportReq");
+                MessageBox.Show($"{ex.Message} : {mathodName}");
             }
         }
 
@@ -283,7 +283,6 @@ namespace RTD_DataViewer
                 dataGridView.AutoResizeColumns();
 
                 dataGridView.RowPostPaint += DataGridView_RowPostPaint;
-                
             }
             catch (Exception ex)
             {
@@ -295,6 +294,107 @@ namespace RTD_DataViewer
         {
             throw new NotImplementedException();
         }
+
+        public void DataGridView_EioColoring(DataGridView dataGridView)
+        {
+            int rowCount = dataGridView.Rows.Count;
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                string eioMode = dataGridView.Rows[i].Cells["EIOSTAT"].Value.ToString();
+                string eioIfMode = dataGridView.Rows[i].Cells["EIOIFMODE"].Value.ToString();
+                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+
+                if (eioMode != string.Empty)
+                {
+                    if (eioMode == "F")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 155, 155);
+                    }
+                    if (eioMode == "T")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 214, 165);
+                    }
+                    if (eioMode == "U")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 254, 196);
+                    }
+                    if (eioMode == "W")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
+                    }
+                    if (eioMode == "R")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
+                    }
+                }
+
+
+                if (eioIfMode != string.Empty)
+                {
+                    if (eioIfMode == "OFF")
+                    {
+                        //FDFF00
+                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(255, 158, 158);
+                    }
+                    if (eioIfMode == "ON")
+                    {
+                        //2192FF
+                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(185, 243, 252);
+                    }
+                }
+            }
+        }
+
+        public void DataGridView_OnOffColoring(DataGridView dataGridView)
+        {
+
+            int rowCount = dataGridView.Rows.Count;
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                string eioMode = dataGridView.Rows[i].Cells["EIOSTAT"].Value.ToString();
+                string eioIfMode = dataGridView.Rows[i].Cells["EIOIFMODE"].Value.ToString();
+                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+
+                if (eioMode != string.Empty)
+                {
+                    if (eioMode == "F")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 0, 0);
+                    }
+                    if (eioMode == "T")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 128, 0);
+                    }
+                    if (eioMode == "U")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 255, 0);
+                    }
+                    if (eioMode == "W")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(128, 255, 0);
+                    }
+                    if (eioMode == "R")
+                    {
+                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(0, 255, 0);
+                    }
+                }
+
+                if (eioIfMode != string.Empty)
+                {
+                    if (eioIfMode == "OFF")
+                    {
+                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.DarkRed;
+                    }
+                    if (eioIfMode == "ON")
+                    {
+                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.Coral;
+                    }
+                }
+            }
+        }
+
 
         private void DataGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {

@@ -31,9 +31,12 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             bt_Search = new Button();
             cb_StockerGroupList = new ComboBox();
-            dgv_StoInventory = new UserWinfromControl.UWC_DataGridView();
-            uwC_DataGridView2 = new UserWinfromControl.UWC_DataGridView();
+            cb_Cststat = new ComboBox();
+            dgv_StoInventory = new DataGridView();
+            dgv_StoStatus = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_StoInventory).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_StoStatus).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -49,10 +52,11 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Controls.Add(bt_Search, 9, 1);
-            tableLayoutPanel1.Controls.Add(cb_StockerGroupList, 8, 1);
-            tableLayoutPanel1.Controls.Add(dgv_StoInventory, 0, 2);
-            tableLayoutPanel1.Controls.Add(uwC_DataGridView2, 6, 2);
+            tableLayoutPanel1.Controls.Add(bt_Search, 9, 0);
+            tableLayoutPanel1.Controls.Add(cb_StockerGroupList, 8, 0);
+            tableLayoutPanel1.Controls.Add(cb_Cststat, 7, 0);
+            tableLayoutPanel1.Controls.Add(dgv_StoInventory, 0, 1);
+            tableLayoutPanel1.Controls.Add(dgv_StoStatus, 6, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -61,13 +65,17 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // bt_Search
             // 
             bt_Search.Dock = DockStyle.Fill;
-            bt_Search.Location = new Point(1263, 33);
+            bt_Search.Location = new Point(1263, 3);
             bt_Search.Name = "bt_Search";
             bt_Search.Size = new Size(134, 24);
             bt_Search.TabIndex = 2;
@@ -79,30 +87,44 @@
             // 
             cb_StockerGroupList.Dock = DockStyle.Fill;
             cb_StockerGroupList.FormattingEnabled = true;
-            cb_StockerGroupList.Location = new Point(1088, 33);
+            cb_StockerGroupList.Location = new Point(1088, 3);
             cb_StockerGroupList.Name = "cb_StockerGroupList";
             cb_StockerGroupList.Size = new Size(169, 23);
             cb_StockerGroupList.TabIndex = 3;
             // 
+            // cb_Cststat
+            // 
+            cb_Cststat.Dock = DockStyle.Fill;
+            cb_Cststat.FormattingEnabled = true;
+            cb_Cststat.Items.AddRange(new object[] { "모두 : ALL", "실트레이 : U", "공트레이 : E" });
+            cb_Cststat.Location = new Point(983, 3);
+            cb_Cststat.Name = "cb_Cststat";
+            cb_Cststat.Size = new Size(99, 23);
+            cb_Cststat.TabIndex = 6;
+            // 
             // dgv_StoInventory
             // 
+            dgv_StoInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dgv_StoInventory, 6);
             dgv_StoInventory.Dock = DockStyle.Fill;
-            dgv_StoInventory.Location = new Point(3, 63);
+            dgv_StoInventory.Location = new Point(3, 33);
             dgv_StoInventory.Name = "dgv_StoInventory";
-            tableLayoutPanel1.SetRowSpan(dgv_StoInventory, 2);
-            dgv_StoInventory.Size = new Size(834, 534);
-            dgv_StoInventory.TabIndex = 4;
+            tableLayoutPanel1.SetRowSpan(dgv_StoInventory, 3);
+            dgv_StoInventory.RowTemplate.Height = 25;
+            dgv_StoInventory.Size = new Size(834, 564);
+            dgv_StoInventory.TabIndex = 7;
             // 
-            // uwC_DataGridView2
+            // dgv_StoStatus
             // 
-            tableLayoutPanel1.SetColumnSpan(uwC_DataGridView2, 4);
-            uwC_DataGridView2.Dock = DockStyle.Fill;
-            uwC_DataGridView2.Location = new Point(843, 63);
-            uwC_DataGridView2.Name = "uwC_DataGridView2";
-            tableLayoutPanel1.SetRowSpan(uwC_DataGridView2, 2);
-            uwC_DataGridView2.Size = new Size(554, 534);
-            uwC_DataGridView2.TabIndex = 5;
+            dgv_StoStatus.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableLayoutPanel1.SetColumnSpan(dgv_StoStatus, 4);
+            dgv_StoStatus.Dock = DockStyle.Fill;
+            dgv_StoStatus.Location = new Point(843, 33);
+            dgv_StoStatus.Name = "dgv_StoStatus";
+            tableLayoutPanel1.SetRowSpan(dgv_StoStatus, 3);
+            dgv_StoStatus.RowTemplate.Height = 25;
+            dgv_StoStatus.Size = new Size(554, 564);
+            dgv_StoStatus.TabIndex = 8;
             // 
             // StockerInventory
             // 
@@ -112,16 +134,18 @@
             Name = "StockerInventory";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgv_StoInventory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_StoStatus).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private UserWinfromControl.UWC_DataGridView dgv_StoInventory;
-        private UserWinfromControl.UWC_DataGridView uwC_DataGridView2;
         private Button bt_Search;
         private ComboBox cb_StockerGroupList;
-        private UserWinfromControl.UWC_DataGridView uwC_DataGridView1;
+        private ComboBox cb_Cststat;
+        private DataGridView dgv_StoStatus;
+        private DataGridView dgv_StoInventory;
     }
 }

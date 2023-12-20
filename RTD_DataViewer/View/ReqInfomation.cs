@@ -131,6 +131,23 @@ namespace RTD_DataViewer.View
                 // cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
 
                 new WinformUtils(main).ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+                int rowCount = reqInfo_dgvReq.DgvData.RowCount;
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    string req_stat_code = reqInfo_dgvReq.DgvData.Rows[i].Cells["REQ_STAT_CODE"].Value.ToString();
+
+                    if (req_stat_code != string.Empty)
+                    {
+                        if (req_stat_code == "REQUEST" || req_stat_code == "QUERY")
+                        {
+                            //FFD4D4
+                            reqInfo_dgvReq.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                        }
+
+                    }
+                }
             }
             catch (Exception ex)
             {
