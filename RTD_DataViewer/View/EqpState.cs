@@ -113,6 +113,7 @@ namespace RTD_DataViewer.View
         {
             try
             {
+                clb_EqpGroupList.Items.Clear();
                 XmlOptionData sqldata = main.sqlList["SearchEqpGroup"];
                 string cquery = sqldata.Sql;
                 string plantId = main.correntConnectionStringSetting.PlantID;

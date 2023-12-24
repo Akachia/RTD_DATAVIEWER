@@ -36,7 +36,7 @@ namespace RTD_DataViewer
         /// </summary>
         /// <param name="carriers"></param>
         /// <returns></returns>
-        public static string MakeCSTErrMsg(List<Carrier> carriers)
+        public string MakeCSTErrMsg(List<Carrier> carriers)
         {
             string routid = ""; string dfct = "F"; string scrp = "N";
             if (carriers.Count != 0)

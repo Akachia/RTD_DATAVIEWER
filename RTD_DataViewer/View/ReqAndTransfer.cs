@@ -155,29 +155,27 @@ namespace RTD_DataViewer.View
                 parameters.Add("@EndDate", endDate, dbType: DbType.Date);
                 //cquery += "       WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'";
 
+                parameters.Add("@PRCS_TYPE_CODE", "%%");
+                parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
                 string cquery = sqldata.Sql;
-                if (cstid != string.Empty)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                    parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                    //cquery += "  AND CSTID = '" + txtID.Text + "'"
-                }
+
                 if (toEqpId != string.Empty)
                 {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
                     parameters.Add("@PORT_ID", string.Concat("%", toEqpId, "%"));
+                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
+
                     //cquery += "  AND PORT_ID LIKE '" + txtFromPort.Text + "%'"; 
                 }
 
                 if (cb_CstStat_Num != 0)
                 {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
+                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
                     if (cb_CstStat_Num == 1) parameters.Add("@CSTSTAT", string.Concat("U")); ;    // 실트레이
                     if (cb_CstStat_Num == 2) parameters.Add("@CSTSTAT", string.Concat("E")); ;    // 공트레이
                     //cquery += " AND CSTSTAT = 'U'"
                     //cquery += " AND CSTSTAT = 'E'"
                 }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
+                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
                 new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception ex)
