@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using SortOrder = System.Windows.Forms.SortOrder;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace RTD_DataViewer
 {
@@ -60,8 +61,6 @@ namespace RTD_DataViewer
                         carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG ||
                         carriers[0].LOTTYPE != carriers[1].LOTTYPE)
                     { return CSTErrMsg.typeErr; }
-
-
                 }
                 //--------------------------------------------------------------------------------------------------------------------------------------------------
                 if (carriers[0].SPCL_FLAG == "Y")
@@ -93,9 +92,26 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
-        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionSql sqldata)
+        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionSql sqldata, bool isAdd)
         {
-            cquery += string.Concat("\n", sqldata.Sql);
+            if (isAdd)
+            {
+                if (cquery.Contains(@$"+{sqldata.Name}"))
+                {
+                    cquery = cquery.Replace(@$"+{sqldata.Name}", sqldata.Sql);
+                }
+                else
+                {
+                    cquery += string.Concat("\n", sqldata.Sql);
+                }
+            }
+            else
+            {
+                if (cquery.Contains(@$"+{sqldata.Name}"))
+                {
+                    cquery = cquery.Replace(@$"+{sqldata.Name}", string.Empty);
+                }
+            }
         }
 
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
@@ -156,6 +172,7 @@ namespace RTD_DataViewer
                 //parameters.Add(SqlVal.StartDate, paramaterDic[SqlVal.StartDate]);
                 //parameters.Add(SqlVal.EndDate, paramaterDic[SqlVal.EndDate]);
 
+                //OptionalSql 추가 Logic
                 foreach (XmlOptionSql item in sqldata.OptionSqls)
                 {
                     if (item.Type == CommonXml.Type.If)
@@ -164,18 +181,20 @@ namespace RTD_DataViewer
                         {
                             if (paramaterDic[item.Key] != item.Default)
                             {
-                                AddToOptionalSqlSyntax(ref cquery, item);
+                                AddToOptionalSqlSyntax(ref cquery, item, true);
                                 parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
                                 //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
+                                continue;
                             }
                         }
                         else if (item.Condition == CommonXml.Condition.equal)
                         {
                             if (paramaterDic[item.Key] == item.Default)
                             {
-                                AddToOptionalSqlSyntax(ref cquery, item);
+                                AddToOptionalSqlSyntax(ref cquery, item, true);
                                 parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
                                 //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
+                                continue;
                             }
                         }
                     }
@@ -184,19 +203,25 @@ namespace RTD_DataViewer
                     {
                         if (paramaterDic[SqlVal.CstStat] != item.Default)
                         {
-                            AddToOptionalSqlSyntax(ref cquery, item);
+                            AddToOptionalSqlSyntax(ref cquery, item, true);
                             if (paramaterDic[SqlVal.CstStat] == "1") parameters.Add($"@{item.Key}", string.Concat("U")); ;    // 실트레이
                             if (paramaterDic[SqlVal.CstStat] == "2") parameters.Add($"@{item.Key}", string.Concat("E")); ;    // 공트레이
+                            continue;
                         }
                     }
 
                     if (item.Type == CommonXml.Type.none)
                     {
-                        AddToOptionalSqlSyntax(ref cquery, item);
+                        AddToOptionalSqlSyntax(ref cquery, item, true);
+                        continue;
                     }
+                    AddToOptionalSqlSyntax(ref cquery, item, false);
                 }
                 ShowSqltoDGV(dataGridView, cquery, parameters, dBConnectionString);
-                
+
+                DataGridView_Coloring(dataGridView, sqldata);
+
+
             }
             catch (Exception ex)
             {
@@ -217,12 +242,11 @@ namespace RTD_DataViewer
             else { MessageBox.Show("Check DatabaseProvier into DBConnectionString.xml file "); }
         }
 
-
         private void ShowSqltoDGV_ORACLE(DataGridView dataGridView, string cquery, DynamicParameters parameters, string connectionString)
         {
             try
             {
-                cquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+                string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
 
                 dataGridView.DataSource = null;
                 dataGridView.Rows.Clear();
@@ -232,12 +256,12 @@ namespace RTD_DataViewer
                 {
                     if (parameters != null)
                     {
-                        dataGridView.DataSource = connection.Query(cquery, parameters).ToList();
+                        dataGridView.DataSource = connection.Query(testcquery, parameters).ToList();
                         main.AppendLog(cquery, parameters);
                     }
                     else
                     {
-                        dataGridView.DataSource = connection.Query(cquery).ToList();
+                        dataGridView.DataSource = connection.Query(testcquery).ToList();
                         main.AppendLog(cquery);
                     }
                 }
@@ -247,7 +271,6 @@ namespace RTD_DataViewer
                 dataGridView.AutoResizeColumns();
 
                 dataGridView.RowPostPaint += DataGridView_RowPostPaint;
-                main.AppendLog(cquery, parameters);
             }
             catch (Exception ex)
             {
@@ -295,106 +318,106 @@ namespace RTD_DataViewer
             throw new NotImplementedException();
         }
 
-        public void DataGridView_EioColoring(DataGridView dataGridView)
+        //public void DataGridView_EioColoring(DataGridView dataGridView)
+        //{
+        //    int rowCount = dataGridView.Rows.Count;
+
+        //    if (dataGridView.Columns.Contains("EIOSTAT") && dataGridView.Columns.Contains("EIOIFMODE"))
+        //    {
+        //        for (int i = 0; i < rowCount; i++)
+        //        {
+        //            string eioMode = dataGridView.Rows[i].Cells["EIOSTAT"].Value.ToString();
+        //            string eioIfMode = dataGridView.Rows[i].Cells["EIOIFMODE"].Value.ToString();
+        //            // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+
+        //            if (eioMode != string.Empty)
+        //            {
+        //                if (eioMode == "F")
+        //                {
+        //                    dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 155, 155);
+        //                }
+        //                if (eioMode == "T")
+        //                {
+        //                    dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 214, 165);
+        //                }
+        //                if (eioMode == "U")
+        //                {
+        //                    dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 254, 196);
+        //                }
+        //                if (eioMode == "W")
+        //                {
+        //                    dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
+        //                }
+        //                if (eioMode == "R")
+        //                {
+        //                    dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
+        //                }
+        //            }
+
+
+        //            if (eioIfMode != string.Empty)
+        //            {
+        //                if (eioIfMode == "OFF")
+        //                {
+        //                    //FDFF00
+        //                    dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(255, 158, 158);
+        //                }
+        //                if (eioIfMode == "ON")
+        //                {
+        //                    //2192FF
+        //                    dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(185, 243, 252);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        private void DataGridView_Coloring(DataGridView dataGridView, XmlOptionData sqldata)
         {
-            int rowCount = dataGridView.Rows.Count;
-
-            for (int i = 0; i < rowCount; i++)
+            try
             {
-                string eioMode = dataGridView.Rows[i].Cells["EIOSTAT"].Value.ToString();
-                string eioIfMode = dataGridView.Rows[i].Cells["EIOIFMODE"].Value.ToString();
-                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
-
-                if (eioMode != string.Empty)
+                int rowCount = dataGridView.Rows.Count;
+                if (sqldata.ColoringDic.Count > 0)
                 {
-                    if (eioMode == "F")
+                    foreach (string item in sqldata.ColoringDic.Keys)
                     {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 155, 155);
-                    }
-                    if (eioMode == "T")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 214, 165);
-                    }
-                    if (eioMode == "U")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 254, 196);
-                    }
-                    if (eioMode == "W")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
-                    }
-                    if (eioMode == "R")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(203, 255, 169);
-                    }
-                }
+                        for (int i = 0; i < rowCount; i++)
+                        {
+                            if (ColumnExists(dataGridView, item))
+                            {
+                                string eioMode = dataGridView.Rows[i].Cells[item].Value.ToString();
+                                if (eioMode != string.Empty)
+                                {
+                                    Dictionary<string, ColoringValue> coloringValues = sqldata.ColoringDic[item].ColoringVarDic;
+                                    if (coloringValues.ContainsKey(eioMode))
+                                    {
+                                        ColoringValue coloringValue = sqldata.ColoringDic[item].ColoringVarDic[eioMode];
+                                        dataGridView.Rows[i].Cells[item].Style.BackColor = Color.FromArgb(coloringValue.Red, coloringValue.Green, coloringValue.Blue);
+                                    }
+                                }
+                            }
 
-
-                if (eioIfMode != string.Empty)
-                {
-                    if (eioIfMode == "OFF")
-                    {
-                        //FDFF00
-                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(255, 158, 158);
-                    }
-                    if (eioIfMode == "ON")
-                    {
-                        //2192FF
-                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.FromArgb(185, 243, 252);
+                        }
                     }
                 }
             }
-        }
-
-        public void DataGridView_OnOffColoring(DataGridView dataGridView)
-        {
-
-            int rowCount = dataGridView.Rows.Count;
-
-            for (int i = 0; i < rowCount; i++)
+            catch (Exception)
             {
-                string eioMode = dataGridView.Rows[i].Cells["EIOSTAT"].Value.ToString();
-                string eioIfMode = dataGridView.Rows[i].Cells["EIOIFMODE"].Value.ToString();
-                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
 
-                if (eioMode != string.Empty)
-                {
-                    if (eioMode == "F")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 0, 0);
-                    }
-                    if (eioMode == "T")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 128, 0);
-                    }
-                    if (eioMode == "U")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(255, 255, 0);
-                    }
-                    if (eioMode == "W")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(128, 255, 0);
-                    }
-                    if (eioMode == "R")
-                    {
-                        dataGridView.Rows[i].Cells["EIOSTAT"].Style.BackColor = Color.FromArgb(0, 255, 0);
-                    }
-                }
-
-                if (eioIfMode != string.Empty)
-                {
-                    if (eioIfMode == "OFF")
-                    {
-                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.DarkRed;
-                    }
-                    if (eioIfMode == "ON")
-                    {
-                        dataGridView.Rows[i].Cells["EIOIFMODE"].Style.BackColor = Color.Coral;
-                    }
-                }
+                throw;
             }
+
         }
 
+        private bool ColumnExists(DataGridView dgv, string columnName)
+        {
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                if (column.Name == columnName)
+                    return true;
+            }
+            return false;
+        }
 
         private void DataGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {

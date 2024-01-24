@@ -142,3 +142,15 @@ C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CstInfo.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.EqpState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.StockerInventory.resources
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\Microsoft.Identity.Client.NativeInterop.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\Microsoft.Web.WebView2.Core.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\Microsoft.Web.WebView2.WinForms.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\Microsoft.Web.WebView2.Wpf.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\System.Diagnostics.DiagnosticSource.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-arm64\native\msalruntime_arm64.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-x64\native\msalruntime.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-x86\native\msalruntime_x86.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-x64\native\WebView2Loader.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\bin\Debug\net6.0-windows\runtimes\win-x86\native\WebView2Loader.dll
+C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.StockerInventory.resources

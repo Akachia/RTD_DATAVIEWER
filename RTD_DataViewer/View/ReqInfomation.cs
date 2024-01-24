@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -92,6 +93,9 @@ namespace RTD_DataViewer.View
 
         public void ReqList()
         {
+            WinformUtils winformUtils = new WinformUtils(main);
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+
             this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
             this.startDate = lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
             this.endDate = lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
@@ -100,54 +104,67 @@ namespace RTD_DataViewer.View
 
             try
             {
-                XmlOptionData sqldata = main.sqlList["ReqInfomation"];
-                DynamicParameters parameters = new DynamicParameters();
-                //using (var connection = new OracleConnection(cstr))
 
-                string cquery = sqldata.Sql;
-                if (cstid != "")
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                    parameters.Add("@CSTID", string.Concat(@"%", cstid, "%"));
-                    //cquery += "   AND REQ.CSTID = '" + txtReqCSTID.Text + "' ";
-                }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                parameters.Add("@StartDate", startDate, dbType: DbType.DateTime);
-                parameters.Add("@EndDate", endDate, dbType: DbType.DateTime);
-                //cquery += "   AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN '" + txtReqsDate.Text + "' AND '" + txtReqeDate.Text + "' ";
-                if (EqpId != "")
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                    parameters.Add("@EQPTID", string.Concat("%", EqpId, "%"));
-                    //cquery += "   AND REQ.EQPTID LIKE '" + txtReqEqpt.Text + "' ";
-                }
-                if (ruleId != "")
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
-                    parameters.Add("@RULEID", string.Concat("%", ruleId, "%"));
-                    //cquery += "   AND REQ.RTD_RULE_ID LIKE '%" + txtRule.Text + "%' ";
-                }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
-                // cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
+                paramaterDic.Add("StartDate", $"'{startDate}'");
+                paramaterDic.Add("EndDate", $"'{endDate}'");
+                paramaterDic.Add("CSTID", $"{cstid}");
+                paramaterDic.Add("EQPTID", $"{EqpId}");
+                paramaterDic.Add("RULEID", $"{ruleId}");
 
-                new WinformUtils(main).ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
-                int rowCount = reqInfo_dgvReq.DgvData.RowCount;
 
-                for (int i = 0; i < rowCount; i++)
-                {
-                    string req_stat_code = reqInfo_dgvReq.DgvData.Rows[i].Cells["REQ_STAT_CODE"].Value.ToString();
 
-                    if (req_stat_code != string.Empty)
-                    {
-                        if (req_stat_code == "REQUEST" || req_stat_code == "QUERY")
-                        {
-                            //FFD4D4
-                            reqInfo_dgvReq.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
-                        }
+                //XmlOptionData sqldata = main.sqlList["ReqInfomation"];
+                //DynamicParameters parameters = new DynamicParameters();
+                ////using (var connection = new OracleConnection(cstr))
 
-                    }
-                }
+                //string cquery = sqldata.Sql;
+                //if (cstid != "")
+                //{
+                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
+                //    parameters.Add("@CSTID", string.Concat(@"%", cstid, "%"));
+                //    //cquery += "   AND REQ.CSTID = '" + txtReqCSTID.Text + "' ";
+                //}
+                //WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
+                //parameters.Add("@StartDate", startDate, dbType: DbType.DateTime);
+                //parameters.Add("@EndDate", endDate, dbType: DbType.DateTime);
+                ////cquery += "   AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN '" + txtReqsDate.Text + "' AND '" + txtReqeDate.Text + "' ";
+                //if (EqpId != "")
+                //{
+                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
+                //    parameters.Add("@EQPTID", string.Concat("%", EqpId, "%"));
+                //    //cquery += "   AND REQ.EQPTID LIKE '" + txtReqEqpt.Text + "' ";
+                //}
+                //if (ruleId != "")
+                //{
+                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
+                //    parameters.Add("@RULEID", string.Concat("%", ruleId, "%"));
+                //    //cquery += "   AND REQ.RTD_RULE_ID LIKE '%" + txtRule.Text + "%' ";
+                //}
+                //WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
+                //// cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
+
+                //new WinformUtils(main).ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+                //int rowCount = reqInfo_dgvReq.DgvData.RowCount;
+
+                //for (int i = 0; i < rowCount; i++)
+                //{
+                //    string req_stat_code = reqInfo_dgvReq.DgvData.Rows[i].Cells["REQ_STAT_CODE"].Value.ToString();
+
+                //    if (req_stat_code != string.Empty)
+                //    {
+                //        if (req_stat_code == "REQUEST" || req_stat_code == "QUERY")
+                //        {
+                //            //FFD4D4
+                //            reqInfo_dgvReq.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                //        }
+
+                //    }
+                //}
+
+
             }
             catch (Exception ex)
             {

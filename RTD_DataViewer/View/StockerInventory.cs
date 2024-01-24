@@ -31,6 +31,10 @@ namespace RTD_DataViewer.View
         {
             try
             {
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                {
+                    return;
+                }
                 XmlOptionData sqldata = main.sqlList["SearchStkComCode"];
                 string cquery = sqldata.Sql;
                 string plantId = main.correntConnectionStringSetting.PlantID;
@@ -62,6 +66,10 @@ namespace RTD_DataViewer.View
 
         private void FillComboBox()
         {
+            if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+            {
+                return;
+            }
             foreach (var item in stkComCodeList)
             {
                 cb_StockerGroupList.Items.Add(item.Key);
@@ -150,7 +158,7 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
 
             winformUtils.ExcuteSql(paramaterDic, dgv_StoStatus, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-            winformUtils.DataGridView_EioColoring(dgv_StoStatus);
+            //winformUtils.DataGridView_EioColoring(dgv_StoStatus);
         }
 
         private void bt_Search_Click(object sender, EventArgs e)

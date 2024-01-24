@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ConnectionStrings>
+  <ORACLE>
+    <Server>218.235.203.61:49157</Server>
+    <Database>xe</Database>
+    <DatabaseProvider>ORACLE</DatabaseProvider>
+    <UserId>system</UserId>
+    <Password>oracle</Password>
+    <AreaID>C1</AreaID>
+    <PlantID>EO</PlantID>
+    <SystemTypeCode>F</SystemTypeCode>
+  </ORACLE>
 	<ESGM2_BMES_FORM_R01>
 		<Server>10.95.105.181,7433</Server>
 		<Database>ESGM2_BMES_FORM_P01</Database>
@@ -10,16 +20,6 @@
 		<PlantID>AE</PlantID>
 		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM2_BMES_FORM_R01>
-	<ORACLE>
-		<Server>218.235.203.61:49157</Server>
-		<Database>xe</Database>
-		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>system</UserId>
-		<Password>oracle</Password>
-		<AreaID>C1</AreaID>
-		<PlantID>EO</PlantID>
-		<SystemTypeCode>F</SystemTypeCode>
-	</ORACLE>
 	<ESGM2_BMES_ELTR_P01>
 		<Server>10.95.105.161,7433</Server>
 		<Database>ESGM2_BMES_ELTR_P01</Database>

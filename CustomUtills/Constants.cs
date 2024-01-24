@@ -55,6 +55,12 @@ namespace CustomUtils
         public static string value = "value";
         public static string Default = "default";
 
+
+        public static string Coloring = "Coloring";
+        public static string Red = "Red";
+        public static string Green = "Green";
+        public static string Blue = "Blue";
+
         /// <summary>
         /// Option
         /// </summary>

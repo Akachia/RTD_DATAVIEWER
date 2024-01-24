@@ -54,7 +54,7 @@ namespace RTD_DataViewer.View
 
                 winformUtils.ExcuteSql(paramaterDic, dgv_PortState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
-                winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
+              //  winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
             }
             catch (Exception)
             {
@@ -113,6 +113,10 @@ namespace RTD_DataViewer.View
         {
             try
             {
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                {
+                    return;
+                }
                 clb_EqpGroupList.Items.Clear();
                 XmlOptionData sqldata = main.sqlList["SearchEqpGroup"];
                 string cquery = sqldata.Sql;
@@ -174,10 +178,7 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("EQP_GROUP_ID_LIST", _EQP_GROUP_LIST);
             paramaterDic.Add("AREA_ID", @$"'{areaID}%'");
 
-            winformUtils.ExcuteSql(paramaterDic, dgv_EqpState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-            int columnCount = dgv_EqpState.DgvData.Columns.Count;
-            winformUtils.DataGridView_EioColoring(dgv_EqpState.DgvData);
+           winformUtils.ExcuteSql(paramaterDic, dgv_EqpState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
         }
 
 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -147,36 +148,16 @@ namespace RTD_DataViewer.View
 
             try
             {
-                XmlOptionData sqldata = main.sqlList["SearchReq"];
-                DynamicParameters parameters = new DynamicParameters();
-                //using (var connection = new OracleConnection(cstr))
+                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
-                parameters.Add("@StartDate", startDate, dbType: DbType.Date);
-                parameters.Add("@EndDate", endDate, dbType: DbType.Date);
-                //cquery += "       WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'";
+                paramaterDic.Add("PRCS_TYPE_CODE", $"{cb_ReqATransfer_CstStat.SelectedIndex}");
+                paramaterDic.Add("CstStat", $"{cb_ReqATransfer_CstStat.SelectedIndex}");
+                paramaterDic.Add("CSTID", lAtb_ReqATransfer_CarrierId.Tb_Text);
+                paramaterDic.Add("PORTID", lAtb_ReqATransfer_StartPort.Tb_Text);
+                paramaterDic.Add("StartDate", lAdtp_ReqATransfer_StartDate.Dtp_Value.ToString("yyyy-MM-dd"));
+                paramaterDic.Add("EndDate", lAdtp_ReqATransfer_EndDate.Dtp_Value.ToString("yyyy-MM-dd"));
 
-                parameters.Add("@PRCS_TYPE_CODE", "%%");
-                parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                string cquery = sqldata.Sql;
-
-                if (toEqpId != string.Empty)
-                {
-                    parameters.Add("@PORT_ID", string.Concat("%", toEqpId, "%"));
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-
-                    //cquery += "  AND PORT_ID LIKE '" + txtFromPort.Text + "%'"; 
-                }
-
-                if (cb_CstStat_Num != 0)
-                {
-                    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                    if (cb_CstStat_Num == 1) parameters.Add("@CSTSTAT", string.Concat("U")); ;    // 실트레이
-                    if (cb_CstStat_Num == 2) parameters.Add("@CSTSTAT", string.Concat("E")); ;    // 공트레이
-                    //cquery += " AND CSTSTAT = 'U'"
-                    //cquery += " AND CSTSTAT = 'E'"
-                }
-                WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                new WinformUtils(main).ExcuteSql(paramaterDic, reqAndTransfer_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }
             catch (Exception ex)
             {
