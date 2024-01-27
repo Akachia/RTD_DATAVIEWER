@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using SortOrder = System.Windows.Forms.SortOrder;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace RTD_DataViewer
 {
@@ -37,61 +38,6 @@ namespace RTD_DataViewer
         /// </summary>
         /// <param name="carriers"></param>
         /// <returns></returns>
-        public string MakeCSTErrMsg(List<Carrier> carriers)
-        {
-            string routid = ""; string dfct = "F"; string scrp = "N";
-            if (carriers.Count != 0)
-            {
-                if (dfct != "Y") { dfct = carriers[0].DFCT_LIMIT_OVER_FLAG; }
-                if (routid == "") { routid = carriers[0].ROUTID; }
-                if (scrp != "N") { scrp = carriers[0].SCRP_TRAY_FLAG; }
-
-                if (carriers.Count == 2)
-                {
-                    //--------------------------------------------------------------------------------------------------------------------------------------------------
-                    if (carriers[0].CSTSTAT != carriers[1].CSTSTAT ||
-                        carriers[0].TRAY_TYPE_CODE != carriers[1].TRAY_TYPE_CODE) // cststat, 트레이 타입
-                    {
-                        return CSTErrMsg.typeErr;
-                    }
-                    //--------------------------------------------------------------------------------------------------------------------------------------------------
-                    if (carriers[0].ASSY_LOTID != carriers[1].ASSY_LOTID ||
-                        carriers[0].ROUTID != carriers[1].ROUTID ||
-                        carriers[0].PROCID != carriers[1].PROCID ||
-                        carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG ||
-                        carriers[0].LOTTYPE != carriers[1].LOTTYPE)
-                    { return CSTErrMsg.typeErr; }
-                }
-                //--------------------------------------------------------------------------------------------------------------------------------------------------
-                if (carriers[0].SPCL_FLAG == "Y")
-                {
-                    if (carriers.Count == 2)
-                    {
-                        if (carriers[0].ASSY_LOTID != carriers[1].ASSY_LOTID ||
-                    carriers[0].ROUTID != carriers[1].ROUTID ||
-                    carriers[0].PROCID != carriers[1].PROCID ||
-                    carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG ||
-                    carriers[0].LOTTYPE != carriers[1].LOTTYPE ||
-                    carriers[0].FORM_SPCL_GR_ID != carriers[1].FORM_SPCL_GR_ID
-                    )
-                        {
-                            return CSTErrMsg.spcCstErr;
-                        }
-                    }
-                }
-
-                if (dfct == "Y")
-                {
-                    return CSTErrMsg.allCellErr;
-                }
-                if (scrp == "Y")
-                {
-                    return CSTErrMsg.crackTrayErr;
-                }
-            }
-            return string.Empty;
-        }
-
         public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionSql sqldata, bool isAdd)
         {
             if (isAdd)
@@ -146,7 +92,6 @@ namespace RTD_DataViewer
             main.cstr = main.strs[dbString].ConnectionString();
         }
 
-
         public void ExcuteSql(Dictionary<string,string> paramaterDic, DataGridView dataGridView, DBConnectionString dBConnectionString, string mathodName)
         {
             try
@@ -175,7 +120,7 @@ namespace RTD_DataViewer
                 //OptionalSql 추가 Logic
                 foreach (XmlOptionSql item in sqldata.OptionSqls)
                 {
-                    if (item.Type == CommonXml.Type.If)
+                    if (item.Type == CommonXml.Type.IF)
                     {
                         if (item.Condition == CommonXml.Condition.not_equal)
                         {
@@ -199,18 +144,34 @@ namespace RTD_DataViewer
                         }
                     }
 
-                    if (item.Type == CommonXml.Type.cststat)
+                    if (item.Type == CommonXml.Type.CSTSTAT)
                     {
-                        if (paramaterDic[SqlVal.CstStat] != item.Default)
+                        if (paramaterDic[SqlVal.CSTSTAT] != item.Default)
                         {
                             AddToOptionalSqlSyntax(ref cquery, item, true);
-                            if (paramaterDic[SqlVal.CstStat] == "1") parameters.Add($"@{item.Key}", string.Concat("U")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.CstStat] == "2") parameters.Add($"@{item.Key}", string.Concat("E")); ;    // 공트레이
+                            if (paramaterDic[SqlVal.CSTSTAT] == "1") parameters.Add($"@{item.Key}", string.Concat("U")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.CSTSTAT] == "2") parameters.Add($"@{item.Key}", string.Concat("E")); ;    // 공트레이
                             continue;
                         }
                     }
 
-                    if (item.Type == CommonXml.Type.none)
+                    if (item.Type == CommonXml.Type.MOVINGSTATE)
+                    {
+
+                        if (paramaterDic[SqlVal.MOVINGSTATE] != item.Default)
+                        {
+                            AddToOptionalSqlSyntax(ref cquery, item, true);
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("DELETE")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("NORMAL_END")); ;    // 공트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("ABNORMAL_END")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("RECEIVE")); ;    // 공트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("MOVING")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("SEND")); ;    // 공트레이
+                            continue;
+                        }
+                    }
+
+                    if (item.Type == CommonXml.Type.NONE)
                     {
                         AddToOptionalSqlSyntax(ref cquery, item, true);
                         continue;
@@ -220,8 +181,6 @@ namespace RTD_DataViewer
                 ShowSqltoDGV(dataGridView, cquery, parameters, dBConnectionString);
 
                 DataGridView_Coloring(dataGridView, sqldata);
-
-
             }
             catch (Exception ex)
             {
@@ -381,22 +340,61 @@ namespace RTD_DataViewer
                 {
                     foreach (string item in sqldata.ColoringDic.Keys)
                     {
-                        for (int i = 0; i < rowCount; i++)
+                        if (ColumnExists(dataGridView, item))
                         {
-                            if (ColumnExists(dataGridView, item))
+                            Coloring coloring = sqldata.ColoringDic[item];
+                            if (coloring.IsColoringColumn)
                             {
-                                string eioMode = dataGridView.Rows[i].Cells[item].Value.ToString();
-                                if (eioMode != string.Empty)
+                                foreach (DataGridViewRow row in dataGridView.Rows)
                                 {
-                                    Dictionary<string, ColoringValue> coloringValues = sqldata.ColoringDic[item].ColoringVarDic;
-                                    if (coloringValues.ContainsKey(eioMode))
-                                    {
-                                        ColoringValue coloringValue = sqldata.ColoringDic[item].ColoringVarDic[eioMode];
-                                        dataGridView.Rows[i].Cells[item].Style.BackColor = Color.FromArgb(coloringValue.Red, coloringValue.Green, coloringValue.Blue);
-                                    }
+                                    row.Cells[item].Style.BackColor = Color.FromArgb(coloring.Red, coloring.Green, coloring.Blue); // 색상 변경
                                 }
                             }
 
+                            for (int i = 0; i < rowCount; i++)
+                            {
+
+                                string value = dataGridView.Rows[i].Cells[item].Value.ToString();
+                                if (value != string.Empty)
+                                {
+                                    if (coloring.IsTimeCompare)
+                                    {
+                                        //Dictionary<string, ColoringValue> coloringValues = coloring.ColoringVarDic;
+                                        //if (coloringValues.ContainsKey(value))
+                                        //{
+                                        //    if (value != string.Empty)
+                                        //    {
+                                        //        DateTime dateTime = DateTime.Parse(value);
+
+                                        //        if (dateTime < date1)
+                                        //        {
+                                        //            //FFD4D4
+                                        //            dataGridView.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                                        //        }
+                                        //    }
+
+                                        //}
+                                    }
+                                    else
+                                    {
+                                        Dictionary<string, ColoringValue> coloringValues = coloring.ColoringVarDic;
+                                        if (coloringValues.ContainsKey(value))
+                                        {
+                                            ColoringValue coloringValue = sqldata.ColoringDic[item].ColoringVarDic[value];
+                                            bool IsColoringRow = coloringValue.IsColoringRow;
+
+                                            if (IsColoringRow)
+                                            {
+                                                dataGridView.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(coloringValue.Red, coloringValue.Green, coloringValue.Blue);
+                                            }
+                                            else
+                                            {
+                                                dataGridView.Rows[i].Cells[item].Style.BackColor = Color.FromArgb(coloringValue.Red, coloringValue.Green, coloringValue.Blue);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -434,6 +432,205 @@ namespace RTD_DataViewer
 
             //var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
             //e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+        }
+
+        public void SearchCstInfo(DataGridView dataGridView, string cstId, ref string errMsg)
+        {
+            //string cstid = latb_CarrierId.Tb_Text;
+            //XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
+            //DynamicParameters parameters = new DynamicParameters();
+            //string cquery = sqldata.Sql;
+
+            //parameters.Add("@CSTID", cstid);
+
+            //new WinformUtils(main).ShowSqltoDGV(dgv_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["SearchCstInfo2"];
+                string cquery = sqldata.Sql;
+                string plantId = main.correntConnectionStringSetting.PlantID;
+                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+
+                DynamicParameters parameters = new DynamicParameters();
+                if (cstId == string.Empty)
+                {
+                    MessageBox.Show("CSTID를 입력해주세요.");
+                    return;
+                }
+                parameters.Add("@CSTID", cstId);
+                List<Carrier> carriers;
+
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                {
+
+                    string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+
+                    dataGridView.DataSource = null;
+                    dataGridView.Rows.Clear();
+                    dataGridView.Columns.Clear();
+                    // dgv_CstInfo.DgvData.RowPostPaint -= DataGridView_RowPostPaint;
+                    using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
+                    {
+                        if (parameters != null)
+                        {
+                            dataGridView.DataSource = connection.Query(testcquery, parameters).ToList();
+                            main.AppendLog(cquery, parameters);
+                        }
+                        else
+                        {
+                            dataGridView.DataSource = connection.Query(testcquery).ToList();
+                            main.AppendLog(cquery);
+                        }
+                    }
+                    dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
+
+                    dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                    dataGridView.AutoResizeColumns();
+
+                    //    dgv_CstInfo.DgvData.RowPostPaint += DataGridView_RowPostPaint;
+                    foreach (DataGridViewRow item in dataGridView.Rows)
+                    {
+                        item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                    }
+                    return;
+                }
+
+                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                {
+                    carriers = connection.Query<Carrier>(cquery, parameters).ToList();
+                    dataGridView.DataSource = carriers;
+                }
+                foreach (DataGridViewColumn col in dataGridView.Columns)
+                {
+                    var prop = typeof(Carrier).GetProperty(col.DataPropertyName);
+                    var displayName = prop?.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+                    if (displayName != null)
+                    {
+                        col.HeaderText = displayName;
+                    }
+                }
+                main.AppendLog(cquery, parameters);
+                dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                dataGridView.AutoResizeColumns();
+
+                if (carriers != null)
+                {
+                    string mismatchMessage = MakeCSTErrMsg(carriers);
+                    errMsg = mismatchMessage;
+                    if (mismatchMessage == string.Empty)
+                    {
+                        foreach (DataGridViewRow item in dataGridView.Rows)
+                        {
+                            item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                        }
+                    }
+                    else
+                    {
+                        int rowCount = 0;
+                        //lb_MismatchMessage.BackColor = Color.FromArgb(255, 155, 155);
+                        foreach (DataGridViewRow item in dataGridView.Rows)
+                        {
+                            if (rowCount == 0)
+                            {
+                                item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                                rowCount++;
+                            }
+                            else
+                            {
+                                item.DefaultCellStyle.BackColor = Color.FromArgb(255, 214, 165);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string MakeCSTErrMsg(List<Carrier> carriers)
+        {
+            /*
+             * 1. 위 아래 데이터가 안맞을 경우 RouteID, WIPSTAT, SpclFlag, LotType, DayGrLotID, FormSpclGrID, PROCID
+             * 2. DFCT_LIMIT_OVER_FLAG = Y
+             * 3. SCRP_TRAY_FLAG = Y
+             * 4. SMPL_ISS_TYPE_CODE = Y
+             */
+            string routid = ""; string dfct = "F"; string scrp = "N"; string sltc = "N";
+            if (carriers.Count != 0)
+            {
+                dfct = carriers[0].DFCT_LIMIT_OVER_FLAG;
+                routid = carriers[0].ROUTID;
+                scrp = carriers[0].SCRP_TRAY_FLAG;
+                sltc = carriers[0].SMPL_ISS_TYPE_CODE;
+
+                if (carriers.Count == 2)
+                {
+                    //--------------------------------------------------------------------------------------------------------------------------------------------------
+                    if (carriers[0].CSTSTAT != carriers[1].CSTSTAT)
+                    {
+                        return CSTErrMsg.typeErr + "(실,공 다름)";
+                    }
+                    if (carriers[0].TRAY_TYPE_CODE != carriers[1].TRAY_TYPE_CODE) // cststat, 트레이 타입
+                    {
+                        return CSTErrMsg.typeErr + "(트레이 타입 다름)";
+                    }
+                    //--------------------------------------------------------------------------------------------------------------------------------------------------
+                    if (carriers[0].DAY_GR_LOTID != carriers[1].DAY_GR_LOTID)
+                    {
+                        return CSTErrMsg.upDownErr + "(조립 LOT ID 다름)";
+                    }
+                    if (carriers[0].ROUTID != carriers[1].ROUTID)
+                    {
+                        return CSTErrMsg.upDownErr + "(RoutId 다름)";
+                    }
+                    if (carriers[0].PROCID != carriers[1].PROCID)
+                    {
+                        return CSTErrMsg.upDownErr + "(PROCID 다름)";
+                    }
+                    if (carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG)
+                    {
+                        return CSTErrMsg.upDownErr + "(스페셜 타입 다름)";
+                    }
+                    if (carriers[0].LOTTYPE != carriers[1].LOTTYPE)
+                    {
+                        return CSTErrMsg.upDownErr + "(Lot 타입 다름)";
+                    }
+                }
+                //--------------------------------------------------------------------------------------------------------------------------------------------------
+                if (carriers[0].SPCL_FLAG == "Y")
+                {
+                    if (carriers.Count == 2)
+                    {
+                        if (carriers[0].DAY_GR_LOTID != carriers[1].DAY_GR_LOTID ||
+                    carriers[0].ROUTID != carriers[1].ROUTID ||
+                    carriers[0].PROCID != carriers[1].PROCID ||
+                    carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG ||
+                    carriers[0].LOTTYPE != carriers[1].LOTTYPE ||
+                    carriers[0].FORM_SPCL_GR_ID != carriers[1].FORM_SPCL_GR_ID
+                    )
+                        {
+                            return CSTErrMsg.spcCstErr;
+                        }
+                    }
+                }
+
+                if (dfct == "Y")
+                {
+                    return CSTErrMsg.allCellErr;
+                }
+                if (scrp == "Y")
+                {
+                    return CSTErrMsg.crackTrayErr;
+                }
+                if (sltc == "Y")
+                {
+                    return CSTErrMsg.smplMsg;
+                }
+            }
+            return string.Empty;
         }
     }
 }

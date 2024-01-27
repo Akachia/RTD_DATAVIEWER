@@ -95,7 +95,7 @@
             // 
             cb_Cststat.Dock = DockStyle.Fill;
             cb_Cststat.FormattingEnabled = true;
-            cb_Cststat.Items.AddRange(new object[] { "모두 : ALL", "공트레이 : E", "실트레이 : U" });
+            cb_Cststat.Items.AddRange(new object[] { "모두 : ALL", "실트레이 : U", "공트레이 : E" });
             cb_Cststat.Location = new Point(783, 3);
             cb_Cststat.Name = "cb_Cststat";
             cb_Cststat.Size = new Size(103, 23);
@@ -145,6 +145,7 @@
             // 
             lAdtp_TransList_StartDate.Dock = DockStyle.Fill;
             lAdtp_TransList_StartDate.Dtp_Value = new DateTime(2023, 11, 27, 10, 20, 54, 324);
+            lAdtp_TransList_StartDate.IsChecked = true;
             lAdtp_TransList_StartDate.Lb_Text = "시작 시간";
             lAdtp_TransList_StartDate.Location = new Point(263, 3);
             lAdtp_TransList_StartDate.Name = "lAdtp_TransList_StartDate";
@@ -155,6 +156,7 @@
             // 
             lAdtp_TransList_EndDate.Dock = DockStyle.Fill;
             lAdtp_TransList_EndDate.Dtp_Value = new DateTime(2023, 11, 27, 10, 20, 56, 692);
+            lAdtp_TransList_EndDate.IsChecked = false;
             lAdtp_TransList_EndDate.Lb_Text = "종료 시간";
             lAdtp_TransList_EndDate.Location = new Point(263, 33);
             lAdtp_TransList_EndDate.Name = "lAdtp_TransList_EndDate";

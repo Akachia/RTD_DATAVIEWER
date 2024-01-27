@@ -42,9 +42,9 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 8;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
@@ -133,7 +133,7 @@
             lb_MismatchMessage.Dock = DockStyle.Fill;
             lb_MismatchMessage.Location = new Point(3, 0);
             lb_MismatchMessage.Name = "lb_MismatchMessage";
-            lb_MismatchMessage.Size = new Size(169, 30);
+            lb_MismatchMessage.Size = new Size(274, 30);
             lb_MismatchMessage.TabIndex = 6;
             lb_MismatchMessage.TextAlign = ContentAlignment.MiddleCenter;
             // 

@@ -135,6 +135,7 @@
             // 
             lAdtp_ReqATransfer_StartDate.Dock = DockStyle.Fill;
             lAdtp_ReqATransfer_StartDate.Dtp_Value = new DateTime(2023, 11, 28, 9, 4, 55, 992);
+            lAdtp_ReqATransfer_StartDate.IsChecked = true;
             lAdtp_ReqATransfer_StartDate.Lb_Text = "시간 시간";
             lAdtp_ReqATransfer_StartDate.Location = new Point(381, 3);
             lAdtp_ReqATransfer_StartDate.Name = "lAdtp_ReqATransfer_StartDate";
@@ -145,6 +146,7 @@
             // 
             lAdtp_ReqATransfer_EndDate.Dock = DockStyle.Fill;
             lAdtp_ReqATransfer_EndDate.Dtp_Value = new DateTime(2023, 11, 28, 9, 4, 58, 362);
+            lAdtp_ReqATransfer_EndDate.IsChecked = false;
             lAdtp_ReqATransfer_EndDate.Lb_Text = "종료 시간";
             lAdtp_ReqATransfer_EndDate.Location = new Point(381, 33);
             lAdtp_ReqATransfer_EndDate.Name = "lAdtp_ReqATransfer_EndDate";
@@ -179,7 +181,7 @@
             ckb_IsDeleteTransfer.Dock = DockStyle.Fill;
             ckb_IsDeleteTransfer.Location = new Point(269, 33);
             ckb_IsDeleteTransfer.Name = "ckb_IsDeleteTransfer";
-            ckb_IsDeleteTransfer.RightToLeft = RightToLeft.Yes;
+            ckb_IsDeleteTransfer.RightToLeft = RightToLeft.No;
             ckb_IsDeleteTransfer.Size = new Size(106, 24);
             ckb_IsDeleteTransfer.TabIndex = 11;
             ckb_IsDeleteTransfer.Text = "반송 삭제 조회";

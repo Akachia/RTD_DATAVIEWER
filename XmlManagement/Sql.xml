@@ -39,25 +39,25 @@
     +Option7
 		</MainSQL>
 		<Option>
-			<Option1 type="if" condition="not_equal" key="LaneId" dataType="string" default="">
+			<Option1 type="IF" condition="not_equal" key="LaneId" dataType="string" default="">
 				AND WA.LANE_ID LIKE @LANE_ID
 			</Option1>
-			<Option2 type="cststat"  condition="not_equal" key="CstStat" dataType="int" default="0">
+			<Option2 type="CSTSTAT"  condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option2>
-			<Option3 type="if" condition="not_equal" key="CstId" dataType="string" default="">
+			<Option3 type="IF" condition="not_equal" key="CstId" dataType="string" default="">
 				AND H.CSTID LIKE @CSTID
 			</Option3>
-			<Option4 type="if" condition="not_equal" key="ReqPortId" dataType="string" default="">
+			<Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
 				AND H.FROM_PORT_ID LIKE @ReqPortId
 			</Option4>
-			<Option5 type="if" condition="not_equal" key="ToPortId" dataType="string" default="">
+			<Option5 type="IF" condition="not_equal" key="ToPortId" dataType="string" default="">
 				AND H.TO_PORT_ID LIKE @ToPortId
 			</Option5>
-			<Option6 type="if" condition="equal" key="isFaulty" dataType="bool" default="True">
+			<Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
 				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR 
 			</Option6>
-			<Option7 type="none" condition="" key="" dataType="" default="" >
+			<Option7 type="NONE" condition="" key="" dataType="" default="" >
 				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
 			</Option7>
 		</Option>
@@ -116,19 +116,19 @@
         +Option5
 			</MainSQL>
 		<Option>
-			<Option1 type="if" condition="not_equal" key="CSTID" dataType="string" default="">
+			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND REQ.CSTID like @CSTID 
 			</Option1>
-      <Option2 type="if" condition="not_equal" key="EQPTID" dataType="string" default="">
+      <Option2 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="">
 				AND REQ.EQPTID LIKE @EQPTID 
 			</Option2>
-      <Option3 type="if" condition="not_equal" key="RULEID" dataType="string" default="">
+      <Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
 			 </Option3>
-			<Option4 type="none" condition="" key="" dataType="" default="">
-				AND REQ.REQ_STAT_CODE = 'QUERY' 
+			<Option4 type="NONE" condition="" key="" dataType="" default="">
+				--AND REQ.REQ_STAT_CODE = 'QUERY' 
 			</Option4>
-			<Option5 type="none" condition="" key="" dataType="" default="">
+			<Option5 type="NONE" condition="" key="" dataType="" default="">
 				ORDER BY REQ.CSTID, REQ.UPDDTTM DESC 
 			</Option5>
 		</Option>
@@ -137,9 +137,9 @@
       <EndDate dataType="DateTime" default=""/>
 	  </AdditionalVariable>
       <Coloring>  
-        <REQ_STAT_CODE>
-         <REQUEST Red="255" Green="212" Blue="212"/>
-			   <QUERY Red="255" Green="212" Blue="212"/>
+        <REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+         <REQUEST Red="255" Green="212" Blue="212" IsColoringRow="false"/>
+			   <QUERY Red="255" Green="212" Blue="212" IsColoringRow="false"/>
 				</REQ_STAT_CODE>
     </Coloring>
 	</ReqList>
@@ -167,26 +167,28 @@
       +Option5
 		</MainSQL>
 		<Option>
-			<Option1 type="none" condition="" key="" dataType="" default="">
+			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="" default="">
 				AND CSTID LIKE @CSTID
 			</Option1>
-			<Option2 type="none" condition="" key="" dataType="" default="">
+			<Option2 type="IF" condition="not_equal" key="ReqEQP" dataType="" default="">
 				AND FROM_PORT_ID LIKE @ReqEQP
 			</Option2>
-			<Option3 type="none" condition="" key="" dataType="" default="">
+			<Option3 type="IF" condition="not_equal" key="ToEQP" dataType="" default="">
 				AND TO_PORT_ID LIKE @ToEQP
 			</Option3>
-			<Option4 type="none" condition="" key="" dataType="" default="">
+			<Option4 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
 				AND CSTSTAT = @CSTSTAT
 			</Option4>
-			<Option5 type="none" condition="" key="" dataType="" default="">
-				AND CMD_STAT_CODE = @MovingState
-			</Option5>
-            <Option6 type="none" condition="" key="" dataType="" default="">
+			<Option5 type="MOVINGSTATE" condition="MOVINGSTATE" key="MOVINGSTATE" dataType="" default="0">
+        AND CMD_STAT_CODE = @MOVINGSTATE
+      </Option5>
+            <Option6 type="IF" condition="not_equal" key="RuleId" dataType="" default="">
 				AND RTD_RULE_ID = @RuleId
 			</Option6>			
 		</Option>
 		<AdditionalVariable>
+      <StartDate dataType="DateTime" default=""/>
+      <EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
       <Coloring>  
     </Coloring>
@@ -199,6 +201,7 @@
       WHERE INSDTTM BETWEEN @StartDate AND @EndDate
       +Option01 --AND CSTID LIKE @CSTID
       +Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
+      +Option03
       -- ORDER BY INSDTTM  DESC
       )
       SELECT
@@ -219,31 +222,28 @@
       , REQ_SEQNO
       FROM TT_Data with(nolock)
       WHERE 1=1
-      +Option03
       +Option04
       +Option05
     </MainSQL>
 		<Option>
-      <Option01 type="if" condition="not_equal" key="CSTID" dataType="string" default="">
+      <Option01 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
         AND CSTID LIKE @CSTID
       </Option01>
-      <Option02 type="if" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="0">
+      <Option02 type="IF" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="0">
         AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
       </Option02>
-			<Option03 type="if" condition="not_equal" key="PORTID" dataType="string" default="">
+			<Option03 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
         AND PORT_ID LIKE @PORTID
       </Option03>
-			<Option04 type="CstStat" condition="CstStat" key="CstStat" dataType="" default="">
-				AND CSTSTAT = @CstStat
-			</Option04>
-			<Option05 type="none" condition="" key="" dataType="" default="">
+			<Option04 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
+        AND CSTSTAT = @CSTSTAT
+      </Option04>
+			<Option05 type="NONE" condition="" key="" dataType="" default="">
 				ORDER BY REQ_SEQNO DESC
 			</Option05>
 		</Option>
 		<AdditionalVariable>
 			<StartDate dataType="DateTime" default=""/>
-			<CSTID dataType="string" default=""/>
-      <PORTID dataType="string" default=""/>
 			<EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
       <Coloring>  
@@ -272,10 +272,10 @@
 			--ORDER BY MAX(INSDTTM) DESC
 		</MainSQL>
 		<Option>
-			<Option1  type="none" condition="" key="" dataType="" default="">
+			<Option1  type="NONE" condition="" key="" dataType="" default="">
 				AND (EXCT_MSG LIKE @ErrText OR EXCT_TYPE LIKE @ErrText)
 			</Option1>
-      <Option2 type="none" condition="" key="" dataType="" default="">
+      <Option2 type="NONE" condition="" key="" dataType="" default="">
 				ORDER BY INSDTTM DESC
 			</Option2>
 		</Option>
@@ -286,41 +286,39 @@
 	</SearchDeleteTransfer>
 	<CstActHistSearch>
 		<MainSQL>
-			SELECT
-			CSTID
-			, LOAD_REP_CSTID
-			, ACTID
-			, CONVERT(CHAR(23), ACTDTTM, 20)  AS ACTDTTM
-			, CSTSTAT
-			, EQPTID
-			, PROCID
-			, LOTID
-			, TRF_STAT_CODE
-			, CST_LOAD_LOCATION_CODE
-			, PORT_ID
-			, RACK_ID
-			, CSTIUSE
-			, INSUSER
-			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
-			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
-			FROM tb_sfc_cst_act_hist with(nolock)
-			where ACTDTTM BETWEEN @StartDate AND @EndDate
+      SELECT
+      CSTID
+      , LOAD_REP_CSTID
+      , ACTID
+      , CONVERT(CHAR(23), ACTDTTM, 20)  AS ACTDTTM
+      , CSTSTAT
+      , EQPTID
+      , PROCID
+      , LOTID
+      , TRF_STAT_CODE
+      , CST_LOAD_LOCATION_CODE
+      , PORT_ID
+      , RACK_ID
+      , CSTIUSE
+      , INSUSER
+      , CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
+      , CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
+      FROM tb_sfc_cst_act_hist with(nolock)
+      where ACTDTTM BETWEEN @StartDate AND @EndDate
       +Option1
       +Option2
-      +Option3
-		</MainSQL>
+    </MainSQL>
 		<Option>
-      <Option1 type="none" condition="" key="" dataType="" default="">
-				AND EQPTID like @EQPTID
-			</Option1>
-      <Option2 type="none" condition="" key="" dataType="" default="">
+      <Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND CSTID like @CSTID
-			</Option2>
-      <Option3 type="none" condition="" key="" dataType="" default="">
+			</Option1>
+      <Option2 type="NONE" condition="" key="" dataType="" default="">
 				ORDER BY ACTDTTM DESC
-			</Option3>
+			</Option2>
 		</Option>
 		<AdditionalVariable>
+      <StartDate dataType="DateTime" default=""/>
+      <EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
       <Coloring>  
     </Coloring>
@@ -351,6 +349,9 @@
 		<Option>
 		</Option>
 		<AdditionalVariable>
+      <StartDate dataType="DateTime" default=""/>
+      <EndDate dataType="DateTime" default=""/>
+      <CSTID dataType="string" default=""/>
 		</AdditionalVariable>
       <Coloring>  
     </Coloring>
@@ -599,15 +600,20 @@
 		<Option>
 		</Option>
 		<AdditionalVariable>
-			<EQP_GROUP_ID_LIST dataType="none" default=""/>
-			<AREA_ID dataType="none" default=""/>
+			<EQP_GROUP_ID_LIST dataType="NONE" default=""/>
+			<AREA_ID dataType="NONE" default=""/>
 		</AdditionalVariable>
       <Coloring>  
-       <CSTTYPE>
-         <TRAY Red="255" Green="155" Blue="155"/>
-			   <TKAE Red="255" Green="214" Blue="165"/>
-			   <U Red="255" Green="254" Blue="196"/>
+       <CSTTYPE Red="255" Green="254" Blue="196" IsColoringColumn="true" IsTimeCompare="false">
+         <TRAY Red="255" Green="155" Blue="155" IsColoringRow="false" />
+			   <TKAE Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+			   <U Red="255" Green="254" Blue="196" IsColoringRow="FALSE" />
 			</CSTTYPE>
+        <INSDTTM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="true">
+          <TODAY Red="255" Green="155" Blue="155" IsColoringRow="true" condition="FUTURE" />
+          <TOMORROW Red="155" Green="255" Blue="155" IsColoringRow="true"  condition="PAST" />
+          <YESTERDAY Red="155" Green="155" Blue="255" IsColoringRow="true" condition="EQUAL" />
+        </INSDTTM>
     </Coloring>
 	</SearchEqpState>
 	<SearchEqpGroup>
@@ -645,29 +651,29 @@
       +Option3
 		</MainSQL>
 		<Option>
-			<Option1 type="if" condition="not_equal" key="EQPTID" dataType="string" default="%%">
+			<Option1 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="%%">
 				AND E.EQPTID like @EQPTID
 			</Option1>
-			<Option2 type="if" condition="not_equal" key="AREA_ID" dataType="string" default="">
+			<Option2 type="IF" condition="not_equal" key="AREA_ID" dataType="string" default="">
 				AND E.EQPTID like @AREA_ID
 			</Option2>
-			<Option3 type="none"  condition="" key="" dataType="" default="">
+			<Option3 type="NONE"  condition="" key="" dataType="" default="">
 				Order by TMCP.PORT_ID
 			</Option3>
 		</Option>
 		<AdditionalVariable>
 		</AdditionalVariable>
     <Coloring>  
-       <ES>
-         <F Red="255" Green="155" Blue="155"/>
-			   <T Red="255" Green="214" Blue="165"/>
-			   <U Red="255" Green="254" Blue="196"/>
-			   <W Red="203" Green="255" Blue="169"/>
-				 <R Red="203" Green="255" Blue="169"/>
+       <ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+         <F Red="255" Green="155" Blue="155" IsColoringRow="false" />
+			   <T Red="255" Green="214" Blue="165" IsColoringRow="false" />
+			   <U Red="255" Green="254" Blue="196" IsColoringRow="false" />
+			   <W Red="203" Green="255" Blue="169" IsColoringRow="false" />
+				 <R Red="203" Green="255" Blue="169" IsColoringRow="false" />
 			</ES>
-      <EIM>
-        	<OFF Red="255" Green="158" Blue="158"/>
-					<ON Red="185" Green="243" Blue="252"/>
+      <EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+        	<OFF Red="255" Green="158" Blue="158" IsColoringRow="false" />
+					<ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
       </EIM>
     </Coloring>
 	</SearchPortState>
@@ -715,33 +721,33 @@
 	</SearchPortEioHist>
 	<SearchStkComCode>
 		<MainSQL>
-			SELECT DISTINCT S70 AS Code,
-			CASE
-			WHEN S70 = '1' THEN 'CDC STO'
-			WHEN S70 = '3' THEN 'HIGH AGING STO'
-			WHEN S70 = '4' THEN 'NORM AGING STO'
-			WHEN S70 = '7' THEN 'SHIP AGING STO'
-			WHEN S70 = '9' THEN 'PRE AGING STO'
-			WHEN S70 = 'E' THEN '2nd Empty STO'
-			WHEN S70 = 'J' THEN 'JIG STO'
-			WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
-			WHEN S70 = 'NPW' THEN 'NND PROD STO'
-			WHEN S70 = 'NWW' THEN 'NND WAIT STO'
-			WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
-			WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
-			WHEN S70 = 'PCW' THEN 'PROD COMP STO'
-			ELSE 'ETC'
-			END AS Sto_Desc
-			FROM EQUIPMENT E (NOLOCK)
-			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
-			ON E.EQSGID = ESA.EQSGID
-			INNER JOIN EquipmentAttr EA
-			ON E.EQPTID = EA.EQPTID
-			WHERE E.EQSGID like @PLANT_ID
-			and E.EQGRID = 'STO'
-			and ESA.S38 = @SYSTEM_TYPE_CODE
-			and EA.S70 is not NULL
-		</MainSQL>
+      SELECT DISTINCT S70 AS Code,
+      CASE
+      WHEN S70 = '1' THEN 'CDC STO'
+      WHEN S70 = '3' THEN 'NORM AGING STO'
+      WHEN S70 = '4' THEN 'HIGH AGING STO'
+      WHEN S70 = '7' THEN 'SHIP AGING STO'
+      WHEN S70 = '9' THEN 'PRE AGING STO'
+      WHEN S70 = 'E' THEN '2nd Empty STO'
+      WHEN S70 = 'J' THEN 'JIG STO'
+      WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
+      WHEN S70 = 'NPW' THEN 'NND PROD STO'
+      WHEN S70 = 'NWW' THEN 'NND WAIT STO'
+      WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
+      WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
+      WHEN S70 = 'PCW' THEN 'PROD COMP STO'
+      ELSE 'ETC'
+      END AS Sto_Desc
+      FROM EQUIPMENT E (NOLOCK)
+      INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+      ON E.EQSGID = ESA.EQSGID
+      INNER JOIN EquipmentAttr EA
+      ON E.EQPTID = EA.EQPTID
+      WHERE E.EQSGID like @PLANT_ID
+      and E.EQGRID = 'STO'
+      and ESA.S38 = @SYSTEM_TYPE_CODE
+      and EA.S70 is not NULL
+    </MainSQL>
 		<Option>
 		</Option>
 		<AdditionalVariable>
@@ -821,10 +827,10 @@
       +Option2
 		</MainSQL>
 		<Option>
-			<Option1 type="cststat"  condition="not_equal" key="CstStat" dataType="int" default="0">
+			<Option1 type="CSTSTAT"  condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
 				AND C.CSTSTAT = @CSTSTAT
 			</Option1>
-			<Option2 type="none"  condition="none" key="none" dataType="none" default="none">
+			<Option2 type="NONE"  condition="NONE" key="NONE" dataType="NONE" default="NONE">
 				ORDER BY
 				CASE
 				WHEN ISNULL(W.LOTID,'') ='' THEN '1'
@@ -837,7 +843,11 @@
 			<PLANT_ID dataType="string" default=""/>
 			<STO_CODE dataType="string" default=""/>
 		</AdditionalVariable>
-      <Coloring>  
+      <Coloring>
+        <TRF_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+          <RESERVED Red="248" Green="255" Blue="219" IsColoringRow="true"/>
+          <MOVING Red="179" Green="255" Blue="174" IsColoringRow="true"/>
+        </TRF_STAT_CODE>
     </Coloring>
 	</SearchStkInventory>
 	<SearchAgingUIHist>
@@ -919,16 +929,16 @@
 			<SYSTEM_TYPE_CODE dataType="string" default=""/>
 		</AdditionalVariable>
     <Coloring>
-       <EIOSTAT>
-         <F Red="255" Green="155" Blue="155"/>
-			   <T Red="255" Green="214" Blue="165"/>
-			   <U Red="255" Green="254" Blue="196"/>
-			   <W Red="203" Green="255" Blue="169"/>
-				 <R Red="203" Green="255" Blue="169"/>
+       <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+         <F Red="255" Green="155" Blue="155" IsColoringRow="false" />
+			   <T Red="255" Green="214" Blue="165" IsColoringRow="false" />
+			   <U Red="255" Green="254" Blue="196" IsColoringRow="false" />
+			   <W Red="203" Green="255" Blue="169" IsColoringRow="false" />
+				 <R Red="203" Green="255" Blue="169" IsColoringRow="false" />
 			</EIOSTAT>
-      <EIOIFMODE>
-        	<OFF Red="255" Green="158" Blue="158"/>
-					<ON Red="185" Green="243" Blue="252"/>
+      <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+        	<OFF Red="255" Green="158" Blue="158" IsColoringRow="false" />
+					<ON Red="185" Green="243" Blue="252" IsColoringRow="false" />
       </EIOIFMODE>
     </Coloring>
 	</SearchStockerCurrState>

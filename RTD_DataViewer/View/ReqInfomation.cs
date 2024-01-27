@@ -34,6 +34,8 @@ namespace RTD_DataViewer.View
             reqInfo_dgvReq.DgvData.CellClick += SearchCstInfo;
             lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
             lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
+            lAdtp_ReqInfo_EndDate.IsChecked = false;
+            lAdtp_ReqInfo_StartDate.IsChecked = true;
         }
 
         private void Bt_Search_Click(object? sender, EventArgs e)
@@ -43,15 +45,19 @@ namespace RTD_DataViewer.View
 
         private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
         {
-            XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-            DynamicParameters parameters = new DynamicParameters();
-            string cquery = sqldata.Sql;
-
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+            string errMsg = string.Empty;
+            new WinformUtils(main).SearchCstInfo(reqInfo_DgvCarrier.DgvData, cstId, ref errMsg);
 
-            parameters.Add("@CSTID", cstId);
+            //XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
+            //DynamicParameters parameters = new DynamicParameters();
+            //string cquery = sqldata.Sql;
 
-            new WinformUtils(main).ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+            
+
+            //parameters.Add("@CSTID", cstId);
+
+            //new WinformUtils(main).ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -97,8 +103,10 @@ namespace RTD_DataViewer.View
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
             this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
-            this.startDate = lAdtp_ReqInfo_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            this.endDate = lAdtp_ReqInfo_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
+
+
+            string endDate = lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting();
+            string startDate = lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting();
             this.ruleId = lAtb_ReqInfo_RuleText.Tb_Text;
             this.EqpId = lAtb_ReqInfo_ReqEqp.Tb_Text;
 

@@ -29,35 +29,35 @@
         private void InitializeComponent()
         {
             dtp_date = new DateTimePicker();
-            lb_txt = new Label();
+            cb_Text = new CheckBox();
             SuspendLayout();
             // 
             // dtp_date
             // 
             dtp_date.Dock = DockStyle.Right;
-            dtp_date.Location = new Point(60, 0);
+            dtp_date.Location = new Point(86, 0);
             dtp_date.Name = "dtp_date";
             dtp_date.Size = new Size(180, 23);
             dtp_date.TabIndex = 0;
             // 
-            // lb_txt
+            // cb_Text
             // 
-            lb_txt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            lb_txt.AutoSize = true;
-            lb_txt.Location = new Point(0, 6);
-            lb_txt.Name = "lb_txt";
-            lb_txt.Size = new Size(39, 15);
-            lb_txt.TabIndex = 1;
-            lb_txt.Text = "label1";
+            cb_Text.AutoSize = true;
+            cb_Text.Location = new Point(0, 3);
+            cb_Text.Name = "cb_Text";
+            cb_Text.Size = new Size(84, 19);
+            cb_Text.TabIndex = 2;
+            cb_Text.Text = "checkBox1";
+            cb_Text.UseVisualStyleBackColor = true;
             // 
             // UWC_LabelAndDateTimePicker
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(lb_txt);
+            Controls.Add(cb_Text);
             Controls.Add(dtp_date);
             Name = "UWC_LabelAndDateTimePicker";
-            Size = new Size(240, 22);
+            Size = new Size(266, 22);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -65,6 +65,6 @@
         #endregion
 
         private DateTimePicker dtp_date;
-        private Label lb_txt;
+        private CheckBox cb_Text;
     }
 }

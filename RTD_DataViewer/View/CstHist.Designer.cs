@@ -50,9 +50,9 @@
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
             tableLayoutPanel7.Controls.Add(lAdtp_CstHist_StartDate, 6, 0);
             tableLayoutPanel7.Controls.Add(lAdtp_CstHist_EndDate, 6, 1);
@@ -77,27 +77,29 @@
             // 
             lAdtp_CstHist_StartDate.Dock = DockStyle.Fill;
             lAdtp_CstHist_StartDate.Dtp_Value = new DateTime(2023, 11, 30, 9, 34, 48, 775);
+            lAdtp_CstHist_StartDate.IsChecked = false;
             lAdtp_CstHist_StartDate.Lb_Text = "시작 시간";
-            lAdtp_CstHist_StartDate.Location = new Point(1039, 3);
+            lAdtp_CstHist_StartDate.Location = new Point(1011, 3);
             lAdtp_CstHist_StartDate.Name = "lAdtp_CstHist_StartDate";
-            lAdtp_CstHist_StartDate.Size = new Size(246, 24);
+            lAdtp_CstHist_StartDate.Size = new Size(274, 24);
             lAdtp_CstHist_StartDate.TabIndex = 0;
             // 
             // lAdtp_CstHist_EndDate
             // 
             lAdtp_CstHist_EndDate.Dock = DockStyle.Fill;
             lAdtp_CstHist_EndDate.Dtp_Value = new DateTime(2023, 11, 30, 9, 34, 54, 344);
+            lAdtp_CstHist_EndDate.IsChecked = false;
             lAdtp_CstHist_EndDate.Lb_Text = "종료 시간";
-            lAdtp_CstHist_EndDate.Location = new Point(1039, 33);
+            lAdtp_CstHist_EndDate.Location = new Point(1011, 33);
             lAdtp_CstHist_EndDate.Name = "lAdtp_CstHist_EndDate";
-            lAdtp_CstHist_EndDate.Size = new Size(246, 24);
+            lAdtp_CstHist_EndDate.Size = new Size(274, 24);
             lAdtp_CstHist_EndDate.TabIndex = 1;
             // 
             // lAtb_CstHist_CarrierId
             // 
             lAtb_CstHist_CarrierId.Dock = DockStyle.Fill;
             lAtb_CstHist_CarrierId.Lb_Text = "Carrier ID";
-            lAtb_CstHist_CarrierId.Location = new Point(871, 3);
+            lAtb_CstHist_CarrierId.Location = new Point(843, 3);
             lAtb_CstHist_CarrierId.Name = "lAtb_CstHist_CarrierId";
             lAtb_CstHist_CarrierId.Size = new Size(162, 24);
             lAtb_CstHist_CarrierId.TabIndex = 2;
@@ -141,13 +143,13 @@
             panel3.Location = new Point(703, 3);
             panel3.Name = "panel3";
             tableLayoutPanel7.SetRowSpan(panel3, 2);
-            panel3.Size = new Size(162, 54);
+            panel3.Size = new Size(134, 54);
             panel3.TabIndex = 8;
             // 
             // rb_IsTrayActHist
             // 
             rb_IsTrayActHist.AutoSize = true;
-            rb_IsTrayActHist.Location = new Point(66, 3);
+            rb_IsTrayActHist.Location = new Point(37, 3);
             rb_IsTrayActHist.Name = "rb_IsTrayActHist";
             rb_IsTrayActHist.RightToLeft = RightToLeft.Yes;
             rb_IsTrayActHist.Size = new Size(94, 19);
@@ -159,7 +161,7 @@
             // 
             rb_IsEventHist.AutoSize = true;
             rb_IsEventHist.Checked = true;
-            rb_IsEventHist.Location = new Point(81, 32);
+            rb_IsEventHist.Location = new Point(52, 32);
             rb_IsEventHist.Name = "rb_IsEventHist";
             rb_IsEventHist.RightToLeft = RightToLeft.Yes;
             rb_IsEventHist.Size = new Size(79, 19);
@@ -172,7 +174,7 @@
             // 
             lAtb_CstHist_ToPort.Dock = DockStyle.Fill;
             lAtb_CstHist_ToPort.Lb_Text = "목적 포트 ID";
-            lAtb_CstHist_ToPort.Location = new Point(871, 33);
+            lAtb_CstHist_ToPort.Location = new Point(843, 33);
             lAtb_CstHist_ToPort.Name = "lAtb_CstHist_ToPort";
             lAtb_CstHist_ToPort.Size = new Size(162, 24);
             lAtb_CstHist_ToPort.TabIndex = 9;

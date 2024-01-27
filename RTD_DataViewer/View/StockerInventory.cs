@@ -87,7 +87,7 @@ namespace RTD_DataViewer.View
 
             paramaterDic.Add("PLANT_ID", $"'{plantId}'");
             paramaterDic.Add("STO_CODE", $"'{stoCode}'");
-            paramaterDic.Add("CstStat", $"{cb_Cststat.SelectedIndex}");
+            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.SelectedIndex}");
 
             new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StoInventory, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
@@ -116,20 +116,6 @@ namespace RTD_DataViewer.View
                         {
                             //FFD4D4
                             dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
-                        }
-                    }
-
-                    if (trf_Stat_Code != string.Empty)
-                    {
-                        if (trf_Stat_Code == "RESERVED")
-                        {
-                            //F8FFDB
-                            dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(248, 255, 219);
-                        }
-                        if (trf_Stat_Code == "MOVING")
-                        {
-                            //B3FFAE
-                            dgv_StoInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
                         }
                     }
                 }

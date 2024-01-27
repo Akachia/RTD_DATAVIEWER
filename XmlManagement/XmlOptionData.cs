@@ -119,31 +119,16 @@ namespace XmlManagement
             try
             {
                 Value = xmlNode.Name;
+                try { this.IsColoringColumn = bool.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.IsColoringColumn).Value); } catch (Exception) { this.IsColoringColumn = false; }
+                try { this.IsTimeCompare = bool.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.IsTimeCompare).Value); } catch (Exception) { this.IsColoringColumn = false; }
+                try { this.Red = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Red).Value); } catch (Exception) { this.Red = 0; }
+                try { this.Green = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Green).Value); } catch (Exception) { this.Green = 0; }
+                try { this.Blue = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Blue).Value); } catch (Exception) { this.Blue = 0; }
                 foreach (XmlNode childNode in xmlNode.ChildNodes)
                 {
                     ColoringVarDic.Add(childNode.Name, new ColoringValue(childNode));
+
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public string Value { get; set; }
-        public Dictionary<string, ColoringValue>? ColoringVarDic { get; set; }
-    }
-
-    public class ColoringValue
-    {
-        public ColoringValue(XmlNode xmlNode)
-        {
-            try
-            {
-                Value = xmlNode.Name;
-                try { this.Red = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Red).Value); } catch (Exception) { this.Red = 999; }
-                try { this.Green = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Green).Value); } catch (Exception) { this.Green = 999; }
-                try { this.Blue = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Blue).Value); } catch (Exception) { this.Blue = 999; }
             }
             catch (Exception ex)
             {
@@ -155,6 +140,79 @@ namespace XmlManagement
         public int Red { get; set; }
         public int Green { get; set; }
         public int Blue { get; set; }
+        public bool IsColoringColumn { get; set; }
+        public bool IsTimeCompare { get; set; }
+        public Dictionary<string, ColoringValue>? ColoringVarDic { get; set; }
+    }
+
+    public class ColoringValue
+    {
+        public ColoringValue(XmlNode xmlNode)
+        {
+            try
+            {
+                Value = xmlNode.Name;
+                try { this.Red = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Red).Value); } catch (Exception) { this.Red = 0; }
+                try { this.Green = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Green).Value); } catch (Exception) { this.Green = 0; }
+                try { this.Blue = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Blue).Value); } catch (Exception) { this.Blue = 0; }
+                try { this.IsColoringRow = bool.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.IsColoringRow).Value); } catch (Exception) { this.IsColoringRow = false; }
+ 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string Value { get; set; }
+        public int Red { get; set; }
+        public int Green { get; set; }
+        public int Blue { get; set; }
+        public bool IsColoringRow { get; set; }
+
+    }
+
+    public class ColoringDate
+    {
+        public ColoringDate(XmlNode xmlNode)
+        {
+            try
+            {
+                if (xmlNode.Name == "TODAY")
+                {
+                    Value = DateTime.Now;
+                }
+
+                if (xmlNode.Name == "TOMORROW")
+                {
+                    Value = DateTime.Now.AddDays(1);
+                }
+
+                if (xmlNode.Name == "YESTERDAY")
+                {
+                    Value = DateTime.Now.AddDays(-1);
+                }
+
+                try { this.Red = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Red).Value); } catch (Exception) { this.Red = 0; }
+                try { this.Green = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Green).Value); } catch (Exception) { this.Green = 0; }
+                try { this.Blue = int.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.Blue).Value); } catch (Exception) { this.Blue = 0; }
+                try { this.IsColoringRow = bool.Parse(xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.IsColoringRow).Value); } catch (Exception) { this.IsColoringRow = false; }
+                try { this.Condition = xmlNode.Attributes.GetNamedItem(CustomUtils.CommonXml.condition).Value; } catch (Exception) { this.Condition = ""; }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DateTime Value { get; set; }
+        public int Red { get; set; }
+        public int Green { get; set; }
+        public int Blue { get; set; }
+        public bool IsColoringRow { get; set; }
+        public string Condition { get; set; }
+
     }
 
     //public XmlOptionData(XmlNode node)

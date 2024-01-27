@@ -175,15 +175,18 @@ namespace RTD_DataViewer.View
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-                DynamicParameters parameters = new DynamicParameters();
-                string cquery = sqldata.Sql;
-
                 string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+                string errMsg = string.Empty;
+                new WinformUtils(main).SearchCstInfo(transList_CstInfo.DgvData, cstId, ref errMsg);
+                //XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
+                //DynamicParameters parameters = new DynamicParameters();
+                //string cquery = sqldata.Sql;
 
-                parameters.Add("@CSTID", cstId);
+                //string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
 
-                new WinformUtils(main).ShowSqltoDGV(transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                //parameters.Add("@CSTID", cstId);
+
+                //new WinformUtils(main).ShowSqltoDGV(transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception)
             {
@@ -238,13 +241,14 @@ namespace RTD_DataViewer.View
 
             paramaterDic.Add("CMD_STAT_CODE_LIST", MakeCmdStatCodeList());
             paramaterDic.Add("LaneId", lAtb_TransList_LaneId.Tb_Text);
-            paramaterDic.Add("CstStat", $"{cb_Cststat.SelectedIndex}");
+            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.SelectedIndex}");
             paramaterDic.Add("CstId", lAtb_TransList_CarrierId.Tb_Text);
             paramaterDic.Add("ReqPortId", lAtb_TransList_ReqEqp.Tb_Text);
             paramaterDic.Add("ToPortId", lAtb_TransList_ToEqp.Tb_Text);
             paramaterDic.Add("isFaulty", $"{ckb_IsFaulty.Checked}");
-            paramaterDic.Add("StartDate", lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd"));
-            paramaterDic.Add("EndDate", lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd"));
+
+            paramaterDic.Add("StartDate", $"'{lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd")}'");
+            paramaterDic.Add("EndDate", $"'{lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd")}'");
 
             new WinformUtils(main).ExcuteSql(paramaterDic, transList_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 

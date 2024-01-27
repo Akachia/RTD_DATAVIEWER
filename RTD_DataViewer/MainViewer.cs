@@ -119,6 +119,9 @@ namespace RTD_DataViewer
 
         private void bt_DataRefresh_Click(object sender, EventArgs e)
         {
+            //sqlList.Clear();
+            //xml = null;
+            //strs.Clear();
             SettingInit();
         }
 
@@ -127,8 +130,10 @@ namespace RTD_DataViewer
             ComboBox comboBox = sender as ComboBox;
 
             if (comboBox.Text != string.Empty) new WinformUtils(this).ChangeDBConn(comboBox.Text);
-
-            correntConnectionStringSetting = strs[cb_DBString.Text];
+            if (cb_DBString.Text != string.Empty)
+            {
+                correntConnectionStringSetting = strs[cb_DBString.Text];
+            }
         }
     }
 }
