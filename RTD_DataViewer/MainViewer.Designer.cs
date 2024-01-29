@@ -52,6 +52,7 @@
             ss_selectionCount = new StatusStrip();
             ColumnCount = new ToolStripStatusLabel();
             RowCount = new ToolStripStatusLabel();
+            tp_WipInfo = new TabPage();
             tableLayoutPanel1.SuspendLayout();
             reqATransfer_dgvReq.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -84,6 +85,7 @@
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
+            reqATransfer_dgvReq.Controls.Add(tp_WipInfo);
             reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
@@ -318,6 +320,16 @@
             RowCount.Size = new Size(121, 17);
             RowCount.Text = "toolStripStatusLabel2";
             // 
+            // tp_WipInfo
+            // 
+            tp_WipInfo.Location = new Point(4, 24);
+            tp_WipInfo.Name = "tp_WipInfo";
+            tp_WipInfo.Padding = new Padding(3);
+            tp_WipInfo.Size = new Size(1420, 603);
+            tp_WipInfo.TabIndex = 9;
+            tp_WipInfo.Text = "WipInfo";
+            tp_WipInfo.UseVisualStyleBackColor = true;
+            // 
             // MainViewer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -379,5 +391,6 @@
         private ToolStripStatusLabel RowCount;
         private TabPage tp_CstInfo;
         private TabPage tp_StockerInventory;
+        private TabPage tp_WipInfo;
     }
 }

@@ -31,5 +31,8 @@
     <Compile Update="View\TransportList.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="View\WipInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

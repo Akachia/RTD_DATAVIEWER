@@ -598,6 +598,10 @@ namespace RTD_DataViewer
                     {
                         return CSTErrMsg.upDownErr + "(Lot 타입 다름)";
                     }
+                    if (carriers[0].WIPSTAT != carriers[1].WIPSTAT)
+                    {
+                        return CSTErrMsg.upDownErr + "(Lot 상태 다름)";
+                    }
                 }
                 //--------------------------------------------------------------------------------------------------------------------------------------------------
                 if (carriers[0].SPCL_FLAG == "Y")

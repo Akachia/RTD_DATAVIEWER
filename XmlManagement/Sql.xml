@@ -30,14 +30,14 @@
 		LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
 		WHERE H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
 		AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
-    +Option1
-    +Option2
-    +Option3
-    +Option4
-    +Option5
-    +Option6
-    +Option7
-		</MainSQL>
+		+Option1
+		+Option2
+		+Option3
+		+Option4
+		+Option5
+		+Option6
+		+Option7
+	</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="LaneId" dataType="string" default="">
 				AND WA.LANE_ID LIKE @LANE_ID
@@ -64,7 +64,16 @@
 	  <AdditionalVariable>
 		  <CMD_STAT_CODE_LIST dataType="List" default=""/>
 	  </AdditionalVariable>
-      <Coloring>  
+      <Coloring>
+		  <상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			  <E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		  </상태>
+		  <진행상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <MOVING Red="255" Green="227" Blue="238" IsColoringRow="false"/>
+			  <RECEIVE Red="255" Green="164" Blue="201" IsColoringRow="false"/>
+			  <SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
+		  </진행상태>
     </Coloring>
 	</SearchTransportReq>
   <SearchTrf>
@@ -83,38 +92,38 @@
 	  <AdditionalVariable>
 		  <CMD_STAT_CODE_LIST dataType="List" default=""/>
 	  </AdditionalVariable>
-      <Coloring>  
+      <Coloring>
     </Coloring>
   </SearchTrf>
   <ReqList>
 		<MainSQL>
-				SELECT
-				   REQ.REQ_SEQNO as 번호
-				 , REQ.CSTID AS CSTID 
-				 , REQ.CSTSTAT as 상태
-				 , REQ.EQPTID AS 설비명
-				 , REQ.PORT_ID AS 포트명
-				 , REQ.REQ_TYPE_CODE AS 요청코드
-				 , REQ.PRCS_TYPE_CODE AS 코드
-				 , REQ.RTD_RULE_ID
-				 , REQ.INSUSER AS 요청자
-				 , CONVERT(CHAR(23), REQ.INSDTTM, 20) AS INSDTTM
-				 , CONVERT(CHAR(23), REQ.UPDDTTM, 20) AS UPDDTTM
-				 , REQ.REQ_STAT_CODE
-				 , REQ.REQ_SEQS
-				 , REQ.RTD_EXEC_LOG_CNTT
-				 , REQ.ERR_CODE
-				 , C.CMCDNAME AS ERR_DESC
-				FROM TB_MHS_TRF_REQ REQ with(nolock)
-				LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
-				WHERE 1 = 1 
-        AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartDate AND @EndDate 
-        +Option1
-        +Option2
-        +Option3
-        +Option4
-        +Option5
-			</MainSQL>
+			SELECT
+			REQ.REQ_SEQNO as 번호
+			, REQ.CSTID AS CSTID
+			, REQ.CSTSTAT as 상태
+			, REQ.EQPTID AS 설비명
+			, REQ.PORT_ID AS 포트명
+			, REQ.REQ_TYPE_CODE AS 요청코드
+			, REQ.PRCS_TYPE_CODE AS 코드
+			, REQ.RTD_RULE_ID
+			, REQ.INSUSER AS 요청자
+			, CONVERT(CHAR(23), REQ.INSDTTM, 20) AS INSDTTM
+			, CONVERT(CHAR(23), REQ.UPDDTTM, 20) AS UPDDTTM
+			, REQ.REQ_STAT_CODE
+			, REQ.REQ_SEQS
+			, REQ.RTD_EXEC_LOG_CNTT
+			, REQ.ERR_CODE
+			, C.CMCDNAME AS ERR_DESC
+			FROM TB_MHS_TRF_REQ REQ with(nolock)
+			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
+			WHERE 1 = 1
+			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartDate AND @EndDate
+			+Option1
+			+Option2
+			+Option3
+			+Option4
+			ORDER BY REQ.CSTID, REQ.UPDDTTM DESC
+		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND REQ.CSTID like @CSTID 
@@ -128,9 +137,6 @@
 			<Option4 type="NONE" condition="" key="" dataType="" default="">
 				--AND REQ.REQ_STAT_CODE = 'QUERY' 
 			</Option4>
-			<Option5 type="NONE" condition="" key="" dataType="" default="">
-				ORDER BY REQ.CSTID, REQ.UPDDTTM DESC 
-			</Option5>
 		</Option>
 	  <AdditionalVariable>
       <StartDate dataType="DateTime" default=""/>
@@ -138,9 +144,13 @@
 	  </AdditionalVariable>
       <Coloring>  
         <REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
-         <REQUEST Red="255" Green="212" Blue="212" IsColoringRow="false"/>
-			   <QUERY Red="255" Green="212" Blue="212" IsColoringRow="false"/>
-				</REQ_STAT_CODE>
+		   <REQUEST Red="255" Green="212" Blue="212" IsColoringRow="true"/>
+		   <QUERY Red="255" Green="212" Blue="212" IsColoringRow="true"/>
+		</REQ_STAT_CODE>
+		  <상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			  <E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		  </상태>
     </Coloring>
 	</ReqList>
 	<SearchTransfer>
@@ -160,11 +170,12 @@
 			, (CASE WHEN (DATEDIFF(minute, INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
 			FROM TB_MHS_TRF_CMD_HIST with(nolock)
 			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
-      +Option1
-      +Option2
-      +Option3
-      +Option4
-      +Option5
+			+Option1
+			+Option2
+			+Option3
+			+Option4
+			+Option5
+			order by INSDTTM desc
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="" default="">
@@ -180,8 +191,8 @@
 				AND CSTSTAT = @CSTSTAT
 			</Option4>
 			<Option5 type="MOVINGSTATE" condition="MOVINGSTATE" key="MOVINGSTATE" dataType="" default="0">
-        AND CMD_STAT_CODE = @MOVINGSTATE
-      </Option5>
+			  AND CMD_STAT_CODE = @MOVINGSTATE
+			</Option5>
             <Option6 type="IF" condition="not_equal" key="RuleId" dataType="" default="">
 				AND RTD_RULE_ID = @RuleId
 			</Option6>			
@@ -190,41 +201,45 @@
       <StartDate dataType="DateTime" default=""/>
       <EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
-      <Coloring>  
+      <Coloring>
+		  <CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			  <E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		  </CSTSTAT>
     </Coloring>
 	</SearchTransfer>
 	<SearchReq>
 		<MainSQL>
-      WITH TT_DATA AS (
-      SELECT top 1000 *
-      FROM TB_MHS_TRF_REQ_HIST with(nolock)
-      WHERE INSDTTM BETWEEN @StartDate AND @EndDate
-      +Option01 --AND CSTID LIKE @CSTID
-      +Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
-      +Option03
-      -- ORDER BY INSDTTM  DESC
-      )
-      SELECT
-      CSTID
-      , CSTSTAT AS 상태
-      , REQ_STAT_CODE
-      , EQPTID
-      , PORT_ID
-      , REQ_TYPE_CODE AS 요청
-      , CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
-      , CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
-      , PRCS_TYPE_CODE
-      , RTD_RULE_ID
-      , REQ_SEQS
-      , ERR_CODE
-      , RTD_EXEC_LOG_CNTT
-      , INSUSER
-      , REQ_SEQNO
-      FROM TT_Data with(nolock)
-      WHERE 1=1
-      +Option04
-      +Option05
-    </MainSQL>
+			WITH TT_DATA AS (
+			SELECT top 1000 *
+			FROM TB_MHS_TRF_REQ_HIST with(nolock)
+			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
+			+Option01 --AND CSTID LIKE @CSTID
+			+Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
+			+Option03
+			-- ORDER BY INSDTTM  DESC
+			)
+			SELECT
+			CSTID
+			, CSTSTAT AS 상태
+			, REQ_STAT_CODE
+			, EQPTID
+			, PORT_ID
+			, REQ_TYPE_CODE AS 요청
+			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
+			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
+			, PRCS_TYPE_CODE
+			, RTD_RULE_ID
+			, REQ_SEQS
+			, ERR_CODE
+			, RTD_EXEC_LOG_CNTT
+			, INSUSER
+			, REQ_SEQNO
+			FROM TT_Data with(nolock)
+			WHERE 1=1
+			+Option04
+			ORDER BY REQ_SEQNO DESC
+		</MainSQL>
 		<Option>
       <Option01 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
         AND CSTID LIKE @CSTID
@@ -238,9 +253,6 @@
 			<Option04 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
         AND CSTSTAT = @CSTSTAT
       </Option04>
-			<Option05 type="NONE" condition="" key="" dataType="" default="">
-				ORDER BY REQ_SEQNO DESC
-			</Option05>
 		</Option>
 		<AdditionalVariable>
 			<StartDate dataType="DateTime" default=""/>
@@ -603,7 +615,18 @@
 			<EQP_GROUP_ID_LIST dataType="NONE" default=""/>
 			<AREA_ID dataType="NONE" default=""/>
 		</AdditionalVariable>
-      <Coloring>  
+      <Coloring>
+		  <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <F Red="255" Green="155" Blue="155" IsColoringRow="false" />
+			  <T Red="255" Green="214" Blue="165" IsColoringRow="false" />
+			  <U Red="255" Green="254" Blue="196" IsColoringRow="false" />
+			  <W Red="203" Green="255" Blue="169" IsColoringRow="false" />
+			  <R Red="203" Green="255" Blue="169" IsColoringRow="false" />
+		  </EIOSTAT>
+		  <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <OFF Red="255" Green="158" Blue="158" IsColoringRow="false" />
+			  <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+		  </EIOIFMODE>
        <CSTTYPE Red="255" Green="254" Blue="196" IsColoringColumn="true" IsTimeCompare="false">
          <TRAY Red="255" Green="155" Blue="155" IsColoringRow="false" />
 			   <TKAE Red="255" Green="214" Blue="165" IsColoringRow="false"/>
