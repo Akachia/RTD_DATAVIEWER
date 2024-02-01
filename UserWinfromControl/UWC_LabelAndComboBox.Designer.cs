@@ -34,20 +34,22 @@
             // 
             // comboBox1
             // 
+            comboBox1.Dock = DockStyle.Fill;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(51, 7);
+            comboBox1.Location = new Point(0, 0);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
+            comboBox1.Size = new Size(172, 23);
             comboBox1.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(51, 10);
+            label1.Location = new Point(3, 10);
             label1.Name = "label1";
             label1.Size = new Size(39, 15);
             label1.TabIndex = 1;
             label1.Text = "label1";
+            label1.Click += label1_Click;
             // 
             // UWC_LabelAndComboBox
             // 
@@ -56,7 +58,7 @@
             Controls.Add(label1);
             Controls.Add(comboBox1);
             Name = "UWC_LabelAndComboBox";
-            Size = new Size(172, 33);
+            Size = new Size(172, 25);
             ResumeLayout(false);
             PerformLayout();
         }

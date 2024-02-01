@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XmlManagement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RTD_DataViewer.View
 {
@@ -31,7 +32,7 @@ namespace RTD_DataViewer.View
             this.main = main;
             tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
             tAbt_ReqInfo_Search.bt_Search.Click += Bt_Search_Click;
-            reqInfo_dgvReq.DgvData.CellClick += SearchCstInfo;
+            reqInfo_dgvReq.DgvData.CellClick += ReqInfoDataGridViewCellClick;
             lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
             lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
             lAdtp_ReqInfo_EndDate.IsChecked = false;
@@ -43,21 +44,49 @@ namespace RTD_DataViewer.View
             Btn_Click();
         }
 
-        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
+        private void ReqInfoDataGridViewCellClick(object? sender, DataGridViewCellEventArgs e)
         {
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+            string req_SeqNo = (sender as DataGridView).CurrentRow.Cells["REQ_SEQNO"].Value.ToString();
+
+            SearchTrfInfo(req_SeqNo);
+
+            if (cstId == "")
+            {
+                try
+                {
+                    cstId = reqInfo_dgvReq_TrfInfo.DgvData.Rows[0].Cells["CSTID"].Value.ToString();
+                }
+                catch (Exception)
+                {
+                    cstId = "";
+                }
+
+            }
+
+            if (cstId != "")
+            {
+                SearchCstInfo(cstId);
+            }
+        }
+
+        private void SearchCstInfo(string cstId)
+        {
             string errMsg = string.Empty;
             new WinformUtils(main).SearchCstInfo(reqInfo_DgvCarrier.DgvData, cstId, ref errMsg);
+        }
 
-            //XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-            //DynamicParameters parameters = new DynamicParameters();
-            //string cquery = sqldata.Sql;
+        private void SearchTrfInfo(string req_SeqNo)
+        {
+            WinformUtils winformUtils = new WinformUtils(main);
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            try
+            {
+                paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
 
-            
-
-            //parameters.Add("@CSTID", cstId);
-
-            //new WinformUtils(main).ShowSqltoDGV(reqInfo_DgvCarrier.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            }
+            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -74,6 +103,32 @@ namespace RTD_DataViewer.View
                 tAbt_ReqInfo_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
                 currNum--;
             }
+        }
+
+        private string MakeTransferStatusCountString(string columnName, string[] atrr, int rowCount)
+        {
+            List<string> list = new List<string>();
+            int count = reqInfo_dgvReq.DgvData.RowCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(reqInfo_dgvReq.DgvData.Rows[i].Cells[columnName].Value.ToString());
+            }
+
+            Dictionary<string, int> keyValuePairs = new();
+
+            foreach (string row in atrr)
+            {
+                keyValuePairs.Add(row, list.Count(a => a.ToString() == row));
+            }
+
+            string str = string.Empty;
+            foreach (string row in keyValuePairs.Keys)
+            {
+                str += $"{row} : {keyValuePairs[row]} \t";
+            }
+
+            return str;
         }
 
         internal void Btn_Click()
@@ -95,12 +150,19 @@ namespace RTD_DataViewer.View
             {
                 ReqList();
             }
+
+            lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
+
         }
 
         public void ReqList()
         {
             WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+
+            reqInfo_dgvReq.DgvData.DataSource = null;
+            reqInfo_dgvReq_TrfInfo.DgvData.DataSource = null;
+            reqInfo_DgvCarrier.DgvData.DataSource = null;
 
             this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
 
@@ -119,59 +181,16 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("EQPTID", $"{EqpId}");
                 paramaterDic.Add("RULEID", $"{ruleId}");
 
+                if (cb_ReqState.SelectedIndex > 0)
+                {
+                    paramaterDic.Add("REQ_STAT_CODE", $"{cb_ReqState.Text}");
+                }
+                else
+                {
+                    paramaterDic.Add("REQ_STAT_CODE", $"");
+                }
+
                 winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-
-
-                //XmlOptionData sqldata = main.sqlList["ReqInfomation"];
-                //DynamicParameters parameters = new DynamicParameters();
-                ////using (var connection = new OracleConnection(cstr))
-
-                //string cquery = sqldata.Sql;
-                //if (cstid != "")
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                //    parameters.Add("@CSTID", string.Concat(@"%", cstid, "%"));
-                //    //cquery += "   AND REQ.CSTID = '" + txtReqCSTID.Text + "' ";
-                //}
-                //WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                //parameters.Add("@StartDate", startDate, dbType: DbType.DateTime);
-                //parameters.Add("@EndDate", endDate, dbType: DbType.DateTime);
-                ////cquery += "   AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN '" + txtReqsDate.Text + "' AND '" + txtReqeDate.Text + "' ";
-                //if (EqpId != "")
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                //    parameters.Add("@EQPTID", string.Concat("%", EqpId, "%"));
-                //    //cquery += "   AND REQ.EQPTID LIKE '" + txtReqEqpt.Text + "' ";
-                //}
-                //if (ruleId != "")
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
-                //    parameters.Add("@RULEID", string.Concat("%", ruleId, "%"));
-                //    //cquery += "   AND REQ.RTD_RULE_ID LIKE '%" + txtRule.Text + "%' ";
-                //}
-                //WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
-                //// cquery += "       ORDER BY REQ.CSTID, REQ.UPDDTTM DESC ";
-
-                //new WinformUtils(main).ShowSqltoDGV(reqInfo_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                //int rowCount = reqInfo_dgvReq.DgvData.RowCount;
-
-                //for (int i = 0; i < rowCount; i++)
-                //{
-                //    string req_stat_code = reqInfo_dgvReq.DgvData.Rows[i].Cells["REQ_STAT_CODE"].Value.ToString();
-
-                //    if (req_stat_code != string.Empty)
-                //    {
-                //        if (req_stat_code == "REQUEST" || req_stat_code == "QUERY")
-                //        {
-                //            //FFD4D4
-                //            reqInfo_dgvReq.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
-                //        }
-
-                //    }
-                //}
-
 
             }
             catch (Exception ex)

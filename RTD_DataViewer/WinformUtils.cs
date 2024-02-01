@@ -163,10 +163,10 @@ namespace RTD_DataViewer
                             AddToOptionalSqlSyntax(ref cquery, item, true);
                             if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("DELETE")); ;    // 실트레이
                             if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("NORMAL_END")); ;    // 공트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("ABNORMAL_END")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("RECEIVE")); ;    // 공트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("MOVING")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("SEND")); ;    // 공트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "3") parameters.Add($"@{item.Key}", string.Concat("ABNORMAL_END")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "4") parameters.Add($"@{item.Key}", string.Concat("RECEIVE")); ;    // 공트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "5") parameters.Add($"@{item.Key}", string.Concat("MOVING")); ;    // 실트레이
+                            if (paramaterDic[SqlVal.MOVINGSTATE] == "6") parameters.Add($"@{item.Key}", string.Concat("SEND")); ;    // 공트레이
                             continue;
                         }
                     }

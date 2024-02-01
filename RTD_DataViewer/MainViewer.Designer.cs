@@ -37,6 +37,8 @@
             tp_CstHist = new TabPage();
             tp_EqpState = new TabPage();
             tp_StockerInventory = new TabPage();
+            tp_WipInfo = new TabPage();
+            tp_WaitWips = new TabPage();
             tp_LnsPkgState = new TabPage();
             tp_LogBox = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -52,7 +54,6 @@
             ss_selectionCount = new StatusStrip();
             ColumnCount = new ToolStripStatusLabel();
             RowCount = new ToolStripStatusLabel();
-            tp_WipInfo = new TabPage();
             tableLayoutPanel1.SuspendLayout();
             reqATransfer_dgvReq.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -86,6 +87,7 @@
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
             reqATransfer_dgvReq.Controls.Add(tp_WipInfo);
+            reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
             reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
@@ -163,6 +165,26 @@
             tp_StockerInventory.TabIndex = 8;
             tp_StockerInventory.Text = "스토커 현황";
             tp_StockerInventory.UseVisualStyleBackColor = true;
+            // 
+            // tp_WipInfo
+            // 
+            tp_WipInfo.Location = new Point(4, 24);
+            tp_WipInfo.Name = "tp_WipInfo";
+            tp_WipInfo.Padding = new Padding(3);
+            tp_WipInfo.Size = new Size(1420, 603);
+            tp_WipInfo.TabIndex = 9;
+            tp_WipInfo.Text = "WipInfo";
+            tp_WipInfo.UseVisualStyleBackColor = true;
+            // 
+            // tp_WaitWips
+            // 
+            tp_WaitWips.Location = new Point(4, 24);
+            tp_WaitWips.Name = "tp_WaitWips";
+            tp_WaitWips.Padding = new Padding(3);
+            tp_WaitWips.Size = new Size(1420, 603);
+            tp_WaitWips.TabIndex = 10;
+            tp_WaitWips.Text = "WaitWips";
+            tp_WaitWips.UseVisualStyleBackColor = true;
             // 
             // tp_LnsPkgState
             // 
@@ -320,16 +342,6 @@
             RowCount.Size = new Size(121, 17);
             RowCount.Text = "toolStripStatusLabel2";
             // 
-            // tp_WipInfo
-            // 
-            tp_WipInfo.Location = new Point(4, 24);
-            tp_WipInfo.Name = "tp_WipInfo";
-            tp_WipInfo.Padding = new Padding(3);
-            tp_WipInfo.Size = new Size(1420, 603);
-            tp_WipInfo.TabIndex = 9;
-            tp_WipInfo.Text = "WipInfo";
-            tp_WipInfo.UseVisualStyleBackColor = true;
-            // 
             // MainViewer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -392,5 +404,6 @@
         private TabPage tp_CstInfo;
         private TabPage tp_StockerInventory;
         private TabPage tp_WipInfo;
+        private TabPage tp_WaitWips;
     }
 }

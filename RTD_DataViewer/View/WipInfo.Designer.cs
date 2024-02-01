@@ -30,11 +30,7 @@
         {
             lb_MismatchMessage = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            dgv_LotActHist = new UserWinfromControl.UWC_DataGridView();
-            dgv_LotInfo = new UserWinfromControl.UWC_DataGridView();
-            dgv_LotHist = new UserWinfromControl.UWC_DataGridView();
             bt_CstInfoSearch = new Button();
-            latb_LotId = new UserWinfromControl.UWC_LabelAndTextBox();
             ckb_ValidNgHist = new CheckBox();
             label1 = new Label();
             tableLayoutPanel1.SuspendLayout();
@@ -61,11 +57,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(dgv_LotActHist, 0, 2);
-            tableLayoutPanel1.Controls.Add(dgv_LotInfo, 0, 1);
-            tableLayoutPanel1.Controls.Add(dgv_LotHist, 4, 2);
             tableLayoutPanel1.Controls.Add(bt_CstInfoSearch, 7, 0);
-            tableLayoutPanel1.Controls.Add(latb_LotId, 6, 0);
             tableLayoutPanel1.Controls.Add(ckb_ValidNgHist, 5, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -78,33 +70,6 @@
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 8;
             // 
-            // dgv_LotActHist
-            // 
-            tableLayoutPanel1.SetColumnSpan(dgv_LotActHist, 4);
-            dgv_LotActHist.Dock = DockStyle.Fill;
-            dgv_LotActHist.Location = new Point(3, 204);
-            dgv_LotActHist.Name = "dgv_LotActHist";
-            dgv_LotActHist.Size = new Size(694, 393);
-            dgv_LotActHist.TabIndex = 0;
-            // 
-            // dgv_LotInfo
-            // 
-            tableLayoutPanel1.SetColumnSpan(dgv_LotInfo, 8);
-            dgv_LotInfo.Dock = DockStyle.Fill;
-            dgv_LotInfo.Location = new Point(3, 33);
-            dgv_LotInfo.Name = "dgv_LotInfo";
-            dgv_LotInfo.Size = new Size(1394, 165);
-            dgv_LotInfo.TabIndex = 1;
-            // 
-            // dgv_LotHist
-            // 
-            tableLayoutPanel1.SetColumnSpan(dgv_LotHist, 4);
-            dgv_LotHist.Dock = DockStyle.Fill;
-            dgv_LotHist.Location = new Point(703, 204);
-            dgv_LotHist.Name = "dgv_LotHist";
-            dgv_LotHist.Size = new Size(694, 393);
-            dgv_LotHist.TabIndex = 2;
-            // 
             // bt_CstInfoSearch
             // 
             bt_CstInfoSearch.Dock = DockStyle.Fill;
@@ -114,16 +79,6 @@
             bt_CstInfoSearch.TabIndex = 4;
             bt_CstInfoSearch.Text = "Search";
             bt_CstInfoSearch.UseVisualStyleBackColor = true;
-            // 
-            // latb_LotId
-            // 
-            latb_LotId.Dock = DockStyle.Fill;
-            latb_LotId.Lb_Text = "Lot Id";
-            latb_LotId.Location = new Point(1088, 3);
-            latb_LotId.Name = "latb_LotId";
-            latb_LotId.Size = new Size(204, 24);
-            latb_LotId.TabIndex = 3;
-            latb_LotId.Tb_Text = "";
             // 
             // ckb_ValidNgHist
             // 

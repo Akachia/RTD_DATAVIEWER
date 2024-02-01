@@ -70,6 +70,10 @@ namespace RTD_DataViewer
             tp_EqpState.Controls.Add(eqpState);
             eqpState.Dock = DockStyle.Fill;
 
+            WaitWips waitWips = new WaitWips(this);
+            tp_WaitWips.Controls.Add(waitWips);
+            waitWips.Dock = DockStyle.Fill;
+
             LnsPkgState lnsPkgState = new LnsPkgState(this);
             tp_LnsPkgState.Controls.Add(lnsPkgState);
             lnsPkgState.Dock = DockStyle.Fill;

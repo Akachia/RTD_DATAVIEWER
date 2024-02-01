@@ -38,7 +38,7 @@
 		+Option6
 		+Option7
 	</MainSQL>
-		<Option>
+	<Option>
 			<Option1 type="IF" condition="not_equal" key="LaneId" dataType="string" default="">
 				AND WA.LANE_ID LIKE @LANE_ID
 			</Option1>
@@ -61,10 +61,10 @@
 				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
 			</Option7>
 		</Option>
-	  <AdditionalVariable>
+	<AdditionalVariable>
 		  <CMD_STAT_CODE_LIST dataType="List" default=""/>
 	  </AdditionalVariable>
-      <Coloring>
+    <Coloring>
 		  <상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 			  <U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
 			  <E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
@@ -75,7 +75,7 @@
 			  <SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
 		  </진행상태>
     </Coloring>
-	</SearchTransportReq>
+  </SearchTransportReq>
   <SearchTrf>
     <MainSQL>
       select
@@ -95,6 +95,40 @@
       <Coloring>
     </Coloring>
   </SearchTrf>
+	<SearchTrfInfo>
+	<MainSQL>
+		select
+		CSTID
+		, CSTSTAT
+		, FROM_PORT_ID
+		, TO_PORT_ID
+		, FINL_TRGT_EQPT_ID
+		, CMD_STAT_CODE
+		, TRF_CODE
+		, RTD_RULE_ID
+		, REQ_DTTM
+		, TRF_STRT_DTTM
+		, UPDDTTM
+		from TB_MHS_TRF_CMD with (NOLOCK)
+		WHERE REQ_SEQNO = @REQ_SEQNO
+	</MainSQL>
+	<Option>
+	</Option>
+	<AdditionalVariable>
+		<REQ_SEQNO dataType="Bigint" default=""/>
+	</AdditionalVariable>
+	<Coloring>
+		<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			<E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		</CSTSTAT>
+		<CMD_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<MOVING Red="255" Green="227" Blue="238" IsColoringRow="false"/>
+			<RECEIVE Red="255" Green="164" Blue="201" IsColoringRow="false"/>
+			<SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
+		</CMD_STAT_CODE>
+	</Coloring>
+  </SearchTrfInfo>
   <ReqList>
 		<MainSQL>
 			SELECT
@@ -113,6 +147,7 @@
 			, REQ.REQ_SEQS
 			, REQ.RTD_EXEC_LOG_CNTT
 			, REQ.ERR_CODE
+			, REQ.REQ_SEQNO
 			, C.CMCDNAME AS ERR_DESC
 			FROM TB_MHS_TRF_REQ REQ with(nolock)
 			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
@@ -128,19 +163,19 @@
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND REQ.CSTID like @CSTID 
 			</Option1>
-      <Option2 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="">
+			<Option2 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="">
 				AND REQ.EQPTID LIKE @EQPTID 
 			</Option2>
-      <Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
+			<Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
-			 </Option3>
-			<Option4 type="NONE" condition="" key="" dataType="" default="">
-				--AND REQ.REQ_STAT_CODE = 'QUERY' 
+			</Option3>
+			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="string" default="">
+				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
 		</Option>
 	  <AdditionalVariable>
-      <StartDate dataType="DateTime" default=""/>
-      <EndDate dataType="DateTime" default=""/>
+		 <StartDate dataType="DateTime" default=""/>
+		 <EndDate dataType="DateTime" default=""/>
 	  </AdditionalVariable>
       <Coloring>  
         <REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -175,6 +210,7 @@
 			+Option3
 			+Option4
 			+Option5
+			+Option6
 			order by INSDTTM desc
 		</MainSQL>
 		<Option>
@@ -217,7 +253,7 @@
 			+Option01 --AND CSTID LIKE @CSTID
 			+Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
 			+Option03
-			-- ORDER BY INSDTTM  DESC
+			ORDER BY INSDTTM  DESC
 			)
 			SELECT
 			CSTID
@@ -258,7 +294,10 @@
 			<StartDate dataType="DateTime" default=""/>
 			<EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
-      <Coloring>  
+      <Coloring>
+		  <REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			  <NO_DATA Red="255" Green="164" Blue="201" IsColoringRow="true"/>
+		  </REQ_STAT_CODE>
     </Coloring>
 	</SearchReq>
 	<SearchDeleteTransfer>
@@ -663,7 +702,7 @@
 			, E.EIOSTAT AS ES
 			, MAX_TRF_QTY AS 버퍼
 			, E.EIOIFMODE AS EIM
-      , EA.EQPT_MAINT_FLAG AS Maint_Flag
+      , EA.EQPT_MAINT_FLAG AS MAINT_FLAG
 			from TB_MCS_CURR_PORT TMCP (NOLOCK)
 			INNER JOIN EIO E (NOLOCK) on e.EQPTID = LEFT(TMCP.PORT_ID, 15)
 			INNER JOIN EQUIPMENT EM (NOLOCK) on e.EQPTID = em.EQPTID
@@ -688,16 +727,19 @@
 		</AdditionalVariable>
     <Coloring>  
        <ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
-         <F Red="255" Green="155" Blue="155" IsColoringRow="false" />
+			   <F Red="255" Green="155" Blue="155" IsColoringRow="false" />
 			   <T Red="255" Green="214" Blue="165" IsColoringRow="false" />
 			   <U Red="255" Green="254" Blue="196" IsColoringRow="false" />
 			   <W Red="203" Green="255" Blue="169" IsColoringRow="false" />
-				 <R Red="203" Green="255" Blue="169" IsColoringRow="false" />
-			</ES>
+			   <R Red="203" Green="255" Blue="169" IsColoringRow="false" />
+		</ES>
       <EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
         	<OFF Red="255" Green="158" Blue="158" IsColoringRow="false" />
-					<ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+			<ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
       </EIM>
+		<MAINT_FLAG Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<M Red="255" Green="158" Blue="158" IsColoringRow="true" />
+		</MAINT_FLAG>
     </Coloring>
 	</SearchPortState>
 	<SearchPortStateHist>
@@ -965,4 +1007,121 @@
       </EIOIFMODE>
     </Coloring>
 	</SearchStockerCurrState>
+	<SearchWaitingWips>
+		<MainSQL>
+			With WipList AS(
+			SELECT
+			C.CSTID
+			, W.LOTID
+			, COUNT(*) AS SectionCount
+			, C.EQPT_CUR AS FROM_EQPTID
+			, C.PORT_CUR AS FROM_PORT_ID
+			, EA.S70 AS TO_EQPT_GROUP_ID
+			, R.EQSGID
+			, W.PROCID
+			, RP.ROUTID
+			, WA.PROD_LOTID
+			, C.CSTSTAT
+			--, E.EQPTID AS TRGT_EQPT_ID
+			, MP.PORT_ID AS TRGT_PORT_ID
+			--, CM.ATTRIBUTE1  AS AGING
+			FROM  CARRIER C (NOLOCK)
+			INNER JOIN WIP W (NOLOCK) 							ON C.CURR_LOTID = W.LOTID
+			INNER JOIN WIPATTR WA (NOLOCK) 						ON W.LOTID = WA.LOTID
+			INNER JOIN TB_MMD_FORM_ROUT_PROC RP (NOLOCK) 		ON RP.ROUTID = W.ROUTID      	AND RP.PROCID = W.PROCID	                AND RP.USE_FLAG = 'Y'
+			INNER JOIN TB_MMD_FORM_ROUT R (NOLOCK) 				ON RP.ROUTID = R.ROUTID	        AND R.USE_FLAG='Y'
+			INNER JOIN PROCESS P (NOLOCK) 						ON W.PROCID = P.PROCID
+
+			-- 2023-09-18 쿼리 수정
+			INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 			ON W.PROCID = PE.PROCID	        AND PE.USE_FLAG = 'Y'			 AND SUBSTRING (PE.EQPTID ,1,3) = 'C1F'    -- 2022-12-25 조건 추가
+			INNER LOOP JOIN EQUIPMENTATTR EA (NOLOCK) 			ON PE.EQPTID = EA.EQPTID
+			INNER LOOP JOIN EQUIPMENT E (NOLOCK) 				ON EA.EQPTID = E.EQPTID			AND E.EQPTIUSE = 'Y'
+			INNER LOOP JOIN EquipmentSegment EQS WITH(NOLOCK)	ON EQS.EQSGID = E.EQSGID        AND R.AREAID = EQS.AREAID
+
+			-- INNER JOIN EquipmentSegment EQS WITH(NOLOCK)		ON EQS.EQSGID = R.EQSGID		AND R.AREAID = EQS.AREAID
+			-- INNER JOIN EQUIPMENT E (NOLOCK) 					ON E.EQSGID = EQS.EQSGID    	AND E.EQPTIUSE = 'Y'
+			-- INNER JOIN EQUIPMENTATTR EA (NOLOCK) 				ON EA.EQPTID = E.EQPTID
+			-- INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 			ON PE.EQPTID = E.EQPTID    		AND W.PROCID = PE.PROCID	                AND PE.USE_FLAG = 'Y'
+
+			-- INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 					ON W.PROCID = PE.PROCID	                AND PE.USE_FLAG = 'Y'			 AND SUBSTRING (PE.EQPTID ,1,3) = 'C1F'    -- 2022-12-25 조건 추가
+			-- INNER JOIN EQUIPMENTATTR EA (NOLOCK) 					ON PE.EQPTID = EA.EQPTID
+			-- INNER JOIN EQUIPMENT E (NOLOCK) 					ON EA.EQPTID = E.EQPTID					AND E.EQPTIUSE = 'Y'
+			-- INNER JOIN EquipmentSegment EQS WITH(NOLOCK)					ON EQS.EQSGID = E.EQSGID                					AND R.AREAID = EQS.AREAID
+
+			INNER JOIN TB_MMD_LANE ML (NOLOCK)
+			ON ML.LANE_ID = RP.LANE_ID
+			INNER JOIN TB_MMD_LANE ML2 (NOLOCK)
+			ON ML2.LANE_ID = EA.S71
+			INNER JOIN TB_MMD_MHS_TRF_REQ_EQPT_SECTION ES WITH(NOLOCK)
+			ON
+			--ES.REQ_PORT_ID ='C1FSTO12301-'					AND
+			ES.TRGT_EQPT_ID = E.EQPTID
+			AND ES.CSTSTAT = C.CSTSTAT
+			AND ES.USE_FLAG ='Y'
+			INNER JOIN TB_MCS_PORT MP WITH(NOLOCK)
+			ON MP.IF_EQPTID = E.EQPTID
+			AND MP.USE_FLAG ='Y'
+			INNER JOIN EioAttr EIA (NOLOCK)
+			ON EA.EQPTID = EIA.EQPTID
+			INNER JOIN Eio EIO (NOLOCK)
+			ON EA.EQPTID = EIO.EQPTID
+			INNER JOIN TB_MMD_EQPT_PROG_ENABLE_ROUT PEM WITH(NOLOCK)
+			ON PEM.EQPTID = E.EQPTID
+			AND PEM.ROUTID = W.ROUTID
+			AND PEM.USE_FLAG ='Y'
+			INNER JOIN TB_MMD_EQPT_PROG_ENABLE_MDLLOT PEL WITH(NOLOCK)
+			ON PEM.EQPTID = PEL.EQPTID
+			AND PEL.MDLLOT_ID  = R.MDLLOT_ID
+			AND PEL.USE_FLAG = 'Y'
+			where C.TRAY_TYPE_CODE IN ('TKAD', 'TKAE')
+			group by C.CSTID, EA.S70, R.EQSGID, W.PROCID, W.LOTID, RP.ROUTID, WA.PROD_LOTID, C.EQPT_CUR , C.PORT_CUR, C.CSTSTAT, MP.PORT_ID
+			)
+			select 	wl.CSTID
+			, wl.LOTID
+			, wl.CSTSTAT
+			, TMTR.REQ_STAT_CODE
+			, wl.SectionCount
+			, wl.FROM_PORT_ID
+			, TMTC.TO_PORT_ID
+			, wl.TRGT_PORT_ID
+			, MP.PORT_STAT_CODE
+			, wl.TO_EQPT_GROUP_ID
+			, wl.EQSGID
+			, wl.PROCID
+			, wl.ROUTID
+			, wl.PROD_LOTID
+			from WipList wl
+			INNER JOIN COMMONCODE CM (NOLOCK)
+			ON CM.CMCDTYPE = 'EQPT_GR_TYPE_CODE'
+			AND CM.CMCDIUSE= 'Y'
+			AND CM.CMCODE = wl.TO_EQPT_GROUP_ID
+			INNER JOIN WIPATTR WA (NOLOCK)
+			ON wl.LOTID = WA.LOTID
+			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK)
+			ON MP.PORT_ID = wl.TRGT_PORT_ID
+			LEFT OUTER JOIN TB_MHS_TRF_REQ TMTR (NOLOCK)
+			ON TMTR.CSTID = wl.CSTID
+			LEFT OUTER JOIN TB_MHS_TRF_CMD TMTC (NOLOCK)
+			ON TMTC.CSTID = wl.CSTID
+			where CM.ATTRIBUTE1 is null
+			order by CSTID
+		</MainSQL>
+		<Option>
+		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
+		<Coloring>
+			<EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<F Red="255" Green="155" Blue="155" IsColoringRow="false" />
+				<T Red="255" Green="214" Blue="165" IsColoringRow="false" />
+				<U Red="255" Green="254" Blue="196" IsColoringRow="false" />
+				<W Red="203" Green="255" Blue="169" IsColoringRow="false" />
+				<R Red="203" Green="255" Blue="169" IsColoringRow="false" />
+			</EIOSTAT>
+			<EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<OFF Red="255" Green="158" Blue="158" IsColoringRow="false" />
+				<ON Red="185" Green="243" Blue="252" IsColoringRow="false" />
+			</EIOIFMODE>
+		</Coloring>
+	</SearchWaitingWips>
 </SqlList>

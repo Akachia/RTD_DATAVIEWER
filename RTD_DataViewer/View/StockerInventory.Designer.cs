@@ -38,6 +38,7 @@
             cb_Cststat = new ComboBox();
             dgv_StoInventory = new DataGridView();
             dgv_StoStatus = new DataGridView();
+            comboBox1 = new ComboBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_StoInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgv_StoStatus).BeginInit();
@@ -61,6 +62,7 @@
             tableLayoutPanel1.Controls.Add(cb_Cststat, 7, 0);
             tableLayoutPanel1.Controls.Add(dgv_StoInventory, 0, 1);
             tableLayoutPanel1.Controls.Add(dgv_StoStatus, 6, 1);
+            tableLayoutPanel1.Controls.Add(comboBox1, 6, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -162,6 +164,16 @@
             dgv_StoStatus.Size = new Size(554, 564);
             dgv_StoStatus.TabIndex = 8;
             // 
+            // comboBox1
+            // 
+            comboBox1.Dock = DockStyle.Fill;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(843, 3);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(134, 23);
+            comboBox1.TabIndex = 9;
+            comboBox1.Text = "TRF_STAT_CODE";
+            // 
             // StockerInventory
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -183,5 +195,6 @@
         private ComboBox cb_Cststat;
         private DataGridView dgv_StoStatus;
         private DataGridView dgv_StoInventory;
+        private ComboBox comboBox1;
     }
 }
