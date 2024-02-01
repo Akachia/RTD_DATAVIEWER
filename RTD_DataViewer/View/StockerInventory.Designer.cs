@@ -38,10 +38,12 @@
             cb_Cststat = new ComboBox();
             dgv_StoInventory = new DataGridView();
             dgv_StoStatus = new DataGridView();
-            comboBox1 = new ComboBox();
+            cb_TrfStatCode = new ComboBox();
+            dgv_TrfCmd = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_StoInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgv_StoStatus).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_TrfCmd).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -62,19 +64,16 @@
             tableLayoutPanel1.Controls.Add(cb_Cststat, 7, 0);
             tableLayoutPanel1.Controls.Add(dgv_StoInventory, 0, 1);
             tableLayoutPanel1.Controls.Add(dgv_StoStatus, 6, 1);
-            tableLayoutPanel1.Controls.Add(comboBox1, 6, 0);
+            tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 6, 0);
+            tableLayoutPanel1.Controls.Add(dgv_TrfCmd, 6, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -159,20 +158,32 @@
             dgv_StoStatus.Dock = DockStyle.Fill;
             dgv_StoStatus.Location = new Point(843, 33);
             dgv_StoStatus.Name = "dgv_StoStatus";
-            tableLayoutPanel1.SetRowSpan(dgv_StoStatus, 3);
+            tableLayoutPanel1.SetRowSpan(dgv_StoStatus, 2);
             dgv_StoStatus.RowTemplate.Height = 25;
-            dgv_StoStatus.Size = new Size(554, 564);
+            dgv_StoStatus.Size = new Size(554, 454);
             dgv_StoStatus.TabIndex = 8;
             // 
-            // comboBox1
+            // cb_TrfStatCode
             // 
-            comboBox1.Dock = DockStyle.Fill;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(843, 3);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(134, 23);
-            comboBox1.TabIndex = 9;
-            comboBox1.Text = "TRF_STAT_CODE";
+            cb_TrfStatCode.Dock = DockStyle.Fill;
+            cb_TrfStatCode.FormattingEnabled = true;
+            cb_TrfStatCode.Items.AddRange(new object[] { "FINAL", "MOVING", "RESERVED" });
+            cb_TrfStatCode.Location = new Point(843, 3);
+            cb_TrfStatCode.Name = "cb_TrfStatCode";
+            cb_TrfStatCode.Size = new Size(134, 23);
+            cb_TrfStatCode.TabIndex = 9;
+            cb_TrfStatCode.Text = "TRF_STAT_CODE";
+            // 
+            // dgv_TrfCmd
+            // 
+            dgv_TrfCmd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableLayoutPanel1.SetColumnSpan(dgv_TrfCmd, 4);
+            dgv_TrfCmd.Dock = DockStyle.Fill;
+            dgv_TrfCmd.Location = new Point(843, 493);
+            dgv_TrfCmd.Name = "dgv_TrfCmd";
+            dgv_TrfCmd.RowTemplate.Height = 25;
+            dgv_TrfCmd.Size = new Size(554, 104);
+            dgv_TrfCmd.TabIndex = 10;
             // 
             // StockerInventory
             // 
@@ -184,6 +195,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgv_StoInventory).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgv_StoStatus).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_TrfCmd).EndInit();
             ResumeLayout(false);
         }
 
@@ -195,6 +207,7 @@
         private ComboBox cb_Cststat;
         private DataGridView dgv_StoStatus;
         private DataGridView dgv_StoInventory;
-        private ComboBox comboBox1;
+        private ComboBox cb_TrfStatCode;
+        private DataGridView dgv_TrfCmd;
     }
 }

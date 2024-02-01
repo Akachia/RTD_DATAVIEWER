@@ -83,6 +83,7 @@ namespace RTD_DataViewer.View
             try
             {
                 paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
+                paramaterDic.Add("CSTID", $"");
 
                 winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }

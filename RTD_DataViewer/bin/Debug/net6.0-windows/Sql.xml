@@ -98,24 +98,31 @@
 	<SearchTrfInfo>
 	<MainSQL>
 		select
-		CSTID
-		, CSTSTAT
-		, FROM_PORT_ID
-		, TO_PORT_ID
-		, FINL_TRGT_EQPT_ID
-		, CMD_STAT_CODE
-		, TRF_CODE
-		, RTD_RULE_ID
-		, REQ_DTTM
-		, TRF_STRT_DTTM
-		, UPDDTTM
-		from TB_MHS_TRF_CMD with (NOLOCK)
-		WHERE REQ_SEQNO = @REQ_SEQNO
+		THTC.CSTID
+		, THTC.CSTSTAT
+		, THTC.FROM_PORT_ID
+		, THTC.TO_PORT_ID
+		, THTC.FINL_TRGT_EQPT_ID
+		, THTC.CMD_STAT_CODE
+		, C.LOAD_REP_CSTID
+		, THTC.TRF_CODE
+		, THTC.RTD_RULE_ID
+		, THTC.REQ_DTTM
+		, THTC.TRF_STRT_DTTM
+		, THTC.UPDDTTM
+		from TB_MHS_TRF_CMD THTC (NOLOCK)
+		INNER JOIN CARRIER C (NOLOCK) ON C.CSTID = THTC.CSTID
+		WHERE 1 = 1
 	</MainSQL>
 	<Option>
+		<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+			AND THTC.CSTID = @CSTID --OR  THTC.CSTID = (SELECT LOAD_REP_CSTID FROM CARRIER WITH (NOLOCK) WHERE CSTID = @CSTID))
+		</Option1>
+		<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
+			AND REQ_SEQNO LIKE @REQ_SEQNO
+		</Option2>
 	</Option>
 	<AdditionalVariable>
-		<REQ_SEQNO dataType="Bigint" default=""/>
 	</AdditionalVariable>
 	<Coloring>
 		<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -619,7 +626,7 @@
 			LEFT JOIN TT_EMPTY_QTY CE ON TOT.EQPTID = CE.TO_EQPTID
 			)
 			SELECT
-			e.EQPTID 
+			e.EQPTID
 			, e.EQGRID
 			, e.EQPTIUSE AS 사용
 			, ei.EIOSTAT
@@ -638,7 +645,7 @@
 			AND (E.EQPTIUSE = 'Y'
 			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
 			AND E.EQPTID like @AREA_ID
-			AND E.EQGRID IN ('CNV','STO','PKG','EOL','FOR','LAM','NND','ROL','COT')
+			AND E.EQGRID IN ('CNV','STO','PKG','EOL','FOR','LAM','NND','ROL','COT','STK')
 			and LEN(E.EQPTID) = 11)
 			OR
 			(E.EQPTIUSE = 'Y'
@@ -786,33 +793,33 @@
 	</SearchPortEioHist>
 	<SearchStkComCode>
 		<MainSQL>
-      SELECT DISTINCT S70 AS Code,
-      CASE
-      WHEN S70 = '1' THEN 'CDC STO'
-      WHEN S70 = '3' THEN 'NORM AGING STO'
-      WHEN S70 = '4' THEN 'HIGH AGING STO'
-      WHEN S70 = '7' THEN 'SHIP AGING STO'
-      WHEN S70 = '9' THEN 'PRE AGING STO'
-      WHEN S70 = 'E' THEN '2nd Empty STO'
-      WHEN S70 = 'J' THEN 'JIG STO'
-      WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
-      WHEN S70 = 'NPW' THEN 'NND PROD STO'
-      WHEN S70 = 'NWW' THEN 'NND WAIT STO'
-      WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
-      WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
-      WHEN S70 = 'PCW' THEN 'PROD COMP STO'
-      ELSE 'ETC'
-      END AS Sto_Desc
-      FROM EQUIPMENT E (NOLOCK)
-      INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
-      ON E.EQSGID = ESA.EQSGID
-      INNER JOIN EquipmentAttr EA
-      ON E.EQPTID = EA.EQPTID
-      WHERE E.EQSGID like @PLANT_ID
-      and E.EQGRID = 'STO'
-      and ESA.S38 = @SYSTEM_TYPE_CODE
-      and EA.S70 is not NULL
-    </MainSQL>
+			SELECT DISTINCT S70 AS Code,
+			CASE
+			WHEN S70 = '9' THEN 'PRE AGING STO'
+			WHEN S70 = '4' THEN 'HIGH AGING STO'
+			WHEN S70 = '3' THEN 'NORM AGING STO'
+			WHEN S70 = '7' THEN 'SHIP AGING STO'
+			WHEN S70 = 'E' THEN '2nd Empty STO'
+			WHEN S70 = '1' THEN 'CDC STO'
+			WHEN S70 = 'J' THEN 'JIG STO'
+			WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
+			WHEN S70 = 'NPW' THEN 'NND PROD STO'
+			WHEN S70 = 'NWW' THEN 'NND WAIT STO'
+			WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
+			WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
+			WHEN S70 = 'PCW' THEN 'PROD COMP STO'
+			ELSE 'ETC'
+			END AS Sto_Desc
+			FROM EQUIPMENT E (NOLOCK)
+			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+			ON E.EQSGID = ESA.EQSGID
+			INNER JOIN EquipmentAttr EA
+			ON E.EQPTID = EA.EQPTID
+			WHERE E.EQSGID like @PLANT_ID
+			and E.EQGRID = 'STO'
+			and ESA.S38 = @SYSTEM_TYPE_CODE
+			and EA.S70 is not NULL
+		</MainSQL>
 		<Option>
 		</Option>
 		<AdditionalVariable>

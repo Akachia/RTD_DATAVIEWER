@@ -25,6 +25,13 @@ namespace RTD_DataViewer.View
             SearchStkComCode();
             FillComboBox();
             cb_Cststat.SelectedIndex = 0;
+            dgv_StoInventory.CellClick += Dgv_StoInventory_CellClick;
+        }
+
+        private void Dgv_StoInventory_CellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+            SearchTrfInfo(cstId);
         }
 
         private void SearchStkComCode()
@@ -63,7 +70,19 @@ namespace RTD_DataViewer.View
             }
 
         }
+        private void SearchTrfInfo(string cstid)
+        {
+            WinformUtils winformUtils = new WinformUtils(main);
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            try
+            {
+                paramaterDic.Add("CSTID", $"{cstid}");
+                paramaterDic.Add("REQ_SEQNO", $"0");
 
+                winformUtils.ExcuteSql(paramaterDic, dgv_TrfCmd, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            }
+            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
+        }
         private void FillComboBox()
         {
             if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
@@ -84,10 +103,17 @@ namespace RTD_DataViewer.View
 
             string plantId = main.correntConnectionStringSetting.PlantID;
             string stoCode = stkComCodeList[cb_StockerGroupList.Text];
+            string trfStatCode = string.Empty;
+            if (cb_TrfStatCode.SelectedIndex > 0)
+            {
+                trfStatCode = cb_TrfStatCode.Text;
+            }
+
 
             paramaterDic.Add("PLANT_ID", $"'{plantId}'");
             paramaterDic.Add("STO_CODE", $"'{stoCode}'");
             paramaterDic.Add("CSTSTAT", $"{cb_Cststat.SelectedIndex}");
+            paramaterDic.Add("TRF_STAT_CODE", $"{trfStatCode}");
 
             new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StoInventory, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
