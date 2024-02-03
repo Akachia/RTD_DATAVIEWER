@@ -11,26 +11,31 @@ using System.Windows.Forms;
 
 namespace RTD_DataViewer.View
 {
-    public partial class WipInfo : UserControl
+    public partial class RollSituation : UserControl
     {
         MainViewer main;
-        public WipInfo(MainViewer main)
+        public RollSituation(MainViewer main)
         {
             InitializeComponent();
             this.main = main;
         }
 
-        private void SearchWaitingWips(string req_SeqNo)
+        private void RollCurrentSituation()
         {
             WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
             try
             {
-                paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
+                // paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
 
-                // winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                winformUtils.ExcuteSql(paramaterDic, dgw_RollCurrentSituation, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }
-            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
+            catch (Exception ex) { MessageBox.Show($"{ex.Message} : RollCurrentSituation"); }
+        }
+
+        private void bt_RollSituationSearch_Click(object sender, EventArgs e)
+        {
+            RollCurrentSituation();
         }
     }
 

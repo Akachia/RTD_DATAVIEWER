@@ -31,7 +31,7 @@
     <Compile Update="View\TransportList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\WipInfo.cs">
+    <Compile Update="View\RollSituation.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="View\WaitWips.cs">

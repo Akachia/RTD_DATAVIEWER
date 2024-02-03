@@ -81,6 +81,10 @@ namespace RTD_DataViewer
             StockerInventory stockerInventory = new StockerInventory(this);
             tp_StockerInventory.Controls.Add(stockerInventory);
             stockerInventory.Dock = DockStyle.Fill;
+
+            RollSituation rollSituation = new RollSituation(this);
+            tp_RollSituation.Controls.Add(rollSituation);
+            rollSituation.Dock = DockStyle.Fill;
         }
 
         public void AppendLog(string text)

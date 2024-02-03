@@ -33,6 +33,9 @@ namespace RTD_DataViewer.View
             catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
         }
 
+
+
+
         private void bt_Search_Click(object sender, EventArgs e)
         {
             SearchWaitingWips("");

@@ -37,7 +37,7 @@
             tp_CstHist = new TabPage();
             tp_EqpState = new TabPage();
             tp_StockerInventory = new TabPage();
-            tp_WipInfo = new TabPage();
+            tp_RollSituation = new TabPage();
             tp_WaitWips = new TabPage();
             tp_LnsPkgState = new TabPage();
             tp_LogBox = new TabPage();
@@ -86,7 +86,7 @@
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
-            reqATransfer_dgvReq.Controls.Add(tp_WipInfo);
+            reqATransfer_dgvReq.Controls.Add(tp_RollSituation);
             reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
             reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
@@ -166,15 +166,15 @@
             tp_StockerInventory.Text = "스토커 현황";
             tp_StockerInventory.UseVisualStyleBackColor = true;
             // 
-            // tp_WipInfo
+            // tp_RollSituation
             // 
-            tp_WipInfo.Location = new Point(4, 24);
-            tp_WipInfo.Name = "tp_WipInfo";
-            tp_WipInfo.Padding = new Padding(3);
-            tp_WipInfo.Size = new Size(1420, 603);
-            tp_WipInfo.TabIndex = 9;
-            tp_WipInfo.Text = "WipInfo";
-            tp_WipInfo.UseVisualStyleBackColor = true;
+            tp_RollSituation.Location = new Point(4, 24);
+            tp_RollSituation.Name = "tp_RollSituation";
+            tp_RollSituation.Padding = new Padding(3);
+            tp_RollSituation.Size = new Size(1420, 603);
+            tp_RollSituation.TabIndex = 9;
+            tp_RollSituation.Text = "RollSituation";
+            tp_RollSituation.UseVisualStyleBackColor = true;
             // 
             // tp_WaitWips
             // 
@@ -403,7 +403,7 @@
         private ToolStripStatusLabel RowCount;
         private TabPage tp_CstInfo;
         private TabPage tp_StockerInventory;
-        private TabPage tp_WipInfo;
+        private TabPage tp_RollSituation;
         private TabPage tp_WaitWips;
     }
 }

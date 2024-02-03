@@ -165,5 +165,5 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\ne
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\net6.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\net6.0-windows\runtimes\win-x64\native\WebView2Loader.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\net6.0-windows\runtimes\win-x86\native\WebView2Loader.dll
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.WipInfo.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.WaitWips.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.RollSituation.resources

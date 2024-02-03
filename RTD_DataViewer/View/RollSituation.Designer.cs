@@ -1,6 +1,6 @@
 ﻿namespace RTD_DataViewer.View
 {
-    partial class WipInfo
+    partial class RollSituation
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -30,10 +30,13 @@
         {
             lb_MismatchMessage = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            bt_CstInfoSearch = new Button();
-            ckb_ValidNgHist = new CheckBox();
+            bt_RollSituationSearch = new Button();
             label1 = new Label();
+            dgw_RollCurrentSituation = new DataGridView();
+            dgv_RollList = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgw_RollCurrentSituation).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_RollList).BeginInit();
             SuspendLayout();
             // 
             // lb_MismatchMessage
@@ -57,9 +60,10 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(bt_CstInfoSearch, 7, 0);
-            tableLayoutPanel1.Controls.Add(ckb_ValidNgHist, 5, 0);
+            tableLayoutPanel1.Controls.Add(bt_RollSituationSearch, 7, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dgw_RollCurrentSituation, 0, 1);
+            tableLayoutPanel1.Controls.Add(dgv_RollList, 0, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -70,27 +74,16 @@
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 8;
             // 
-            // bt_CstInfoSearch
+            // bt_RollSituationSearch
             // 
-            bt_CstInfoSearch.Dock = DockStyle.Fill;
-            bt_CstInfoSearch.Location = new Point(1298, 3);
-            bt_CstInfoSearch.Name = "bt_CstInfoSearch";
-            bt_CstInfoSearch.Size = new Size(99, 24);
-            bt_CstInfoSearch.TabIndex = 4;
-            bt_CstInfoSearch.Text = "Search";
-            bt_CstInfoSearch.UseVisualStyleBackColor = true;
-            // 
-            // ckb_ValidNgHist
-            // 
-            ckb_ValidNgHist.AutoSize = true;
-            ckb_ValidNgHist.Dock = DockStyle.Fill;
-            ckb_ValidNgHist.Location = new Point(878, 3);
-            ckb_ValidNgHist.Name = "ckb_ValidNgHist";
-            ckb_ValidNgHist.RightToLeft = RightToLeft.Yes;
-            ckb_ValidNgHist.Size = new Size(204, 24);
-            ckb_ValidNgHist.TabIndex = 5;
-            ckb_ValidNgHist.Text = "입고 불허 조회";
-            ckb_ValidNgHist.UseVisualStyleBackColor = true;
+            bt_RollSituationSearch.Dock = DockStyle.Fill;
+            bt_RollSituationSearch.Location = new Point(1298, 3);
+            bt_RollSituationSearch.Name = "bt_RollSituationSearch";
+            bt_RollSituationSearch.Size = new Size(99, 24);
+            bt_RollSituationSearch.TabIndex = 4;
+            bt_RollSituationSearch.Text = "Search";
+            bt_RollSituationSearch.UseVisualStyleBackColor = true;
+            bt_RollSituationSearch.Click += bt_RollSituationSearch_Click;
             // 
             // label1
             // 
@@ -102,16 +95,40 @@
             label1.TabIndex = 6;
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // WipInfo
+            // dgw_RollCurrentSituation
+            // 
+            dgw_RollCurrentSituation.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableLayoutPanel1.SetColumnSpan(dgw_RollCurrentSituation, 8);
+            dgw_RollCurrentSituation.Dock = DockStyle.Fill;
+            dgw_RollCurrentSituation.Location = new Point(3, 33);
+            dgw_RollCurrentSituation.Name = "dgw_RollCurrentSituation";
+            dgw_RollCurrentSituation.RowTemplate.Height = 25;
+            dgw_RollCurrentSituation.Size = new Size(1394, 165);
+            dgw_RollCurrentSituation.TabIndex = 7;
+            // 
+            // dgv_RollList
+            // 
+            dgv_RollList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableLayoutPanel1.SetColumnSpan(dgv_RollList, 8);
+            dgv_RollList.Dock = DockStyle.Fill;
+            dgv_RollList.Location = new Point(3, 204);
+            dgv_RollList.Name = "dgv_RollList";
+            dgv_RollList.RowTemplate.Height = 25;
+            dgv_RollList.Size = new Size(1394, 393);
+            dgv_RollList.TabIndex = 8;
+            // 
+            // RollSituation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
             Controls.Add(lb_MismatchMessage);
-            Name = "WipInfo";
+            Name = "RollSituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgw_RollCurrentSituation).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_RollList).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -123,9 +140,10 @@
         private UserWinfromControl.UWC_DataGridView dgv_LotActHist;
         private UserWinfromControl.UWC_DataGridView dgv_LotInfo;
         private UserWinfromControl.UWC_DataGridView dgv_LotHist;
-        private Button bt_CstInfoSearch;
+        private Button bt_RollSituationSearch;
         private UserWinfromControl.UWC_LabelAndTextBox latb_LotId;
-        private CheckBox ckb_ValidNgHist;
         private Label label1;
+        private DataGridView dgw_RollCurrentSituation;
+        private DataGridView dgv_RollList;
     }
 }
