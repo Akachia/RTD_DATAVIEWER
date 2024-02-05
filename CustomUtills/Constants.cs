@@ -90,6 +90,27 @@ namespace CustomUtils
             public static string YESTERDAY = "YESTERDAY";
         }
 
+        public static class EventValues
+        {
+            /// <summary>
+            /// ClassName = "EventVals";
+            /// </summary>
+            public static string ClassName = "EventValues";
+            /// <summary>
+            /// TYPE = "TYPE";
+            /// </summary>
+            public static string TYPE = "TYPE";
+            /// <summary>
+            /// CallSQL = "CallSQL";
+            /// </summary>
+            public static string CallSQL = "CallSQL";
+            /// <summary>
+            /// EventType = "EventType";
+            /// </summary>
+            public static string EventType = "EventType";
+        }
+
+
         public static string key = "key";
         public static string value = "value";
         public static string Default = "default";

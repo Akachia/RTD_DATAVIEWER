@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using CustomUtills;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,7 @@ namespace RTD_DataViewer.View
         string EqpId = string.Empty;
         string ruleId = string.Empty;
         int currNum = 0;
+        int carrierState = 0;
 
         public ReqInfomation(MainViewer main)
         {
@@ -61,7 +63,6 @@ namespace RTD_DataViewer.View
                 {
                     cstId = "";
                 }
-
             }
 
             if (cstId != "")
@@ -74,6 +75,15 @@ namespace RTD_DataViewer.View
         {
             string errMsg = string.Empty;
             new WinformUtils(main).SearchCstInfo(reqInfo_DgvCarrier.DgvData, cstId, ref errMsg);
+
+            if (errMsg.Equals(string.Empty))
+            {
+                lb_CarrierInfoValidText.Text = "Carrier loading infomation is normal";
+            }
+            else
+            {
+                lb_CarrierInfoValidText.Text = errMsg;
+            }
         }
 
         private void SearchTrfInfo(string req_SeqNo)
@@ -152,8 +162,47 @@ namespace RTD_DataViewer.View
                 ReqList();
             }
 
-            lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
+            if (main.correntConnectionStringSetting.DatabaseProvider != "ORACLE")
+            {
+                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
+            }
 
+            if (ckb_IsOpenReqSituation.Checked)
+            {
+                MakeSituations();
+            }
+            else
+            {
+                string ruleResult = "100|CNV UR|5|1,117|CNV2 UR|5|2,117-106|CNV Child UR|5|3,119|CNV Child UR|5|4";
+                MakeRuleResult(ruleResult);
+            }
+
+        }
+
+        private void MakeSituations()
+        {
+
+        }
+
+        private void MakeRuleResult(string ruleResult)
+        {
+            RuleResultCollection ruleResultCollection = new RuleResultCollection(ruleResult);
+
+            tv_SituationOrRuleResult.Nodes.Clear(); 
+
+            foreach (RuleResult rule in ruleResultCollection.RuleResults)
+            {
+                TreeNode rootNode = new TreeNode($"{rule.RuleName} : {rule.ResultNum}");
+                rootNode.Name = rule.RuleId.ToString();
+                tv_SituationOrRuleResult.Nodes.Add(rootNode);
+
+                foreach (RuleResult childRule in rule.ChildRuleResults)
+                {
+                    TreeNode childNode = new TreeNode($"{childRule.RuleName} : {childRule.ResultNum}");
+                    childNode.Name = childRule.RuleId.ToString();
+                    rootNode.Nodes.Add(childNode);
+                }
+            }
         }
 
         public void ReqList()
@@ -166,7 +215,7 @@ namespace RTD_DataViewer.View
             reqInfo_DgvCarrier.DgvData.DataSource = null;
 
             this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
-
+            this.carrierState = cb_CarrierState.SelectedIndex;
 
             string endDate = lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting();
             string startDate = lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting();
@@ -181,6 +230,7 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("CSTID", $"{cstid}");
                 paramaterDic.Add("EQPTID", $"{EqpId}");
                 paramaterDic.Add("RULEID", $"{ruleId}");
+                paramaterDic.Add("CSTSTAT", $"{carrierState}");
 
                 if (cb_ReqState.SelectedIndex > 0)
                 {
@@ -198,6 +248,11 @@ namespace RTD_DataViewer.View
             {
                 MessageBox.Show($"{ex.Message} : ReqList");
             }
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }

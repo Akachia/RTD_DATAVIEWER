@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
+using static CustomUtils.CommonXml;
 
 namespace XmlManagement
 {
@@ -16,6 +17,7 @@ namespace XmlManagement
                 OptionSqls = new();
                 AdditionalVarDic = new Dictionary<string, AdditionalVariable>();
                 ColoringDic = new Dictionary<string, Coloring>();
+                EventValueDic = new Dictionary<string, EventValue>();
                 Name = xmlNode.Name;
                 Sql = xmlNode.ChildNodes[0].InnerText;
 
@@ -33,6 +35,11 @@ namespace XmlManagement
                 {
                     ColoringDic.Add(childNode.Name, new Coloring(childNode));
                 }
+                foreach (XmlNode childNode in xmlNode[EventValues.ClassName].ChildNodes)
+                {
+                    EventValueDic.Add(childNode.Name, new EventValue(childNode));
+                }
+
             }
             catch (Exception ex)
             {
@@ -46,6 +53,7 @@ namespace XmlManagement
         public List<XmlOptionSql>? OptionSqls { get; set; }
         public Dictionary<string, AdditionalVariable>? AdditionalVarDic { get; set; }
         public Dictionary<string, Coloring>? ColoringDic { get; set; }
+        public Dictionary<string, EventValue>? EventValueDic { get; set; }
     }
 
     public class XmlOptionSql
@@ -215,6 +223,29 @@ namespace XmlManagement
 
     }
 
+    public class EventValue
+    {
+        public EventValue(XmlNode xmlNode)
+        {
+            try
+            {
+                ColumnName = xmlNode.Name;
+                try { this.Type = xmlNode.Attributes.GetNamedItem(EventValues.TYPE).Value; } catch (Exception) { this.Type = ""; }
+                try { this.CallSQL = xmlNode.Attributes.GetNamedItem(EventValues.CallSQL).Value; } catch (Exception) { this.CallSQL = ""; }
+                try { this.EventType = xmlNode.Attributes.GetNamedItem(EventValues.EventType).Value; } catch (Exception) { this.EventType = ""; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string ColumnName { get; set; }
+        public string Type { get; set; }
+        public string CallSQL { get; set; }
+        public string EventType { get; set; }
+
+    }
     //public XmlOptionData(XmlNode node)
     //{
     //    // Tag Name
