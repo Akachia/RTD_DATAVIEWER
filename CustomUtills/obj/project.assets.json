@@ -2077,11 +2077,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj",
+      "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj",
       "projectName": "CustomUtills",
-      "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj",
+      "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj",
       "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\obj\\",
+      "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

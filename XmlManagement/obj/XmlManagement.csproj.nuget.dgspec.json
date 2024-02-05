@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\XmlManagement.csproj": {}
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\XmlManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj",
         "projectName": "CustomUtills",
-        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj",
         "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\obj\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,14 +70,14 @@
         }
       }
     },
-    "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\DBManagement.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\DBManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\DBManagement.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\DBManagement.csproj",
         "projectName": "DBManagement",
-        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\DBManagement.csproj",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\DBManagement.csproj",
         "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\obj\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,8 +99,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj"
               }
             }
           }
@@ -144,14 +144,14 @@
         }
       }
     },
-    "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\XmlManagement.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\XmlManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\XmlManagement.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\XmlManagement.csproj",
         "projectName": "XmlManagement",
-        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\XmlManagement.csproj",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\XmlManagement.csproj",
         "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\obj\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -173,11 +173,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\CustomUtills\\CustomUtills.csproj"
               },
-              "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\DBManagement.csproj": {
-                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\DBManagement\\DBManagement.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\DBManagement.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\DBManagement\\DBManagement.csproj"
               }
             }
           }

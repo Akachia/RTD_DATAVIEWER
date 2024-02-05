@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wdH61YO8WGuOXEOGpzNTK3qM9By0bNkePHAyQCqExJVOed35hk2jvsdM5gSXZLokdZWiXaDxf03Ev6sEuYMHkQ==",
+  "dgSpecHash": "hnvkXF9kaXderVdZLF0YOoymU8IaW4nhqwNlLAkxI6shGE3z+bwnQYooZzeneVG/fth6sXr1ohOfDQVqd9jAGQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\carry\\Documents\\GitHub\\Tester1\\XmlManagement\\XmlManagement.csproj",
+  "projectFilePath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DataViewer\\XmlManagement\\XmlManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\carry\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\carry\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
