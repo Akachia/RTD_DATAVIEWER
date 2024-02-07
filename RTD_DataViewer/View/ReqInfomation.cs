@@ -46,6 +46,11 @@ namespace RTD_DataViewer.View
             Btn_Click();
         }
 
+        private void GetValues()
+        {
+
+        }
+
         private void ReqInfoDataGridViewCellClick(object? sender, DataGridViewCellEventArgs e)
         {
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
@@ -188,7 +193,7 @@ namespace RTD_DataViewer.View
         {
             RuleResultCollection ruleResultCollection = new RuleResultCollection(ruleResult);
 
-            tv_SituationOrRuleResult.Nodes.Clear(); 
+            tv_SituationOrRuleResult.Nodes.Clear();
 
             foreach (RuleResult rule in ruleResultCollection.RuleResults)
             {
