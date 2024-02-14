@@ -23,9 +23,7 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\XmlManagement.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\XmlManagement.pdb
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\CustomUtills.dll
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\DBManagement.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\CustomUtills.pdb
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\DBManagement.pdb
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\obj\Debug\net6.0\XmlManagement.csproj.AssemblyReference.cache
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\obj\Debug\net6.0\XmlManagement.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\obj\Debug\net6.0\XmlManagement.AssemblyInfoInputs.cache

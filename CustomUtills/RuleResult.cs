@@ -30,7 +30,6 @@ namespace CustomUtills
                 {
                     RuleResults.Add(new RuleResult(ruleResultStr));
                 }
- 
             }
         }
 

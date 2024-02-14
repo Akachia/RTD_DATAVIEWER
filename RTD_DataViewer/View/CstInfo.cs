@@ -43,10 +43,10 @@ namespace RTD_DataViewer.View
 
         private void SearchCstInfo()
         {
-            string errMsg = string.Empty; 
+            string errMsg = string.Empty;
             new WinformUtils(main).SearchCstInfo(dgv_CstInfo.DgvData, latb_CarrierId.Tb_Text, ref errMsg);
 
-            
+
             lb_MismatchMessage.Text = errMsg;
 
             //string cstid = latb_CarrierId.Tb_Text;

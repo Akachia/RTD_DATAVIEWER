@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using DBManagemnet;
 
 namespace XmlManagement
 {
@@ -36,30 +35,6 @@ namespace XmlManagement
             //}
 
             return null;
-        }
-
-        public Dictionary<string, DBConnectionString> MakeConnectionStringLIst(string sqlXmlPath)
-        {
-            XmlDocument xdoc = new XmlDocument();
-            Dictionary<string, DBConnectionString> result = new Dictionary<string, DBConnectionString>();
-            // 특정 노드들을 필터링
-            xdoc.Load(sqlXmlPath);
-            XmlNode nodes = xdoc.ChildNodes[1];
-
-            foreach (XmlNode node in nodes)
-            {
-                result.Add(node.Name, new DBConnectionString(
-                    node["Server"].InnerText,
-                    node["Database"].InnerText,
-                    node["DatabaseProvider"].InnerText,
-                    node["UserId"].InnerText,
-                    node["Password"].InnerText,
-                    node["AreaID"].InnerText,
-                    node["PlantID"].InnerText,
-                    node["SystemTypeCode"].InnerText)
-                    );
-            }
-            return result;
         }
     }
 }

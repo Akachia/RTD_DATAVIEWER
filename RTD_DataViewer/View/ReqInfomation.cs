@@ -74,6 +74,17 @@ namespace RTD_DataViewer.View
             {
                 SearchCstInfo(cstId);
             }
+
+
+            if (ckb_IsOpenReqSituation.Checked)
+            {
+                MakeSituations();
+            }
+            else
+            {
+                string ruleResult = (sender as DataGridView).CurrentRow.Cells["RTD_EXEC_LOG_CNTT"].Value.ToString();
+                MakeRuleResult(ruleResult);
+            }
         }
 
         private void SearchCstInfo(string cstId)
@@ -172,15 +183,6 @@ namespace RTD_DataViewer.View
                 lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
             }
 
-            if (ckb_IsOpenReqSituation.Checked)
-            {
-                MakeSituations();
-            }
-            else
-            {
-                string ruleResult = "100|CNV UR|5|1,117|CNV2 UR|5|2,117-106|CNV Child UR|5|3,119|CNV Child UR|5|4";
-                MakeRuleResult(ruleResult);
-            }
 
         }
 

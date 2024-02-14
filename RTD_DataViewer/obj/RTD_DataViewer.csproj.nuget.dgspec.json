@@ -101,6 +101,9 @@
             "projectReferences": {
               "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj": {
                 "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj"
+              },
+              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\XmlManagement\\XmlManagement.csproj": {
+                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\XmlManagement\\XmlManagement.csproj"
               }
             }
           }
@@ -115,13 +118,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.28, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.1.4, )"
+              "version": "[5.1.5, )"
             },
             "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
-              "version": "[3.21.120, )"
+              "version": "[3.21.130, )"
             }
           },
           "imports": [
@@ -200,11 +207,11 @@
           "dependencies": {
             "Dapper": {
               "target": "Package",
-              "version": "[2.1.24, )"
+              "version": "[2.1.28, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.1.4, )"
+              "version": "[5.1.5, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -212,7 +219,7 @@
             },
             "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
-              "version": "[3.21.120, )"
+              "version": "[3.21.130, )"
             }
           },
           "imports": [
@@ -342,9 +349,6 @@
             "projectReferences": {
               "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj": {
                 "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj"
-              },
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\DBManagement\\DBManagement.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\DBManagement\\DBManagement.csproj"
               }
             }
           }

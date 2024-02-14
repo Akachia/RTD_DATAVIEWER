@@ -44,3 +44,7 @@ C:\Users\carry\Documents\GitHub\RTD_DataViewer\DBManagement\obj\Debug\net6.0\DBM
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\DBManagement\obj\Debug\net6.0\refint\DBManagement.dll
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\DBManagement\obj\Debug\net6.0\DBManagement.pdb
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\DBManagement\obj\Debug\net6.0\ref\DBManagement.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\DBManagement\bin\Debug\net6.0\DBConnectionString.xml
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\DBManagement\bin\Debug\net6.0\Sql.xml
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\DBManagement\bin\Debug\net6.0\XmlManagement.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\DBManagement\bin\Debug\net6.0\XmlManagement.pdb
