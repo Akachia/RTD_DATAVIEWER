@@ -1,5 +1,6 @@
 ﻿using CustomUtills;
 using Dapper;
+using DBManagement;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,38 +18,36 @@ namespace RTD_DataViewer.View
 {
     public partial class ReqInfomation : UserControl
     {
+        #region Variable
         MainViewer main;
-        string cstid = string.Empty;
-        string startDate = string.Empty;
-        string endDate = string.Empty;
-        string EqpId = string.Empty;
-        string ruleId = string.Empty;
         int currNum = 0;
-        int carrierState = 0;
+        string errMsg;
+        DefaultSqlData reqListData = null;
+        Dictionary<string, string> paramaterDic;
+        #endregion
 
+        #region Construction
         public ReqInfomation(MainViewer main)
         {
             InitializeComponent();
-            DateTime tomorrow = DateTime.Today.AddDays(1);
-            DateTime yesterday = DateTime.Today.AddDays(-1);
             this.main = main;
             tAbt_ReqInfo_Search.timer.Tick += Timer_Tick;
             tAbt_ReqInfo_Search.bt_Search.Click += Bt_Search_Click;
             reqInfo_dgvReq.DgvData.CellClick += ReqInfoDataGridViewCellClick;
-            lAdtp_ReqInfo_EndDate.Dtp_Value = tomorrow;
-            lAdtp_ReqInfo_StartDate.Dtp_Value = yesterday;
             lAdtp_ReqInfo_EndDate.IsChecked = false;
             lAdtp_ReqInfo_StartDate.IsChecked = true;
+        }
+        #endregion
+
+        #region Events for UI Controls
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void Bt_Search_Click(object? sender, EventArgs e)
         {
             Btn_Click();
-        }
-
-        private void GetValues()
-        {
-
         }
 
         private void ReqInfoDataGridViewCellClick(object? sender, DataGridViewCellEventArgs e)
@@ -87,33 +86,30 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchCstInfo(string cstId)
+        internal void Btn_Click()
         {
-            string errMsg = string.Empty;
-            new WinformUtils(main).SearchCstInfo(reqInfo_DgvCarrier.DgvData, cstId, ref errMsg);
-
-            if (errMsg.Equals(string.Empty))
+            if (tAbt_ReqInfo_Search.IsUseTimer)
             {
-                lb_CarrierInfoValidText.Text = "Carrier loading infomation is normal";
+                tAbt_ReqInfo_Search.timer.Interval = 1000;
+                if (tAbt_ReqInfo_Search.timer.Enabled)
+                {
+                    tAbt_ReqInfo_Search.timer.Stop();
+                    tAbt_ReqInfo_Search.bt_Search.Text = "Search";
+                }
+                else
+                {
+                    tAbt_ReqInfo_Search.timer.Start();
+                }
             }
             else
             {
-                lb_CarrierInfoValidText.Text = errMsg;
+                ReqList();
             }
-        }
 
-        private void SearchTrfInfo(string req_SeqNo)
-        {
-            WinformUtils winformUtils = new WinformUtils(main);
-            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-            try
+            if (main.correntConnectionStringSetting.DatabaseProvider != "ORACLE")
             {
-                paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
-                paramaterDic.Add("CSTID", $"");
-
-                winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
             }
-            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -129,6 +125,32 @@ namespace RTD_DataViewer.View
             {
                 tAbt_ReqInfo_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
                 currNum--;
+            }
+        }
+
+
+
+        #endregion
+
+        #region Utilities for Ui
+        private void MakeRuleResult(string ruleResult)
+        {
+            RuleResultCollection ruleResultCollection = new RuleResultCollection(ruleResult);
+
+            tv_SituationOrRuleResult.Nodes.Clear();
+
+            foreach (RuleResult rule in ruleResultCollection.RuleResults)
+            {
+                TreeNode rootNode = new TreeNode($"{rule.RuleName} : {rule.ResultNum}");
+                rootNode.Name = rule.RuleId.ToString();
+                tv_SituationOrRuleResult.Nodes.Add(rootNode);
+
+                foreach (RuleResult childRule in rule.ChildRuleResults)
+                {
+                    TreeNode childNode = new TreeNode($"{childRule.RuleName} : {childRule.ResultNum}");
+                    childNode.Name = childRule.RuleId.ToString();
+                    rootNode.Nodes.Add(childNode);
+                }
             }
         }
 
@@ -158,31 +180,9 @@ namespace RTD_DataViewer.View
             return str;
         }
 
-        internal void Btn_Click()
+
+        private void GetValues()
         {
-            if (tAbt_ReqInfo_Search.IsUseTimer)
-            {
-                tAbt_ReqInfo_Search.timer.Interval = 1000;
-                if (tAbt_ReqInfo_Search.timer.Enabled)
-                {
-                    tAbt_ReqInfo_Search.timer.Stop();
-                    tAbt_ReqInfo_Search.bt_Search.Text = "Search";
-                }
-                else
-                {
-                    tAbt_ReqInfo_Search.timer.Start();
-                }
-            }
-            else
-            {
-                ReqList();
-            }
-
-            if (main.correntConnectionStringSetting.DatabaseProvider != "ORACLE")
-            {
-                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, reqInfo_dgvReq.DgvData.RowCount);
-            }
-
 
         }
 
@@ -191,76 +191,91 @@ namespace RTD_DataViewer.View
 
         }
 
-        private void MakeRuleResult(string ruleResult)
-        {
-            RuleResultCollection ruleResultCollection = new RuleResultCollection(ruleResult);
+        #endregion
 
-            tv_SituationOrRuleResult.Nodes.Clear();
-
-            foreach (RuleResult rule in ruleResultCollection.RuleResults)
-            {
-                TreeNode rootNode = new TreeNode($"{rule.RuleName} : {rule.ResultNum}");
-                rootNode.Name = rule.RuleId.ToString();
-                tv_SituationOrRuleResult.Nodes.Add(rootNode);
-
-                foreach (RuleResult childRule in rule.ChildRuleResults)
-                {
-                    TreeNode childNode = new TreeNode($"{childRule.RuleName} : {childRule.ResultNum}");
-                    childNode.Name = childRule.RuleId.ToString();
-                    rootNode.Nodes.Add(childNode);
-                }
-            }
-        }
+        #region Assign SqlData to DataGrid view functuons Section 
 
         public void ReqList()
         {
-            WinformUtils winformUtils = new WinformUtils(main);
-            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            paramaterDic = new Dictionary<string, string>();
+            string methodName = MethodBase.GetCurrentMethod().Name;
 
-            reqInfo_dgvReq.DgvData.DataSource = null;
-            reqInfo_dgvReq_TrfInfo.DgvData.DataSource = null;
-            reqInfo_DgvCarrier.DgvData.DataSource = null;
+            paramaterDic.Add("StartDate", $"{lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting()}");
+            paramaterDic.Add("EndDate", $"{lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting()}");
+            paramaterDic.Add("CSTID", $"{lAtb_ReqInfo_Cstid.Tb_Text}");
+            paramaterDic.Add("PORT_ID", $"{lAtb_ReqInfo_ReqEqp.Tb_Text}");
+            paramaterDic.Add("RULEID", $"{lAtb_ReqInfo_RuleText.Tb_Text}");
+            paramaterDic.Add("CSTSTAT", $"{cb_CarrierState}");
 
-            this.cstid = lAtb_ReqInfo_Cstid.Tb_Text;
-            this.carrierState = cb_CarrierState.SelectedIndex;
-
-            string endDate = lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting();
-            string startDate = lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting();
-            this.ruleId = lAtb_ReqInfo_RuleText.Tb_Text;
-            this.EqpId = lAtb_ReqInfo_ReqEqp.Tb_Text;
+            if (cb_ReqState.SelectedIndex > 0)
+            {
+                paramaterDic.Add("REQ_STAT_CODE", $"{cb_ReqState.Text}");
+            }
+            else
+            {
+                paramaterDic.Add("REQ_STAT_CODE", $"");
+            }
 
             try
             {
-
-                paramaterDic.Add("StartDate", $"'{startDate}'");
-                paramaterDic.Add("EndDate", $"'{endDate}'");
-                paramaterDic.Add("CSTID", $"{cstid}");
-                paramaterDic.Add("EQPTID", $"{EqpId}");
-                paramaterDic.Add("RULEID", $"{ruleId}");
-                paramaterDic.Add("CSTSTAT", $"{carrierState}");
-
-                if (cb_ReqState.SelectedIndex > 0)
+                if (reqListData == null)
                 {
-                    paramaterDic.Add("REQ_STAT_CODE", $"{cb_ReqState.Text}");
+                    reqListData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    reqInfo_dgvReq.DgvData.DataSource = reqListData.ExcuteSql();
                 }
                 else
                 {
-                    paramaterDic.Add("REQ_STAT_CODE", $"");
+                    reqInfo_dgvReq.DgvData.DataSource = reqListData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
                 }
 
-                winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
+                if (reqListData.ErrMsg == string.Empty)
+                {
+                    main.AppendLog(reqListData.sqlStr);
+                    new WinformUtils().DataGridView_Coloring(reqInfo_dgvReq.DgvData, main.sqlList[methodName]);
+                }
+                else
+                {
+                    MessageBox.Show($"{reqListData.ErrMsg} : {methodName}");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : ReqList");
+                MessageBox.Show($"{ex.Message} : {methodName}");
             }
-
         }
 
-        private void label1_Click(object sender, EventArgs e)
+
+        private void SearchCstInfo(string cstId)
         {
+            string errMsg = string.Empty;
+            new WinformUtils(main).SearchCstInfo(reqInfo_DgvCarrier.DgvData, cstId, ref errMsg);
 
+            if (errMsg.Equals(string.Empty))
+            {
+                lb_CarrierInfoValidText.Text = "Carrier loading infomation is normal";
+            }
+            else
+            {
+                lb_CarrierInfoValidText.Text = errMsg;
+            }
         }
+
+        private void SearchTrfInfo(string req_SeqNo)
+        {
+            WinformUtils winformUtils = new WinformUtils(main);
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            try
+            {
+                paramaterDic.Add("REQ_SEQNO", $"{req_SeqNo}");
+                paramaterDic.Add("CSTID", $"");
+
+                winformUtils.ExcuteSql(paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+
+
+            }
+            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
+        }
+
+        #endregion
     }
 }

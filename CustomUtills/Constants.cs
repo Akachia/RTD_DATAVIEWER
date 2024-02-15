@@ -39,11 +39,28 @@ namespace CustomUtils
         public static class Type
         {
             public static string IF = "IF";
+            public static string VAR = "VAR";
             public static string NONE = "NONE";
             public static string CSTSTAT = "CSTSTAT";
             public static string MOVINGSTATE = "MOVINGSTATE";
         }
+        public static class DataType
+        {
+            /// <summary>
+            /// _string = "string"
+            /// </summary>
+            public static string _string = "string";
 
+            /// <summary>
+            /// _int = "int"
+            /// </summary>
+            public static string _int = "int";
+
+            /// <summary>
+            /// _DateTime = "DateTime"
+            /// </summary>
+            public static string _DateTime = "DateTime";
+        }
         public static string dataType = "dataType";
         /// <summary>
         /// condition = "condition"

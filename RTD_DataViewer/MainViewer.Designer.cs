@@ -40,6 +40,7 @@
             tp_RollSituation = new TabPage();
             tp_WaitWips = new TabPage();
             tp_LnsPkgState = new TabPage();
+            tp_BizRuleErr = new TabPage();
             tp_LogBox = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
             lb_ServerIP = new Label();
@@ -89,6 +90,7 @@
             reqATransfer_dgvReq.Controls.Add(tp_RollSituation);
             reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
             reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
+            reqATransfer_dgvReq.Controls.Add(tp_BizRuleErr);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
             reqATransfer_dgvReq.Location = new Point(3, 43);
@@ -195,6 +197,16 @@
             tp_LnsPkgState.TabIndex = 6;
             tp_LnsPkgState.Text = "LnsPkgState";
             tp_LnsPkgState.UseVisualStyleBackColor = true;
+            // 
+            // tp_BizRuleErr
+            // 
+            tp_BizRuleErr.Location = new Point(4, 24);
+            tp_BizRuleErr.Name = "tp_BizRuleErr";
+            tp_BizRuleErr.Padding = new Padding(3);
+            tp_BizRuleErr.Size = new Size(1420, 603);
+            tp_BizRuleErr.TabIndex = 11;
+            tp_BizRuleErr.Text = "BizRuleErr";
+            tp_BizRuleErr.UseVisualStyleBackColor = true;
             // 
             // tp_LogBox
             // 
@@ -405,5 +417,6 @@
         private TabPage tp_StockerInventory;
         private TabPage tp_RollSituation;
         private TabPage tp_WaitWips;
+        private TabPage tp_BizRuleErr;
     }
 }

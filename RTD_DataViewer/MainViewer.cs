@@ -1,5 +1,6 @@
 using CustomUtils;
 using Dapper;
+using DBManagement;
 using DBManagemnet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -85,6 +86,10 @@ namespace RTD_DataViewer
             RollSituation rollSituation = new RollSituation(this);
             tp_RollSituation.Controls.Add(rollSituation);
             rollSituation.Dock = DockStyle.Fill;
+
+            BizRuleErr bizRuleErr = new BizRuleErr(this);
+            tp_BizRuleErr.Controls.Add(bizRuleErr);
+            rollSituation.Dock = DockStyle.Fill;
         }
 
         public void AppendLog(string text)
@@ -108,7 +113,7 @@ namespace RTD_DataViewer
             {
                 xml = new XmlData(CommonConstants.sqlXmlPath);
                 sqlList = xml.OptionSqlListparser();
-                strs = new WinformUtils(this).GetConfigList();
+                strs = new DatabaseUtilities().GetConfigList();
 
                 List<string> stringss = strs.Keys.ToList();
                 cb_DBString.DataSource = null;
@@ -117,12 +122,19 @@ namespace RTD_DataViewer
 
                 correntConnectionStringSetting = strs[cb_DBString.Text];
 
-                new WinformUtils(this).ChangeDBConn(cb_DBString.Text);
+                ChangeDBConn(cb_DBString.Text);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void ChangeDBConn(string dbString)
+        {
+            lb_ServerIP.Text = strs[dbString].Server.ToString();
+            lb_ServerName.Text = strs[dbString].Database.ToString();
+            cstr = strs[dbString].ConnectionString();
         }
 
         private void bt_DataRefresh_Click(object sender, EventArgs e)
@@ -137,7 +149,7 @@ namespace RTD_DataViewer
         {
             ComboBox comboBox = sender as ComboBox;
 
-            if (comboBox.Text != string.Empty) new WinformUtils(this).ChangeDBConn(comboBox.Text);
+            if (comboBox.Text != string.Empty) ChangeDBConn(comboBox.Text);
             if (cb_DBString.Text != string.Empty)
             {
                 correntConnectionStringSetting = strs[cb_DBString.Text];

@@ -31,13 +31,11 @@
             tableLayoutPanel3 = new TableLayoutPanel();
             utb_RtdDataViewerLog = new UserWinfromControl.UWC_TextBox();
             utb_RtdMessageText = new UserWinfromControl.UWC_TextBox();
-            bt_Clear = new Button();
+            bt_Log_Clear = new Button();
             bt_beautifierJson = new Button();
             bt_beautifierXml = new Button();
-            utb_RtdEditerText = new UserWinfromControl.UWC_TextBox();
-            bt_RtdEditerLogConvert = new Button();
-            label2 = new Label();
             label3 = new Label();
+            bt_MessageClear = new Button();
             tableLayoutPanel3.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,19 +46,17 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
             tableLayoutPanel3.Controls.Add(utb_RtdDataViewerLog, 0, 1);
-            tableLayoutPanel3.Controls.Add(utb_RtdMessageText, 2, 1);
-            tableLayoutPanel3.Controls.Add(bt_Clear, 1, 0);
-            tableLayoutPanel3.Controls.Add(bt_beautifierJson, 3, 0);
-            tableLayoutPanel3.Controls.Add(bt_beautifierXml, 4, 0);
-            tableLayoutPanel3.Controls.Add(utb_RtdEditerText, 5, 1);
-            tableLayoutPanel3.Controls.Add(bt_RtdEditerLogConvert, 7, 0);
-            tableLayoutPanel3.Controls.Add(label2, 5, 0);
-            tableLayoutPanel3.Controls.Add(label3, 2, 0);
+            tableLayoutPanel3.Controls.Add(utb_RtdMessageText, 4, 1);
+            tableLayoutPanel3.Controls.Add(bt_beautifierXml, 7, 0);
+            tableLayoutPanel3.Controls.Add(bt_beautifierJson, 6, 0);
+            tableLayoutPanel3.Controls.Add(bt_Log_Clear, 3, 0);
+            tableLayoutPanel3.Controls.Add(bt_MessageClear, 5, 0);
+            tableLayoutPanel3.Controls.Add(label3, 4, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(0, 0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -73,39 +69,40 @@
             // 
             // utb_RtdDataViewerLog
             // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdDataViewerLog, 2);
+            tableLayoutPanel3.SetColumnSpan(utb_RtdDataViewerLog, 4);
             utb_RtdDataViewerLog.Dock = DockStyle.Fill;
             utb_RtdDataViewerLog.Location = new Point(3, 33);
             utb_RtdDataViewerLog.Name = "utb_RtdDataViewerLog";
             tableLayoutPanel3.SetRowSpan(utb_RtdDataViewerLog, 2);
-            utb_RtdDataViewerLog.Size = new Size(574, 564);
+            utb_RtdDataViewerLog.Size = new Size(904, 564);
             utb_RtdDataViewerLog.TabIndex = 0;
             // 
             // utb_RtdMessageText
             // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdMessageText, 3);
+            tableLayoutPanel3.SetColumnSpan(utb_RtdMessageText, 4);
             utb_RtdMessageText.Dock = DockStyle.Fill;
-            utb_RtdMessageText.Location = new Point(583, 33);
+            utb_RtdMessageText.Location = new Point(913, 33);
             utb_RtdMessageText.Name = "utb_RtdMessageText";
             tableLayoutPanel3.SetRowSpan(utb_RtdMessageText, 2);
-            utb_RtdMessageText.Size = new Size(404, 564);
+            utb_RtdMessageText.Size = new Size(484, 564);
             utb_RtdMessageText.TabIndex = 1;
             // 
-            // bt_Clear
+            // bt_Log_Clear
             // 
-            bt_Clear.Location = new Point(503, 3);
-            bt_Clear.Name = "bt_Clear";
-            bt_Clear.Size = new Size(74, 23);
-            bt_Clear.TabIndex = 4;
-            bt_Clear.Text = "Clear";
-            bt_Clear.UseVisualStyleBackColor = true;
-            bt_Clear.Click += bt_Clear_Click;
+            bt_Log_Clear.Location = new Point(833, 3);
+            bt_Log_Clear.Name = "bt_Log_Clear";
+            bt_Log_Clear.Size = new Size(74, 23);
+            bt_Log_Clear.TabIndex = 4;
+            bt_Log_Clear.Text = "Clear";
+            bt_Log_Clear.UseVisualStyleBackColor = true;
+            bt_Log_Clear.Click += bt_Clear_Click;
             // 
             // bt_beautifierJson
             // 
-            bt_beautifierJson.Location = new Point(833, 3);
+            bt_beautifierJson.Dock = DockStyle.Fill;
+            bt_beautifierJson.Location = new Point(1243, 3);
             bt_beautifierJson.Name = "bt_beautifierJson";
-            bt_beautifierJson.Size = new Size(74, 23);
+            bt_beautifierJson.Size = new Size(74, 24);
             bt_beautifierJson.TabIndex = 2;
             bt_beautifierJson.Text = "Convert_J";
             bt_beautifierJson.UseVisualStyleBackColor = true;
@@ -113,55 +110,36 @@
             // 
             // bt_beautifierXml
             // 
-            bt_beautifierXml.Location = new Point(913, 3);
+            bt_beautifierXml.Dock = DockStyle.Fill;
+            bt_beautifierXml.Location = new Point(1323, 3);
             bt_beautifierXml.Name = "bt_beautifierXml";
-            bt_beautifierXml.Size = new Size(74, 23);
+            bt_beautifierXml.Size = new Size(74, 24);
             bt_beautifierXml.TabIndex = 3;
             bt_beautifierXml.Text = "Convert_X";
             bt_beautifierXml.UseVisualStyleBackColor = true;
             bt_beautifierXml.Click += bt_beautifierXml_Click;
             // 
-            // utb_RtdEditerText
-            // 
-            tableLayoutPanel3.SetColumnSpan(utb_RtdEditerText, 3);
-            utb_RtdEditerText.Dock = DockStyle.Fill;
-            utb_RtdEditerText.Location = new Point(993, 33);
-            utb_RtdEditerText.Name = "utb_RtdEditerText";
-            tableLayoutPanel3.SetRowSpan(utb_RtdEditerText, 2);
-            utb_RtdEditerText.Size = new Size(404, 564);
-            utb_RtdEditerText.TabIndex = 5;
-            // 
-            // bt_RtdEditerLogConvert
-            // 
-            bt_RtdEditerLogConvert.Location = new Point(1323, 3);
-            bt_RtdEditerLogConvert.Name = "bt_RtdEditerLogConvert";
-            bt_RtdEditerLogConvert.Size = new Size(74, 23);
-            bt_RtdEditerLogConvert.TabIndex = 6;
-            bt_RtdEditerLogConvert.Text = "Convert";
-            bt_RtdEditerLogConvert.UseVisualStyleBackColor = true;
-            bt_RtdEditerLogConvert.Click += bt_RtdEditerLogConvert_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(993, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(244, 30);
-            label2.TabIndex = 7;
-            label2.Text = "RTD Editer Text Converter";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Fill;
-            label3.Location = new Point(583, 0);
+            label3.Location = new Point(913, 0);
             label3.Name = "label3";
             label3.Size = new Size(244, 30);
             label3.TabIndex = 8;
             label3.Text = "RTD Massge Text Converter";
             label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // bt_MessageClear
+            // 
+            bt_MessageClear.Dock = DockStyle.Fill;
+            bt_MessageClear.Location = new Point(1163, 3);
+            bt_MessageClear.Name = "bt_MessageClear";
+            bt_MessageClear.Size = new Size(74, 24);
+            bt_MessageClear.TabIndex = 9;
+            bt_MessageClear.Text = "Clear";
+            bt_MessageClear.UseVisualStyleBackColor = true;
+            bt_MessageClear.Click += bt_MessageClear_Click;
             // 
             // LogBox
             // 
@@ -180,12 +158,10 @@
         private TableLayoutPanel tableLayoutPanel3;
         internal UserWinfromControl.UWC_TextBox utb_RtdDataViewerLog;
         private UserWinfromControl.UWC_TextBox utb_RtdMessageText;
-        private Button bt_Clear;
+        private Button bt_Log_Clear;
         private Button bt_beautifierJson;
         private Button bt_beautifierXml;
-        private UserWinfromControl.UWC_TextBox utb_RtdEditerText;
-        private Button bt_RtdEditerLogConvert;
-        private Label label2;
         private Label label3;
+        private Button bt_MessageClear;
     }
 }

@@ -85,12 +85,7 @@ namespace RTD_DataViewer
             return null;// new DatabaseUtills().MakeConnectionStringLIst(@"./DBConnectionString.xml");
         }
 
-        public void ChangeDBConn( string dbString)
-        {
-            main.lb_ServerIP.Text = main.strs[dbString].Server.ToString();
-            main.lb_ServerName.Text = main.strs[dbString].Database.ToString();
-            main.cstr = main.strs[dbString].ConnectionString();
-        }
+
 
         public void ExcuteSql(Dictionary<string,string> paramaterDic, DataGridView dataGridView, DBConnectionString dBConnectionString, string mathodName)
         {
@@ -286,8 +281,10 @@ namespace RTD_DataViewer
         {
             throw new NotImplementedException();
         }
-        private void DataGridView_Coloring(DataGridView dataGridView, XmlOptionData sqldata)
+        public void DataGridView_Coloring(DataGridView dataGridView, XmlOptionData sqldata)
         {
+            dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dataGridView.AutoResizeColumns();
             try
             {
                 int rowCount = dataGridView.Rows.Count;

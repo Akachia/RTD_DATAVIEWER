@@ -141,13 +141,13 @@ namespace RTD_DataViewer.View
             utb_RtdDataViewerLog.Text = string.Empty;
         }
 
-        private void bt_RtdEditerLogConvert_Click(object sender, EventArgs e)
-        {
-            string prevText = utb_RtdEditerText.Text;
+        //private void bt_RtdEditerLogConvert_Click(object sender, EventArgs e)
+        //{
+        //    string prevText = utb_RtdEditerText.Text;
 
-            utb_RtdEditerText.Text = string.Empty;
-            utb_RtdEditerText.ApeendText(prevText.Replace(",", "\n"));
-        }
+        //    utb_RtdEditerText.Text = string.Empty;
+        //    utb_RtdEditerText.ApeendText(prevText.Replace(",", "\n"));
+        //}
 
         private void bt_beautifierJson_Click_1(object sender, EventArgs e)
         {
@@ -180,6 +180,11 @@ namespace RTD_DataViewer.View
 
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void bt_MessageClear_Click(object sender, EventArgs e)
+        {
+            utb_RtdMessageText.Text = string.Empty;
         }
     }
 }

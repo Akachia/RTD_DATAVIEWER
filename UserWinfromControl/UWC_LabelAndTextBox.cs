@@ -74,10 +74,33 @@ namespace UserWinfromControl
             }
         }
 
-        private void UWC_LabelAndTextBox_MouseHover(object sender, EventArgs e)
+
+
+        private void textBox_Enter(object sender, EventArgs e)
         {
             lb_Txt.Visible = false;
             lb_Txt.Enabled = false;
+        }
+
+        private void textBox_MouseEnter(object sender, EventArgs e)
+        {
+            lb_Txt.Visible = false;
+            lb_Txt.Enabled = false;
+        }
+
+        private void textBox_MouseHover(object sender, EventArgs e)
+        {
+            lb_Txt.Visible = false;
+            lb_Txt.Enabled = false;
+        }
+
+        private void textBox_MouseLeave(object sender, EventArgs e)
+        {
+            if (this.textBox.Text == string.Empty)
+            {
+                lb_Txt.Visible = true;
+                lb_Txt.Enabled = true;
+            }
         }
     }
 }

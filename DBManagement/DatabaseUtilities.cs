@@ -64,142 +64,45 @@ namespace DBManagement
             }
         }
 
-        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
-        {
-            cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql);
-        }
 
-        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, string parameterName, string parameterValue)
-        {
-            cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql.Replace(parameterName, parameterValue));
-        }
+        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
+        //{
+        //    cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql);
+        //}
 
-        public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, Dictionary<string, string> parameters)
-        {
-            foreach (KeyValuePair<string, string> item in parameters)
-            {
-                sqldata.OptionSqls[seq].Sql.Replace(item.Key, item.Value);
-            }
+        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, string parameterName, string parameterValue)
+        //{
+        //    cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql.Replace(parameterName, parameterValue));
+        //}
 
-            cquery += string.Concat("\n", sqldata);
-        }
+        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, Dictionary<string, string> parameters)
+        //{
+        //    foreach (KeyValuePair<string, string> item in parameters)
+        //    {
+        //        sqldata.OptionSqls[seq].Sql.Replace(item.Key, item.Value);
+        //    }
+
+        //    cquery += string.Concat("\n", sqldata);
+        //}
 
         public Dictionary<string, DBConnectionString> GetConfigList()
         {
             return MakeConnectionStringLIst(@"./DBConnectionString.xml");
         }
 
-        //public void ChangeDBConn(string dbString)
-        //{
-        //    main.lb_ServerIP.Text = main.strs[dbString].Server.ToString();
-        //    main.lb_ServerName.Text = main.strs[dbString].Database.ToString();
-        //    main.cstr = main.strs[dbString].ConnectionString();
-        //}
-
-        public object ExcuteSql(Dictionary<string, string> paramaterDic, XmlOptionData sqldata, DBConnectionString dBConnectionString, string mathodName, ref string errMsg)
+        public object GetSqlData(string cquery, DBConnectionString dBConnectionString, ref string errMsg)
         {
-            try
+            if (dBConnectionString.DatabaseProvider.ToString() == "ORACLE")
             {
-                //XmlOptionData sqldata = main.sqlList[mathodName];
-                string cquery = sqldata.Sql;
-                DynamicParameters parameters = new DynamicParameters();
-
-                //추가 변수에 관한 로직 추가 필요.
-                foreach (KeyValuePair<string, AdditionalVariable> item in sqldata.AdditionalVarDic)
-                {
-                    if (paramaterDic.ContainsKey(item.Key))
-                    {
-                        //CustomUtills.CustomUtill.RexReplace(ref cquery, @$"@{item.Key}", paramaterDic[item.Key]);
-                        cquery = cquery.Replace(@$"@{item.Key}", paramaterDic[item.Key]);
-                    }
-                    else
-                    {
-                        cquery = cquery.Replace(@$"@{item.Key}", @$"'%{item.Value.DefaultValue}%'");
-                    }
-                }
-
-                //parameters.Add(SqlVal.StartDate, paramaterDic[SqlVal.StartDate]);
-                //parameters.Add(SqlVal.EndDate, paramaterDic[SqlVal.EndDate]);
-
-                //OptionalSql 추가 Logic
-                foreach (XmlOptionSql item in sqldata.OptionSqls)
-                {
-                    if (item.Type == CommonXml.Type.IF)
-                    {
-                        if (item.Condition == CommonXml.Condition.not_equal)
-                        {
-                            if (paramaterDic[item.Key] != item.Default)
-                            {
-                                AddToOptionalSqlSyntax(ref cquery, item, true);
-                                parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
-                                //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
-                                continue;
-                            }
-                        }
-                        else if (item.Condition == CommonXml.Condition.equal)
-                        {
-                            if (paramaterDic[item.Key] == item.Default)
-                            {
-                                AddToOptionalSqlSyntax(ref cquery, item, true);
-                                parameters.Add($"@{item.Key}", string.Concat("%", paramaterDic[item.Key], "%"));
-                                //cquery += " AND H.CSTID LIKE '%" + txtCSTID.Text + "%'";
-                                continue;
-                            }
-                        }
-                    }
-
-                    if (item.Type == CommonXml.Type.CSTSTAT)
-                    {
-                        if (paramaterDic[SqlVal.CSTSTAT] != item.Default)
-                        {
-                            if (paramaterDic[SqlVal.CSTSTAT] == "1")
-                            {
-                                AddToOptionalSqlSyntax(ref cquery, item, true);
-                                parameters.Add($"@{item.Key}", string.Concat("U"));
-                            }   // 실트레이
-                            else if (paramaterDic[SqlVal.CSTSTAT] == "2")
-                            {
-                                AddToOptionalSqlSyntax(ref cquery, item, true);
-                                parameters.Add($"@{item.Key}", string.Concat("E"));
-                            } // 공트레이
-                            else
-                            {
-                                AddToOptionalSqlSyntax(ref cquery, item, false);
-                            }
-                            continue;
-                        }
-                    }
-
-                    if (item.Type == CommonXml.Type.MOVINGSTATE)
-                    {
-
-                        if (paramaterDic[SqlVal.MOVINGSTATE] != item.Default)
-                        {
-                            AddToOptionalSqlSyntax(ref cquery, item, true);
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "1") parameters.Add($"@{item.Key}", string.Concat("DELETE")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "2") parameters.Add($"@{item.Key}", string.Concat("NORMAL_END")); ;    // 공트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "3") parameters.Add($"@{item.Key}", string.Concat("ABNORMAL_END")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "4") parameters.Add($"@{item.Key}", string.Concat("RECEIVE")); ;    // 공트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "5") parameters.Add($"@{item.Key}", string.Concat("MOVING")); ;    // 실트레이
-                            if (paramaterDic[SqlVal.MOVINGSTATE] == "6") parameters.Add($"@{item.Key}", string.Concat("SEND")); ;    // 공트레이
-                            continue;
-                        }
-                    }
-
-                    if (item.Type == CommonXml.Type.NONE)
-                    {
-                        AddToOptionalSqlSyntax(ref cquery, item, true);
-                        continue;
-                    }
-                    AddToOptionalSqlSyntax(ref cquery, item, false);
-                }
-                return GetSqlData(cquery, parameters, dBConnectionString,ref errMsg);
-
-                //DataGridView_Coloring(dataGridView, sqldata);
+                return ShowSqltoDGV_ORACLE(cquery, dBConnectionString.ConnectionString(), ref errMsg);
             }
-            catch (Exception ex)
+            else if (dBConnectionString.DatabaseProvider.ToString() == "MSSQL")
             {
-                errMsg = $"{ex.Message} : {mathodName}";
+                return ShowSqltoDGV_MSSQL(cquery, dBConnectionString.MssqlConnectionString(), ref errMsg);
+            }
+            else
+            {
+                errMsg = "Check DatabaseProvier into DBConnectionString.xml file ";
                 return null;
             }
         }
@@ -247,7 +150,38 @@ namespace DBManagement
                 return null;
             }
         }
+        private object ShowSqltoDGV_ORACLE(string cquery, string connectionString, ref string errMsg)
+        {
+            try
+            {
+                string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+                using (var connection = new OracleConnection(connectionString))
+                {
+                    return connection.Query(testcquery).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+                return null;
+            }
+        }
 
+        private object ShowSqltoDGV_MSSQL(string cquery, string connectionString, ref string errMsg)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                     return connection.Query(cquery).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+                return null;
+            }
+        }
         private object ShowSqltoDGV_MSSQL(string cquery, DynamicParameters parameters, string connectionString, ref string errMsg)
         {
             try

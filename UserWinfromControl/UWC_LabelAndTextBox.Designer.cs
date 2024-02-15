@@ -40,7 +40,7 @@
             textBox.Size = new Size(200, 23);
             textBox.TabIndex = 0;
             textBox.Click += textBox_Click;
-            textBox.TextChanged += textBox_TextChanged;
+            textBox.Enter += textBox_Enter;
             textBox.Leave += textBox_Leave;
             // 
             // lb_Txt
@@ -61,7 +61,6 @@
             Controls.Add(textBox);
             Name = "UWC_LabelAndTextBox";
             Size = new Size(200, 25);
-            MouseHover += UWC_LabelAndTextBox_MouseHover;
             ResumeLayout(false);
             PerformLayout();
         }
