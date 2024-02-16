@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UserWinfromControl;
 using XmlManagement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -27,7 +28,8 @@ namespace RTD_DataViewer.View
         DefaultSqlData? reqListData = null;
         SearchCstInfo? searchCstInfoData = null;
         DefaultSqlData? searchTrfInfoData = null;
-        Dictionary<string, string> paramaterDic;
+
+        List<Control> variableControls = new List<Control>();
         #endregion
 
         #region Construction
@@ -40,6 +42,14 @@ namespace RTD_DataViewer.View
             reqInfo_dgvReq.DgvData.CellClick += ReqInfoDataGridViewCellClick;
             lAdtp_ReqInfo_EndDate.IsChecked = false;
             lAdtp_ReqInfo_StartDate.IsChecked = true;
+
+            variableControls.Add(lAdtp_ReqInfo_StartDate);
+            variableControls.Add(lAdtp_ReqInfo_EndDate);
+            variableControls.Add(lAtb_ReqInfo_Cstid);
+            variableControls.Add(lAtb_ReqInfo_ReqEqp);
+            variableControls.Add(lAtb_ReqInfo_RuleText);
+            variableControls.Add(cb_CarrierState);
+            variableControls.Add(cb_ReqState);
 
             cb_CarrierState.SetCstStatData();
             cb_ReqState.SetReqStatCodeData();
@@ -186,63 +196,48 @@ namespace RTD_DataViewer.View
             return str;
         }
 
-        private void MakeParamaterDic()
+        private Dictionary<string, string> MakeParamaterDic()//List<Control> variableControls)
         {
-            if (paramaterDic == null)
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            try
             {
-                paramaterDic = new Dictionary<string, string>();
-
-                paramaterDic.Add("StartDate", $"{lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting()}");
-                paramaterDic.Add("EndDate", $"{lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting()}");
-                paramaterDic.Add("CSTID", $"{lAtb_ReqInfo_Cstid.Tb_Text}");
-                paramaterDic.Add("PORT_ID", $"{lAtb_ReqInfo_ReqEqp.Tb_Text}");
-                paramaterDic.Add("RULEID", $"{lAtb_ReqInfo_RuleText.Tb_Text}");
-                paramaterDic.Add("CSTSTAT", $"{cb_CarrierState}");
-
-                if (cb_ReqState.ComboBoxSelectedIndex > 0)
+                foreach (var item in variableControls)
                 {
-                    paramaterDic.Add("REQ_STAT_CODE", $"{cb_ReqState.Text}");
+                    if (item is UWC_LabelAndDateTimePicker)
+                    {
+                        UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
+                        paramaterDic.Add(datePicker.VariableName, datePicker.MakeNowDateStringAndSetting());
+                    }
+
+                    if (item is UWC_LabelAndTextBox)
+                    {
+                        UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;
+                        paramaterDic.Add(text.VariableName, text.Tb_Text);
+                    }
+
+                    if (item is UWC_ComboBox)
+                    {
+                        UWC_ComboBox comboBox = item as UWC_ComboBox;
+
+                        if (cb_ReqState.ComboBoxSelectedIndex > 0)
+                        {
+                            paramaterDic.Add(comboBox.VariableName, comboBox.ComboBoxSelectedItem);
+                        }
+                        else
+                        {
+                            paramaterDic.Add(comboBox.VariableName, $"");
+                        }
+                    }
                 }
-                else
-                {
-                    paramaterDic.Add("REQ_STAT_CODE", $"");
-                }
+
+                return paramaterDic;
             }
-            else
+            catch (Exception)
             {
-                paramaterDic.Clear();
-
-                paramaterDic = new Dictionary<string, string>();
-
-                paramaterDic.Add("StartDate", $"{lAdtp_ReqInfo_StartDate.MakeNowDateStringAndSetting()}");
-                paramaterDic.Add("EndDate", $"{lAdtp_ReqInfo_EndDate.MakeNowDateStringAndSetting()}");
-                paramaterDic.Add("CSTID", $"{lAtb_ReqInfo_Cstid.Tb_Text}");
-                paramaterDic.Add("PORT_ID", $"{lAtb_ReqInfo_ReqEqp.Tb_Text}");
-                paramaterDic.Add("RULEID", $"{lAtb_ReqInfo_RuleText.Tb_Text}");
-                paramaterDic.Add("CSTSTAT", $"{cb_CarrierState}");
-
-                if (cb_ReqState.ComboBoxSelectedIndex > 0)
-                {
-                    paramaterDic.Add("REQ_STAT_CODE", $"{cb_ReqState.Text}");
-                }
-                else
-                {
-                    paramaterDic.Add("REQ_STAT_CODE", $"");
-                }
+                return null;
             }
-        }
 
-        private void MakeParamaterDic(Dictionary<string, string> parameterDics)
-        {
-            if (paramaterDic == null)
-            {
-                paramaterDic = parameterDics;
-            }
-            else
-            {
-                paramaterDic.Clear();
-                paramaterDic = parameterDics;
-            }
+
         }
 
         private void GetValues()
@@ -262,21 +257,21 @@ namespace RTD_DataViewer.View
         {
             MakeParamaterDic();
             string methodName = MethodBase.GetCurrentMethod().Name;
-            winformUtils.ShowDgv(methodName, paramaterDic, reqInfo_dgvReq.DgvData, reqListData);
+            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_dgvReq.DgvData, reqListData);
         }
 
         private void SearchCstInfo(string cstId)
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
             MakeParamaterDic();
-            winformUtils.ShowDgv(methodName, paramaterDic, reqInfo_DgvCarrier.DgvData, searchCstInfoData);
+            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_DgvCarrier.DgvData, searchCstInfoData);
         }
 
         private void SearchTrfInfo(string req_SeqNo)
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
             MakeParamaterDic();
-            winformUtils.ShowDgv(methodName, paramaterDic, reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData);
+            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData);
         }
         #endregion
 

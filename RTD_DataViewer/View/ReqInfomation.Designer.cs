@@ -134,7 +134,7 @@
             lAtb_ReqInfo_ReqEqp.Size = new Size(162, 24);
             lAtb_ReqInfo_ReqEqp.TabIndex = 3;
             lAtb_ReqInfo_ReqEqp.Tb_Text = "";
-            lAtb_ReqInfo_ReqEqp.VariableName = "PortId";
+            lAtb_ReqInfo_ReqEqp.VariableName = "PORTID";
             // 
             // lAtb_ReqInfo_RuleText
             // 
@@ -144,7 +144,7 @@
             lAtb_ReqInfo_RuleText.Size = new Size(162, 24);
             lAtb_ReqInfo_RuleText.TabIndex = 4;
             lAtb_ReqInfo_RuleText.Tb_Text = "";
-            lAtb_ReqInfo_RuleText.VariableName = "RuleId";
+            lAtb_ReqInfo_RuleText.VariableName = "RULEID";
             // 
             // lAtb_ReqInfo_Cstid
             // 

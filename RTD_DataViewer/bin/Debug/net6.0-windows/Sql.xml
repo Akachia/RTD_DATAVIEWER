@@ -165,7 +165,7 @@
 			FROM TB_MHS_TRF_REQ REQ with(nolock)
 			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
 			WHERE 1 = 1
-			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartDate AND @EndDate
+			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 			+Option3
@@ -177,20 +177,20 @@
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND REQ.CSTID like @CSTID 
 			</Option1>
-			<Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
-				AND REQ.PORT_ID LIKE @PORT_ID
+			<Option2 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
+				AND REQ.PORT_ID LIKE @PORTID
 			</Option2>
 			<Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
 			</Option3>
-			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="string" default="">
+			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="int" default="-1">
 				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
-			<Option5 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="-1">
+			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="int" default="-1">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option5>
-			<Option6 type="VAR" condition="" key="StartDate" dataType="DateTime" default=""/>
-			<Option7 type="VAR" condition="" key="EndDate" dataType="DateTime" default=""/>
+			<Option6 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option7 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
 		</AdditionalVariable>
@@ -227,7 +227,7 @@
 			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
 			, (CASE WHEN (DATEDIFF(minute, INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
 			FROM TB_MHS_TRF_CMD_HIST with(nolock)
-			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
+			WHERE INSDTTM BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 			+Option3
@@ -257,8 +257,8 @@
 			</Option6>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
+			<StartTime dataType="DateTime" default=""/>
+			<EndTime dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -273,7 +273,7 @@
 			WITH TT_DATA AS (
 			SELECT top 1000 *
 			FROM TB_MHS_TRF_REQ_HIST with(nolock)
-			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
+			WHERE INSDTTM BETWEEN @StartTime AND @EndTime
 			+Option01 --AND CSTID LIKE @CSTID
 			+Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
 			+Option03
@@ -315,8 +315,8 @@
 			</Option04>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
+			<StartTime dataType="DateTime" default=""/>
+			<EndTime dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -340,7 +340,7 @@
 			, CONVERT(NVARCHAR(20), MAX(INSDTTM),20) AS LASTINSDTTM
 			, COUNT(CSTID)  AS CNT
 			FROM TB_MHS_TRF_CMD_HIST with(nolock)
-			WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartDate AND @EndDate
+			WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartTime AND @EndTime
 			AND CMD_STAT_CODE = 'DELETE'
 			GROUP BY CSTID, FROM_EQPTID, FROM_PORT_ID, TO_EQPTID, TO_PORT_ID, CSTSTAT, RTD_RULE_ID, CMD_STAT_CODE, INSUSER
       +Option1
@@ -379,7 +379,7 @@
 			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
 			FROM tb_sfc_cst_act_hist with(nolock)
-			where ACTDTTM BETWEEN @StartDate AND @EndDate
+			where ACTDTTM BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 		</MainSQL>
@@ -392,8 +392,8 @@
 			</Option2>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
+			<StartTime dataType="DateTime" default=""/>
+			<EndTime dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
@@ -418,13 +418,13 @@
 			, CONVERT(CHAR(23), UPDDTTM, 20)  AS UPDDTTM
 			FROM TB_MHS_TRF_EVENT_HIST with(nolock)
 			where CSTID like @CSTID
-			and INSDTTM BETWEEN @StartDate AND @EndDate
+			and INSDTTM BETWEEN @StartTime AND @EndTime
 			ORDER BY INSDTTM DESC
 		</MainSQL>
 		<Option/>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
+			<StartTime dataType="DateTime" default=""/>
+			<EndTime dataType="DateTime" default=""/>
 			<CSTID dataType="string" default=""/>
 		</AdditionalVariable>
 		<Coloring/>  
@@ -1280,7 +1280,7 @@
 			, EXCT_LOCATION
 			FROM TB_SOM_BZRULE_ERR_HIST WITH (NOLOCK)
 			WHERE 1=1
-			AND INSDTTM BETWEEN @StartDate AND @EndDate
+			AND INSDTTM BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 			ORDER BY INSDTTM DESC
@@ -1292,8 +1292,8 @@
 			<Option2 type="IF" condition="not_equal" key="BizRuleID" dataType="string" default="">
 				AND	BZRULE_ID like @BizRuleID
 			</Option2>
-			<Option3 type="VAR" condition="" key="StartDate" dataType="DateTime" default=""/>
-			<Option4 type="VAR" condition="" key="EndDate" dataType="DateTime" default=""/>
+			<Option3 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option4 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
 		</AdditionalVariable>

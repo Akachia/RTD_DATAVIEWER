@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RTD_DataViewer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+257882557e5f70550ef50ed5ba8f107dbd9e5868")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a148f0e1c1deb03035503cf4c82b59cb7476f65")]
 [assembly: System.Reflection.AssemblyProductAttribute("RTD_DataViewer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RTD_DataViewer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
