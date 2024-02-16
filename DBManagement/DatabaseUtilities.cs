@@ -64,27 +64,6 @@ namespace DBManagement
             }
         }
 
-
-        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq)
-        //{
-        //    cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql);
-        //}
-
-        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, string parameterName, string parameterValue)
-        //{
-        //    cquery += string.Concat("\n", sqldata.OptionSqls[seq].Sql.Replace(parameterName, parameterValue));
-        //}
-
-        //public static void AddToOptionalSqlSyntax(ref string cquery, XmlOptionData sqldata, int seq, Dictionary<string, string> parameters)
-        //{
-        //    foreach (KeyValuePair<string, string> item in parameters)
-        //    {
-        //        sqldata.OptionSqls[seq].Sql.Replace(item.Key, item.Value);
-        //    }
-
-        //    cquery += string.Concat("\n", sqldata);
-        //}
-
         public Dictionary<string, DBConnectionString> GetConfigList()
         {
             return MakeConnectionStringLIst(@"./DBConnectionString.xml");

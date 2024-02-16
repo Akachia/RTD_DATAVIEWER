@@ -89,7 +89,7 @@ namespace RTD_DataViewer.View
 
                 if (bizRuleErrData.ErrMsg == string.Empty)
                 {
-                    main.AppendLog(bizRuleErrData.sqlStr);
+                    main.AppendLog(bizRuleErrData.SqlStr);
                     new WinformUtils().DataGridView_Coloring(dgv_BizRuleError.DgvData, main.sqlList[methodName]);
                 }
                 else

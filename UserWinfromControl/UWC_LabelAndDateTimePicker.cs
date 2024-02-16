@@ -13,12 +13,18 @@ namespace UserWinfromControl
 {
     public partial class UWC_LabelAndDateTimePicker : UserControl
     {
+        string variableName = string.Empty;
+
+        public string VariableName
+        {
+            get { return variableName; }
+            set { variableName = value; }
+        }
         public string Lb_Text
         {
             get { return cb_Text.Text; }
             set { cb_Text.Text = value; }
         }
-
         public bool IsChecked
         {
             get { return cb_Text.Checked; }

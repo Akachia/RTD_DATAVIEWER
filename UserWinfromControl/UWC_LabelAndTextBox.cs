@@ -15,6 +15,14 @@ namespace UserWinfromControl
     {
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
+        string variableName = string.Empty;
+
+        public string VariableName
+        {
+            get { return variableName; }
+            set { variableName = value; }
+        }
+
         public string Lb_Text
         {
             get

@@ -36,8 +36,6 @@
             lAtb_ReqInfo_ReqEqp = new UserWinfromControl.UWC_LabelAndTextBox();
             lAtb_ReqInfo_RuleText = new UserWinfromControl.UWC_LabelAndTextBox();
             lAtb_ReqInfo_Cstid = new UserWinfromControl.UWC_LabelAndTextBox();
-            cb_ReqState = new ComboBox();
-            cb_CarrierState = new ComboBox();
             lAdtp_ReqInfo_StartDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_ReqInfo_EndDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lb_TransferStatus = new Label();
@@ -45,6 +43,8 @@
             lb_CarrierInfoValidText = new Label();
             ckb_IsOpenReqSituation = new CheckBox();
             tv_SituationOrRuleResult = new TreeView();
+            cb_CarrierState = new UserWinfromControl.UWC_ComboBox();
+            cb_ReqState = new UserWinfromControl.UWC_ComboBox();
             tableLayoutPanel4.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -68,14 +68,14 @@
             tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_ReqEqp, 7, 0);
             tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_RuleText, 7, 1);
             tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_Cstid, 6, 0);
-            tableLayoutPanel4.Controls.Add(cb_ReqState, 6, 1);
-            tableLayoutPanel4.Controls.Add(cb_CarrierState, 5, 0);
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_StartDate, 4, 0);
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_EndDate, 4, 1);
             tableLayoutPanel4.Controls.Add(lb_TransferStatus, 3, 0);
             tableLayoutPanel4.Controls.Add(panel1, 0, 4);
             tableLayoutPanel4.Controls.Add(ckb_IsOpenReqSituation, 5, 1);
             tableLayoutPanel4.Controls.Add(tv_SituationOrRuleResult, 8, 2);
+            tableLayoutPanel4.Controls.Add(cb_CarrierState, 5, 0);
+            tableLayoutPanel4.Controls.Add(cb_ReqState, 6, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(0, 0);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -128,12 +128,13 @@
             // 
             // lAtb_ReqInfo_ReqEqp
             // 
-            lAtb_ReqInfo_ReqEqp.Lb_Text = "요청 설비";
+            lAtb_ReqInfo_ReqEqp.Lb_Text = "EqptId";
             lAtb_ReqInfo_ReqEqp.Location = new Point(1053, 3);
             lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
             lAtb_ReqInfo_ReqEqp.Size = new Size(162, 24);
             lAtb_ReqInfo_ReqEqp.TabIndex = 3;
             lAtb_ReqInfo_ReqEqp.Tb_Text = "";
+            lAtb_ReqInfo_ReqEqp.VariableName = "PortId";
             // 
             // lAtb_ReqInfo_RuleText
             // 
@@ -143,6 +144,7 @@
             lAtb_ReqInfo_RuleText.Size = new Size(162, 24);
             lAtb_ReqInfo_RuleText.TabIndex = 4;
             lAtb_ReqInfo_RuleText.Tb_Text = "";
+            lAtb_ReqInfo_RuleText.VariableName = "RuleId";
             // 
             // lAtb_ReqInfo_Cstid
             // 
@@ -152,46 +154,31 @@
             lAtb_ReqInfo_Cstid.Size = new Size(162, 24);
             lAtb_ReqInfo_Cstid.TabIndex = 5;
             lAtb_ReqInfo_Cstid.Tb_Text = "";
-            // 
-            // cb_ReqState
-            // 
-            cb_ReqState.FormattingEnabled = true;
-            cb_ReqState.Items.AddRange(new object[] { "ALL", "CREATED", "REQUEST" });
-            cb_ReqState.Location = new Point(885, 33);
-            cb_ReqState.Name = "cb_ReqState";
-            cb_ReqState.Size = new Size(162, 23);
-            cb_ReqState.TabIndex = 9;
-            cb_ReqState.Text = "REQ_STAT_CODE";
-            // 
-            // cb_CarrierState
-            // 
-            cb_CarrierState.FormattingEnabled = true;
-            cb_CarrierState.Items.AddRange(new object[] { "모두 : ALL", "실트레이 : U", "공트레이 : E" });
-            cb_CarrierState.Location = new Point(801, 3);
-            cb_CarrierState.Name = "cb_CarrierState";
-            cb_CarrierState.Size = new Size(78, 23);
-            cb_CarrierState.TabIndex = 11;
-            cb_CarrierState.Text = "공/실";
+            lAtb_ReqInfo_Cstid.VariableName = "CSTID";
             // 
             // lAdtp_ReqInfo_StartDate
             // 
-            lAdtp_ReqInfo_StartDate.Dtp_Value = new DateTime(2023, 11, 27, 9, 43, 47, 506);
-            lAdtp_ReqInfo_StartDate.IsChecked = false;
+            lAdtp_ReqInfo_StartDate.Dock = DockStyle.Fill;
+            lAdtp_ReqInfo_StartDate.Dtp_Value = new DateTime(2024, 2, 15, 0, 0, 0, 0);
+            lAdtp_ReqInfo_StartDate.IsChecked = true;
             lAdtp_ReqInfo_StartDate.Lb_Text = "시작 시간 ";
             lAdtp_ReqInfo_StartDate.Location = new Point(521, 3);
             lAdtp_ReqInfo_StartDate.Name = "lAdtp_ReqInfo_StartDate";
             lAdtp_ReqInfo_StartDate.Size = new Size(274, 24);
             lAdtp_ReqInfo_StartDate.TabIndex = 6;
+            lAdtp_ReqInfo_StartDate.VariableName = "StartTime";
             // 
             // lAdtp_ReqInfo_EndDate
             // 
-            lAdtp_ReqInfo_EndDate.Dtp_Value = new DateTime(2023, 11, 27, 9, 43, 50, 385);
+            lAdtp_ReqInfo_EndDate.Dock = DockStyle.Fill;
+            lAdtp_ReqInfo_EndDate.Dtp_Value = new DateTime(2024, 2, 15, 0, 0, 0, 0);
             lAdtp_ReqInfo_EndDate.IsChecked = false;
             lAdtp_ReqInfo_EndDate.Lb_Text = "종료 시간";
             lAdtp_ReqInfo_EndDate.Location = new Point(521, 33);
             lAdtp_ReqInfo_EndDate.Name = "lAdtp_ReqInfo_EndDate";
             lAdtp_ReqInfo_EndDate.Size = new Size(274, 24);
             lAdtp_ReqInfo_EndDate.TabIndex = 7;
+            lAdtp_ReqInfo_EndDate.VariableName = "EndTime";
             // 
             // lb_TransferStatus
             // 
@@ -247,6 +234,31 @@
             tv_SituationOrRuleResult.Size = new Size(176, 434);
             tv_SituationOrRuleResult.TabIndex = 15;
             // 
+            // cb_CarrierState
+            // 
+            cb_CarrierState.ComboBoxSelectedIndex = -1;
+            cb_CarrierState.ComboBoxText = "공/실";
+            cb_CarrierState.DataSource = null;
+            cb_CarrierState.Dock = DockStyle.Fill;
+            cb_CarrierState.Location = new Point(801, 3);
+            cb_CarrierState.Name = "cb_CarrierState";
+            cb_CarrierState.Size = new Size(78, 24);
+            cb_CarrierState.TabIndex = 16;
+            cb_CarrierState.VariableName = "CSTSTAT";
+            // 
+            // cb_ReqState
+            // 
+            cb_ReqState.ComboBoxSelectedIndex = -1;
+            cb_ReqState.ComboBoxText = "REQ_STAT_CODE";
+            cb_ReqState.DataSource = null;
+            cb_ReqState.Dock = DockStyle.Fill;
+            cb_ReqState.Location = new Point(885, 33);
+            cb_ReqState.Name = "cb_ReqState";
+            cb_ReqState.Size = new Size(162, 24);
+            cb_ReqState.TabIndex = 17;
+            cb_ReqState.VariableName = "REQ_STAT_CODE";
+            cb_ReqState.Load += cb_ReqState_Load;
+            // 
             // ReqInfomation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -273,12 +285,12 @@
         internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_ReqInfo_StartDate;
         internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_ReqInfo_EndDate;
         private UserWinfromControl.UWC_DataGridView reqInfo_dgvReq_TrfInfo;
-        private ComboBox cb_ReqState;
         private Label lb_TransferStatus;
-        internal ComboBox cb_CarrierState;
         private Panel panel1;
         private Label lb_CarrierInfoValidText;
         private CheckBox ckb_IsOpenReqSituation;
         private TreeView tv_SituationOrRuleResult;
+        private UserWinfromControl.UWC_ComboBox cb_CarrierState;
+        private UserWinfromControl.UWC_ComboBox cb_ReqState;
     }
 }

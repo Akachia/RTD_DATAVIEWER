@@ -15,6 +15,7 @@ using SortOrder = System.Windows.Forms.SortOrder;
 using System.Data;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using DBManagement;
 
 namespace RTD_DataViewer
 {
@@ -578,6 +579,36 @@ namespace RTD_DataViewer
                 }
             }
             return string.Empty;
+        }
+
+        public void ShowDgv(string methodName, Dictionary<string, string> paramaterDic, DataGridView dataGridView, SqlResultData sqlResultData)
+        {
+            try
+            {
+                if (sqlResultData == null)
+                {
+                    sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    dataGridView.DataSource = sqlResultData.ExcuteSql();
+                }
+                else
+                {
+                    dataGridView.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                }
+
+                if (sqlResultData.ErrMsg == string.Empty)
+                {
+                    main.AppendLog(sqlResultData.SqlStr);
+                    new WinformUtils().DataGridView_Coloring(dataGridView, main.sqlList[methodName]);
+                }
+                else
+                {
+                    MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message} : {methodName}");
+            }
         }
     }
 }

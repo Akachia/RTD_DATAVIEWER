@@ -1,6 +1,6 @@
 ﻿namespace UserWinfromControl
 {
-    partial class UWC_LabelAndComboBox
+    partial class UWC_ComboBox
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             comboBox1 = new ComboBox();
-            label1 = new Label();
             SuspendLayout();
             // 
             // comboBox1
@@ -41,31 +40,18 @@
             comboBox1.Size = new Size(172, 23);
             comboBox1.TabIndex = 0;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(39, 15);
-            label1.TabIndex = 1;
-            label1.Text = "label1";
-            label1.Click += label1_Click;
-            // 
-            // UWC_LabelAndComboBox
+            // UWC_ComboBox
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(label1);
             Controls.Add(comboBox1);
-            Name = "UWC_LabelAndComboBox";
+            Name = "UWC_ComboBox";
             Size = new Size(172, 25);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private ComboBox comboBox1;
-        private Label label1;
     }
 }

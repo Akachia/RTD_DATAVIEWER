@@ -131,6 +131,7 @@ namespace CustomUtils
         public static string key = "key";
         public static string value = "value";
         public static string Default = "default";
+        public static string CSTID = "CSTID";
 
 
         public static string Coloring = "Coloring";

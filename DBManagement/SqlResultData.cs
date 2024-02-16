@@ -19,21 +19,22 @@ namespace DBManagement
     public abstract class SqlResultData
     {
         #region Variable List
-        Dictionary<string, string> paramaterDic;
-        XmlOptionData sqldata;
-        DBConnectionString dBConnectionString;
-        public string sqlStr;
-        string errMsg;
+        internal Dictionary<string, string>? paramaterDic;
+        internal XmlOptionData? sqldata;
+        internal DBConnectionString? dBConnectionString;
+        internal string? sqlStr;
+        internal string? errMsg;
 
         DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
         #endregion
 
         #region Get/Set List
-        public Dictionary<string, string> ParamaterDic { get => paramaterDic; set => paramaterDic = value; }
-        public XmlOptionData Sqldata { get => sqldata; set => sqldata = value; }
-        public DBConnectionString DBConnectionString { get => dBConnectionString; set => dBConnectionString = value; }
-        public string ErrMsg { get => errMsg; set => errMsg = value; }
+        public Dictionary<string, string>? ParamaterDic { get => paramaterDic; set => paramaterDic = value; }
+        public XmlOptionData? Sqldata { get => sqldata; set => sqldata = value; }
+        public DBConnectionString? DBConnectionString { get => dBConnectionString; set => dBConnectionString = value; }
+        public string? ErrMsg { get => errMsg; set => errMsg = value; }
+        public string? SqlStr { get => sqlStr; set => sqlStr = value; }
 
         #endregion
 
