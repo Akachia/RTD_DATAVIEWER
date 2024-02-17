@@ -257,7 +257,6 @@
             cb_ReqState.Size = new Size(162, 24);
             cb_ReqState.TabIndex = 17;
             cb_ReqState.VariableName = "REQ_STAT_CODE";
-            cb_ReqState.Load += cb_ReqState_Load;
             // 
             // ReqInfomation
             // 

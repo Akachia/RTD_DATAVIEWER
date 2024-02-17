@@ -190,6 +190,12 @@ namespace DBManagement
                 //OptionalSql 추가 Logic
                 foreach (XmlOptionSql item in sqldata.OptionSqls)
                 {
+                    if (!paramaterDic.ContainsKey(item.Key))
+                    {
+                        continue;
+                    }
+
+
                     if (item.Type == CommonXml.Type.IF)
                     {
                         if (item.Condition == CommonXml.Condition.not_equal)

@@ -35,3 +35,4 @@ C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtil
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\refint\CustomUtills.dll
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.pdb
 C:\Users\carry\Documents\GitHub\Tester1\CustomUtills\obj\Debug\net6.0\ref\CustomUtills.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\CustomUtills\obj\Debug\net6.0\CustomUtills.sourcelink.json

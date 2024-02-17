@@ -16,6 +16,7 @@ using System.Data;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using DBManagement;
+using UserWinfromControl;
 
 namespace RTD_DataViewer
 {
@@ -86,7 +87,47 @@ namespace RTD_DataViewer
             return null;// new DatabaseUtills().MakeConnectionStringLIst(@"./DBConnectionString.xml");
         }
 
+        public Dictionary<string, string> MakeParamaterDic(List<Control> variableControls)
+        {
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            try
+            {
+                foreach (var item in variableControls)
+                {
+                    if (item is UWC_LabelAndDateTimePicker)
+                    {
+                        UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
+                        paramaterDic.Add(datePicker.VariableName, datePicker.MakeNowDateStringAndSetting());
+                    }
 
+                    if (item is UWC_LabelAndTextBox)
+                    {
+                        UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;
+                        paramaterDic.Add(text.VariableName, text.Tb_Text);
+                    }
+
+                    if (item is UWC_ComboBox)
+                    {
+                        UWC_ComboBox comboBox = item as UWC_ComboBox;
+
+                        if (comboBox.ComboBoxSelectedIndex > 0)
+                        {
+                            paramaterDic.Add(comboBox.VariableName, comboBox.ComboBoxSelectedItem);
+                        }
+                        else
+                        {
+                            paramaterDic.Add(comboBox.VariableName, $"");
+                        }
+                    }
+                }
+
+                return paramaterDic;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public void ExcuteSql(Dictionary<string,string> paramaterDic, DataGridView dataGridView, DBConnectionString dBConnectionString, string mathodName)
         {
@@ -282,6 +323,7 @@ namespace RTD_DataViewer
         {
             throw new NotImplementedException();
         }
+
         public void DataGridView_Coloring(DataGridView dataGridView, XmlOptionData sqldata)
         {
             dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
@@ -581,10 +623,11 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
-        public void ShowDgv(string methodName, Dictionary<string, string> paramaterDic, DataGridView dataGridView, SqlResultData sqlResultData)
+        public SqlResultData ShowDgv(string methodName, DataGridView dataGridView, SqlResultData sqlResultData, Dictionary<string, string> paramaterDic)
         {
             try
             {
+
                 if (sqlResultData == null)
                 {
                     sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
@@ -604,10 +647,13 @@ namespace RTD_DataViewer
                 {
                     MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
                 }
+
+                return sqlResultData;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message} : {methodName}");
+                return null;
             }
         }
     }

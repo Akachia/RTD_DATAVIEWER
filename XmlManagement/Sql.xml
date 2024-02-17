@@ -183,10 +183,10 @@
 			<Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
 			</Option3>
-			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="int" default="-1">
+			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="string" default="">
 				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
-			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="int" default="-1">
+			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option5>
 			<Option6 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>

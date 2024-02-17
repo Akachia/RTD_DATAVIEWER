@@ -160,8 +160,15 @@ namespace DBManagement
                     errMsg ="Carrier ID를 입력해주세요.";
                     return null;
                 }
-
-                cquery = cquery.Replace($"@{CommonXml.CSTID}", paramaterDic[CommonXml.CSTID]);
+                if (paramaterDic.ContainsKey(CommonXml.CSTID))
+                {
+                    cquery = cquery.Replace($"@{CommonXml.CSTID}", paramaterDic[CommonXml.CSTID]);
+                }
+                else
+                {
+                    errMsg = $" CSTID is null : {this.GetType().Name}";
+                    return null;
+                }
                 List <Carrier> carriers;
 
                 if (dBConnectionString.DatabaseProvider == "ORACLE")

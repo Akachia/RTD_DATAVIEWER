@@ -54,6 +54,14 @@ namespace XmlManagement
         public Dictionary<string, AdditionalVariable>? AdditionalVarDic { get; set; }
         public Dictionary<string, Coloring>? ColoringDic { get; set; }
         public Dictionary<string, EventValue>? EventValueDic { get; set; }
+
+        public Dictionary<string, string> getEventDicByFunctionName(string functionName)
+        {
+            EventValue ev = EventValueDic.Single(a => a.Value.CallSQL == functionName).Value;
+            Dictionary<string, string> valuePairs = new Dictionary<string, string>();
+            valuePairs.Add(ev.ColumnName, ev.Value);
+            return valuePairs;
+        }
     }
 
     public class XmlOptionSql
@@ -241,6 +249,7 @@ namespace XmlManagement
         }
 
         public string ColumnName { get; set; }
+        public string Value { get; set; }
         public string Type { get; set; }
         public string CallSQL { get; set; }
         public string EventType { get; set; }

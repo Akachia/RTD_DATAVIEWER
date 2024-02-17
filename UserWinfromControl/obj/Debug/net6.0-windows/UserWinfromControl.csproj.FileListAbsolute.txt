@@ -28,12 +28,10 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.AssemblyInfoInputs.cache
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.AssemblyInfo.cs
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.csproj.CoreCompileInputs.cache
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.csproj.CopyComplete
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\refint\UserWinfromControl.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.pdb
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\ref\UserWinfromControl.dll
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_LabelAndComboBox.resources
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\bin\Debug\net6.0-windows\UserWinfromControl.deps.json
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\bin\Debug\net6.0-windows\UserWinfromControl.dll
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\bin\Debug\net6.0-windows\UserWinfromControl.pdb
@@ -79,3 +77,6 @@ C:\Users\carry\Documents\GitHub\Tester1\UserWinfromControl\obj\Debug\net6.0-wind
 C:\Users\carry\Documents\GitHub\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\refint\UserWinfromControl.dll
 C:\Users\carry\Documents\GitHub\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.pdb
 C:\Users\carry\Documents\GitHub\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\ref\UserWinfromControl.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_ComboBox.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.sourcelink.json
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinf.D9374DD0.Up2Date

@@ -124,7 +124,7 @@
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND (THTC.CSTID like @CSTID OR  THTC.CSTID = (SELECT LOAD_REP_CSTID FROM CARRIER WITH (NOLOCK) WHERE CSTID like @CSTID))
 			</Option1>
-				<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
+			<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
 				AND REQ_SEQNO LIKE @REQ_SEQNO
 			</Option2>
 		</Option>
@@ -183,10 +183,10 @@
 			<Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
 			</Option3>
-			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="int" default="-1">
+			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="string" default="">
 				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
-			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="int" default="-1">
+			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option5>
 			<Option6 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UserWinfromControl;
 using XmlManagement;
+using static CustomUtils.CommonXml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RTD_DataViewer.View
@@ -28,8 +29,8 @@ namespace RTD_DataViewer.View
         DefaultSqlData? reqListData = null;
         SearchCstInfo? searchCstInfoData = null;
         DefaultSqlData? searchTrfInfoData = null;
-
-        List<Control> variableControls = new List<Control>();
+        Dictionary<string, string>? eventCallVal = null; 
+        List<Control>? variableControls = new List<Control>();
         #endregion
 
         #region Construction
@@ -71,10 +72,19 @@ namespace RTD_DataViewer.View
 
         private void ReqInfoDataGridViewCellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
-            string req_SeqNo = (sender as DataGridView).CurrentRow.Cells["REQ_SEQNO"].Value.ToString();
 
-            SearchTrfInfo(req_SeqNo);
+            if (reqListData != null)
+            {
+                foreach (var item in reqListData.Sqldata.EventValueDic.Keys)
+                {
+                    EventValue eventValue = reqListData.Sqldata.EventValueDic[item];
+                    eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                }
+            }
+
+            SearchTrfInfo();
+
+            string cstId = reqListData.Sqldata.EventValueDic["CSTID"].Value;
 
             if (cstId == "")
             {
@@ -90,7 +100,7 @@ namespace RTD_DataViewer.View
 
             if (cstId != "")
             {
-                SearchCstInfo(cstId);
+                SearchCstInfo();
             }
 
 
@@ -196,55 +206,6 @@ namespace RTD_DataViewer.View
             return str;
         }
 
-        private Dictionary<string, string> MakeParamaterDic()//List<Control> variableControls)
-        {
-            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-            try
-            {
-                foreach (var item in variableControls)
-                {
-                    if (item is UWC_LabelAndDateTimePicker)
-                    {
-                        UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
-                        paramaterDic.Add(datePicker.VariableName, datePicker.MakeNowDateStringAndSetting());
-                    }
-
-                    if (item is UWC_LabelAndTextBox)
-                    {
-                        UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;
-                        paramaterDic.Add(text.VariableName, text.Tb_Text);
-                    }
-
-                    if (item is UWC_ComboBox)
-                    {
-                        UWC_ComboBox comboBox = item as UWC_ComboBox;
-
-                        if (cb_ReqState.ComboBoxSelectedIndex > 0)
-                        {
-                            paramaterDic.Add(comboBox.VariableName, comboBox.ComboBoxSelectedItem);
-                        }
-                        else
-                        {
-                            paramaterDic.Add(comboBox.VariableName, $"");
-                        }
-                    }
-                }
-
-                return paramaterDic;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-
-        }
-
-        private void GetValues()
-        {
-
-        }
-
         private void MakeSituations()
         {
 
@@ -255,29 +216,23 @@ namespace RTD_DataViewer.View
         #region Assign SqlData to DataGrid view functuons Section 
         private void ReqList()
         {
-            MakeParamaterDic();
+            Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
             string methodName = MethodBase.GetCurrentMethod().Name;
-            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_dgvReq.DgvData, reqListData);
+            reqListData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq.DgvData, reqListData, paramaterDic) as DefaultSqlData;
         }
 
-        private void SearchCstInfo(string cstId)
+        private void SearchCstInfo()
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
-            MakeParamaterDic();
-            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_DgvCarrier.DgvData, searchCstInfoData);
+            searchCstInfoData = winformUtils.ShowDgv(methodName, reqInfo_DgvCarrier.DgvData, searchCstInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as SearchCstInfo;
         }
 
-        private void SearchTrfInfo(string req_SeqNo)
+        private void SearchTrfInfo()
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
-            MakeParamaterDic();
-            winformUtils.ShowDgv(methodName, MakeParamaterDic(), reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData);
+            searchTrfInfoData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as DefaultSqlData;
         }
-        #endregion
 
-        private void cb_ReqState_Load(object sender, EventArgs e)
-        {
-
-        }
+#endregion
     }
 }
