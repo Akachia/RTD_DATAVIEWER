@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SearchTransportReq>
+	<MainSQL>
+			SELECT CC.CSTID
+			, H.FROM_PORT_iD AS 요청포트
+			, H.TO_PORT_ID AS 목적포트
+			, H.CSTSTAT AS 상태
+			, CC.CURR_LOTID AS LOTID
+			, WA.LANE_ID AS LANE_ID
+			, W.EQSGID AS 라인
+			, W.ROUTID AS ROUT
+			, H.CMD_STAT_CODE AS 현황
+			, W.PROCID AS PROCID
+			, W.WIPSTAT AS WIP
+			, CONVERT(CHAR(23), H.INSDTTM, 20) AS 요청시각
+			, CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
+			, CC.ABNORM_TRF_RSN_CODE AS ATRC
+			, W.WIPHOLD AS HOLD
+			, H.RTD_RULE_ID
+			, H.TRF_CODE
+			, H.INSUSER AS 요청
+			, H.REQ_SEQNO AS 순번
+			, H.CNCL_REQ_FLAG AS 취소
+			, (CASE WHEN (DATEDIFF(minute, H.INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
+			, H.RSPN_CODE AS RSPN
+			, C.CMCDNAME AS ERR_MSG
+			FROM CARRIER CC with(nolock)
+			INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
+			LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
+			LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
+			LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
+			WHERE H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
+			AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
+			+Option1
+			+Option2
+			+Option3
+			+Option4
+			+Option5
+			+Option6
+			+Option7
+		</MainSQL>
+	<Option>
+		<Option1 type="IF" condition="not_equal" key="LANE_ID" dataType="string" default="">
+				AND WA.LANE_ID LIKE @LANE_ID
+			</Option1>
+		<Option2 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
+				AND H.CSTSTAT = @CSTSTAT
+			</Option2>
+		<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND H.CSTID IN (@CSTID)
+			</Option3>
+		<Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
+				AND H.FROM_PORT_ID LIKE @ReqPortId
+			</Option4>
+		<Option5 type="IF" condition="not_equal" key="ToPortId" dataType="string" default="">
+				AND H.TO_PORT_ID LIKE @ToPortId
+			</Option5>
+		<Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
+				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR 
+			</Option6>
+		<Option7 type="NONE" condition="" key="" dataType="" default="">
+				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]></Option7>
+		<Option8 type="VAR" condition="" key="CMD_STAT_CODE_LIST" dataType="List" default=""/>
+	</Option>
+	<AdditionalVariable>
+		</AdditionalVariable>
+	<Coloring>
+		<상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			<E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		</상태>
+		<진행상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<MOVING Red="255" Green="227" Blue="238" IsColoringRow="false"/>
+			<RECEIVE Red="255" Green="164" Blue="201" IsColoringRow="false"/>
+			<SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
+		</진행상태>
+		<HOLD Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<Y Red="255" Green="155" Blue="155" IsColoringRow="true"/>
+		</HOLD>
+	</Coloring>
+	<EventValues/>
+</SearchTransportReq>

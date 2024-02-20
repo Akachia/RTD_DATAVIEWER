@@ -146,6 +146,7 @@
 			REQ.REQ_SEQNO as 번호
 			, REQ.CSTID AS CSTID
 			, REQ.CSTSTAT as 상태
+			, EA.s02 AS 극성
 			, REQ.EQPTID AS 설비명
 			, REQ.PORT_ID AS 포트명
 			, REQ.REQ_TYPE_CODE AS 요청코드
@@ -162,7 +163,8 @@
 			, C.CMCDNAME AS ERR_DESC
 			FROM TB_MHS_TRF_REQ REQ with(nolock)
 			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
-			WHERE 1 = 1
+			LEFT OUTER JOIN EquipmentAttr  EA With (NOLOCK) ON EA.EQPTID = REQ.EQPTID
+			WHERE 1=1
 			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartDate AND @EndDate
 			+Option1
 			+Option2

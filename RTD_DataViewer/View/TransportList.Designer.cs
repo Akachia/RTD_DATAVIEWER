@@ -141,7 +141,7 @@
             lAdtp_TransList_StartDate.Name = "lAdtp_TransList_StartDate";
             lAdtp_TransList_StartDate.Size = new Size(274, 24);
             lAdtp_TransList_StartDate.TabIndex = 12;
-            lAdtp_TransList_StartDate.VariableName = "";
+            lAdtp_TransList_StartDate.VariableName = "StartTime";
             // 
             // lAdtp_TransList_EndDate
             // 
@@ -153,7 +153,7 @@
             lAdtp_TransList_EndDate.Name = "lAdtp_TransList_EndDate";
             lAdtp_TransList_EndDate.Size = new Size(274, 24);
             lAdtp_TransList_EndDate.TabIndex = 13;
-            lAdtp_TransList_EndDate.VariableName = "";
+            lAdtp_TransList_EndDate.VariableName = "EndTime";
             // 
             // tAbt_TransList_Search
             // 
@@ -292,7 +292,7 @@
             // cb_CarrierStat
             // 
             cb_CarrierStat.ComboBoxSelectedIndex = -1;
-            cb_CarrierStat.ComboBoxText = "";
+            cb_CarrierStat.ComboBoxText = "공/실";
             cb_CarrierStat.DataSource = null;
             cb_CarrierStat.Location = new Point(843, 3);
             cb_CarrierStat.Name = "cb_CarrierStat";

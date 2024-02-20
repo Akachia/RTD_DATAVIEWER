@@ -273,7 +273,7 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("isFaulty", $"{ckb_IsFaulty.Checked}");
 
             string methodName = MethodBase.GetCurrentMethod().Name;
-            transPortListData = winformUtils.ShowDgv(methodName, transList_dgvReq.DgvData, transPortListData, paramaterDic) as DefaultSqlData;
+            transPortListData = winformUtils.ShowDgv(methodName, transList_dgvReq, transPortListData, paramaterDic) as DefaultSqlData;
 
         }
         #endregion

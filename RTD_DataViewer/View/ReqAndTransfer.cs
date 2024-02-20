@@ -132,6 +132,5 @@ namespace RTD_DataViewer.View
                 MessageBox.Show($"{ex.Message} : SearchReq");
             }
         }
-
     }
 }

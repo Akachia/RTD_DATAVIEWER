@@ -147,7 +147,7 @@ namespace DBManagement
             return string.Empty;
         }
 
-        public override object ExcuteSql()
+        public new object ExcuteSql()
         {
             try
             {

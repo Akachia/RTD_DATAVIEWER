@@ -219,19 +219,24 @@ namespace RTD_DataViewer.View
         {
             Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
             string methodName = MethodBase.GetCurrentMethod().Name;
-            reqListData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq.DgvData, reqListData, paramaterDic) as DefaultSqlData;
+            reqListData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq, reqListData, paramaterDic) as DefaultSqlData;
         }
 
         private void SearchCstInfo()
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
-            searchCstInfoData = winformUtils.ShowDgv(methodName, reqInfo_DgvCarrier.DgvData, searchCstInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as SearchCstInfo;
+            searchCstInfoData = winformUtils.ShowDgv(methodName, reqInfo_DgvCarrier, searchCstInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as SearchCstInfo;
+
+            if (searchCstInfoData != null)
+            {
+                reqInfo_DgvCarrier.Lb_Text2 = searchCstInfoData.CarrierMismatchInfo;
+            }
         }
 
         private void SearchTrfInfo()
         {
             string methodName = MethodBase.GetCurrentMethod().Name;
-            searchTrfInfoData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as DefaultSqlData;
+            searchTrfInfoData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq_TrfInfo, searchTrfInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as DefaultSqlData;
         }
 
         #endregion

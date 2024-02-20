@@ -634,25 +634,26 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
-        public SqlResultData ShowDgv(string methodName, DataGridView dataGridView, SqlResultData sqlResultData, Dictionary<string, string> paramaterDic)
+        public SqlResultData ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultData sqlResultData, Dictionary<string, string> paramaterDic)
         {
+            DataGridView data = dataGridView.DgvData;
+            dataGridView.Lb_Text = methodName;
             try
             {
-
                 if (sqlResultData == null)
                 {
                     sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
-                    dataGridView.DataSource = sqlResultData.ExcuteSql();
+                    data.DataSource = sqlResultData.ExcuteSql();
                 }
                 else
                 {
-                    dataGridView.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    data.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
                 }
 
                 if (sqlResultData.ErrMsg == string.Empty)
                 {
                     main.AppendLog(sqlResultData.SqlStr);
-                    new WinformUtils().DataGridView_Coloring(dataGridView, main.sqlList[methodName]);
+                    new WinformUtils().DataGridView_Coloring(data, main.sqlList[methodName]);
                 }
                 else
                 {

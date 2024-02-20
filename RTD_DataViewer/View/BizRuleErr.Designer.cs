@@ -75,6 +75,8 @@
             // 
             tableLayoutPanel1.SetColumnSpan(dgv_BizRuleError, 7);
             dgv_BizRuleError.Dock = DockStyle.Fill;
+            dgv_BizRuleError.Lb_Text = "SqlName";
+            dgv_BizRuleError.Lb_Text2 = "";
             dgv_BizRuleError.Location = new Point(3, 33);
             dgv_BizRuleError.Name = "dgv_BizRuleError";
             tableLayoutPanel1.SetRowSpan(dgv_BizRuleError, 2);
@@ -99,6 +101,7 @@
             lAtb_ErrorText.Size = new Size(190, 24);
             lAtb_ErrorText.TabIndex = 2;
             lAtb_ErrorText.Tb_Text = "";
+            lAtb_ErrorText.VariableName = "";
             // 
             // bt_Search
             // 
@@ -130,6 +133,7 @@
             lAdtp_StartTime.Name = "lAdtp_StartTime";
             lAdtp_StartTime.Size = new Size(274, 24);
             lAdtp_StartTime.TabIndex = 5;
+            lAdtp_StartTime.VariableName = "";
             // 
             // lAdtp_EndTime
             // 
@@ -141,15 +145,18 @@
             lAdtp_EndTime.Name = "lAdtp_EndTime";
             lAdtp_EndTime.Size = new Size(274, 24);
             lAdtp_EndTime.TabIndex = 6;
+            lAdtp_EndTime.VariableName = "";
             // 
             // lAtb_EqptId
             // 
+            lAtb_EqptId.Dock = DockStyle.Fill;
             lAtb_EqptId.Lb_Text = "EqptId";
             lAtb_EqptId.Location = new Point(983, 3);
             lAtb_EqptId.Name = "lAtb_EqptId";
             lAtb_EqptId.Size = new Size(134, 24);
             lAtb_EqptId.TabIndex = 7;
             lAtb_EqptId.Tb_Text = "";
+            lAtb_EqptId.VariableName = "";
             // 
             // BizRuleErr
             // 

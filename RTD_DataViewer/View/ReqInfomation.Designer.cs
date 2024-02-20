@@ -30,7 +30,6 @@
         {
             tableLayoutPanel4 = new TableLayoutPanel();
             reqInfo_dgvReq = new UserWinfromControl.UWC_DataGridView();
-            reqInfo_DgvCarrier = new UserWinfromControl.UWC_DataGridView();
             reqInfo_dgvReq_TrfInfo = new UserWinfromControl.UWC_DataGridView();
             tAbt_ReqInfo_Search = new UserWinfromControl.UWC_TimerAndBtn();
             lAtb_ReqInfo_ReqEqp = new UserWinfromControl.UWC_LabelAndTextBox();
@@ -39,14 +38,12 @@
             lAdtp_ReqInfo_StartDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_ReqInfo_EndDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lb_TransferStatus = new Label();
-            panel1 = new Panel();
-            lb_CarrierInfoValidText = new Label();
             ckb_IsOpenReqSituation = new CheckBox();
             tv_SituationOrRuleResult = new TreeView();
             cb_CarrierState = new UserWinfromControl.UWC_ComboBox();
             cb_ReqState = new UserWinfromControl.UWC_ComboBox();
+            reqInfo_DgvCarrier = new UserWinfromControl.UWC_DataGridView();
             tableLayoutPanel4.SuspendLayout();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel4
@@ -62,7 +59,6 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13F));
             tableLayoutPanel4.Controls.Add(reqInfo_dgvReq, 0, 2);
-            tableLayoutPanel4.Controls.Add(reqInfo_DgvCarrier, 3, 4);
             tableLayoutPanel4.Controls.Add(reqInfo_dgvReq_TrfInfo, 0, 3);
             tableLayoutPanel4.Controls.Add(tAbt_ReqInfo_Search, 8, 0);
             tableLayoutPanel4.Controls.Add(lAtb_ReqInfo_ReqEqp, 7, 0);
@@ -71,21 +67,20 @@
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_StartDate, 4, 0);
             tableLayoutPanel4.Controls.Add(lAdtp_ReqInfo_EndDate, 4, 1);
             tableLayoutPanel4.Controls.Add(lb_TransferStatus, 3, 0);
-            tableLayoutPanel4.Controls.Add(panel1, 0, 4);
             tableLayoutPanel4.Controls.Add(ckb_IsOpenReqSituation, 5, 1);
             tableLayoutPanel4.Controls.Add(tv_SituationOrRuleResult, 8, 2);
             tableLayoutPanel4.Controls.Add(cb_CarrierState, 5, 0);
             tableLayoutPanel4.Controls.Add(cb_ReqState, 6, 1);
+            tableLayoutPanel4.Controls.Add(reqInfo_DgvCarrier, 0, 4);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(0, 0);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 6;
+            tableLayoutPanel4.RowCount = 5;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 95F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
             tableLayoutPanel4.Size = new Size(1400, 600);
             tableLayoutPanel4.TabIndex = 1;
             // 
@@ -93,31 +88,27 @@
             // 
             tableLayoutPanel4.SetColumnSpan(reqInfo_dgvReq, 8);
             reqInfo_dgvReq.Dock = DockStyle.Fill;
+            reqInfo_dgvReq.Lb_Text = "SqlName";
+            reqInfo_dgvReq.Lb_Text2 = "";
             reqInfo_dgvReq.Location = new Point(3, 63);
             reqInfo_dgvReq.Name = "reqInfo_dgvReq";
-            reqInfo_dgvReq.Size = new Size(1212, 334);
+            reqInfo_dgvReq.Size = new Size(1212, 329);
             reqInfo_dgvReq.TabIndex = 0;
-            // 
-            // reqInfo_DgvCarrier
-            // 
-            tableLayoutPanel4.SetColumnSpan(reqInfo_DgvCarrier, 9);
-            reqInfo_DgvCarrier.Dock = DockStyle.Fill;
-            reqInfo_DgvCarrier.Location = new Point(3, 503);
-            reqInfo_DgvCarrier.Name = "reqInfo_DgvCarrier";
-            reqInfo_DgvCarrier.Size = new Size(1394, 94);
-            reqInfo_DgvCarrier.TabIndex = 1;
             // 
             // reqInfo_dgvReq_TrfInfo
             // 
             tableLayoutPanel4.SetColumnSpan(reqInfo_dgvReq_TrfInfo, 8);
             reqInfo_dgvReq_TrfInfo.Dock = DockStyle.Fill;
-            reqInfo_dgvReq_TrfInfo.Location = new Point(3, 403);
+            reqInfo_dgvReq_TrfInfo.Lb_Text = "SqlName";
+            reqInfo_dgvReq_TrfInfo.Lb_Text2 = "";
+            reqInfo_dgvReq_TrfInfo.Location = new Point(3, 398);
             reqInfo_dgvReq_TrfInfo.Name = "reqInfo_dgvReq_TrfInfo";
-            reqInfo_dgvReq_TrfInfo.Size = new Size(1212, 74);
+            reqInfo_dgvReq_TrfInfo.Size = new Size(1212, 89);
             reqInfo_dgvReq_TrfInfo.TabIndex = 8;
             // 
             // tAbt_ReqInfo_Search
             // 
+            tAbt_ReqInfo_Search.Dock = DockStyle.Fill;
             tAbt_ReqInfo_Search.Interval = 20;
             tAbt_ReqInfo_Search.IsUseTimer = false;
             tAbt_ReqInfo_Search.Location = new Point(1221, 3);
@@ -128,6 +119,7 @@
             // 
             // lAtb_ReqInfo_ReqEqp
             // 
+            lAtb_ReqInfo_ReqEqp.Dock = DockStyle.Fill;
             lAtb_ReqInfo_ReqEqp.Lb_Text = "EqptId";
             lAtb_ReqInfo_ReqEqp.Location = new Point(1053, 3);
             lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
@@ -138,6 +130,7 @@
             // 
             // lAtb_ReqInfo_RuleText
             // 
+            lAtb_ReqInfo_RuleText.Dock = DockStyle.Fill;
             lAtb_ReqInfo_RuleText.Lb_Text = "Rule Name";
             lAtb_ReqInfo_RuleText.Location = new Point(1053, 33);
             lAtb_ReqInfo_RuleText.Name = "lAtb_ReqInfo_RuleText";
@@ -148,6 +141,7 @@
             // 
             // lAtb_ReqInfo_Cstid
             // 
+            lAtb_ReqInfo_Cstid.Dock = DockStyle.Fill;
             lAtb_ReqInfo_Cstid.Lb_Text = "Carrier ID";
             lAtb_ReqInfo_Cstid.Location = new Point(885, 3);
             lAtb_ReqInfo_Cstid.Name = "lAtb_ReqInfo_Cstid";
@@ -191,27 +185,6 @@
             lb_TransferStatus.TabIndex = 10;
             lb_TransferStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // panel1
-            // 
-            tableLayoutPanel4.SetColumnSpan(panel1, 8);
-            panel1.Controls.Add(lb_CarrierInfoValidText);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 483);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1212, 14);
-            panel1.TabIndex = 13;
-            // 
-            // lb_CarrierInfoValidText
-            // 
-            lb_CarrierInfoValidText.AutoSize = true;
-            lb_CarrierInfoValidText.Dock = DockStyle.Fill;
-            lb_CarrierInfoValidText.Location = new Point(0, 0);
-            lb_CarrierInfoValidText.Name = "lb_CarrierInfoValidText";
-            lb_CarrierInfoValidText.Size = new Size(0, 15);
-            lb_CarrierInfoValidText.TabIndex = 0;
-            lb_CarrierInfoValidText.TextAlign = ContentAlignment.MiddleCenter;
-            lb_CarrierInfoValidText.Click += label1_Click;
-            // 
             // ckb_IsOpenReqSituation
             // 
             ckb_IsOpenReqSituation.AutoSize = true;
@@ -230,8 +203,8 @@
             tv_SituationOrRuleResult.Dock = DockStyle.Fill;
             tv_SituationOrRuleResult.Location = new Point(1221, 63);
             tv_SituationOrRuleResult.Name = "tv_SituationOrRuleResult";
-            tableLayoutPanel4.SetRowSpan(tv_SituationOrRuleResult, 3);
-            tv_SituationOrRuleResult.Size = new Size(176, 434);
+            tableLayoutPanel4.SetRowSpan(tv_SituationOrRuleResult, 2);
+            tv_SituationOrRuleResult.Size = new Size(176, 424);
             tv_SituationOrRuleResult.TabIndex = 15;
             // 
             // cb_CarrierState
@@ -258,6 +231,17 @@
             cb_ReqState.TabIndex = 17;
             cb_ReqState.VariableName = "REQ_STAT_CODE";
             // 
+            // reqInfo_DgvCarrier
+            // 
+            tableLayoutPanel4.SetColumnSpan(reqInfo_DgvCarrier, 9);
+            reqInfo_DgvCarrier.Dock = DockStyle.Fill;
+            reqInfo_DgvCarrier.Lb_Text = "SqlName";
+            reqInfo_DgvCarrier.Lb_Text2 = "";
+            reqInfo_DgvCarrier.Location = new Point(3, 493);
+            reqInfo_DgvCarrier.Name = "reqInfo_DgvCarrier";
+            reqInfo_DgvCarrier.Size = new Size(1394, 104);
+            reqInfo_DgvCarrier.TabIndex = 18;
+            // 
             // ReqInfomation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -267,8 +251,6 @@
             Size = new Size(1400, 600);
             tableLayoutPanel4.ResumeLayout(false);
             tableLayoutPanel4.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -276,7 +258,6 @@
 
         internal TableLayoutPanel tableLayoutPanel4;
         internal UserWinfromControl.UWC_DataGridView reqInfo_dgvReq;
-        internal UserWinfromControl.UWC_DataGridView reqInfo_DgvCarrier;
         internal UserWinfromControl.UWC_TimerAndBtn tAbt_ReqInfo_Search;
         internal UserWinfromControl.UWC_LabelAndTextBox lAtb_ReqInfo_ReqEqp;
         internal UserWinfromControl.UWC_LabelAndTextBox lAtb_ReqInfo_RuleText;
@@ -285,11 +266,10 @@
         internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_ReqInfo_EndDate;
         private UserWinfromControl.UWC_DataGridView reqInfo_dgvReq_TrfInfo;
         private Label lb_TransferStatus;
-        private Panel panel1;
-        private Label lb_CarrierInfoValidText;
         private CheckBox ckb_IsOpenReqSituation;
         private TreeView tv_SituationOrRuleResult;
         private UserWinfromControl.UWC_ComboBox cb_CarrierState;
         private UserWinfromControl.UWC_ComboBox cb_ReqState;
+        private UserWinfromControl.UWC_DataGridView reqInfo_DgvCarrier;
     }
 }

@@ -75,7 +75,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1434, 677);
+            tableLayoutPanel1.Size = new Size(1584, 837);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // reqATransfer_dgvReq
@@ -96,7 +96,7 @@
             reqATransfer_dgvReq.Location = new Point(3, 43);
             reqATransfer_dgvReq.Name = "reqATransfer_dgvReq";
             reqATransfer_dgvReq.SelectedIndex = 0;
-            reqATransfer_dgvReq.Size = new Size(1428, 631);
+            reqATransfer_dgvReq.Size = new Size(1578, 791);
             reqATransfer_dgvReq.TabIndex = 0;
             // 
             // tp_ReqInfomation
@@ -104,7 +104,7 @@
             tp_ReqInfomation.Location = new Point(4, 24);
             tp_ReqInfomation.Name = "tp_ReqInfomation";
             tp_ReqInfomation.Padding = new Padding(3);
-            tp_ReqInfomation.Size = new Size(1420, 603);
+            tp_ReqInfomation.Size = new Size(1570, 763);
             tp_ReqInfomation.TabIndex = 0;
             tp_ReqInfomation.Text = "요청정보";
             tp_ReqInfomation.UseVisualStyleBackColor = true;
@@ -114,7 +114,7 @@
             tp_TransportList.Location = new Point(4, 24);
             tp_TransportList.Name = "tp_TransportList";
             tp_TransportList.Padding = new Padding(3);
-            tp_TransportList.Size = new Size(1420, 603);
+            tp_TransportList.Size = new Size(1570, 663);
             tp_TransportList.TabIndex = 1;
             tp_TransportList.Text = "반송목록";
             tp_TransportList.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             tp_ReqAndTransfer.Location = new Point(4, 24);
             tp_ReqAndTransfer.Name = "tp_ReqAndTransfer";
             tp_ReqAndTransfer.Padding = new Padding(3);
-            tp_ReqAndTransfer.Size = new Size(1420, 603);
+            tp_ReqAndTransfer.Size = new Size(1570, 663);
             tp_ReqAndTransfer.TabIndex = 3;
             tp_ReqAndTransfer.Text = "요청/반송 이력";
             tp_ReqAndTransfer.UseVisualStyleBackColor = true;
@@ -133,7 +133,7 @@
             // 
             tp_CstInfo.Location = new Point(4, 24);
             tp_CstInfo.Name = "tp_CstInfo";
-            tp_CstInfo.Size = new Size(1420, 603);
+            tp_CstInfo.Size = new Size(1570, 663);
             tp_CstInfo.TabIndex = 7;
             tp_CstInfo.Text = "케리어 정보";
             tp_CstInfo.UseVisualStyleBackColor = true;
@@ -143,7 +143,7 @@
             tp_CstHist.Location = new Point(4, 24);
             tp_CstHist.Name = "tp_CstHist";
             tp_CstHist.Padding = new Padding(3);
-            tp_CstHist.Size = new Size(1420, 603);
+            tp_CstHist.Size = new Size(1570, 663);
             tp_CstHist.TabIndex = 4;
             tp_CstHist.Text = "케리어 이력";
             tp_CstHist.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@
             tp_EqpState.Location = new Point(4, 24);
             tp_EqpState.Name = "tp_EqpState";
             tp_EqpState.Padding = new Padding(3);
-            tp_EqpState.Size = new Size(1420, 603);
+            tp_EqpState.Size = new Size(1570, 663);
             tp_EqpState.TabIndex = 5;
             tp_EqpState.Text = "설비 상태";
             tp_EqpState.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@
             tp_StockerInventory.Location = new Point(4, 24);
             tp_StockerInventory.Name = "tp_StockerInventory";
             tp_StockerInventory.Padding = new Padding(3);
-            tp_StockerInventory.Size = new Size(1420, 603);
+            tp_StockerInventory.Size = new Size(1570, 663);
             tp_StockerInventory.TabIndex = 8;
             tp_StockerInventory.Text = "스토커 현황";
             tp_StockerInventory.UseVisualStyleBackColor = true;
@@ -173,7 +173,7 @@
             tp_RollSituation.Location = new Point(4, 24);
             tp_RollSituation.Name = "tp_RollSituation";
             tp_RollSituation.Padding = new Padding(3);
-            tp_RollSituation.Size = new Size(1420, 603);
+            tp_RollSituation.Size = new Size(1570, 663);
             tp_RollSituation.TabIndex = 9;
             tp_RollSituation.Text = "RollSituation";
             tp_RollSituation.UseVisualStyleBackColor = true;
@@ -183,7 +183,7 @@
             tp_WaitWips.Location = new Point(4, 24);
             tp_WaitWips.Name = "tp_WaitWips";
             tp_WaitWips.Padding = new Padding(3);
-            tp_WaitWips.Size = new Size(1420, 603);
+            tp_WaitWips.Size = new Size(1570, 663);
             tp_WaitWips.TabIndex = 10;
             tp_WaitWips.Text = "WaitWips";
             tp_WaitWips.UseVisualStyleBackColor = true;
@@ -193,7 +193,7 @@
             tp_LnsPkgState.Location = new Point(4, 24);
             tp_LnsPkgState.Name = "tp_LnsPkgState";
             tp_LnsPkgState.Padding = new Padding(3);
-            tp_LnsPkgState.Size = new Size(1420, 603);
+            tp_LnsPkgState.Size = new Size(1570, 663);
             tp_LnsPkgState.TabIndex = 6;
             tp_LnsPkgState.Text = "LnsPkgState";
             tp_LnsPkgState.UseVisualStyleBackColor = true;
@@ -203,7 +203,7 @@
             tp_BizRuleErr.Location = new Point(4, 24);
             tp_BizRuleErr.Name = "tp_BizRuleErr";
             tp_BizRuleErr.Padding = new Padding(3);
-            tp_BizRuleErr.Size = new Size(1420, 603);
+            tp_BizRuleErr.Size = new Size(1570, 663);
             tp_BizRuleErr.TabIndex = 11;
             tp_BizRuleErr.Text = "BizRuleErr";
             tp_BizRuleErr.UseVisualStyleBackColor = true;
@@ -213,7 +213,7 @@
             tp_LogBox.Location = new Point(4, 24);
             tp_LogBox.Name = "tp_LogBox";
             tp_LogBox.Padding = new Padding(3);
-            tp_LogBox.Size = new Size(1420, 603);
+            tp_LogBox.Size = new Size(1570, 663);
             tp_LogBox.TabIndex = 2;
             tp_LogBox.Text = "LogBox";
             tp_LogBox.UseVisualStyleBackColor = true;
@@ -239,16 +239,16 @@
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(1428, 34);
+            tableLayoutPanel2.Size = new Size(1578, 34);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // lb_ServerIP
             // 
             lb_ServerIP.AutoSize = true;
             lb_ServerIP.Dock = DockStyle.Fill;
-            lb_ServerIP.Location = new Point(1058, 0);
+            lb_ServerIP.Location = new Point(1169, 0);
             lb_ServerIP.Name = "lb_ServerIP";
-            lb_ServerIP.Size = new Size(179, 17);
+            lb_ServerIP.Size = new Size(199, 17);
             lb_ServerIP.TabIndex = 0;
             lb_ServerIP.Text = "ServerIP";
             // 
@@ -256,9 +256,9 @@
             // 
             lb_ServerName.AutoSize = true;
             lb_ServerName.Dock = DockStyle.Fill;
-            lb_ServerName.Location = new Point(1058, 17);
+            lb_ServerName.Location = new Point(1169, 17);
             lb_ServerName.Name = "lb_ServerName";
-            lb_ServerName.Size = new Size(179, 17);
+            lb_ServerName.Size = new Size(199, 17);
             lb_ServerName.TabIndex = 1;
             lb_ServerName.Text = "ServerName";
             // 
@@ -269,7 +269,7 @@
             lb_CurLocTime.Location = new Point(3, 0);
             lb_CurLocTime.Name = "lb_CurLocTime";
             tableLayoutPanel2.SetRowSpan(lb_CurLocTime, 2);
-            lb_CurLocTime.Size = new Size(315, 34);
+            lb_CurLocTime.Size = new Size(349, 34);
             lb_CurLocTime.TabIndex = 2;
             lb_CurLocTime.Text = "CurrentLocatuonTime";
             lb_CurLocTime.TextAlign = ContentAlignment.MiddleCenter;
@@ -278,10 +278,10 @@
             // 
             lb_KorTime.AutoSize = true;
             lb_KorTime.Dock = DockStyle.Fill;
-            lb_KorTime.Location = new Point(324, 0);
+            lb_KorTime.Location = new Point(358, 0);
             lb_KorTime.Name = "lb_KorTime";
             tableLayoutPanel2.SetRowSpan(lb_KorTime, 2);
-            lb_KorTime.Size = new Size(315, 34);
+            lb_KorTime.Size = new Size(349, 34);
             lb_KorTime.TabIndex = 3;
             lb_KorTime.Text = "KoreaTime";
             lb_KorTime.TextAlign = ContentAlignment.MiddleCenter;
@@ -290,10 +290,10 @@
             // 
             panel1.Controls.Add(bt_DataRefresh);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(645, 3);
+            panel1.Location = new Point(713, 3);
             panel1.Name = "panel1";
             tableLayoutPanel2.SetRowSpan(panel1, 2);
-            panel1.Size = new Size(208, 28);
+            panel1.Size = new Size(230, 28);
             panel1.TabIndex = 4;
             // 
             // bt_DataRefresh
@@ -311,10 +311,10 @@
             // 
             cb_DBString.Dock = DockStyle.Fill;
             cb_DBString.FormattingEnabled = true;
-            cb_DBString.Location = new Point(1243, 3);
+            cb_DBString.Location = new Point(1374, 3);
             cb_DBString.Name = "cb_DBString";
             tableLayoutPanel2.SetRowSpan(cb_DBString, 2);
-            cb_DBString.Size = new Size(182, 23);
+            cb_DBString.Size = new Size(201, 23);
             cb_DBString.TabIndex = 5;
             cb_DBString.TextChanged += cb_DBString_TextChanged;
             // 
@@ -323,7 +323,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1434, 24);
+            menuStrip1.Size = new Size(1584, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -336,9 +336,9 @@
             // ss_selectionCount
             // 
             ss_selectionCount.Items.AddRange(new ToolStripItem[] { ColumnCount, RowCount });
-            ss_selectionCount.Location = new Point(0, 679);
+            ss_selectionCount.Location = new Point(0, 839);
             ss_selectionCount.Name = "ss_selectionCount";
-            ss_selectionCount.Size = new Size(1434, 22);
+            ss_selectionCount.Size = new Size(1584, 22);
             ss_selectionCount.TabIndex = 2;
             ss_selectionCount.Text = "statusStrip1";
             // 
@@ -358,7 +358,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1434, 701);
+            ClientSize = new Size(1584, 861);
             Controls.Add(ss_selectionCount);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);

@@ -89,7 +89,7 @@ namespace RTD_DataViewer
 
             BizRuleErr bizRuleErr = new BizRuleErr(this);
             tp_BizRuleErr.Controls.Add(bizRuleErr);
-            rollSituation.Dock = DockStyle.Fill;
+            bizRuleErr.Dock = DockStyle.Fill;
         }
 
         public void AppendLog(string text)
