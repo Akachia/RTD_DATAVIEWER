@@ -40,6 +40,8 @@ namespace UserWinfromControl
         public UWC_LabelAndDateTimePicker()
         {
             InitializeComponent();
+
+            this.dtp_date.Value = DateTime.Today.AddDays(-1);
         }
 
         public string MakeNowDateStringAndSetting(string endDate)

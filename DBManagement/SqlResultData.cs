@@ -63,16 +63,9 @@ namespace DBManagement
                 {
                     DatabaseUtilities.AddToOptionalSqlSyntax(ref cquery, item, true);
                 }
-
-                if (item.DataType == CommonXml.DataType._DateTime)
-                {
-                    cquery = cquery.Replace(@$"@{item.Key}", $@"'{paramaterDic[item.Key]}'");
-                }
-                else
-                {
-                    cquery = cquery.Replace(@$"@{item.Key}", $@"'%{paramaterDic[item.Key]}%'");
-                }
-                
+                // 각 변수마다 처리해야 하는 방법이 다르기 때문에
+                // 여기서는 기본적인 처리만 하는 것을 원칙으로 한다.
+                cquery = cquery.Replace(@$"@{item.Key}", $@"{paramaterDic[item.Key]}");                
             }
             //else
             //{

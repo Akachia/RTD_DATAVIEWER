@@ -15,7 +15,15 @@ namespace CustomUtills
             Regex regex = new Regex(pattern);
             source = regex.Replace(source, target);
         }
+
+        public static string LikeStringMaskingByLeft(string str) => @$"'%{str}'";
+
+        public static string LikeStringMaskingByRight(string str) => @$"'{str}%'";
+
+        public static string LikeStringMaskingByBoth(string str) => @$"'%{str}%'";
+
+        public static string StringToDBStr(string str) => @$"'{str}'";
     }
 
-    
+
 }

@@ -100,6 +100,7 @@
             lAtb_ReqATransfer_CarrierId.Size = new Size(176, 24);
             lAtb_ReqATransfer_CarrierId.TabIndex = 1;
             lAtb_ReqATransfer_CarrierId.Tb_Text = "";
+            lAtb_ReqATransfer_CarrierId.VariableName = "";
             // 
             // lAtb_ReqATransfer_StartPort
             // 
@@ -110,6 +111,7 @@
             lAtb_ReqATransfer_StartPort.Size = new Size(162, 24);
             lAtb_ReqATransfer_StartPort.TabIndex = 2;
             lAtb_ReqATransfer_StartPort.Tb_Text = "";
+            lAtb_ReqATransfer_StartPort.VariableName = "";
             // 
             // lAtb_ReqATransfer_RuleId
             // 
@@ -120,6 +122,7 @@
             lAtb_ReqATransfer_RuleId.Size = new Size(176, 24);
             lAtb_ReqATransfer_RuleId.TabIndex = 3;
             lAtb_ReqATransfer_RuleId.Tb_Text = "";
+            lAtb_ReqATransfer_RuleId.VariableName = "";
             // 
             // lAtb_ReqATransfer_ArrPort
             // 
@@ -130,6 +133,7 @@
             lAtb_ReqATransfer_ArrPort.Size = new Size(162, 24);
             lAtb_ReqATransfer_ArrPort.TabIndex = 4;
             lAtb_ReqATransfer_ArrPort.Tb_Text = "";
+            lAtb_ReqATransfer_ArrPort.VariableName = "";
             // 
             // lAdtp_ReqATransfer_StartDate
             // 
@@ -141,6 +145,7 @@
             lAdtp_ReqATransfer_StartDate.Name = "lAdtp_ReqATransfer_StartDate";
             lAdtp_ReqATransfer_StartDate.Size = new Size(274, 24);
             lAdtp_ReqATransfer_StartDate.TabIndex = 5;
+            lAdtp_ReqATransfer_StartDate.VariableName = "";
             // 
             // lAdtp_ReqATransfer_EndDate
             // 
@@ -152,6 +157,7 @@
             lAdtp_ReqATransfer_EndDate.Name = "lAdtp_ReqATransfer_EndDate";
             lAdtp_ReqATransfer_EndDate.Size = new Size(274, 24);
             lAdtp_ReqATransfer_EndDate.TabIndex = 6;
+            lAdtp_ReqATransfer_EndDate.VariableName = "";
             // 
             // cb_ReqATransfer_CstStat
             // 

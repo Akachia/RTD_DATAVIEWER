@@ -58,7 +58,7 @@ namespace XmlManagement
         public Dictionary<string, string> getEventDicByFunctionName(string functionName)
         {
             EventValue ev = EventValueDic.Single(a => a.Value.CallSQL == functionName).Value;
-            Dictionary<string, string> valuePairs = new Dictionary<string, string>();
+            Dictionary<string, string> valuePairs = new();
             valuePairs.Add(ev.ColumnName, ev.Value);
             return valuePairs;
         }

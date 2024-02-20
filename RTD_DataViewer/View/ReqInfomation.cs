@@ -31,6 +31,7 @@ namespace RTD_DataViewer.View
         DefaultSqlData? searchTrfInfoData = null;
         Dictionary<string, string>? eventCallVal = null; 
         List<Control>? variableControls = new List<Control>();
+       
         #endregion
 
         #region Construction
@@ -233,6 +234,6 @@ namespace RTD_DataViewer.View
             searchTrfInfoData = winformUtils.ShowDgv(methodName, reqInfo_dgvReq_TrfInfo.DgvData, searchTrfInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as DefaultSqlData;
         }
 
-#endregion
+        #endregion
     }
 }

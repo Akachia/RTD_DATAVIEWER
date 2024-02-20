@@ -62,18 +62,6 @@ namespace RTD_DataViewer.View
             int cb_Moving_Num = cb_ReqATransfer_MovingState.SelectedIndex;
             try
             {
-                //XmlOptionData sqldata = main.sqlList["SearchTransfer"];
-                //Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                //string cquery = sqldata.Sql;
-                //var parameters = new DynamicParameters();
-                //parameters.Add("@StartDate", startDate);
-                //parameters.Add("@EndDate", endDate);
-                //parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                //parameters.Add("@ReqEQP", string.Concat("%", reqEqpId, "%"));
-                //parameters.Add("@ToEQP", string.Concat("%", toEqpId, "%"));
-                //parameters.Add("@MovingState", cb_ReqATransfer_MovingState.Text);
-                //parameters.Add("@RuleId", string.Concat("%", ruleId, "%"));
-
                 Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
                 paramaterDic.Add("CSTSTAT", $"{cb_CstStat_Num}");
@@ -86,50 +74,6 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("EndDate", $"'{endDate}'");
 
                 new WinformUtils(main).ExcuteSql(paramaterDic, reqAndTransfer_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-
-                //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
-
-                //if (cstid != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                //    parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                //    //cquery += " AND CSTID LIKE '%" + txtID.Text + "%'";
-                //}
-                //if (reqEqpId != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                //    parameters.Add("@ReqEQP", string.Concat("%", reqEqpId, "%"));
-                //    //cquery += " AND FROM_PORT_ID LIKE '%" + txtFromPort.Text + "%'"; 
-                //}
-                //if (toEqpId != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                //    parameters.Add("@ToEQP", string.Concat("%", toEqpId, "%"));
-                //    //cquery += " AND TO_PORT_ID LIKE '%" + txtToPort.Text + "%'";
-                //}
-                //if (cb_CstStat_Num != 0)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 3);
-                //    if (cb_CstStat_Num == 1) parameters.Add("@CSTSTAT", string.Concat("U")); ;    // 실트레이
-                //    if (cb_CstStat_Num == 2) parameters.Add("@CSTSTAT", string.Concat("E")); ;    // 공트레이
-                //    //cquery += " AND CSTSTAT = 'U'"
-                //    //cquery += " AND CSTSTAT = 'E'"
-                //}
-                //if (cb_Moving_Num != 0)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 4);
-                //    parameters.Add("@MovingState", cb_ReqATransfer_MovingState.Text);
-                //    //if (cobStat.SelectedIndex != 0) { cquery += " AND CMD_STAT_CODE = '" + cobStat.Text + "'"
-                //}
-                //if (ruleId != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 5);
-                //    parameters.Add("@RuleId", string.Concat("%", ruleId, "%"));
-                //    //if(txtRuleList.Text.Trim() != "") { cquery += " AND RTD_RULE_ID = '" + txtRuleList.Text + "'"
-                //}
-
-                //new WinformUtils(main).ShowSqltoDGV(reqAndTransfer_dgvReq.DgvData, cquery, parameters, main.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {

@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using DBManagement;
 using UserWinfromControl;
+using CustomUtills;
 
 namespace RTD_DataViewer
 {
@@ -97,13 +98,23 @@ namespace RTD_DataViewer
                     if (item is UWC_LabelAndDateTimePicker)
                     {
                         UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
-                        paramaterDic.Add(datePicker.VariableName, datePicker.MakeNowDateStringAndSetting());
+                        paramaterDic.Add(datePicker.VariableName, CustomUtill.StringToDBStr(datePicker.MakeNowDateStringAndSetting()));
                     }
 
                     if (item is UWC_LabelAndTextBox)
                     {
                         UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;
-                        paramaterDic.Add(text.VariableName, text.Tb_Text);
+
+                        if (text.VariableName == "CSTID")
+                        {
+                            string carrierIds = text.TextToCarrierListByRex(text.Tb_Text);
+                            paramaterDic.Add(text.VariableName, carrierIds);
+                            text.Tb_Text = carrierIds;
+                        }
+                        else 
+                        {
+                            paramaterDic.Add(text.VariableName, CustomUtill.LikeStringMaskingByBoth(text.Tb_Text));
+                        }
                     }
 
                     if (item is UWC_ComboBox)

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DBManagement;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,19 +16,27 @@ namespace RTD_DataViewer.View
 {
     public partial class TransportList : UserControl
     {
+        #region Variable
         MainViewer main;
         int currNum = 0;
+        WinformUtils? winformUtils = null;
+        DefaultSqlData? transPortListData = null;
+        SearchCstInfo? searchCstInfoData = null;
+        DefaultSqlData? searchTrfInfoData = null;
+        List<Control>? variableControls = new List<Control>();
         public TransportList(MainViewer main)
         {
             InitializeComponent();
             this.main = main;
             InitControlText(main);
+            winformUtils = new(main);
         }
 
+        #endregion
+
+        #region Construction
         public void InitControlText(MainViewer main)
         {
-            cb_Cststat.SelectedIndex = 0;
-
             DateTime tomorrow = DateTime.Today.AddDays(1);
             DateTime yesterday = DateTime.Today.AddDays(-1);
             this.main = main;
@@ -38,9 +47,46 @@ namespace RTD_DataViewer.View
             transList_dgvReq.DgvData.CellClick += SearchCstInfo;
             transList_dgvReq.DgvData.CellClick += SearchTrf;
 
+            variableControls.Add(lAdtp_TransList_EndDate);
+            variableControls.Add(lAdtp_TransList_StartDate);
+            variableControls.Add(lAtb_TransList_CarrierId);
+            variableControls.Add(lAtb_TransList_LaneId);
+            variableControls.Add(lAtb_TransList_ReqEqp);
+            variableControls.Add(lAtb_TransList_ToEqp);
+            variableControls.Add(cb_CarrierStat);
+
             transList_dgvReq.DgvData.CellDoubleClick += SearchCstInfo;
+
+            cb_CarrierStat.SetCstStatData();
         }
 
+        #endregion
+
+        #region Events for UI Controls
+        private void Bt_Search_Click(object? sender, EventArgs e)
+        {
+            Btn_Click();
+        }
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            int interval = tAbt_TransList_Search.Interval;
+
+            if (currNum == 0)
+            {
+                SearchTransportReq();
+                currNum = tAbt_TransList_Search.Interval;
+            }
+            else
+            {
+                tAbt_TransList_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
+                currNum--;
+            }
+        }
+
+
+        #endregion
+
+        #region Utilities for Ui
         private string MakeCmdStatCodeList()
         {
             string CmdStatCodeList = string.Empty;
@@ -119,7 +165,30 @@ namespace RTD_DataViewer.View
 
             return CmdStatCodeList;
         }
+        internal void Btn_Click()
+        {
+            if (tAbt_TransList_Search.IsUseTimer)
+            {
+                tAbt_TransList_Search.timer.Interval = 1000;
+                if (tAbt_TransList_Search.timer.Enabled)
+                {
+                    tAbt_TransList_Search.timer.Stop();
+                    tAbt_TransList_Search.bt_Search.Text = "Search";
+                }
+                else
+                {
+                    tAbt_TransList_Search.timer.Start();
+                }
+            }
+            else
+            {
+                SearchTransportReq();
+            }
+        }
 
+        #endregion
+
+        #region Assign SqlData to DataGrid view functuons Section 
         private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
         {
             try
@@ -144,10 +213,7 @@ namespace RTD_DataViewer.View
 
         }
 
-        private void Bt_Search_Click(object? sender, EventArgs e)
-        {
-            Btn_Click();
-        }
+
 
         private void SearchTrf(object? sender, DataGridViewCellEventArgs e)
         {
@@ -195,63 +261,23 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            int interval = tAbt_TransList_Search.Interval;
-
-            if (currNum == 0)
-            {
-                SearchTransportReq();
-                currNum = tAbt_TransList_Search.Interval;
-            }
-            else
-            {
-                tAbt_TransList_Search.bt_Search.Text = currNum.ToString("000") + "\nStop";
-                currNum--;
-            }
-        }
-
-        internal void Btn_Click()
-        {
-            if (tAbt_TransList_Search.IsUseTimer)
-            {
-                tAbt_TransList_Search.timer.Interval = 1000;
-                if (tAbt_TransList_Search.timer.Enabled)
-                {
-                    tAbt_TransList_Search.timer.Stop();
-                    tAbt_TransList_Search.bt_Search.Text = "Search";
-                }
-                else
-                {
-                    tAbt_TransList_Search.timer.Start();
-                }
-            }
-            else
-            {
-                SearchTransportReq();
-            }
-        }
 
         /// <summary>
         /// 현재 반송 현황을 보여주는 함수
         /// </summary>
         private void SearchTransportReq()
         {
-            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
 
             paramaterDic.Add("CMD_STAT_CODE_LIST", MakeCmdStatCodeList());
-            paramaterDic.Add("LaneId", lAtb_TransList_LaneId.Tb_Text);
-            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.SelectedIndex}");
-            paramaterDic.Add("CstId", lAtb_TransList_CarrierId.Tb_Text);
-            paramaterDic.Add("ReqPortId", lAtb_TransList_ReqEqp.Tb_Text);
-            paramaterDic.Add("ToPortId", lAtb_TransList_ToEqp.Tb_Text);
             paramaterDic.Add("isFaulty", $"{ckb_IsFaulty.Checked}");
 
-            paramaterDic.Add("StartDate", $"'{lAdtp_TransList_StartDate.Dtp_Value.ToString("yyyy-MM-dd")}'");
-            paramaterDic.Add("EndDate", $"'{lAdtp_TransList_EndDate.Dtp_Value.ToString("yyyy-MM-dd")}'");
-
-            new WinformUtils(main).ExcuteSql(paramaterDic, transList_dgvReq.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            transPortListData = winformUtils.ShowDgv(methodName, transList_dgvReq.DgvData, transPortListData, paramaterDic) as DefaultSqlData;
 
         }
+        #endregion
+
+
     }
 }

@@ -533,8 +533,7 @@
       },
       "UserWinfromControl/1.0.0": {
         "dependencies": {
-          "CustomUtills": "1.0.0",
-          "Microsoft.Data.SqlClient": "5.1.5"
+          "CustomUtills": "1.0.0"
         },
         "runtime": {
           "UserWinfromControl.dll": {}

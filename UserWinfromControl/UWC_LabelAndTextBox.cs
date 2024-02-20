@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -45,6 +46,7 @@ namespace UserWinfromControl
             this.textBox.AutoCompleteCustomSource = source;
             this.textBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             this.textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            this.textBox.Multiline = true;
 
         }
 
@@ -82,6 +84,59 @@ namespace UserWinfromControl
             }
         }
 
+        public string TextToCarrierListByRex(string carrierText)
+        {
+            string carrierIds = string.Empty;
+            Regex regex_Form = new(@"(TKA[E|D][0-9]{6})");
+            Regex regex_Elec = new(@"([[B|E][B|X][A|E][E|O][C|A|R][A|S]\d{4})");
+
+            MatchCollection matches_Form = regex_Form.Matches(carrierText);
+            MatchCollection matches_Elec = regex_Elec.Matches(carrierText);
+
+            if (matches_Form.Count > 0)
+            {
+                foreach (Match s in matches_Form)
+                {
+                    if (carrierIds.Equals(string.Empty))
+                    {
+                        carrierIds += @$"'{s.Value}'";
+                    }
+                    else
+                    {
+                        carrierIds += @$",'{s.Value}'";
+                    }
+                }
+            }
+            if (matches_Elec.Count > 0)
+            {
+                foreach (Match s in matches_Elec)
+                {
+                    if (carrierIds.Equals(string.Empty))
+                    {
+                        carrierIds += @$"'{s.Value}'";
+                    }
+                    else
+                    {
+                        carrierIds += @$",'{s.Value}'";
+                    }
+                }
+            }
+
+            if (matches_Elec.Count == 0 && matches_Form.Count == 0)
+            {
+                return carrierText;
+            }
+
+            return carrierIds;
+        }
+
+        private string MakeCmdStatCodeList()
+        {
+            string CmdStatCodeList = string.Empty;
+
+
+            return CmdStatCodeList;
+        }
 
 
         private void textBox_Enter(object sender, EventArgs e)
