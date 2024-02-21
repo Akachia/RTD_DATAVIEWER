@@ -114,7 +114,7 @@
             tp_TransportList.Location = new Point(4, 24);
             tp_TransportList.Name = "tp_TransportList";
             tp_TransportList.Padding = new Padding(3);
-            tp_TransportList.Size = new Size(1570, 663);
+            tp_TransportList.Size = new Size(1570, 763);
             tp_TransportList.TabIndex = 1;
             tp_TransportList.Text = "반송목록";
             tp_TransportList.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             tp_ReqAndTransfer.Location = new Point(4, 24);
             tp_ReqAndTransfer.Name = "tp_ReqAndTransfer";
             tp_ReqAndTransfer.Padding = new Padding(3);
-            tp_ReqAndTransfer.Size = new Size(1570, 663);
+            tp_ReqAndTransfer.Size = new Size(1570, 763);
             tp_ReqAndTransfer.TabIndex = 3;
             tp_ReqAndTransfer.Text = "요청/반송 이력";
             tp_ReqAndTransfer.UseVisualStyleBackColor = true;
@@ -133,7 +133,7 @@
             // 
             tp_CstInfo.Location = new Point(4, 24);
             tp_CstInfo.Name = "tp_CstInfo";
-            tp_CstInfo.Size = new Size(1570, 663);
+            tp_CstInfo.Size = new Size(1570, 763);
             tp_CstInfo.TabIndex = 7;
             tp_CstInfo.Text = "케리어 정보";
             tp_CstInfo.UseVisualStyleBackColor = true;
@@ -143,7 +143,7 @@
             tp_CstHist.Location = new Point(4, 24);
             tp_CstHist.Name = "tp_CstHist";
             tp_CstHist.Padding = new Padding(3);
-            tp_CstHist.Size = new Size(1570, 663);
+            tp_CstHist.Size = new Size(1570, 763);
             tp_CstHist.TabIndex = 4;
             tp_CstHist.Text = "케리어 이력";
             tp_CstHist.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@
             tp_EqpState.Location = new Point(4, 24);
             tp_EqpState.Name = "tp_EqpState";
             tp_EqpState.Padding = new Padding(3);
-            tp_EqpState.Size = new Size(1570, 663);
+            tp_EqpState.Size = new Size(1570, 763);
             tp_EqpState.TabIndex = 5;
             tp_EqpState.Text = "설비 상태";
             tp_EqpState.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@
             tp_StockerInventory.Location = new Point(4, 24);
             tp_StockerInventory.Name = "tp_StockerInventory";
             tp_StockerInventory.Padding = new Padding(3);
-            tp_StockerInventory.Size = new Size(1570, 663);
+            tp_StockerInventory.Size = new Size(1570, 763);
             tp_StockerInventory.TabIndex = 8;
             tp_StockerInventory.Text = "스토커 현황";
             tp_StockerInventory.UseVisualStyleBackColor = true;
@@ -173,7 +173,7 @@
             tp_RollSituation.Location = new Point(4, 24);
             tp_RollSituation.Name = "tp_RollSituation";
             tp_RollSituation.Padding = new Padding(3);
-            tp_RollSituation.Size = new Size(1570, 663);
+            tp_RollSituation.Size = new Size(1570, 763);
             tp_RollSituation.TabIndex = 9;
             tp_RollSituation.Text = "RollSituation";
             tp_RollSituation.UseVisualStyleBackColor = true;
@@ -183,7 +183,7 @@
             tp_WaitWips.Location = new Point(4, 24);
             tp_WaitWips.Name = "tp_WaitWips";
             tp_WaitWips.Padding = new Padding(3);
-            tp_WaitWips.Size = new Size(1570, 663);
+            tp_WaitWips.Size = new Size(1570, 763);
             tp_WaitWips.TabIndex = 10;
             tp_WaitWips.Text = "WaitWips";
             tp_WaitWips.UseVisualStyleBackColor = true;
@@ -193,7 +193,7 @@
             tp_LnsPkgState.Location = new Point(4, 24);
             tp_LnsPkgState.Name = "tp_LnsPkgState";
             tp_LnsPkgState.Padding = new Padding(3);
-            tp_LnsPkgState.Size = new Size(1570, 663);
+            tp_LnsPkgState.Size = new Size(1570, 763);
             tp_LnsPkgState.TabIndex = 6;
             tp_LnsPkgState.Text = "LnsPkgState";
             tp_LnsPkgState.UseVisualStyleBackColor = true;
@@ -203,7 +203,7 @@
             tp_BizRuleErr.Location = new Point(4, 24);
             tp_BizRuleErr.Name = "tp_BizRuleErr";
             tp_BizRuleErr.Padding = new Padding(3);
-            tp_BizRuleErr.Size = new Size(1570, 663);
+            tp_BizRuleErr.Size = new Size(1570, 763);
             tp_BizRuleErr.TabIndex = 11;
             tp_BizRuleErr.Text = "BizRuleErr";
             tp_BizRuleErr.UseVisualStyleBackColor = true;
@@ -213,7 +213,7 @@
             tp_LogBox.Location = new Point(4, 24);
             tp_LogBox.Name = "tp_LogBox";
             tp_LogBox.Padding = new Padding(3);
-            tp_LogBox.Size = new Size(1570, 663);
+            tp_LogBox.Size = new Size(1570, 763);
             tp_LogBox.TabIndex = 2;
             tp_LogBox.Text = "LogBox";
             tp_LogBox.UseVisualStyleBackColor = true;

@@ -25,4 +25,10 @@
     <ProjectReference Include="..\XmlManagement\XmlManagement.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="View\PortCurrentState.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentCurrentInfomation>
+	<MainSQL>
+			select
+			EA.EQPTID
+			, EA.WO_DETL_ID
+			, TSFD.DEMAND_TYPE
+			, EA.EQPT_OPER_MODE as EOM
+			, EA.SPCL_LOT_GNRT_FLAG as SLGF
+			, LT.LOTTYPE as LT
+			, PILOT_PROD_DIVS_CODE as PPDC
+			from TB_SFC_FP_DETL_PLAN TSFD (NOLOCK)
+			INNER JOIN EioAttr EA (NOLOCK)
+			ON EA.WO_DETL_ID = TSFD.WOID
+			INNER JOIN LotType LT (NOLOCK)
+			ON LT.DEMAND_TYPE = TSFD.DEMAND_TYPE
+		</MainSQL>
+	<Option/>
+	<AdditionalVariable>
+		<CMD_STAT_CODE_LIST dataType="List" default=""/>
+	</AdditionalVariable>
+	<Coloring/>
+	<EventValues/>
+</SearchEquipmentCurrentInfomation>

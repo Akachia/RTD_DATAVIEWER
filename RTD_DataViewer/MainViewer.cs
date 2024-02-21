@@ -47,31 +47,31 @@ namespace RTD_DataViewer
             appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
             appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
 
-            ReqInfomation reqInfomation = new ReqInfomation(this);
+            PortRequestList reqInfomation = new PortRequestList(this);
             tp_ReqInfomation.Controls.Add(reqInfomation);
             reqInfomation.Dock = DockStyle.Fill;
 
-            TransportList transportList = new TransportList(this);
+            TransportJobList transportList = new TransportJobList(this);
             tp_TransportList.Controls.Add(transportList);
             transportList.Dock = DockStyle.Fill;
 
-            ReqAndTransfer reqAndTransfer = new ReqAndTransfer(this);
+            TransportJobAndPortRequestHistory reqAndTransfer = new TransportJobAndPortRequestHistory(this);
             tp_ReqAndTransfer.Controls.Add(reqAndTransfer);
             reqAndTransfer.Dock = DockStyle.Fill;
 
-            CstHist cstHist = new CstHist(this);
+            CarrierHistory cstHist = new CarrierHistory(this);
             tp_CstHist.Controls.Add(cstHist);
             cstHist.Dock = DockStyle.Fill;
 
-            CstInfo cstInfo = new CstInfo(this);
+            CarrierInfomation cstInfo = new CarrierInfomation(this);
             tp_CstInfo.Controls.Add(cstInfo);
             cstInfo.Dock = DockStyle.Fill;
 
-            EqpState eqpState = new EqpState(this);
+            EquipmentCurrentState eqpState = new EquipmentCurrentState(this);
             tp_EqpState.Controls.Add(eqpState);
             eqpState.Dock = DockStyle.Fill;
 
-            WaitWips waitWips = new WaitWips(this);
+            WaitingLotInfomation waitWips = new WaitingLotInfomation(this);
             tp_WaitWips.Controls.Add(waitWips);
             waitWips.Dock = DockStyle.Fill;
 
@@ -79,11 +79,11 @@ namespace RTD_DataViewer
             tp_LnsPkgState.Controls.Add(lnsPkgState);
             lnsPkgState.Dock = DockStyle.Fill;
 
-            StockerInventory stockerInventory = new StockerInventory(this);
+            StockerInventorySituation stockerInventory = new StockerInventorySituation(this);
             tp_StockerInventory.Controls.Add(stockerInventory);
             stockerInventory.Dock = DockStyle.Fill;
 
-            RollSituation rollSituation = new RollSituation(this);
+            RollCurrentSituation rollSituation = new RollCurrentSituation(this);
             tp_RollSituation.Controls.Add(rollSituation);
             rollSituation.Dock = DockStyle.Fill;
 

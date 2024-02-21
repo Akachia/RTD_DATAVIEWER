@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortCurrentState>
+	<MainSQL>
+			select TMCP.PORT_ID
+				, TMCP.PORT_STAT_CODE AS 요청
+				, E.EIOSTAT AS ES
+				, MAX_TRF_QTY AS 버퍼
+				, E.EIOIFMODE AS EIM
+				, EA.EQPT_MAINT_FLAG AS MAINT_FLAG
+			from TB_MCS_CURR_PORT TMCP (NOLOCK)
+			INNER JOIN EIO E (NOLOCK) on e.EQPTID = LEFT(TMCP.PORT_ID, 15)
+			INNER JOIN EQUIPMENT EM (NOLOCK) on e.EQPTID = em.EQPTID
+			INNER JOIN EIOATTR EA (NOLOCK) on EA.EQPTID = LEFT(TMCP.PORT_ID, 15)
+			where 1=1
+			+Option1
+			+Option2
+			+Option3
+		</MainSQL>
+	<Option>
+		<Option1 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="%%">
+				AND E.EQPTID like @EQPTID
+			</Option1>
+		<Option2 type="IF" condition="not_equal" key="AREA_ID" dataType="string" default="">
+				AND E.EQPTID like @AREA_ID
+			</Option2>
+		<Option3 type="NONE" condition="" key="" dataType="" default="">
+				Order by TMCP.PORT_ID
+			</Option3>
+	</Option>
+	<AdditionalVariable/>
+	<Coloring>
+		<ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+			<T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+			<U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+			<W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+			<R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+		</ES>
+		<EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+			<ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+		</EIM>
+		<MAINT_FLAG Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<M Red="255" Green="158" Blue="158" IsColoringRow="true"/>
+		</MAINT_FLAG>
+	</Coloring>
+	<EventValues/>
+</SearchPortCurrentState>

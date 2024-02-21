@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SearchTransportJobInfomation>
+	<MainSQL>
+		select
+		THTC.CSTID
+		, THTC.CSTSTAT
+		, THTC.FROM_PORT_ID
+		, THTC.TO_PORT_ID
+		, THTC.FINL_TRGT_EQPT_ID
+		, THTC.CMD_STAT_CODE
+		, C.LOAD_REP_CSTID
+		, THTC.TRF_CODE
+		, THTC.RTD_RULE_ID
+		, THTC.REQ_DTTM
+		, THTC.TRF_STRT_DTTM
+		, THTC.UPDDTTM
+		from TB_MHS_TRF_CMD THTC (NOLOCK)
+		INNER JOIN CARRIER C (NOLOCK) ON C.CSTID = THTC.CSTID
+		WHERE 1 = 1
+	</MainSQL>
+	<Option>
+		<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND (THTC.CSTID like @CSTID OR  THTC.CSTID = (SELECT LOAD_REP_CSTID FROM CARRIER WITH (NOLOCK) WHERE CSTID like @CSTID))
+			</Option1>
+		<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
+				AND REQ_SEQNO LIKE @REQ_SEQNO
+			</Option2>
+	</Option>
+	<AdditionalVariable/>
+	<Coloring>
+		<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
+			<E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
+		</CSTSTAT>
+		<CMD_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<MOVING Red="255" Green="227" Blue="238" IsColoringRow="false"/>
+			<RECEIVE Red="255" Green="164" Blue="201" IsColoringRow="false"/>
+			<SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
+		</CMD_STAT_CODE>
+	</Coloring>
+	<EventValues/>
+</SearchTransportJobInfomation>

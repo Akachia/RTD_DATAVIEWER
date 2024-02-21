@@ -4,13 +4,13 @@
     <Compile Update="View\BizRuleErr.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\CstHist.cs">
+    <Compile Update="View\CarrierHistory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\CstInfo.cs">
+    <Compile Update="View\CarrierInfomation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\EqpState.cs">
+    <Compile Update="View\EquipmentCurrentState.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="View\LnsPkgState.cs">
@@ -22,22 +22,22 @@
     <Compile Update="View\LogBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\ReqAndTransfer.cs">
+    <Compile Update="View\TransportJobAndPortRequestHistory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\ReqInfomation.cs">
+    <Compile Update="View\PortRequestList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\StockerInventory.cs">
+    <Compile Update="View\StockerInventorySituation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\TransportList.cs">
+    <Compile Update="View\TransportJobList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\RollSituation.cs">
+    <Compile Update="View\RollCurrentSituation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\WaitWips.cs">
+    <Compile Update="View\WaitingLotInfomation.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
