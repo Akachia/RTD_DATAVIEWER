@@ -26,9 +26,9 @@ namespace RTD_DataViewer.View
         int currNum = 0;
         string errMsg;
         WinformUtils? winformUtils = null;
-        DefaultSqlData? reqListData = null;
-        SearchCstInfo? searchCstInfoData = null;
-        DefaultSqlData? searchTrfInfoData = null;
+        DefaultSqlData? searchPortRequestListData = null;
+        SearchCarrierInfomation? searchCarrierInfomationData = null;
+        DefaultSqlData? searchTransportJobHistoryData = null;
         Dictionary<string, string>? eventCallVal = null; 
         List<Control>? variableControls = new List<Control>();
        
@@ -73,46 +73,51 @@ namespace RTD_DataViewer.View
 
         private void ReqInfoDataGridViewCellClick(object? sender, DataGridViewCellEventArgs e)
         {
-
-            if (reqListData != null)
+            try
             {
-                foreach (var item in reqListData.Sqldata.EventValueDic.Keys)
+                if (searchPortRequestListData != null)
                 {
-                    EventValue eventValue = reqListData.Sqldata.EventValueDic[item];
-                    eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                    foreach (var item in searchPortRequestListData.Sqldata.EventValueDic.Keys)
+                    {
+                        EventValue eventValue = searchPortRequestListData.Sqldata.EventValueDic[item];
+                        eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                    }
+                }
+
+                SearchTransportJobInfomation();
+
+                string cstId = searchPortRequestListData.Sqldata.EventValueDic["CSTID"].Value;
+
+                if (cstId == "")
+                {
+                    try
+                    {
+                        cstId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["CSTID"].Value.ToString();
+                    }
+                    catch (Exception)
+                    {
+                        cstId = "";
+                    }
+                }
+
+                if (cstId != "")
+                {
+                    SearchCarrierInfomation();
+                }
+
+
+                if (ckb_IsOpenReqSituation.Checked)
+                {
+                    MakeSituations();
+                }
+                else
+                {
+                    string ruleResult = (sender as DataGridView).CurrentRow.Cells["RTD_EXEC_LOG_CNTT"].Value.ToString();
+                    MakeRuleResult(ruleResult);
                 }
             }
-
-            SearchTransportJobInfomation();
-
-            string cstId = reqListData.Sqldata.EventValueDic["CSTID"].Value;
-
-            if (cstId == "")
-            {
-                try
-                {
-                    cstId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["CSTID"].Value.ToString();
-                }
-                catch (Exception)
-                {
-                    cstId = "";
-                }
-            }
-
-            if (cstId != "")
-            {
-                SearchCarrierInfomation();
-            }
-
-
-            if (ckb_IsOpenReqSituation.Checked)
-            {
-                MakeSituations();
-            }
-            else
-            {
-                string ruleResult = (sender as DataGridView).CurrentRow.Cells["RTD_EXEC_LOG_CNTT"].Value.ToString();
-                MakeRuleResult(ruleResult);
+            catch { 
+                
             }
         }
 
@@ -217,26 +222,76 @@ namespace RTD_DataViewer.View
         #region Assign SqlData to DataGrid view functuons Section 
         private void SearchPortRequestList()
         {
-            Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            reqListData = winformUtils.ShowDgv(methodName, dgv_PortRequestList, reqListData, paramaterDic) as DefaultSqlData;
+            try
+            {
+                Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                searchPortRequestListData =
+                    winformUtils.ShowDgv
+                    (
+                        methodName,
+                        dgv_PortRequestList,
+                        searchPortRequestListData,
+                        paramaterDic
+                    ) as DefaultSqlData;
+
+                //다른 정보 화면 클리어 처리
+                dgv_CarrierInfomation.DgvData.DataSource = null;
+                dgv_TransportJobInfomation.DgvData.DataSource = null;
+                tv_SituationOrRuleResult.Nodes.Clear();
+            }
+            catch (Exception ex)
+            {
+                dgv_PortRequestList.DgvData.DataSource = null;
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void SearchCarrierInfomation()
         {
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            searchCstInfoData = winformUtils.ShowDgv(methodName, dgv_CarrierInfomation, searchCstInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as SearchCstInfo;
-
-            if (searchCstInfoData != null)
+            try
             {
-                dgv_CarrierInfomation.Lb_Text2 = searchCstInfoData.CarrierMismatchInfo;
+                if (searchPortRequestListData != null)
+                {
+                    string methodName = MethodBase.GetCurrentMethod().Name;
+                    searchCarrierInfomationData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_CarrierInfomation,
+                            searchCarrierInfomationData,
+                            searchPortRequestListData.Sqldata.getEventDicByFunctionName(methodName)
+                        );
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void SearchTransportJobInfomation()
         {
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            searchTrfInfoData = winformUtils.ShowDgv(methodName, dgv_TransportJobInfomation, searchTrfInfoData, reqListData.Sqldata.getEventDicByFunctionName(methodName)) as DefaultSqlData;
+            try
+            {
+                if (searchPortRequestListData != null)
+                {
+                    string methodName = MethodBase.GetCurrentMethod().Name;
+                    searchTransportJobHistoryData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_TransportJobInfomation,
+                            searchTransportJobHistoryData,
+                            searchPortRequestListData.Sqldata.getEventDicByFunctionName(methodName)
+                        ) as DefaultSqlData;
+                }
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         #endregion
     }

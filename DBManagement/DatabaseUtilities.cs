@@ -158,7 +158,7 @@ namespace DBManagement
             catch (Exception ex)
             {
                 errMsg = ex.Message;
-                return null;
+                throw new Exception(errMsg, ex);
             }
         }
         private object ShowSqltoDGV_MSSQL(string cquery, DynamicParameters parameters, string connectionString, ref string errMsg)

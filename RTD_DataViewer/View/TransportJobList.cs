@@ -20,9 +20,9 @@ namespace RTD_DataViewer.View
         MainViewer main;
         int currNum = 0;
         WinformUtils? winformUtils = null;
-        DefaultSqlData? transPortListData = null;
-        SearchCstInfo? searchCstInfoData = null;
-        DefaultSqlData? searchTrfInfoData = null;
+        DefaultSqlData? currentTransportJobListData = null;
+        SearchCarrierInfomation? searchCarrierInfomationData = null;
+        DefaultSqlData? searchTransportJobHistoryData = null;
         List<Control>? variableControls = new List<Control>();
         public TransportJobList(MainViewer main)
         {
@@ -44,8 +44,8 @@ namespace RTD_DataViewer.View
             tAbt_TransList_Search.bt_Search.Click += Bt_Search_Click;
             lAdtp_TransList_EndDate.Dtp_Value = tomorrow;
             lAdtp_TransList_StartDate.Dtp_Value = yesterday;
-            dgv_CurrentTransportJobList.DgvData.CellClick += SearchCstInfo;
-            dgv_CurrentTransportJobList.DgvData.CellClick += SearchTrf;
+            dgv_CurrentTransportJobList.DgvData.CellClick += CurrentTransportJobListCellClick;
+ 
 
             variableControls.Add(lAdtp_TransList_EndDate);
             variableControls.Add(lAdtp_TransList_StartDate);
@@ -55,7 +55,7 @@ namespace RTD_DataViewer.View
             variableControls.Add(lAtb_TransList_ToEqp);
             variableControls.Add(cb_CarrierStat);
 
-            dgv_CurrentTransportJobList.DgvData.CellDoubleClick += SearchCstInfo;
+            //dgv_CurrentTransportJobList.DgvData.CellDoubleClick += SearchCstInfo;
 
             cb_CarrierStat.SetCstStatData();
         }
@@ -83,7 +83,25 @@ namespace RTD_DataViewer.View
             }
         }
 
+        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
+        {
+            SearchCarrierInfomation();
+        }
 
+        private void CurrentTransportJobListCellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (currentTransportJobListData != null)
+            {
+                foreach (var item in currentTransportJobListData.Sqldata.EventValueDic.Keys)
+                {
+                    EventValue eventValue = currentTransportJobListData.Sqldata.EventValueDic[item];
+                    eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                }
+            }
+
+            SearchTransportJobHistory();
+            SearchCarrierInfomation();
+        }
         #endregion
 
         #region Utilities for Ui
@@ -189,77 +207,54 @@ namespace RTD_DataViewer.View
         #endregion
 
         #region Assign SqlData to DataGrid view functuons Section 
-        private void SearchCstId(object? sender, DataGridViewCellEventArgs e)
+        private void SearchTransportJobHistory()
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-                DynamicParameters parameters = new DynamicParameters();
-                string cquery = sqldata.Sql;
-
-                //DataGridView dataGrid = sender as DataGridView;
-
-                string trf_Code = (sender as DataGridView).CurrentRow.Cells["TRF_CODE"].Value.ToString();
-
-                parameters.Add("@TRF_CODE", trf_Code);
-
-                new WinformUtils(main).ShowSqltoDGV(dgv_TransportJobHistory.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                if (currentTransportJobListData != null)
+                {
+                    string methodName = MethodBase.GetCurrentMethod().Name;
+                    searchTransportJobHistoryData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_TransportJobHistory,
+                            searchTransportJobHistoryData,
+                            currentTransportJobListData.Sqldata.getEventDicByFunctionName(methodName)
+                        ) as DefaultSqlData;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
-
         }
 
 
 
-        private void SearchTrf(object? sender, DataGridViewCellEventArgs e)
+        private void SearchCarrierInfomation()
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["SearchTrf"];
-                DynamicParameters parameters = new DynamicParameters();
-                string cquery = sqldata.Sql;
-
-                string trf_Code = (sender as DataGridView).CurrentRow.Cells["TRF_CODE"].Value.ToString();
-
-                parameters.Add("@TRF_CODE", trf_Code);
-
-                new WinformUtils(main).ShowSqltoDGV(dgv_TransportJobHistory.DgvData, cquery, parameters, main.correntConnectionStringSetting);
+                if (currentTransportJobListData != null)
+                {
+                    string methodName = MethodBase.GetCurrentMethod().Name;
+                    searchCarrierInfomationData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_CarrierInfomation,
+                            searchCarrierInfomationData,
+                            currentTransportJobListData.Sqldata.getEventDicByFunctionName(methodName)
+                        );
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
-
         }
 
-        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
-                string errMsg = string.Empty;
-                new WinformUtils(main).SearchCstInfo(dgv_CarrierInfomation.DgvData, cstId, ref errMsg);
-                //XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-                //DynamicParameters parameters = new DynamicParameters();
-                //string cquery = sqldata.Sql;
-
-                //string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
-
-                //parameters.Add("@CSTID", cstId);
-
-                //new WinformUtils(main).ShowSqltoDGV(transList_CstInfo.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
 
 
         /// <summary>
@@ -273,7 +268,7 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("isFaulty", $"{ckb_IsFaulty.Checked}");
 
             string methodName = MethodBase.GetCurrentMethod().Name;
-            transPortListData = winformUtils.ShowDgv(methodName, dgv_CurrentTransportJobList, transPortListData, paramaterDic) as DefaultSqlData;
+            currentTransportJobListData = winformUtils.ShowDgv(methodName, dgv_CurrentTransportJobList, currentTransportJobListData, paramaterDic) as DefaultSqlData;
 
         }
         #endregion

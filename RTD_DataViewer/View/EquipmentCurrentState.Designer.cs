@@ -131,7 +131,7 @@
             bt_EqpStateSearch.TabIndex = 4;
             bt_EqpStateSearch.Text = "Search";
             bt_EqpStateSearch.UseVisualStyleBackColor = true;
-            bt_EqpStateSearch.Click += this.bt_EqpStateSearch_Click;
+            bt_EqpStateSearch.Click += bt_EqpStateSearch_Click;
             // 
             // bt_GetEqpGroup
             // 
@@ -142,7 +142,7 @@
             bt_GetEqpGroup.TabIndex = 5;
             bt_GetEqpGroup.Text = "Get EqpGroup";
             bt_GetEqpGroup.UseVisualStyleBackColor = true;
-            bt_GetEqpGroup.Click += this.bt_GetEqpGroup_Click;
+            bt_GetEqpGroup.Click += bt_GetEqpGroup_Click;
             // 
             // dgv_EquipmentStateHist
             // 

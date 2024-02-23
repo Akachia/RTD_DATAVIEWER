@@ -1,6 +1,6 @@
 ﻿namespace RTD_DataViewer.View
 {
-    partial class TransportJobAndPortRequestHistory
+    partial class TransportJobAndPortRequestRecord
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -30,19 +30,18 @@
         {
             tableLayoutPanel6 = new TableLayoutPanel();
             bt_ReqATransfer_Search = new Button();
-            lAtb_ReqATransfer_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
-            lAtb_ReqATransfer_StartPort = new UserWinfromControl.UWC_LabelAndTextBox();
-            lAtb_ReqATransfer_RuleId = new UserWinfromControl.UWC_LabelAndTextBox();
-            lAtb_ReqATransfer_ArrPort = new UserWinfromControl.UWC_LabelAndTextBox();
             lAdtp_ReqATransfer_StartDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_ReqATransfer_EndDate = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            cb_ReqATransfer_CstStat = new ComboBox();
-            cb_ReqATransfer_MovingState = new ComboBox();
-            ckb_IsDeleteTransfer = new CheckBox();
-            dgv_PortRequestHistory = new UserWinfromControl.UWC_DataGridView();
+            dgv_PortRequestRecord = new UserWinfromControl.UWC_DataGridView();
             panel2 = new Panel();
             rb_TransferHist = new RadioButton();
             rb_ReqHist = new RadioButton();
+            lAtb_ReqATransfer_StartPort = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_ReqATransfer_ArrPort = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_ReqATransfer_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_ReqATransfer_RuleId = new UserWinfromControl.UWC_LabelAndTextBox();
+            cb_CarrierStat = new UserWinfromControl.UWC_ComboBox();
+            cb_TransportStatList = new UserWinfromControl.UWC_ComboBox();
             tableLayoutPanel6.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -54,22 +53,21 @@
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
             tableLayoutPanel6.Controls.Add(bt_ReqATransfer_Search, 7, 0);
-            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_CarrierId, 4, 0);
-            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_StartPort, 5, 0);
-            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_RuleId, 4, 1);
-            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_ArrPort, 5, 1);
             tableLayoutPanel6.Controls.Add(lAdtp_ReqATransfer_StartDate, 2, 0);
             tableLayoutPanel6.Controls.Add(lAdtp_ReqATransfer_EndDate, 2, 1);
-            tableLayoutPanel6.Controls.Add(cb_ReqATransfer_CstStat, 6, 0);
-            tableLayoutPanel6.Controls.Add(cb_ReqATransfer_MovingState, 6, 1);
-            tableLayoutPanel6.Controls.Add(ckb_IsDeleteTransfer, 1, 1);
-            tableLayoutPanel6.Controls.Add(dgv_PortRequestHistory, 0, 2);
+            tableLayoutPanel6.Controls.Add(dgv_PortRequestRecord, 0, 2);
             tableLayoutPanel6.Controls.Add(panel2, 3, 0);
+            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_StartPort, 6, 0);
+            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_ArrPort, 6, 1);
+            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_CarrierId, 5, 0);
+            tableLayoutPanel6.Controls.Add(lAtb_ReqATransfer_RuleId, 5, 1);
+            tableLayoutPanel6.Controls.Add(cb_CarrierStat, 4, 0);
+            tableLayoutPanel6.Controls.Add(cb_TransportStatList, 4, 1);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(0, 0);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -91,50 +89,6 @@
             bt_ReqATransfer_Search.Text = "Search";
             bt_ReqATransfer_Search.UseVisualStyleBackColor = true;
             // 
-            // lAtb_ReqATransfer_CarrierId
-            // 
-            lAtb_ReqATransfer_CarrierId.Dock = DockStyle.Fill;
-            lAtb_ReqATransfer_CarrierId.Lb_Text = "Carrier ID";
-            lAtb_ReqATransfer_CarrierId.Location = new Point(857, 3);
-            lAtb_ReqATransfer_CarrierId.Name = "lAtb_ReqATransfer_CarrierId";
-            lAtb_ReqATransfer_CarrierId.Size = new Size(176, 24);
-            lAtb_ReqATransfer_CarrierId.TabIndex = 1;
-            lAtb_ReqATransfer_CarrierId.Tb_Text = "";
-            lAtb_ReqATransfer_CarrierId.VariableName = "";
-            // 
-            // lAtb_ReqATransfer_StartPort
-            // 
-            lAtb_ReqATransfer_StartPort.Dock = DockStyle.Fill;
-            lAtb_ReqATransfer_StartPort.Lb_Text = "출발 포트";
-            lAtb_ReqATransfer_StartPort.Location = new Point(1039, 3);
-            lAtb_ReqATransfer_StartPort.Name = "lAtb_ReqATransfer_StartPort";
-            lAtb_ReqATransfer_StartPort.Size = new Size(162, 24);
-            lAtb_ReqATransfer_StartPort.TabIndex = 2;
-            lAtb_ReqATransfer_StartPort.Tb_Text = "";
-            lAtb_ReqATransfer_StartPort.VariableName = "";
-            // 
-            // lAtb_ReqATransfer_RuleId
-            // 
-            lAtb_ReqATransfer_RuleId.Dock = DockStyle.Fill;
-            lAtb_ReqATransfer_RuleId.Lb_Text = "Rule ID";
-            lAtb_ReqATransfer_RuleId.Location = new Point(857, 33);
-            lAtb_ReqATransfer_RuleId.Name = "lAtb_ReqATransfer_RuleId";
-            lAtb_ReqATransfer_RuleId.Size = new Size(176, 24);
-            lAtb_ReqATransfer_RuleId.TabIndex = 3;
-            lAtb_ReqATransfer_RuleId.Tb_Text = "";
-            lAtb_ReqATransfer_RuleId.VariableName = "";
-            // 
-            // lAtb_ReqATransfer_ArrPort
-            // 
-            lAtb_ReqATransfer_ArrPort.Dock = DockStyle.Fill;
-            lAtb_ReqATransfer_ArrPort.Lb_Text = "도착 포트";
-            lAtb_ReqATransfer_ArrPort.Location = new Point(1039, 33);
-            lAtb_ReqATransfer_ArrPort.Name = "lAtb_ReqATransfer_ArrPort";
-            lAtb_ReqATransfer_ArrPort.Size = new Size(162, 24);
-            lAtb_ReqATransfer_ArrPort.TabIndex = 4;
-            lAtb_ReqATransfer_ArrPort.Tb_Text = "";
-            lAtb_ReqATransfer_ArrPort.VariableName = "";
-            // 
             // lAdtp_ReqATransfer_StartDate
             // 
             lAdtp_ReqATransfer_StartDate.Dock = DockStyle.Fill;
@@ -145,7 +99,7 @@
             lAdtp_ReqATransfer_StartDate.Name = "lAdtp_ReqATransfer_StartDate";
             lAdtp_ReqATransfer_StartDate.Size = new Size(274, 24);
             lAdtp_ReqATransfer_StartDate.TabIndex = 5;
-            lAdtp_ReqATransfer_StartDate.VariableName = "";
+            lAdtp_ReqATransfer_StartDate.VariableName = "StartTime";
             // 
             // lAdtp_ReqATransfer_EndDate
             // 
@@ -157,52 +111,18 @@
             lAdtp_ReqATransfer_EndDate.Name = "lAdtp_ReqATransfer_EndDate";
             lAdtp_ReqATransfer_EndDate.Size = new Size(274, 24);
             lAdtp_ReqATransfer_EndDate.TabIndex = 6;
-            lAdtp_ReqATransfer_EndDate.VariableName = "";
+            lAdtp_ReqATransfer_EndDate.VariableName = "EndTime";
             // 
-            // cb_ReqATransfer_CstStat
+            // dgv_PortRequestRecord
             // 
-            cb_ReqATransfer_CstStat.Dock = DockStyle.Fill;
-            cb_ReqATransfer_CstStat.FormattingEnabled = true;
-            cb_ReqATransfer_CstStat.Items.AddRange(new object[] { "모두 : ALL", "실트레이 : U", "공트레이 : E" });
-            cb_ReqATransfer_CstStat.Location = new Point(1207, 3);
-            cb_ReqATransfer_CstStat.Name = "cb_ReqATransfer_CstStat";
-            cb_ReqATransfer_CstStat.Size = new Size(78, 23);
-            cb_ReqATransfer_CstStat.TabIndex = 7;
-            cb_ReqATransfer_CstStat.Text = "트레이 구분";
-            // 
-            // cb_ReqATransfer_MovingState
-            // 
-            cb_ReqATransfer_MovingState.Dock = DockStyle.Fill;
-            cb_ReqATransfer_MovingState.FormattingEnabled = true;
-            cb_ReqATransfer_MovingState.Items.AddRange(new object[] { "ALL", "DELETE", "NORMAL_END", "ABNORMAL_END", "RECEIVE", "MOVING", "SEND" });
-            cb_ReqATransfer_MovingState.Location = new Point(1207, 33);
-            cb_ReqATransfer_MovingState.Name = "cb_ReqATransfer_MovingState";
-            cb_ReqATransfer_MovingState.Size = new Size(78, 23);
-            cb_ReqATransfer_MovingState.TabIndex = 8;
-            cb_ReqATransfer_MovingState.Text = "진행상태";
-            // 
-            // ckb_IsDeleteTransfer
-            // 
-            ckb_IsDeleteTransfer.AutoSize = true;
-            ckb_IsDeleteTransfer.Dock = DockStyle.Fill;
-            ckb_IsDeleteTransfer.Location = new Point(381, 33);
-            ckb_IsDeleteTransfer.Name = "ckb_IsDeleteTransfer";
-            ckb_IsDeleteTransfer.RightToLeft = RightToLeft.No;
-            ckb_IsDeleteTransfer.Size = new Size(106, 24);
-            ckb_IsDeleteTransfer.TabIndex = 11;
-            ckb_IsDeleteTransfer.Text = "반송 삭제 조회";
-            ckb_IsDeleteTransfer.UseVisualStyleBackColor = true;
-            // 
-            // dgv_PortRequestHistory
-            // 
-            tableLayoutPanel6.SetColumnSpan(dgv_PortRequestHistory, 8);
-            dgv_PortRequestHistory.Dock = DockStyle.Fill;
-            dgv_PortRequestHistory.Lb_Text = "SqlName";
-            dgv_PortRequestHistory.Lb_Text2 = "";
-            dgv_PortRequestHistory.Location = new Point(3, 63);
-            dgv_PortRequestHistory.Name = "dgv_PortRequestHistory";
-            dgv_PortRequestHistory.Size = new Size(1394, 534);
-            dgv_PortRequestHistory.TabIndex = 12;
+            tableLayoutPanel6.SetColumnSpan(dgv_PortRequestRecord, 8);
+            dgv_PortRequestRecord.Dock = DockStyle.Fill;
+            dgv_PortRequestRecord.Lb_Text = "SqlName";
+            dgv_PortRequestRecord.Lb_Text2 = "";
+            dgv_PortRequestRecord.Location = new Point(3, 63);
+            dgv_PortRequestRecord.Name = "dgv_PortRequestRecord";
+            dgv_PortRequestRecord.Size = new Size(1394, 534);
+            dgv_PortRequestRecord.TabIndex = 12;
             // 
             // panel2
             // 
@@ -240,15 +160,82 @@
             rb_ReqHist.Text = "요청이력";
             rb_ReqHist.UseVisualStyleBackColor = true;
             // 
-            // TransportJobAndPortRequestHistory
+            // lAtb_ReqATransfer_StartPort
+            // 
+            lAtb_ReqATransfer_StartPort.Dock = DockStyle.Fill;
+            lAtb_ReqATransfer_StartPort.Lb_Text = "출발 포트";
+            lAtb_ReqATransfer_StartPort.Location = new Point(1123, 3);
+            lAtb_ReqATransfer_StartPort.Name = "lAtb_ReqATransfer_StartPort";
+            lAtb_ReqATransfer_StartPort.Size = new Size(162, 24);
+            lAtb_ReqATransfer_StartPort.TabIndex = 2;
+            lAtb_ReqATransfer_StartPort.Tb_Text = "";
+            lAtb_ReqATransfer_StartPort.VariableName = "ReqPortId";
+            // 
+            // lAtb_ReqATransfer_ArrPort
+            // 
+            lAtb_ReqATransfer_ArrPort.Dock = DockStyle.Fill;
+            lAtb_ReqATransfer_ArrPort.Lb_Text = "도착 포트";
+            lAtb_ReqATransfer_ArrPort.Location = new Point(1123, 33);
+            lAtb_ReqATransfer_ArrPort.Name = "lAtb_ReqATransfer_ArrPort";
+            lAtb_ReqATransfer_ArrPort.Size = new Size(162, 24);
+            lAtb_ReqATransfer_ArrPort.TabIndex = 4;
+            lAtb_ReqATransfer_ArrPort.Tb_Text = "";
+            lAtb_ReqATransfer_ArrPort.VariableName = "ToPortId";
+            // 
+            // lAtb_ReqATransfer_CarrierId
+            // 
+            lAtb_ReqATransfer_CarrierId.Dock = DockStyle.Fill;
+            lAtb_ReqATransfer_CarrierId.Lb_Text = "Carrier ID";
+            lAtb_ReqATransfer_CarrierId.Location = new Point(955, 3);
+            lAtb_ReqATransfer_CarrierId.Name = "lAtb_ReqATransfer_CarrierId";
+            lAtb_ReqATransfer_CarrierId.Size = new Size(162, 24);
+            lAtb_ReqATransfer_CarrierId.TabIndex = 1;
+            lAtb_ReqATransfer_CarrierId.Tb_Text = "";
+            lAtb_ReqATransfer_CarrierId.VariableName = "CSTID";
+            // 
+            // lAtb_ReqATransfer_RuleId
+            // 
+            lAtb_ReqATransfer_RuleId.Dock = DockStyle.Fill;
+            lAtb_ReqATransfer_RuleId.Lb_Text = "Rule ID";
+            lAtb_ReqATransfer_RuleId.Location = new Point(955, 33);
+            lAtb_ReqATransfer_RuleId.Name = "lAtb_ReqATransfer_RuleId";
+            lAtb_ReqATransfer_RuleId.Size = new Size(162, 24);
+            lAtb_ReqATransfer_RuleId.TabIndex = 3;
+            lAtb_ReqATransfer_RuleId.Tb_Text = "";
+            lAtb_ReqATransfer_RuleId.VariableName = "RuleId";
+            // 
+            // cb_CarrierStat
+            // 
+            cb_CarrierStat.ComboBoxSelectedIndex = -1;
+            cb_CarrierStat.ComboBoxText = "공/실";
+            cb_CarrierStat.DataSource = null;
+            cb_CarrierStat.Dock = DockStyle.Fill;
+            cb_CarrierStat.Location = new Point(857, 3);
+            cb_CarrierStat.Name = "cb_CarrierStat";
+            cb_CarrierStat.Size = new Size(92, 24);
+            cb_CarrierStat.TabIndex = 14;
+            cb_CarrierStat.VariableName = "CSTSTAT";
+            // 
+            // cb_TransportStatList
+            // 
+            cb_TransportStatList.ComboBoxSelectedIndex = -1;
+            cb_TransportStatList.ComboBoxText = "반송 상태";
+            cb_TransportStatList.DataSource = null;
+            cb_TransportStatList.Dock = DockStyle.Fill;
+            cb_TransportStatList.Location = new Point(857, 33);
+            cb_TransportStatList.Name = "cb_TransportStatList";
+            cb_TransportStatList.Size = new Size(92, 24);
+            cb_TransportStatList.TabIndex = 15;
+            cb_TransportStatList.VariableName = "MOVINGSTATE";
+            // 
+            // TransportJobAndPortRequestRecord
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel6);
-            Name = "TransportJobAndPortRequestHistory";
+            Name = "TransportJobAndPortRequestRecord";
             Size = new Size(1400, 600);
             tableLayoutPanel6.ResumeLayout(false);
-            tableLayoutPanel6.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
@@ -264,12 +251,11 @@
         internal UserWinfromControl.UWC_LabelAndTextBox lAtb_ReqATransfer_ArrPort;
         internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_ReqATransfer_StartDate;
         internal UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_ReqATransfer_EndDate;
-        internal ComboBox cb_ReqATransfer_CstStat;
-        internal ComboBox cb_ReqATransfer_MovingState;
-        internal CheckBox ckb_IsDeleteTransfer;
-        internal UserWinfromControl.UWC_DataGridView dgv_PortRequestHistory;
+        internal UserWinfromControl.UWC_DataGridView dgv_PortRequestRecord;
         private Panel panel2;
         internal RadioButton rb_TransferHist;
         internal RadioButton rb_ReqHist;
+        private UserWinfromControl.UWC_ComboBox cb_TransportStatList;
+        private UserWinfromControl.UWC_ComboBox cb_CarrierStat;
     }
 }

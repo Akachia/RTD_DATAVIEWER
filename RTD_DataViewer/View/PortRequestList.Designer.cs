@@ -80,7 +80,7 @@
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 95F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
             tableLayoutPanel4.Size = new Size(1400, 600);
             tableLayoutPanel4.TabIndex = 1;
             // 
@@ -92,7 +92,7 @@
             dgv_PortRequestList.Lb_Text2 = "";
             dgv_PortRequestList.Location = new Point(3, 63);
             dgv_PortRequestList.Name = "dgv_PortRequestList";
-            dgv_PortRequestList.Size = new Size(1212, 329);
+            dgv_PortRequestList.Size = new Size(1212, 319);
             dgv_PortRequestList.TabIndex = 0;
             // 
             // dgv_TransportJobInfomation
@@ -101,7 +101,7 @@
             dgv_TransportJobInfomation.Dock = DockStyle.Fill;
             dgv_TransportJobInfomation.Lb_Text = "SqlName";
             dgv_TransportJobInfomation.Lb_Text2 = "";
-            dgv_TransportJobInfomation.Location = new Point(3, 398);
+            dgv_TransportJobInfomation.Location = new Point(3, 388);
             dgv_TransportJobInfomation.Name = "dgv_TransportJobInfomation";
             dgv_TransportJobInfomation.Size = new Size(1212, 89);
             dgv_TransportJobInfomation.TabIndex = 8;
@@ -204,7 +204,7 @@
             tv_SituationOrRuleResult.Location = new Point(1221, 63);
             tv_SituationOrRuleResult.Name = "tv_SituationOrRuleResult";
             tableLayoutPanel4.SetRowSpan(tv_SituationOrRuleResult, 2);
-            tv_SituationOrRuleResult.Size = new Size(176, 424);
+            tv_SituationOrRuleResult.Size = new Size(176, 414);
             tv_SituationOrRuleResult.TabIndex = 15;
             // 
             // cb_CarrierState
@@ -237,9 +237,9 @@
             dgv_CarrierInfomation.Dock = DockStyle.Fill;
             dgv_CarrierInfomation.Lb_Text = "SqlName";
             dgv_CarrierInfomation.Lb_Text2 = "";
-            dgv_CarrierInfomation.Location = new Point(3, 493);
+            dgv_CarrierInfomation.Location = new Point(3, 483);
             dgv_CarrierInfomation.Name = "dgv_CarrierInfomation";
-            dgv_CarrierInfomation.Size = new Size(1394, 104);
+            dgv_CarrierInfomation.Size = new Size(1394, 114);
             dgv_CarrierInfomation.TabIndex = 18;
             // 
             // PortRequestList

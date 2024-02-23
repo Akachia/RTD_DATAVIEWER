@@ -30,7 +30,7 @@
 			LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
 			LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
 			LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
-			WHERE H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
+			WHERE 1=1
 			AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
 			+Option1
 			+Option2
@@ -39,6 +39,7 @@
 			+Option5
 			+Option6
 			+Option7
+			<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="LANE_ID" dataType="string" default="">
@@ -48,7 +49,7 @@
 				AND H.CSTSTAT = @CSTSTAT
 			</Option2>
 			<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND H.CSTID IN (@CSTID)
+				AND (H.CSTID IN (@CSTID) OR H.CSTID LIKE @CSTID)
 			</Option3>
 			<Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
 				AND H.FROM_PORT_ID LIKE @ReqPortId
@@ -59,10 +60,9 @@
 			<Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
 				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR 
 			</Option6>
-			<Option7 type="NONE" condition="" key="" dataType="" default="">
-				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
+			<Option7 type="IF" condition="not_equal" key="CMD_STAT_CODE_LIST" dataType="string" default="">
+				AND H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
 			</Option7>
-			<Option8 type="VAR" condition="" key="CMD_STAT_CODE_LIST" dataType="List" default=""/>
 		</Option>
 		<AdditionalVariable>
 		</AdditionalVariable>
@@ -80,9 +80,12 @@
 				<Y Red="255" Green="155" Blue="155" IsColoringRow="true"/>
 			</HOLD>
 		</Coloring>
-		<EventValues/>
+		<EventValues>
+			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
+			<TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
+		</EventValues>/>
 	</SearchCurrentTransportJobList>
-	<SearchTrf>
+	<SearchTransportJobHistory>
 		<MainSQL>
 			select
 			PORT_ID
@@ -90,17 +93,19 @@
 			, TRF_END_CODE as TEC 
 			, EVENT_CODE
 			, INSDTTM
-			from TB_MHS_TRF_EVENT_HIST with (NOLOCK) WHERE TRF_CODE = @TRF_CODE
+			from TB_MHS_TRF_EVENT_HIST with (NOLOCK) 
+			WHERE 1=1
+			AND TRF_CODE = @TRF_CODE
 			order by INSDTTM desc
 		</MainSQL>
 		<Option>
-			<Option1 type="VAR" condition="" key="CMD_STAT_CODE_LIST" dataType="List" default=""/>
+			<Option1 type="VAR" condition="" key="TRF_CODE" dataType="string" default=""/>
 		</Option>
 		<AdditionalVariable>
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchTrf>
+	</SearchTransportJobHistory>
 	<SearchTransportJobInfomation>
 		<MainSQL>
 			select
@@ -119,6 +124,8 @@
 			from TB_MHS_TRF_CMD THTC (NOLOCK)
 			INNER JOIN CARRIER C (NOLOCK) ON C.CSTID = THTC.CSTID
 			WHERE 1 = 1
+			+Option1
+			+Option2
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
@@ -177,7 +184,7 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND REQ.CSTID IN (@CSTID) 
+				AND (REQ.CSTID IN (@CSTID) OR REQ.CSTID LIKE @CSTID)
 			</Option1>
 			<Option2 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
 				AND REQ.PORT_ID LIKE @PORTID
@@ -189,7 +196,7 @@
 				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
 			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
-				AND H.CSTSTAT = @CSTSTAT
+				AND REQ.CSTSTAT = @CSTSTAT
 			</Option5>
 			<Option6 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
 			<Option7 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
@@ -212,7 +219,7 @@
 			<RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = '' EventType='Click'/>
 		</EventValues>
 	</SearchPortRequestList>
-	<SearchTransportJobHistory>
+	<SearchTransportJobRecord>
 		<MainSQL>
 			SELECT
 			CSTID
@@ -242,11 +249,11 @@
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="" default="">
 				AND CSTID IN (@CSTID)
 			</Option1>
-			<Option2 type="IF" condition="not_equal" key="ReqEQP" dataType="" default="">
-				AND FROM_PORT_ID LIKE @ReqEQP
+			<Option2 type="IF" condition="not_equal" key="ReqPortId" dataType="" default="">
+				AND FROM_PORT_ID LIKE @ReqPortId
 			</Option2>
-			<Option3 type="IF" condition="not_equal" key="ToEQP" dataType="" default="">
-				AND TO_PORT_ID LIKE @ToEQP
+			<Option3 type="IF" condition="not_equal" key="ToPortId" dataType="" default="">
+				AND TO_PORT_ID LIKE @ToPortId
 			</Option3>
 			<Option4 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
 				AND CSTSTAT = @CSTSTAT
@@ -257,10 +264,10 @@
 			<Option6 type="IF" condition="not_equal" key="RuleId" dataType="" default="">
 				AND RTD_RULE_ID = @RuleId
 			</Option6>
+			<Option7 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option8 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<StartTime dataType="DateTime" default=""/>
-			<EndTime dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -269,7 +276,7 @@
 			</CSTSTAT>
 		</Coloring>
 		<EventValues/>
-	</SearchTransportJobHistory>
+	</SearchTransportJobRecord>
 	<SearchPortRequestHistory>
 		<MainSQL>
 			WITH TT_DATA AS (
@@ -306,19 +313,19 @@
 			<Option01 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND CSTID IN (@CSTID)
 			</Option01>
-			<Option02 type="IF" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="0">
+			<Option02 type="IF" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="">
 				AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
 			</Option02>
-			<Option03 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
-				AND PORT_ID LIKE @PORTID
+			<Option03 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
+				AND PORT_ID LIKE @ReqPortId
 			</Option03>
 			<Option04 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
 				AND CSTSTAT = @CSTSTAT
 			</Option04>
+			<Option05 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option06 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<StartTime dataType="DateTime" default=""/>
-			<EndTime dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">

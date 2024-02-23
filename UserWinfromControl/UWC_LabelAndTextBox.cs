@@ -124,7 +124,15 @@ namespace UserWinfromControl
 
             if (matches_Elec.Count == 0 && matches_Form.Count == 0)
             {
-                return carrierText;
+                if (carrierText == string.Empty)
+                {
+                    return carrierText;
+                }
+                else 
+                { 
+                    return CustomUtills.CustomUtill.LikeStringMaskingByBoth(carrierText); 
+                }
+                
             }
 
             return carrierIds;

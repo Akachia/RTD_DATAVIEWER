@@ -304,7 +304,7 @@
             cb_CarrierStat.Name = "cb_CarrierStat";
             cb_CarrierStat.Size = new Size(78, 24);
             cb_CarrierStat.TabIndex = 25;
-            cb_CarrierStat.VariableName = "";
+            cb_CarrierStat.VariableName = "CSTSTAT";
             // 
             // TransportJobList
             // 

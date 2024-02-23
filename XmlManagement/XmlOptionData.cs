@@ -55,6 +55,15 @@ namespace XmlManagement
         public Dictionary<string, Coloring>? ColoringDic { get; set; }
         public Dictionary<string, EventValue>? EventValueDic { get; set; }
 
+        /// <summary>
+        /// 세팅 값 -> SQL명, 컬럼명
+        /// 0. 지정된SQL에 세팅된 컬럼의 값을 각 객체에 있는 EventValue에 저장한다.
+        /// 1. SQL명으로 컬럼값을 저장한 Dic을 반환 
+        /// 2. 저장한 Dic에 있는 Value값으로 처리 
+        /// 
+        /// </summary>
+        /// <param name="functionName"></param>
+        /// <returns></returns>
         public Dictionary<string, string> getEventDicByFunctionName(string functionName)
         {
             EventValue ev = EventValueDic.Single(a => a.Value.CallSQL == functionName).Value;

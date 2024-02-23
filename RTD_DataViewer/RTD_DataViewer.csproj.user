@@ -22,7 +22,7 @@
     <Compile Update="View\LogBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\TransportJobAndPortRequestHistory.cs">
+    <Compile Update="View\TransportJobAndPortRequestRecord.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="View\PortRequestList.cs">

@@ -49,13 +49,13 @@ namespace DBManagement
         public string TRAY_CNVR_BCR_SCAN_COUNT { get; set; }
     }
 
-    public class SearchCstInfo : SqlResultData
+    public class SearchCarrierInfomation : SqlResultData
     {
         string carrierMismatchInfo = string.Empty;
 
         public string CarrierMismatchInfo { get => carrierMismatchInfo; set => carrierMismatchInfo = value; }
 
-        public SearchCstInfo(Dictionary<string, string> paramaterDic, XmlOptionData sqldata, DBConnectionString dBConnectionString) 
+        public SearchCarrierInfomation(Dictionary<string, string> paramaterDic, XmlOptionData sqldata, DBConnectionString dBConnectionString)
             : base(paramaterDic, sqldata, dBConnectionString)
         {
         }
@@ -157,19 +157,19 @@ namespace DBManagement
 
                 if (paramaterDic[CommonXml.CSTID] == string.Empty)
                 {
-                    errMsg ="Carrier ID를 입력해주세요.";
+                    errMsg = "Carrier ID를 입력해주세요.";
                     return null;
                 }
                 if (paramaterDic.ContainsKey(CommonXml.CSTID))
                 {
-                    cquery = cquery.Replace($"@{CommonXml.CSTID}", paramaterDic[CommonXml.CSTID]);
+                    cquery = cquery.Replace($"@{CommonXml.CSTID}", CustomUtills.CustomUtill.StringToDBStr(paramaterDic[CommonXml.CSTID]));
                 }
                 else
                 {
                     errMsg = $" CSTID is null : {this.GetType().Name}";
                     return null;
                 }
-                List <Carrier> carriers;
+                List<Carrier> carriers;
 
                 if (dBConnectionString.DatabaseProvider == "ORACLE")
                 {
@@ -199,6 +199,14 @@ namespace DBManagement
             }
         }
 
+        public new object ExcuteSql(Dictionary<string, string> paramaterDic, XmlOptionData sqldata, DBConnectionString dBConnectionString)
+        {
+            this.dBConnectionString = dBConnectionString;
+            this.paramaterDic = paramaterDic;
+            this.sqldata = sqldata;
 
+            return ExcuteSql();
+        }
     }
 }
+

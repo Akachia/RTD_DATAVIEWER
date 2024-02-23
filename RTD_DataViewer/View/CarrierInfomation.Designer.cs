@@ -120,7 +120,7 @@
             latb_CarrierId.Size = new Size(204, 24);
             latb_CarrierId.TabIndex = 3;
             latb_CarrierId.Tb_Text = "";
-            latb_CarrierId.VariableName = "";
+            latb_CarrierId.VariableName = "CSTID";
             // 
             // ckb_ValidNgHist
             // 

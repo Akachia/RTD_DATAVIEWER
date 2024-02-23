@@ -77,6 +77,17 @@ namespace UserWinfromControl
             this.comboBox1.Items.Add("REQUEST");
         }
 
+        public void SetTransportStatCodeData()
+        {
+            this.comboBox1.Items.Add("ALL");
+            this.comboBox1.Items.Add("NORMAL_END");
+            this.comboBox1.Items.Add("ABNORMAL_END");
+            this.comboBox1.Items.Add("DELETE");
+            this.comboBox1.Items.Add("SEND");
+            this.comboBox1.Items.Add("RECEIVE");
+            this.comboBox1.Items.Add("MOVING");
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 

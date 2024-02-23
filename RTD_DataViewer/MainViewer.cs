@@ -55,7 +55,7 @@ namespace RTD_DataViewer
             tp_TransportList.Controls.Add(transportList);
             transportList.Dock = DockStyle.Fill;
 
-            TransportJobAndPortRequestHistory reqAndTransfer = new TransportJobAndPortRequestHistory(this);
+            TransportJobAndPortRequestRecord reqAndTransfer = new TransportJobAndPortRequestRecord(this);
             tp_ReqAndTransfer.Controls.Add(reqAndTransfer);
             reqAndTransfer.Dock = DockStyle.Fill;
 

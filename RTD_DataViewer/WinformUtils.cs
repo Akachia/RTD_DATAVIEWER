@@ -18,6 +18,8 @@ using System.Reflection;
 using DBManagement;
 using UserWinfromControl;
 using CustomUtills;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RTD_DataViewer
 {
@@ -99,21 +101,32 @@ namespace RTD_DataViewer
                     {
                         UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
                         paramaterDic.Add(datePicker.VariableName, CustomUtill.StringToDBStr(datePicker.MakeNowDateStringAndSetting()));
+                        continue;
                     }
 
                     if (item is UWC_LabelAndTextBox)
                     {
-                        UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;
+                        UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;                   
 
                         if (text.VariableName == "CSTID")
                         {
                             string carrierIds = text.TextToCarrierListByRex(text.Tb_Text);
                             paramaterDic.Add(text.VariableName, carrierIds);
-                            text.Tb_Text = carrierIds;
+                            if (text.Tb_Text.Equals(string.Empty))
+                            {
+
+                            }
+                            else 
+                            {
+                                text.Tb_Text = carrierIds;
+                            }
+
+                            continue;
                         }
                         else 
                         {
-                            paramaterDic.Add(text.VariableName, CustomUtill.LikeStringMaskingByBoth(text.Tb_Text));
+                            paramaterDic.Add(text.VariableName, text.Tb_Text);
+                            continue;
                         }
                     }
 
@@ -123,11 +136,13 @@ namespace RTD_DataViewer
 
                         if (comboBox.ComboBoxSelectedIndex > 0)
                         {
-                            paramaterDic.Add(comboBox.VariableName, comboBox.ComboBoxSelectedItem);
+                            paramaterDic.Add(comboBox.VariableName, CustomUtill.StringToDBStr(comboBox.ComboBoxSelectedItem));
+                            continue;
                         }
                         else
                         {
                             paramaterDic.Add(comboBox.VariableName, $"");
+                            continue;
                         }
                     }
                 }
@@ -444,7 +459,8 @@ namespace RTD_DataViewer
         {
             try
             {
-                XmlOptionData sqldata = main.sqlList["SearchCstInfo2"];
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                XmlOptionData sqldata = main.sqlList[methodName];
                 string cquery = sqldata.Sql;
                 string plantId = main.correntConnectionStringSetting.PlantID;
                 string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
@@ -653,7 +669,43 @@ namespace RTD_DataViewer
                 if (sqlResultData.ErrMsg == string.Empty)
                 {
                     main.AppendLog(sqlResultData.SqlStr);
-                    new WinformUtils().DataGridView_Coloring(data, main.sqlList[methodName]);
+                    DataGridView_Coloring(data, main.sqlList[methodName]);
+                }
+                else
+                {
+                    MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
+                }
+                
+                return sqlResultData;
+            }
+            catch (Exception ex)
+            {
+                main.AppendLog(ex.Source);
+                MessageBox.Show($"{ex.Message} : {methodName}");
+                return null;
+            }
+        }
+
+        public SearchCarrierInfomation ShowDgv(string methodName, UWC_DataGridView dataGridView, SearchCarrierInfomation sqlResultData, Dictionary<string, string> paramaterDic)
+        {
+            DataGridView data = dataGridView.DgvData;
+            dataGridView.Lb_Text = methodName;
+            try
+            {
+                if (sqlResultData == null)
+                {
+                    sqlResultData = new SearchCarrierInfomation(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    data.DataSource = sqlResultData.ExcuteSql();
+                }
+                else
+                {
+                    data.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                }
+
+                if (sqlResultData.ErrMsg == string.Empty)
+                {
+                    main.AppendLog(sqlResultData.SqlStr);
+                    DataGridView_Coloring(data, main.sqlList[methodName]);
                 }
                 else
                 {
@@ -664,9 +716,15 @@ namespace RTD_DataViewer
             }
             catch (Exception ex)
             {
+                main.AppendLog(sqlResultData.SqlStr);
                 MessageBox.Show($"{ex.Message} : {methodName}");
                 return null;
             }
+        }
+        public void GetDataGridViewDataByColumnToEventData(ref SqlResultData sqlResultData)
+        {
+
+
         }
     }
 }

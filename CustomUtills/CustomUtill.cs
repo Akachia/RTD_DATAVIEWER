@@ -16,13 +16,68 @@ namespace CustomUtills
             source = regex.Replace(source, target);
         }
 
+        public static bool IsLikeQeury(string source)
+        {
+            string pattern = @"((?i)AND .+ LIKE .+)";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(source);
+        }
+
+        public static bool IsEqualQeury(string source)
+        {
+            string pattern = @"((?i)AND.+ = .+)";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(source);
+        }
+
+        public static bool IsInQeury(string source)
+        {
+            string pattern = @"((?i)AND.+ IN .+)";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(source);
+        }
+
+        public static bool IsMaskingValue(string source)
+        {
+            string pattern = @"('.+')";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(source);
+        }
+
+        public static bool IsMaskingLikeValue(string source)
+        {
+            string pattern = @"('%?.+%?')";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(source);
+        }
+
         public static string LikeStringMaskingByLeft(string str) => @$"'%{str}'";
 
         public static string LikeStringMaskingByRight(string str) => @$"'{str}%'";
 
-        public static string LikeStringMaskingByBoth(string str) => @$"'%{str}%'";
+        public static string LikeStringMaskingByBoth(string str)
+        {
+            if (IsMaskingLikeValue(str))
+            {
+                return str;
+            }
+            return @$"'%{str}%'";
+        }    
 
-        public static string StringToDBStr(string str) => @$"'{str}'";
+
+        public static string StringToDBStr(string str)
+        {
+            if (IsMaskingLikeValue(str))
+            {
+                return str;
+            }
+            return @$"'{str}'";
+        } 
     }
 
 
