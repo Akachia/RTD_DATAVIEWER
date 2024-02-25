@@ -17,6 +17,7 @@ namespace UserWinfromControl
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
         string variableName = string.Empty;
+        bool isMultiInputTextControl = false;
 
         public string VariableName
         {
@@ -40,6 +41,12 @@ namespace UserWinfromControl
 
         }
 
+        public bool IsMultiInputTextControl
+        {
+            get => isMultiInputTextControl;
+            set => isMultiInputTextControl = value;
+        }
+
         public UWC_LabelAndTextBox()
         {
             InitializeComponent();
@@ -47,7 +54,6 @@ namespace UserWinfromControl
             this.textBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             this.textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             this.textBox.Multiline = true;
-
         }
 
         private void textBox_Click(object sender, EventArgs e)

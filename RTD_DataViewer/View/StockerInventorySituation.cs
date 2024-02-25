@@ -24,21 +24,20 @@ namespace RTD_DataViewer.View
             this.main = main;
             SearchStockerCommonCodeList();
             FillComboBox();
-            cb_Cststat.SelectedIndex = 0;
-            dgv_StockerInventory.CellClick += Dgv_StoInventory_CellClick;
+            dgv_StockerInventory.DgvData.CellClick += Dgv_StoInventory_CellClick;
         }
 
         private void Dgv_StoInventory_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
-            SearchTrfInfo(cstId);
+            SearchTransportJobInfomation(cstId);
         }
 
         private void SearchStockerCommonCodeList()
         {
             try
             {
-                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                if (!main.correntConnectionStringSetting.IsConnection)
                 {
                     return;
                 }
@@ -70,7 +69,7 @@ namespace RTD_DataViewer.View
             }
 
         }
-        private void SearchTrfInfo(string cstid)
+        private void SearchTransportJobInfomation(string cstid)
         {
             WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
@@ -79,13 +78,13 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("CSTID", $"{cstid}");
                 paramaterDic.Add("REQ_SEQNO", $"0");
 
-                winformUtils.ExcuteSql(paramaterDic, dgv_TransportJobInfomation, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                winformUtils.ExcuteSql(paramaterDic, dgv_TransportJobInfomation.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }
-            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTrfInfo"); }
+            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTransportJobInfomation"); }
         }
         private void FillComboBox()
         {
-            if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+            if (!main.correntConnectionStringSetting.IsConnection)
             {
                 return;
             }
@@ -97,7 +96,7 @@ namespace RTD_DataViewer.View
             cb_StockerGroupList.SelectedIndex = 0;
         }
 
-        private void SearchStkInventory()
+        private void SearchStockerInventory()
         {
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
@@ -111,16 +110,16 @@ namespace RTD_DataViewer.View
 
             paramaterDic.Add("PLANT_ID", $"'{plantId}'");
             paramaterDic.Add("STO_CODE", $"'{stoCode}'");
-            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.SelectedIndex}");
+            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.ComboBoxSelectedIndex}");
             paramaterDic.Add("TRF_STAT_CODE", $"{trfStatCode}");
 
-            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StockerInventory, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StockerInventory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
             DateTime date1 = DateTime.Now;
 
-            int rowCount = dgv_StockerInventory.RowCount;
+            int rowCount = dgv_StockerInventory.DgvData.RowCount;
 
-            foreach (DataGridViewRow row in dgv_StockerInventory.Rows)
+            foreach (DataGridViewRow row in dgv_StockerInventory.DgvData.Rows)
             {
                 row.Cells["AGING_ISS_SCHD_DTTM"].Style.BackColor = Color.FromArgb(222, 245, 229); // 색상 변경
             }
@@ -129,8 +128,8 @@ namespace RTD_DataViewer.View
             {
                 try
                 {
-                    string agingDttm = dgv_StockerInventory.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
-                    string trf_Stat_Code = dgv_StockerInventory.Rows[i].Cells["TRF_STAT_CODE"].Value.ToString();
+                    string agingDttm = dgv_StockerInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+                    string trf_Stat_Code = dgv_StockerInventory.DgvData.Rows[i].Cells["TRF_STAT_CODE"].Value.ToString();
 
                     if (agingDttm != string.Empty)
                     {
@@ -139,7 +138,7 @@ namespace RTD_DataViewer.View
                         if (dateTime < date1)
                         {
                             //FFD4D4
-                            dgv_StockerInventory.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                            dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
                         }
                     }
                 }
@@ -154,7 +153,7 @@ namespace RTD_DataViewer.View
 
             }
         }
-        private void SearchStockerCurrState()
+        private void SearchStockerCurrentState()
         {
             WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
@@ -167,14 +166,14 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("PLANT_ID", @$"'{plantId}%'");
             paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
 
-            winformUtils.ExcuteSql(paramaterDic, dgv_StockerCurrState, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            winformUtils.ExcuteSql(paramaterDic, dgv_StockerCurrState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             //winformUtils.DataGridView_EioColoring(dgv_StoStatus);
         }
 
         private void bt_Search_Click(object sender, EventArgs e)
         {
-            SearchStkInventory();
-            SearchStockerCurrState();
+            SearchStockerInventory();
+            SearchStockerCurrentState();
         }
     }
 

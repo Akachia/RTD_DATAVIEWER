@@ -108,7 +108,7 @@ namespace RTD_DataViewer
                     {
                         UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;                   
 
-                        if (text.VariableName == "CSTID")
+                        if (text.IsMultiInputTextControl)
                         {
                             string carrierIds = text.TextToCarrierListByRex(text.Tb_Text);
                             paramaterDic.Add(text.VariableName, carrierIds);
@@ -144,6 +144,14 @@ namespace RTD_DataViewer
                             paramaterDic.Add(comboBox.VariableName, $"");
                             continue;
                         }
+                    }
+
+                    if (item is UWC_NumberUpDown)
+                    {
+                        UWC_NumberUpDown numberUpDown = item as UWC_NumberUpDown;
+
+                        paramaterDic.Add(numberUpDown.VariableName, numberUpDown.Number.ToString());
+                        continue;
                     }
                 }
 

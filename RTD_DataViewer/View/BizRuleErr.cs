@@ -35,7 +35,7 @@ namespace RTD_DataViewer.View
         #region Events for UI Controls
         private void bt_Search_Click(object sender, EventArgs e)
         {
-            SearchBizRuleErr();
+            SearchBizRuleError();
         }
 
         private void DgvData_CellClick(object? sender, DataGridViewCellEventArgs e)
@@ -65,7 +65,7 @@ namespace RTD_DataViewer.View
 
         #region Assign SqlData to DataGrid view functuons Section 
 
-        public void SearchBizRuleErr()
+        public void SearchBizRuleError()
         {
             paramaterDic = new Dictionary<string, string>();
             string methodName = MethodBase.GetCurrentMethod().Name;

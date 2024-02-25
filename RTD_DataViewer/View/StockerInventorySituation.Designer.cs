@@ -28,24 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             tableLayoutPanel1 = new TableLayoutPanel();
             bt_Search = new Button();
             cb_StockerGroupList = new ComboBox();
-            cb_Cststat = new ComboBox();
-            dgv_StockerInventory = new DataGridView();
-            dgv_StockerCurrState = new DataGridView();
             cb_TrfStatCode = new ComboBox();
-            dgv_TransportJobInfomation = new DataGridView();
+            uwC_LabelAndTextBox1 = new UserWinfromControl.UWC_LabelAndTextBox();
+            cb_Cststat = new UserWinfromControl.UWC_ComboBox();
+            dgv_StockerInventory = new UserWinfromControl.UWC_DataGridView();
+            dgv_StockerCurrState = new UserWinfromControl.UWC_DataGridView();
+            dgv_TransportJobInfomation = new UserWinfromControl.UWC_DataGridView();
+            bt_GetStockerGroupList = new Button();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgv_StockerInventory).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_StockerCurrState).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_TransportJobInfomation).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -63,11 +56,13 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.Controls.Add(bt_Search, 9, 0);
             tableLayoutPanel1.Controls.Add(cb_StockerGroupList, 8, 0);
+            tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 5, 0);
+            tableLayoutPanel1.Controls.Add(uwC_LabelAndTextBox1, 6, 0);
             tableLayoutPanel1.Controls.Add(cb_Cststat, 7, 0);
             tableLayoutPanel1.Controls.Add(dgv_StockerInventory, 0, 1);
             tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 6, 1);
-            tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 6, 0);
-            tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 6, 3);
+            tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 0, 3);
+            tableLayoutPanel1.Controls.Add(bt_GetStockerGroupList, 9, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -99,109 +94,84 @@
             cb_StockerGroupList.Size = new Size(169, 23);
             cb_StockerGroupList.TabIndex = 3;
             // 
-            // cb_Cststat
-            // 
-            cb_Cststat.Dock = DockStyle.Fill;
-            cb_Cststat.FormattingEnabled = true;
-            cb_Cststat.Items.AddRange(new object[] { "모두 : ALL", "실트레이 : U", "공트레이 : E" });
-            cb_Cststat.Location = new Point(983, 3);
-            cb_Cststat.Name = "cb_Cststat";
-            cb_Cststat.Size = new Size(99, 23);
-            cb_Cststat.TabIndex = 6;
-            // 
-            // dgv_StockerInventory
-            // 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgv_StockerInventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgv_StockerInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(dgv_StockerInventory, 6);
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgv_StockerInventory.DefaultCellStyle = dataGridViewCellStyle2;
-            dgv_StockerInventory.Dock = DockStyle.Fill;
-            dgv_StockerInventory.Location = new Point(3, 33);
-            dgv_StockerInventory.Name = "dgv_StockerInventory";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 3);
-            dgv_StockerInventory.RowTemplate.Height = 25;
-            dgv_StockerInventory.Size = new Size(834, 564);
-            dgv_StockerInventory.TabIndex = 7;
-            // 
-            // dgv_StockerCurrState
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgv_StockerCurrState.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dgv_StockerCurrState.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(dgv_StockerCurrState, 4);
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgv_StockerCurrState.DefaultCellStyle = dataGridViewCellStyle4;
-            dgv_StockerCurrState.Dock = DockStyle.Fill;
-            dgv_StockerCurrState.Location = new Point(843, 33);
-            dgv_StockerCurrState.Name = "dgv_StockerCurrState";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 2);
-            dgv_StockerCurrState.RowTemplate.Height = 25;
-            dgv_StockerCurrState.Size = new Size(554, 454);
-            dgv_StockerCurrState.TabIndex = 8;
-            // 
             // cb_TrfStatCode
             // 
             cb_TrfStatCode.Dock = DockStyle.Fill;
             cb_TrfStatCode.FormattingEnabled = true;
             cb_TrfStatCode.Items.AddRange(new object[] { "FINAL", "MOVING", "RESERVED" });
-            cb_TrfStatCode.Location = new Point(843, 3);
+            cb_TrfStatCode.Location = new Point(703, 3);
             cb_TrfStatCode.Name = "cb_TrfStatCode";
             cb_TrfStatCode.Size = new Size(134, 23);
             cb_TrfStatCode.TabIndex = 9;
             cb_TrfStatCode.Text = "TRF_STAT_CODE";
             // 
+            // uwC_LabelAndTextBox1
+            // 
+            uwC_LabelAndTextBox1.IsMultiInputTextControl = false;
+            uwC_LabelAndTextBox1.Lb_Text = "Carrier_ID";
+            uwC_LabelAndTextBox1.Location = new Point(843, 3);
+            uwC_LabelAndTextBox1.Name = "uwC_LabelAndTextBox1";
+            uwC_LabelAndTextBox1.Size = new Size(134, 24);
+            uwC_LabelAndTextBox1.TabIndex = 11;
+            uwC_LabelAndTextBox1.Tb_Text = "";
+            uwC_LabelAndTextBox1.VariableName = "CSTID";
+            // 
+            // cb_Cststat
+            // 
+            cb_Cststat.ComboBoxSelectedIndex = -1;
+            cb_Cststat.ComboBoxText = "";
+            cb_Cststat.DataSource = null;
+            cb_Cststat.Dock = DockStyle.Fill;
+            cb_Cststat.Location = new Point(983, 3);
+            cb_Cststat.Name = "cb_Cststat";
+            cb_Cststat.Size = new Size(99, 24);
+            cb_Cststat.TabIndex = 12;
+            cb_Cststat.VariableName = "";
+            // 
+            // dgv_StockerInventory
+            // 
+            tableLayoutPanel1.SetColumnSpan(dgv_StockerInventory, 6);
+            dgv_StockerInventory.Dock = DockStyle.Fill;
+            dgv_StockerInventory.Lb_Text = "SqlName";
+            dgv_StockerInventory.Lb_Text2 = "";
+            dgv_StockerInventory.Location = new Point(3, 33);
+            dgv_StockerInventory.Name = "dgv_StockerInventory";
+            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 2);
+            dgv_StockerInventory.Size = new Size(834, 454);
+            dgv_StockerInventory.TabIndex = 13;
+            // 
+            // dgv_StockerCurrState
+            // 
+            tableLayoutPanel1.SetColumnSpan(dgv_StockerCurrState, 3);
+            dgv_StockerCurrState.Dock = DockStyle.Fill;
+            dgv_StockerCurrState.Lb_Text = "SqlName";
+            dgv_StockerCurrState.Lb_Text2 = "";
+            dgv_StockerCurrState.Location = new Point(843, 33);
+            dgv_StockerCurrState.Name = "dgv_StockerCurrState";
+            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 2);
+            dgv_StockerCurrState.Size = new Size(414, 454);
+            dgv_StockerCurrState.TabIndex = 14;
+            // 
             // dgv_TransportJobInfomation
             // 
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgv_TransportJobInfomation.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgv_TransportJobInfomation.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(dgv_TransportJobInfomation, 4);
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgv_TransportJobInfomation.DefaultCellStyle = dataGridViewCellStyle6;
+            tableLayoutPanel1.SetColumnSpan(dgv_TransportJobInfomation, 10);
             dgv_TransportJobInfomation.Dock = DockStyle.Fill;
-            dgv_TransportJobInfomation.Location = new Point(843, 493);
+            dgv_TransportJobInfomation.Lb_Text = "SqlName";
+            dgv_TransportJobInfomation.Lb_Text2 = "";
+            dgv_TransportJobInfomation.Location = new Point(3, 493);
             dgv_TransportJobInfomation.Name = "dgv_TransportJobInfomation";
-            dgv_TransportJobInfomation.RowTemplate.Height = 25;
-            dgv_TransportJobInfomation.Size = new Size(554, 104);
-            dgv_TransportJobInfomation.TabIndex = 10;
+            dgv_TransportJobInfomation.Size = new Size(1394, 104);
+            dgv_TransportJobInfomation.TabIndex = 15;
+            // 
+            // bt_GetStockerGroupList
+            // 
+            bt_GetStockerGroupList.Dock = DockStyle.Fill;
+            bt_GetStockerGroupList.Location = new Point(1263, 33);
+            bt_GetStockerGroupList.Name = "bt_GetStockerGroupList";
+            bt_GetStockerGroupList.Size = new Size(134, 24);
+            bt_GetStockerGroupList.TabIndex = 16;
+            bt_GetStockerGroupList.Text = "GetStockerGroup";
+            bt_GetStockerGroupList.UseVisualStyleBackColor = true;
             // 
             // StockerInventorySituation
             // 
@@ -211,9 +181,6 @@
             Name = "StockerInventorySituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgv_StockerInventory).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_StockerCurrState).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_TransportJobInfomation).EndInit();
             ResumeLayout(false);
         }
 
@@ -222,10 +189,12 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button bt_Search;
         private ComboBox cb_StockerGroupList;
-        private ComboBox cb_Cststat;
-        private DataGridView dgv_StockerCurrState;
-        private DataGridView dgv_StockerInventory;
         private ComboBox cb_TrfStatCode;
-        private DataGridView dgv_TransportJobInfomation;
+        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox1;
+        private UserWinfromControl.UWC_ComboBox cb_Cststat;
+        private UserWinfromControl.UWC_DataGridView dgv_StockerInventory;
+        private UserWinfromControl.UWC_DataGridView dgv_StockerCurrState;
+        private UserWinfromControl.UWC_DataGridView dgv_TransportJobInfomation;
+        private Button bt_GetStockerGroupList;
     }
 }

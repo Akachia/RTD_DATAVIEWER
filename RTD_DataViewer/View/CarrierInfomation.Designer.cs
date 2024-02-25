@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            dgv_CarrierActHistory = new UserWinfromControl.UWC_DataGridView();
+            dgv_CarrierActAbbreviatedRecord = new UserWinfromControl.UWC_DataGridView();
             dgv_CarrierInfomation = new UserWinfromControl.UWC_DataGridView();
-            dgv_CarrierEventHistory = new UserWinfromControl.UWC_DataGridView();
+            dgv_CarrierEventAbbreviatedRecord = new UserWinfromControl.UWC_DataGridView();
             bt_CstInfoSearch = new Button();
             latb_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
-            ckb_ValidNgHist = new CheckBox();
             lb_MismatchMessage = new Label();
+            ckb_ValidNgHist = new CheckBox();
+            uwC_NumberUpDown1 = new UserWinfromControl.UWC_NumberUpDown();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,18 +46,19 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(dgv_CarrierActHistory, 0, 2);
+            tableLayoutPanel1.Controls.Add(dgv_CarrierActAbbreviatedRecord, 0, 2);
             tableLayoutPanel1.Controls.Add(dgv_CarrierInfomation, 0, 1);
-            tableLayoutPanel1.Controls.Add(dgv_CarrierEventHistory, 4, 2);
+            tableLayoutPanel1.Controls.Add(dgv_CarrierEventAbbreviatedRecord, 4, 2);
             tableLayoutPanel1.Controls.Add(bt_CstInfoSearch, 7, 0);
             tableLayoutPanel1.Controls.Add(latb_CarrierId, 6, 0);
-            tableLayoutPanel1.Controls.Add(ckb_ValidNgHist, 5, 0);
             tableLayoutPanel1.Controls.Add(lb_MismatchMessage, 0, 0);
+            tableLayoutPanel1.Controls.Add(ckb_ValidNgHist, 4, 0);
+            tableLayoutPanel1.Controls.Add(uwC_NumberUpDown1, 5, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -67,16 +69,16 @@
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // dgv_CarrierActHistory
+            // dgv_CarrierActAbbreviatedRecord
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_CarrierActHistory, 4);
-            dgv_CarrierActHistory.Dock = DockStyle.Fill;
-            dgv_CarrierActHistory.Lb_Text = "SqlName";
-            dgv_CarrierActHistory.Lb_Text2 = "";
-            dgv_CarrierActHistory.Location = new Point(3, 204);
-            dgv_CarrierActHistory.Name = "dgv_CarrierActHistory";
-            dgv_CarrierActHistory.Size = new Size(694, 393);
-            dgv_CarrierActHistory.TabIndex = 0;
+            tableLayoutPanel1.SetColumnSpan(dgv_CarrierActAbbreviatedRecord, 4);
+            dgv_CarrierActAbbreviatedRecord.Dock = DockStyle.Fill;
+            dgv_CarrierActAbbreviatedRecord.Lb_Text = "SqlName";
+            dgv_CarrierActAbbreviatedRecord.Lb_Text2 = "";
+            dgv_CarrierActAbbreviatedRecord.Location = new Point(3, 204);
+            dgv_CarrierActAbbreviatedRecord.Name = "dgv_CarrierActAbbreviatedRecord";
+            dgv_CarrierActAbbreviatedRecord.Size = new Size(834, 393);
+            dgv_CarrierActAbbreviatedRecord.TabIndex = 0;
             // 
             // dgv_CarrierInfomation
             // 
@@ -89,16 +91,16 @@
             dgv_CarrierInfomation.Size = new Size(1394, 165);
             dgv_CarrierInfomation.TabIndex = 1;
             // 
-            // dgv_CarrierEventHistory
+            // dgv_CarrierEventAbbreviatedRecord
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_CarrierEventHistory, 4);
-            dgv_CarrierEventHistory.Dock = DockStyle.Fill;
-            dgv_CarrierEventHistory.Lb_Text = "SqlName";
-            dgv_CarrierEventHistory.Lb_Text2 = "";
-            dgv_CarrierEventHistory.Location = new Point(703, 204);
-            dgv_CarrierEventHistory.Name = "dgv_CarrierEventHistory";
-            dgv_CarrierEventHistory.Size = new Size(694, 393);
-            dgv_CarrierEventHistory.TabIndex = 2;
+            tableLayoutPanel1.SetColumnSpan(dgv_CarrierEventAbbreviatedRecord, 4);
+            dgv_CarrierEventAbbreviatedRecord.Dock = DockStyle.Fill;
+            dgv_CarrierEventAbbreviatedRecord.Lb_Text = "SqlName";
+            dgv_CarrierEventAbbreviatedRecord.Lb_Text2 = "";
+            dgv_CarrierEventAbbreviatedRecord.Location = new Point(843, 204);
+            dgv_CarrierEventAbbreviatedRecord.Name = "dgv_CarrierEventAbbreviatedRecord";
+            dgv_CarrierEventAbbreviatedRecord.Size = new Size(554, 393);
+            dgv_CarrierEventAbbreviatedRecord.TabIndex = 2;
             // 
             // bt_CstInfoSearch
             // 
@@ -114,6 +116,7 @@
             // latb_CarrierId
             // 
             latb_CarrierId.Dock = DockStyle.Fill;
+            latb_CarrierId.IsMultiInputTextControl = false;
             latb_CarrierId.Lb_Text = "Carrier ID";
             latb_CarrierId.Location = new Point(1088, 3);
             latb_CarrierId.Name = "latb_CarrierId";
@@ -121,18 +124,6 @@
             latb_CarrierId.TabIndex = 3;
             latb_CarrierId.Tb_Text = "";
             latb_CarrierId.VariableName = "CSTID";
-            // 
-            // ckb_ValidNgHist
-            // 
-            ckb_ValidNgHist.AutoSize = true;
-            ckb_ValidNgHist.Dock = DockStyle.Fill;
-            ckb_ValidNgHist.Location = new Point(878, 3);
-            ckb_ValidNgHist.Name = "ckb_ValidNgHist";
-            ckb_ValidNgHist.RightToLeft = RightToLeft.Yes;
-            ckb_ValidNgHist.Size = new Size(204, 24);
-            ckb_ValidNgHist.TabIndex = 5;
-            ckb_ValidNgHist.Text = "입고 불허 조회";
-            ckb_ValidNgHist.UseVisualStyleBackColor = true;
             // 
             // lb_MismatchMessage
             // 
@@ -143,6 +134,28 @@
             lb_MismatchMessage.Size = new Size(274, 30);
             lb_MismatchMessage.TabIndex = 6;
             lb_MismatchMessage.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ckb_ValidNgHist
+            // 
+            ckb_ValidNgHist.AutoSize = true;
+            ckb_ValidNgHist.Dock = DockStyle.Fill;
+            ckb_ValidNgHist.Location = new Point(843, 3);
+            ckb_ValidNgHist.Name = "ckb_ValidNgHist";
+            ckb_ValidNgHist.RightToLeft = RightToLeft.Yes;
+            ckb_ValidNgHist.Size = new Size(169, 24);
+            ckb_ValidNgHist.TabIndex = 5;
+            ckb_ValidNgHist.Text = "입고 불허 조회";
+            ckb_ValidNgHist.UseVisualStyleBackColor = true;
+            // 
+            // uwC_NumberUpDown1
+            // 
+            uwC_NumberUpDown1.Dock = DockStyle.Fill;
+            uwC_NumberUpDown1.Location = new Point(1018, 3);
+            uwC_NumberUpDown1.Name = "uwC_NumberUpDown1";
+            uwC_NumberUpDown1.Number = 40;
+            uwC_NumberUpDown1.Size = new Size(64, 24);
+            uwC_NumberUpDown1.TabIndex = 7;
+            uwC_NumberUpDown1.VariableName = "TOPNUMBER";
             // 
             // CarrierInfomation
             // 
@@ -159,12 +172,13 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private UserWinfromControl.UWC_DataGridView dgv_CarrierActHistory;
+        private UserWinfromControl.UWC_DataGridView dgv_CarrierActAbbreviatedRecord;
         private UserWinfromControl.UWC_DataGridView dgv_CarrierInfomation;
-        private UserWinfromControl.UWC_DataGridView dgv_CarrierEventHistory;
+        private UserWinfromControl.UWC_DataGridView dgv_CarrierEventAbbreviatedRecord;
         private UserWinfromControl.UWC_LabelAndTextBox latb_CarrierId;
         private Button bt_CstInfoSearch;
         private CheckBox ckb_ValidNgHist;
         private Label lb_MismatchMessage;
+        private UserWinfromControl.UWC_NumberUpDown uwC_NumberUpDown1;
     }
 }

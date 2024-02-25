@@ -22,9 +22,9 @@ namespace RTD_DataViewer.View
     {
         #region Variable
         WinformUtils? winformUtils = null;
-        DefaultSqlData? SearchCarrierEventHistoryData = null;
+        DefaultSqlData? SearchCarrierEventAbbreviatedRecordData = null;
         SearchCarrierInfomation? searchCarrierInfomationData = null;
-        DefaultSqlData? SearchCarrierActHistoryData = null;
+        DefaultSqlData? SearchCarrierActAbbreviatedRecordData = null;
         List<Control>? variableControls = new List<Control>();
         #endregion
 
@@ -32,7 +32,15 @@ namespace RTD_DataViewer.View
         public CarrierInfomation(MainViewer main)
         {
             InitializeComponent();
-            variableControls.Add(latb_CarrierId);
+
+            foreach (Control control in this.Controls[0].Controls)
+            {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
+
             winformUtils = new(main);
         }
         #endregion
@@ -41,15 +49,15 @@ namespace RTD_DataViewer.View
         private void bt_CstInfoSearch_Click(object sender, EventArgs e)
         {
             SearchCarrierInfomation();
-            SearchCarrierEventHistory();
+            SearchCarrierEventAbbreviatedRecord();
 
             if (ckb_ValidNgHist.Checked == true)
             {
-                SearchCarrierActHistory();
+                SearchCarrierActAbbreviatedRecord();
             }
             else
             {
-                SearchCarrierActHistory();
+                SearchCarrierActAbbreviatedRecord();
             }
         }
         #endregion
@@ -81,7 +89,7 @@ namespace RTD_DataViewer.View
         }
 
 
-        private void SearchCarrierActHistory()
+        private void SearchCarrierActAbbreviatedRecord()
         {
             string cstid = latb_CarrierId.Tb_Text;
             string methodName = MethodBase.GetCurrentMethod().Name;
@@ -92,12 +100,12 @@ namespace RTD_DataViewer.View
                 {
                     Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
 
-                    SearchCarrierActHistoryData =
+                    SearchCarrierActAbbreviatedRecordData =
                         winformUtils.ShowDgv
                         (
                             methodName,
-                            dgv_CarrierActHistory,
-                            SearchCarrierActHistoryData,
+                            dgv_CarrierActAbbreviatedRecord,
+                            SearchCarrierActAbbreviatedRecordData,
                             paramaterDic
                         ) as DefaultSqlData;
                 }
@@ -108,7 +116,7 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchCarrierEventHistory()
+        private void SearchCarrierEventAbbreviatedRecord()
         {
             string cstid = latb_CarrierId.Tb_Text;
             string methodName = MethodBase.GetCurrentMethod().Name;
@@ -118,12 +126,12 @@ namespace RTD_DataViewer.View
                 {
                     Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
 
-                    SearchCarrierEventHistoryData =
+                    SearchCarrierEventAbbreviatedRecordData =
                         winformUtils.ShowDgv
                         (
                             methodName,
-                            dgv_CarrierEventHistory,
-                            SearchCarrierEventHistoryData,
+                            dgv_CarrierEventAbbreviatedRecord,
+                            SearchCarrierEventAbbreviatedRecordData,
                             paramaterDic
                         ) as DefaultSqlData;
                 }
@@ -134,10 +142,5 @@ namespace RTD_DataViewer.View
             }
         }
         #endregion
-
-
-
-
-
     }
 }

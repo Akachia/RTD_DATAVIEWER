@@ -188,108 +188,35 @@ namespace DBManagement
             }
         }
 
-        public object SearchCstInfo(string cstId, ref string errMsg, XmlOptionData sqldata, DBConnectionString dBConnectionString)
+        public class DatabaseConnectionTest
         {
-            try
+            public bool TestConnection(string connectionString)
             {
-                string cquery = sqldata.Sql;
-               // string plantId = main.correntConnectionStringSetting.PlantID;
-               // string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
-
-                DynamicParameters parameters = new DynamicParameters();
-                if (cstId == string.Empty)
+                try
                 {
-                    errMsg = "CSTID를 입력해주세요.";
-                    return null;
-                }
-                parameters.Add("@CSTID", cstId);
-                List<Carrier> carriers;
-
-                if (dBConnectionString.DatabaseProvider == "ORACLE")
-                { 
-                    string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
-
-                    // dgv_CstInfo.DgvData.RowPostPaint -= DataGridView_RowPostPaint;
-                    using (var connection = new OracleConnection(dBConnectionString.ConnectionString()))
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        if (parameters != null)
+                        connection.Open(); // 데이터베이스 연결 시도
+                        if (connection.State == System.Data.ConnectionState.Open)
                         {
-                            return connection.Query(testcquery, parameters).ToList();
-                            //main.AppendLog(cquery, parameters);
+                            // 연결 상태 확인
+                            Console.WriteLine("Connection successful.");
+                            return true;
                         }
                         else
                         {
-                            return connection.Query(testcquery).ToList();
-                            //main.AppendLog(cquery);
+                            Console.WriteLine("Connection failed.");
+                            return false;
                         }
                     }
-                    //dataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Gray;
-
-                    //dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                    //dataGridView.AutoResizeColumns();
-
-                    ////    dgv_CstInfo.DgvData.RowPostPaint += DataGridView_RowPostPaint;
-                    //foreach (DataGridViewRow item in dataGridView.Rows)
-                    //{
-                    //    item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
-                    //}
-                    
                 }
-                return null;
-                //using (var connection = new SqlConnection(dBConnectionString.MssqlConnectionString()))
-                //{
-                //    carriers = connection.Query<Carrier>(cquery, parameters).ToList();
-                //    dataGridView.DataSource = carriers;
-                //}
-                //foreach (DataGridViewColumn col in dataGridView.Columns)
-                //{
-                //    var prop = typeof(Carrier).GetProperty(col.DataPropertyName);
-                //    var displayName = prop?.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
-                //    if (displayName != null)
-                //    {
-                //        col.HeaderText = displayName;
-                //    }
-                //}
-                //main.AppendLog(cquery, parameters);
-                //dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                //dataGridView.AutoResizeColumns();
-
-                //if (carriers != null)
-                //{
-                //    string mismatchMessage = MakeCSTErrMsg(carriers);
-                //    errMsg = mismatchMessage;
-                //    if (mismatchMessage == string.Empty)
-                //    {
-                //        foreach (DataGridViewRow item in dataGridView.Rows)
-                //        {
-                //            item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        int rowCount = 0;
-                //        //lb_MismatchMessage.BackColor = Color.FromArgb(255, 155, 155);
-                //        foreach (DataGridViewRow item in dataGridView.Rows)
-                //        {
-                //            if (rowCount == 0)
-                //            {
-                //                item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
-                //                rowCount++;
-                //            }
-                //            else
-                //            {
-                //                item.DefaultCellStyle.BackColor = Color.FromArgb(255, 214, 165);
-                //            }
-                //        }
-                //    }
-                //}
-            }
-            catch (Exception)
-            {
-                return null;
+                catch (Exception ex)
+                {
+                    // 연결 시도 중 오류 발생
+                    Console.WriteLine($"Connection failed: {ex.Message}");
+                    return false;
+                }
             }
         }
-
-
     }
 }

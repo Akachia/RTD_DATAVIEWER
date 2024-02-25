@@ -83,7 +83,7 @@
             lAdtp_CstHist_StartDate.Name = "lAdtp_CstHist_StartDate";
             lAdtp_CstHist_StartDate.Size = new Size(274, 24);
             lAdtp_CstHist_StartDate.TabIndex = 0;
-            lAdtp_CstHist_StartDate.VariableName = "";
+            lAdtp_CstHist_StartDate.VariableName = "StartTime";
             // 
             // lAdtp_CstHist_EndDate
             // 
@@ -95,18 +95,19 @@
             lAdtp_CstHist_EndDate.Name = "lAdtp_CstHist_EndDate";
             lAdtp_CstHist_EndDate.Size = new Size(274, 24);
             lAdtp_CstHist_EndDate.TabIndex = 1;
-            lAdtp_CstHist_EndDate.VariableName = "";
+            lAdtp_CstHist_EndDate.VariableName = "EndTime";
             // 
             // lAtb_CstHist_CarrierId
             // 
             lAtb_CstHist_CarrierId.Dock = DockStyle.Fill;
+            lAtb_CstHist_CarrierId.IsMultiInputTextControl = false;
             lAtb_CstHist_CarrierId.Lb_Text = "Carrier ID";
             lAtb_CstHist_CarrierId.Location = new Point(843, 3);
             lAtb_CstHist_CarrierId.Name = "lAtb_CstHist_CarrierId";
             lAtb_CstHist_CarrierId.Size = new Size(162, 24);
             lAtb_CstHist_CarrierId.TabIndex = 2;
             lAtb_CstHist_CarrierId.Tb_Text = "";
-            lAtb_CstHist_CarrierId.VariableName = "";
+            lAtb_CstHist_CarrierId.VariableName = "CSTID";
             // 
             // bt_CstHist_Search
             // 
@@ -180,13 +181,14 @@
             // lAtb_CstHist_ToPort
             // 
             lAtb_CstHist_ToPort.Dock = DockStyle.Fill;
+            lAtb_CstHist_ToPort.IsMultiInputTextControl = false;
             lAtb_CstHist_ToPort.Lb_Text = "목적 포트 ID";
             lAtb_CstHist_ToPort.Location = new Point(843, 33);
             lAtb_CstHist_ToPort.Name = "lAtb_CstHist_ToPort";
             lAtb_CstHist_ToPort.Size = new Size(162, 24);
             lAtb_CstHist_ToPort.TabIndex = 9;
             lAtb_CstHist_ToPort.Tb_Text = "";
-            lAtb_CstHist_ToPort.VariableName = "";
+            lAtb_CstHist_ToPort.VariableName = "PORT_ID";
             // 
             // CarrierHistory
             // 

@@ -144,6 +144,7 @@ namespace DBManagement
                 // 
                 else
                 {
+                    cquery = cquery.Replace(@$"@{dicKey}", $@"{dicValue}");
                 }
             }
             //SQL 값이 없을 경우

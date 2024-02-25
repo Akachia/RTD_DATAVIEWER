@@ -153,13 +153,13 @@
             dgv_RollList.Size = new Size(1394, 393);
             dgv_RollList.TabIndex = 8;
             // 
-            // RollSituation
+            // RollCurrentSituation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
             Controls.Add(lb_MismatchMessage);
-            Name = "RollSituation";
+            Name = "RollCurrentSituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

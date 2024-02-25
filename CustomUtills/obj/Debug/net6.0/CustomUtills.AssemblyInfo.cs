@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomUtills")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15190a610cf2f9bccffed5306e781521ce1f12d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ada3090d97c7ce5899a222c3452ad85ed216869a")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomUtills")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomUtills")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

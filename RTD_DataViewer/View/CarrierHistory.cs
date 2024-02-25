@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DBManagement;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,12 +16,18 @@ namespace RTD_DataViewer.View
 {
     public partial class CarrierHistory : UserControl
     {
-        MainViewer main;
+        #region Variable
+        WinformUtils? winformUtils = null;
+        DefaultSqlData? SearchCarrierEventHistoryData = null;
+        DefaultSqlData? SearchCarrierActHistoryData = null;
+        List<Control>? variableControls = new List<Control>();
 
+        #endregion
+
+        #region Construction
         public CarrierHistory(MainViewer main)
         {
             InitializeComponent();
-            this.main = main;
 
             DateTime tomorrow = DateTime.Today.AddDays(1);
             DateTime yesterday = DateTime.Today.AddDays(-1);
@@ -29,154 +36,99 @@ namespace RTD_DataViewer.View
             lAdtp_CstHist_StartDate.Dtp_Value = yesterday;
             lAdtp_CstHist_EndDate.IsChecked = false;
             lAdtp_CstHist_StartDate.IsChecked = true;
+
+            variableControls.Add(lAdtp_CstHist_EndDate);
+            variableControls.Add(lAdtp_CstHist_StartDate);
+            variableControls.Add(lAtb_CstHist_CarrierId);
+            variableControls.Add(lAtb_CstHist_ToPort);
+
+            winformUtils = new(main);
         }
+        #endregion
 
-        private void SearchCstInfo(object? sender, DataGridViewCellEventArgs e)
-        {
-            XmlOptionData sqldata = main.sqlList["SearchCstInfo"];
-            DynamicParameters parameters = new DynamicParameters();
-            string cquery = string.Empty;
-            WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 16);
+        #region Events for UI Controls
 
-            //DataGridView dataGrid = sender as DataGridView;
+        #endregion
 
-            string trf_Code = (sender as DataGridView).CurrentRow.Cells["TRF_CODE"].Value.ToString();
-
-            parameters.Add("@TRF_CODE", trf_Code);
-
-            // new WinformUtils(main).ShowSqltoDGV(main.transList_CstHist.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-            main.AppendLog(cquery, parameters);
-        }
-
-        internal void Btn_Click()
+        #region Utilities for Ui
+        private void bt_CstHist_Search_Click(object sender, EventArgs e)
         {
             bool isTrayActHist = rb_IsTrayActHist.Checked;
             bool isEventHist = rb_IsEventHist.Checked;
 
             if (isTrayActHist == true)
             {
-                CstActHistSearch();
+                SearchCarrierActHistory();
             }
             else if (isEventHist == true)
             {
-                CstEventHistSearch();
+                SearchCarrierEventHistory();
             }
         }
+        #endregion
 
-        private void CstActHistSearch()
+        #region Assign SqlData to DataGrid view functuons Section 
+
+        private void SearchCarrierActHistory()
         {
             string cstid = lAtb_CstHist_CarrierId.Tb_Text;
-            string toPortId = lAtb_CstHist_ToPort.Tb_Text;
-
-            string startDate;
-            string endDate; ;
-            if (lAdtp_CstHist_EndDate.IsChecked)
-            {
-                endDate = lAdtp_CstHist_EndDate.Dtp_Value.ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                lAdtp_CstHist_EndDate.Dtp_Value = DateTime.Now;
-                endDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-
-            if (lAdtp_CstHist_StartDate.IsChecked)
-            {
-                startDate = lAdtp_CstHist_StartDate.Dtp_Value.ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                lAdtp_CstHist_StartDate.Dtp_Value = DateTime.Today.AddDays(-1);
-                startDate = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss");
-            }
-
-            //int cb_Num = main.cb_Cststat.SelectedIndex;
+            string methodName = MethodBase.GetCurrentMethod().Name;
 
             try
             {
-                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-
-                paramaterDic.Add("PORTID", toPortId);
-                paramaterDic.Add("CSTID", cstid);
-                paramaterDic.Add("StartDate", $"'{startDate}'");
-                paramaterDic.Add("EndDate", $"'{endDate}'");
-
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_CarrierHistory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-
-                //XmlOptionData sqldata = main.sqlList["CstActHistSearch"];
-                //string cquery = sqldata.Sql;
-                //var parameters = new DynamicParameters();
-
-                //if (toPortId != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 0);
-                //    parameters.Add("@PORTID", string.Concat("%", toPortId, "%"));
-                //}
-
-                //if (cstid != string.Empty)
-                //{
-                //    WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 1);
-                //    parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-                //}
-
-                //WinformUtils.AddToOptionalSqlSyntax(ref cquery, sqldata, 2);
-                //parameters.Add("@StartDate", startDate);
-                //parameters.Add("@EndDate", endDate);
-
-                //new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-                //main.AppendLog(cquery, parameters);
+                if (cstid != string.Empty)
+                {
+                    Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                    SearchCarrierActHistoryData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_CarrierHistory,
+                            SearchCarrierActHistoryData,
+                            paramaterDic
+                        ) as DefaultSqlData;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : CstActHistSearch");
+                MessageBox.Show($"{ex.Message} : {methodName}");
             }
         }
 
-        private void CstEventHistSearch()
+        private void SearchCarrierEventHistory()
         {
             string cstid = lAtb_CstHist_CarrierId.Tb_Text;
-            string toEqpId = lAtb_CstHist_ToPort.Tb_Text;
-
-            string endDate = lAdtp_CstHist_EndDate.MakeNowDateStringAndSetting();
-            string startDate = lAdtp_CstHist_StartDate.MakeNowDateStringAndSetting();
-
+            string methodName = MethodBase.GetCurrentMethod().Name;
             try
             {
+                if (cstid != string.Empty)
+                {
+                    Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
 
-                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-
-                paramaterDic.Add("CSTID", $"'{cstid}'");
-                paramaterDic.Add("StartDate", $"'{startDate}'");
-                paramaterDic.Add("EndDate", $"'{endDate}'");
-
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_CarrierHistory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-                //XmlOptionData sqldata = main.sqlList["CstEventHistSearch"];
-                //Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                //string cquery = sqldata.Sql;
-                //var parameters = new DynamicParameters();
-
-                //parameters.Add("@StartDate", startDate);
-                //parameters.Add("@EndDate", endDate);
-
-                //parameters.Add("@CSTID", string.Concat("%", cstid, "%"));
-
-                //new WinformUtils(main).ShowSqltoDGV(cstHist_Dgv.DgvData, cquery, parameters, main.correntConnectionStringSetting);
-
-               // main.AppendLog(cquery, parameters);
+                    SearchCarrierEventHistoryData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            dgv_CarrierHistory,
+                            SearchCarrierEventHistoryData,
+                            paramaterDic
+                        ) as DefaultSqlData;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : CstEventHistSearch");
+                MessageBox.Show($"{ex.Message} : {methodName}");
             }
         }
 
-        private void bt_CstHist_Search_Click(object sender, EventArgs e)
-        {
-            Btn_Click();
-        }
+        #endregion
+
+
+
+
+
+
+
+
     }
 }

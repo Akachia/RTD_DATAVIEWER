@@ -120,6 +120,7 @@
             // lAtb_ReqInfo_ReqEqp
             // 
             lAtb_ReqInfo_ReqEqp.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_ReqEqp.IsMultiInputTextControl = false;
             lAtb_ReqInfo_ReqEqp.Lb_Text = "EqptId";
             lAtb_ReqInfo_ReqEqp.Location = new Point(1053, 3);
             lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
@@ -131,6 +132,7 @@
             // lAtb_ReqInfo_RuleText
             // 
             lAtb_ReqInfo_RuleText.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_RuleText.IsMultiInputTextControl = false;
             lAtb_ReqInfo_RuleText.Lb_Text = "Rule Name";
             lAtb_ReqInfo_RuleText.Location = new Point(1053, 33);
             lAtb_ReqInfo_RuleText.Name = "lAtb_ReqInfo_RuleText";
@@ -142,6 +144,7 @@
             // lAtb_ReqInfo_Cstid
             // 
             lAtb_ReqInfo_Cstid.Dock = DockStyle.Fill;
+            lAtb_ReqInfo_Cstid.IsMultiInputTextControl = true;
             lAtb_ReqInfo_Cstid.Lb_Text = "Carrier ID";
             lAtb_ReqInfo_Cstid.Location = new Point(885, 3);
             lAtb_ReqInfo_Cstid.Name = "lAtb_ReqInfo_Cstid";

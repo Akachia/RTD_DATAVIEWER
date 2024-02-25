@@ -121,7 +121,7 @@ namespace RTD_DataViewer
                 cb_DBString.DataSource = stringss;
 
                 correntConnectionStringSetting = strs[cb_DBString.Text];
-
+                correntConnectionStringSetting.TestConnection();
                 ChangeDBConn(cb_DBString.Text);
             }
             catch (Exception ex)
