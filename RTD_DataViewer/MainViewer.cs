@@ -147,12 +147,20 @@ namespace RTD_DataViewer
 
         private void cb_DBString_TextChanged(object sender, EventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-
-            if (comboBox.Text != string.Empty) ChangeDBConn(comboBox.Text);
-            if (cb_DBString.Text != string.Empty)
+            try
             {
-                correntConnectionStringSetting = strs[cb_DBString.Text];
+                ComboBox comboBox = sender as ComboBox;
+
+                if (comboBox.Text != string.Empty) ChangeDBConn(comboBox.Text);
+                if (cb_DBString.Text != string.Empty)
+                {
+                    correntConnectionStringSetting = strs[cb_DBString.Text];
+                    correntConnectionStringSetting.TestConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

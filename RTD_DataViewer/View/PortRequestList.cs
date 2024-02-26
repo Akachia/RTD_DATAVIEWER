@@ -141,9 +141,9 @@ namespace RTD_DataViewer.View
                 SearchPortRequestList();
             }
 
-            if (main.correntConnectionStringSetting.DatabaseProvider != "ORACLE")
+            if (main.correntConnectionStringSetting.IsConnection)
             {
-                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST" }, dgv_PortRequestList.DgvData.RowCount);
+                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST", "QUERY" }, dgv_PortRequestList.DgvData.RowCount);
             }
         }
 

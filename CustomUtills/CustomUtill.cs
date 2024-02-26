@@ -18,7 +18,7 @@ namespace CustomUtills
 
         public static bool IsLikeQeury(string source)
         {
-            string pattern = @"((?i)AND .+ LIKE .+)";
+            string pattern = @"((?i)AND.+ LIKE .+)";
             Regex regex = new Regex(pattern);
 
             return regex.IsMatch(source);

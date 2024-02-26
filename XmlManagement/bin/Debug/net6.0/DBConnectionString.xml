@@ -28,7 +28,7 @@
 		<Password>##r51T1980D@!</Password>
 		<AreaID>C1</AreaID>
 		<PlantID>AE</PlantID>
-		<SystemTypeCode>C</SystemTypeCode>
+		<SystemTypeCode>A</SystemTypeCode>
 	</ESGM2_BMES_CELL_P01>	
 	<ESGM_BMES_CELL_P01>
 		<Server>10.95.9.52,7433;</Server>

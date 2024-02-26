@@ -87,7 +87,7 @@
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
             tableLayoutPanel5.Size = new Size(1400, 600);
             tableLayoutPanel5.TabIndex = 1;
             // 
@@ -234,7 +234,7 @@
             dgv_TransportJobHistory.Lb_Text2 = "";
             dgv_TransportJobHistory.Location = new Point(1081, 63);
             dgv_TransportJobHistory.Name = "dgv_TransportJobHistory";
-            dgv_TransportJobHistory.Size = new Size(316, 424);
+            dgv_TransportJobHistory.Size = new Size(316, 414);
             dgv_TransportJobHistory.TabIndex = 20;
             // 
             // dgv_CarrierInfomation
@@ -243,9 +243,9 @@
             dgv_CarrierInfomation.Dock = DockStyle.Fill;
             dgv_CarrierInfomation.Lb_Text = "SqlName";
             dgv_CarrierInfomation.Lb_Text2 = "";
-            dgv_CarrierInfomation.Location = new Point(1081, 493);
+            dgv_CarrierInfomation.Location = new Point(1081, 483);
             dgv_CarrierInfomation.Name = "dgv_CarrierInfomation";
-            dgv_CarrierInfomation.Size = new Size(316, 104);
+            dgv_CarrierInfomation.Size = new Size(316, 114);
             dgv_CarrierInfomation.TabIndex = 21;
             // 
             // ckb_IsFaulty

@@ -176,7 +176,7 @@ namespace RTD_DataViewer.View
                 DynamicParameters parameters = new DynamicParameters();
 
                 parameters.Add($"@PLANT_ID", @$"{plantId}%");
-                //parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
+                parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
 
                 using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
                 {

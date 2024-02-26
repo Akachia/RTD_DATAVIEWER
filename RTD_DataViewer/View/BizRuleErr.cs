@@ -15,18 +15,25 @@ namespace RTD_DataViewer.View
     public partial class BizRuleErr : UserControl
     {
         #region Variable
-        MainViewer main;
-        string errMsg;
         DefaultSqlData bizRuleErrData = null;
-        Dictionary<string, string> paramaterDic;
+        WinformUtils? winformUtils = null;
+        List<Control>? variableControls = new List<Control>();
         #endregion
 
         #region Construction
         public BizRuleErr(MainViewer main)
         {
             InitializeComponent();
-            this.main = main;
-            dgv_BizRuleError.DgvData.CellClick += DgvData_CellClick; ;
+            dgv_BizRuleError.DgvData.CellClick += DgvData_CellClick;
+
+            foreach (Control control in this.Controls[0].Controls) {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
+
+            winformUtils = new(main);
         }
 
 
@@ -67,40 +74,25 @@ namespace RTD_DataViewer.View
 
         public void SearchBizRuleError()
         {
-            paramaterDic = new Dictionary<string, string>();
-            string methodName = MethodBase.GetCurrentMethod().Name;
-
-            paramaterDic.Add("StartDate", $"{lAdtp_StartTime.MakeNowDateStringAndSetting()}");
-            paramaterDic.Add("EndDate", $"{lAdtp_EndTime.MakeNowDateStringAndSetting()}");
-            paramaterDic.Add("ErrorText", $"{lAtb_ErrorText.Tb_Text}");
-            paramaterDic.Add("BizRuleID", $"{lAtb_EqptId.Tb_Text}");
-
             try
             {
-                if (bizRuleErrData == null)
-                {
-                    bizRuleErrData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
-                    dgv_BizRuleError.DgvData.DataSource = bizRuleErrData.ExcuteSql();
-                }
-                else
-                {
-                    dgv_BizRuleError.DgvData.DataSource = bizRuleErrData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
-                }
+                Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                bizRuleErrData =
+                    winformUtils.ShowDgv
+                    (
+                        methodName,
+                        dgv_BizRuleError,
+                        bizRuleErrData,
+                        paramaterDic
+                    ) as DefaultSqlData;
 
-                if (bizRuleErrData.ErrMsg == string.Empty)
-                {
-                    main.AppendLog(bizRuleErrData.SqlStr);
-                    new WinformUtils().DataGridView_Coloring(dgv_BizRuleError.DgvData, main.sqlList[methodName]);
-                }
-                else
-                {
-                    MessageBox.Show($"{bizRuleErrData.ErrMsg} : {methodName}");
-                }
-
+                //다른 정보 화면 클리어 처리
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : {methodName}");
+                dgv_BizRuleError.DgvData.DataSource = null;
+                MessageBox.Show(ex.Message);
             }
         }
 

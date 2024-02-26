@@ -11,8 +11,10 @@
 			, W.EQSGID AS 라인
 			, W.ROUTID AS ROUT
 			, H.CMD_STAT_CODE AS 현황
+			, W.PRODID AS PRODID
 			, W.PROCID AS PROCID
 			, W.WIPSTAT AS WIP
+			, L.LOTTYPE
 			, CONVERT(CHAR(23), H.INSDTTM, 20) AS 요청시각
 			, CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
 			, CC.ABNORM_TRF_RSN_CODE AS ATRC
@@ -28,6 +30,7 @@
 			FROM CARRIER CC with(nolock)
 			INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
 			LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
+			LEFT JOIN Lot L with(nolock) ON W.LOTID = L.LOTID
 			LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
 			LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
 			WHERE 1=1
@@ -155,21 +158,22 @@
 			REQ.REQ_SEQNO as 번호
 			, REQ.CSTID AS CSTID
 			, REQ.CSTSTAT as 상태
-			, EA.s02 AS 극성
+			, EA.S02 AS 극성
 			, REQ.EQPTID AS 설비명
 			, REQ.PORT_ID AS 포트명
-			, REQ.REQ_TYPE_CODE AS 요청코드
-			, REQ.PRCS_TYPE_CODE AS 코드
+			, REQ.REQ_TYPE_CODE AS 요청
 			, REQ.RTD_RULE_ID
-			, REQ.INSUSER AS 요청자
+			, REQ_TRGT_EQPTID AS 최종EQPT
+			, REQ.TRGT_EQPT_MOUNT_PSTN_ID AS UWD번호
 			, CONVERT(CHAR(23), REQ.INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), REQ.UPDDTTM, 20) AS UPDDTTM
+			, REQ.ERR_CODE
+			, C.CMCDNAME AS ERR_DESC
 			, REQ.REQ_STAT_CODE
 			, REQ.REQ_SEQS
+			, REQ.PRCS_TYPE_CODE AS 코드
+			, REQ.INSUSER AS 요청자
 			, REQ.RTD_EXEC_LOG_CNTT
-			, REQ.ERR_CODE
-			, REQ.REQ_SEQNO
-			, C.CMCDNAME AS ERR_DESC
 			FROM TB_MHS_TRF_REQ REQ with(nolock)
 			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
 			LEFT OUTER JOIN EquipmentAttr  EA With (NOLOCK) ON EA.EQPTID = REQ.EQPTID
@@ -215,7 +219,7 @@
 		</Coloring>
 		<EventValues>
 			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
-			<REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
+			<번호 TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
 			<RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = '' EventType='Click'/>
 		</EventValues>
 	</SearchPortRequestList>
@@ -352,8 +356,8 @@
 			WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartTime AND @EndTime
 			AND CMD_STAT_CODE = 'DELETE'
 			GROUP BY CSTID, FROM_EQPTID, FROM_PORT_ID, TO_EQPTID, TO_PORT_ID, CSTSTAT, RTD_RULE_ID, CMD_STAT_CODE, INSUSER
-      +Option1
-      +Option2
+		      +Option1
+		      +Option2
 			--ORDER BY MAX(INSDTTM) DESC
 		</MainSQL>
 		<Option>
@@ -768,6 +772,62 @@
 		<Coloring/>
 		<EventValues/>
 	</SearchEquipmentGroupList>
+	<SearchEquipmentStateHistory>
+		<MainSQL>
+			select 
+			+Option1 
+			PORT_ID
+			, PORT_STAT_CODE AS 상태
+			, ACTDTTM
+			, ACTID
+			from TB_MCS_PORT_STAT_HIST with (NOLOCK)
+			where PORT_ID like @PORT_ID
+			ORDER BY ACTDTTM desc
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="VAR" condition="" key="PORT_ID" dataType="string" default="0"/>
+		</Option>
+		<AdditionalVariable>
+			<PORT_ID dataType="string" default=""/>
+		</AdditionalVariable>
+		<Coloring/>
+		<EventValues/>
+	</SearchEquipmentStateHistory>
+	<SearchEquipmentEioHistory>
+		<MainSQL>
+			SELECT
+			+Option1
+			EIO.EQPTID,
+			EIO.EIOSTAT,
+			CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM,
+			MP.MAX_TRF_QTY,
+			CE.CMD_QTY
+			FROM EIO EIO WITH(NOLOCK)
+			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
+			LEFT JOIN(
+			SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_EQPTID, TO_PORT_ID
+			) CE ON EIO.EQPTID = CE.TO_PORT_ID
+			WHERE EIO.EQPTID like @PORT_ID
+			ORDER BY EIO_DTTM desc
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="VAR" condition="" key="PORT_ID" dataType="string" default="0"/>
+		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
+		<Coloring/>
+		<EventValues/>
+	</SearchEquipmentEioHistory>
 	<SearchPortCurrentState>
 		<MainSQL>
 			select TMCP.PORT_ID
@@ -1331,11 +1391,11 @@
 	<SearchBizRuleError>
 		<MainSQL>
 			SELECT TOP 1000
-			EXCT_PARA
+			INSDTTM
+			, EXCT_PARA
 			, BZRULE_ID
 			, EXCT_MSG
 			, DATASET
-			, INSDTTM
 			, UPDDTTM
 			, EXCT_TYPE
 			, EXCT_LOCATION

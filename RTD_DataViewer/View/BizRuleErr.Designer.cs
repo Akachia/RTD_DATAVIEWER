@@ -36,7 +36,7 @@
             utb_BizFlowText = new UserWinfromControl.UWC_TextBox();
             lAdtp_StartTime = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_EndTime = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            lAtb_EqptId = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_BizRuleID = new UserWinfromControl.UWC_LabelAndTextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -60,7 +60,7 @@
             tableLayoutPanel1.Controls.Add(utb_BizFlowText, 7, 1);
             tableLayoutPanel1.Controls.Add(lAdtp_StartTime, 5, 0);
             tableLayoutPanel1.Controls.Add(lAdtp_EndTime, 6, 0);
-            tableLayoutPanel1.Controls.Add(lAtb_EqptId, 7, 0);
+            tableLayoutPanel1.Controls.Add(lAtb_BizRuleID, 7, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -95,13 +95,14 @@
             // lAtb_ErrorText
             // 
             lAtb_ErrorText.Dock = DockStyle.Fill;
+            lAtb_ErrorText.IsMultiInputTextControl = false;
             lAtb_ErrorText.Lb_Text = "Error Text";
             lAtb_ErrorText.Location = new Point(1123, 3);
             lAtb_ErrorText.Name = "lAtb_ErrorText";
             lAtb_ErrorText.Size = new Size(190, 24);
             lAtb_ErrorText.TabIndex = 2;
             lAtb_ErrorText.Tb_Text = "";
-            lAtb_ErrorText.VariableName = "";
+            lAtb_ErrorText.VariableName = "ErrorText";
             // 
             // bt_Search
             // 
@@ -133,7 +134,7 @@
             lAdtp_StartTime.Name = "lAdtp_StartTime";
             lAdtp_StartTime.Size = new Size(274, 24);
             lAdtp_StartTime.TabIndex = 5;
-            lAdtp_StartTime.VariableName = "";
+            lAdtp_StartTime.VariableName = "StartTime";
             // 
             // lAdtp_EndTime
             // 
@@ -145,18 +146,19 @@
             lAdtp_EndTime.Name = "lAdtp_EndTime";
             lAdtp_EndTime.Size = new Size(274, 24);
             lAdtp_EndTime.TabIndex = 6;
-            lAdtp_EndTime.VariableName = "";
+            lAdtp_EndTime.VariableName = "EndTime";
             // 
-            // lAtb_EqptId
+            // lAtb_BizRuleID
             // 
-            lAtb_EqptId.Dock = DockStyle.Fill;
-            lAtb_EqptId.Lb_Text = "EqptId";
-            lAtb_EqptId.Location = new Point(983, 3);
-            lAtb_EqptId.Name = "lAtb_EqptId";
-            lAtb_EqptId.Size = new Size(134, 24);
-            lAtb_EqptId.TabIndex = 7;
-            lAtb_EqptId.Tb_Text = "";
-            lAtb_EqptId.VariableName = "";
+            lAtb_BizRuleID.Dock = DockStyle.Fill;
+            lAtb_BizRuleID.IsMultiInputTextControl = false;
+            lAtb_BizRuleID.Lb_Text = "BizRuleID";
+            lAtb_BizRuleID.Location = new Point(983, 3);
+            lAtb_BizRuleID.Name = "lAtb_BizRuleID";
+            lAtb_BizRuleID.Size = new Size(134, 24);
+            lAtb_BizRuleID.TabIndex = 7;
+            lAtb_BizRuleID.Tb_Text = "";
+            lAtb_BizRuleID.VariableName = "BizRuleID";
             // 
             // BizRuleErr
             // 
@@ -179,6 +181,6 @@
         private UserWinfromControl.UWC_TextBox utb_BizFlowText;
         private UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_StartTime;
         private UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_EndTime;
-        private UserWinfromControl.UWC_LabelAndTextBox lAtb_EqptId;
+        private UserWinfromControl.UWC_LabelAndTextBox lAtb_BizRuleID;
     }
 }

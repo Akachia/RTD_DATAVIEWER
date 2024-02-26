@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DBManagement;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -16,25 +17,54 @@ namespace RTD_DataViewer.View
 {
     public partial class StockerInventorySituation : UserControl
     {
+
+        #region Variable
         MainViewer main;
-        Dictionary<string, string> stkComCodeList;
+        int currNum = 0;
+        string errMsg;
+        WinformUtils? winformUtils = null;
+        DefaultSqlData? SearchStockerInventoryData = null;
+        DefaultSqlData? SearchTransportJobInfomationData = null;
+        DefaultSqlData? searchTransportJobHistoryData = null;
+        Dictionary<string, string>? eventCallVal = null;
+        Dictionary<string, string>? stkComCodeList = null;
+        List<Control>? variableControls = new List<Control>();
+        #endregion
+
+        #region Construction
         public StockerInventorySituation(MainViewer main)
         {
             InitializeComponent();
             this.main = main;
-            SearchStockerCommonCodeList();
-            FillComboBox();
             dgv_StockerInventory.DgvData.CellClick += Dgv_StoInventory_CellClick;
+            cb_CarrierStat.SetCstStatData();
+            winformUtils = new(main);
         }
 
+        #endregion
+
+        #region Events for UI Controls
         private void Dgv_StoInventory_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
             SearchTransportJobInfomation(cstId);
         }
 
+        private void bt_Search_Click(object sender, EventArgs e)
+        {
+            SearchStockerInventory();
+            SearchStockerCurrentState();
+        }
+        #endregion
+
+        #region Utilities for Ui
+
+        #endregion
+
+        #region Assign SqlData to DataGrid view functuons Section 
         private void SearchStockerCommonCodeList()
         {
+            clb_StockerCommonCodeList.Item.Clear();
             try
             {
                 if (!main.correntConnectionStringSetting.IsConnection)
@@ -54,12 +84,11 @@ namespace RTD_DataViewer.View
                 using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
                 {
                     List<StkComCode> stkComCodes = connection.Query<StkComCode>(cquery, parameters).ToList();
-                    stkComCodeList = new Dictionary<string, string>();
-                    foreach (var stkComCode in stkComCodes)
+                    foreach (var item in stkComCodes)
                     {
-                        stkComCodeList.Add(stkComCode.Sto_Desc, stkComCode.Code);
+                        clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
                     }
-
+                    clb_StockerCommonCodeList.DataObject = stkComCodes;
                     main.AppendLog(cquery, parameters);
                 }
             }
@@ -67,42 +96,73 @@ namespace RTD_DataViewer.View
             {
                 throw;
             }
-
         }
         private void SearchTransportJobInfomation(string cstid)
         {
-            WinformUtils winformUtils = new WinformUtils(main);
+            //WinformUtils winformUtils = new WinformUtils(main);
+            //Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            //try
+            //{
+            //    paramaterDic.Add("CSTID", $"{cstid}");
+            //    paramaterDic.Add("REQ_SEQNO", $"0");
+
+            //    winformUtils.ExcuteSql(paramaterDic, dgv_TransportJobInfomation.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            //}
+            //catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTransportJobInfomation"); }
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+
+            paramaterDic.Add("CSTID", $"{cstid}");
             try
             {
-                paramaterDic.Add("CSTID", $"{cstid}");
-                paramaterDic.Add("REQ_SEQNO", $"0");
-
-                winformUtils.ExcuteSql(paramaterDic, dgv_TransportJobInfomation.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                if (SearchTransportJobInfomationData != null)
+                {
+                    string methodName = MethodBase.GetCurrentMethod().Name;
+                    searchTransportJobHistoryData =
+                        winformUtils.ShowDgv
+                        (
+                            methodName,
+                            this.dgv_TransportJobInfomation,
+                            SearchTransportJobInfomationData,
+                            paramaterDic
+                        ) as DefaultSqlData;
+                }
             }
-            catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTransportJobInfomation"); }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-        private void FillComboBox()
+
+        private string MakestkComCodeString(List<StkComCode> stkComCodes)
         {
-            if (!main.correntConnectionStringSetting.IsConnection)
-            {
-                return;
-            }
-            foreach (var item in stkComCodeList)
-            {
-                cb_StockerGroupList.Items.Add(item.Key);
-            }
+            string CmdStatCodeList = string.Empty;
 
-            cb_StockerGroupList.SelectedIndex = 0;
+            foreach (string key in this.clb_StockerCommonCodeList.CheckedItem)
+            {
+                string str = stkComCodes.First(a => a.Sto_Desc == key).Code;
+
+                if (CmdStatCodeList == string.Empty)
+                {
+                    CmdStatCodeList += @$"'{str}'";
+                }
+                else
+                {
+                    CmdStatCodeList += @$",'{str}'";
+                }
+            }
+            return CmdStatCodeList;
         }
-
         private void SearchStockerInventory()
         {
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            List<StkComCode> stkComCodes = clb_StockerCommonCodeList.DataObject as List<StkComCode>;
 
             string plantId = main.correntConnectionStringSetting.PlantID;
-            string stoCode = stkComCodeList[cb_StockerGroupList.Text];
+            string stoCode = 
+
+
             string trfStatCode = string.Empty;
+
             if (cb_TrfStatCode.SelectedIndex > 0)
             {
                 trfStatCode = cb_TrfStatCode.Text;
@@ -110,10 +170,10 @@ namespace RTD_DataViewer.View
 
             paramaterDic.Add("PLANT_ID", $"'{plantId}'");
             paramaterDic.Add("STO_CODE", $"'{stoCode}'");
-            paramaterDic.Add("CSTSTAT", $"{cb_Cststat.ComboBoxSelectedIndex}");
+            paramaterDic.Add("CSTSTAT", $"{cb_CarrierStat.ComboBoxSelectedIndex}");
             paramaterDic.Add("TRF_STAT_CODE", $"{trfStatCode}");
 
-            new WinformUtils(main).ExcuteSql(paramaterDic, dgv_StockerInventory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            winformUtils.ExcuteSql(paramaterDic, dgv_StockerInventory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
             DateTime date1 = DateTime.Now;
 
@@ -159,10 +219,10 @@ namespace RTD_DataViewer.View
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
             string plantId = main.correntConnectionStringSetting.PlantID;
-            string stoCode = stkComCodeList[cb_StockerGroupList.Text];
+            //string stoCode = stkComCodeList[daff.Text];
             string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
 
-            paramaterDic.Add("STO_CODE", $"'{stoCode}'");
+            // paramaterDic.Add("STO_CODE", $"'{stoCode}'");
             paramaterDic.Add("PLANT_ID", @$"'{plantId}%'");
             paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
 
@@ -170,10 +230,11 @@ namespace RTD_DataViewer.View
             //winformUtils.DataGridView_EioColoring(dgv_StoStatus);
         }
 
-        private void bt_Search_Click(object sender, EventArgs e)
+        #endregion
+
+        private void bt_GetStockerGroupList_Click(object sender, EventArgs e)
         {
-            SearchStockerInventory();
-            SearchStockerCurrentState();
+            SearchStockerCommonCodeList();
         }
     }
 
