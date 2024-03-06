@@ -16,6 +16,9 @@ namespace UserWinfromControl
     {
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
+        public delegate KeyPressEventHandler EnterPress(object sender, KeyEventArgs e);
+        public EnterPress enterPress = null;
+
         string variableName = string.Empty;
         bool isMultiInputTextControl = false;
 
@@ -54,6 +57,7 @@ namespace UserWinfromControl
             this.textBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             this.textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             this.textBox.Multiline = true;
+            //enterPress = new EnterPress(textBox_KeyDown);
         }
 
         private void textBox_Click(object sender, EventArgs e)
@@ -134,11 +138,11 @@ namespace UserWinfromControl
                 {
                     return carrierText;
                 }
-                else 
-                { 
-                    return CustomUtills.CustomUtill.LikeStringMaskingByBoth(carrierText); 
+                else
+                {
+                    return CustomUtills.CustomUtill.LikeStringMaskingByBoth(carrierText);
                 }
-                
+
             }
 
             return carrierIds;
@@ -177,6 +181,14 @@ namespace UserWinfromControl
             {
                 lb_Txt.Visible = true;
                 lb_Txt.Enabled = true;
+            }
+        }
+
+        private void textBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                
             }
         }
     }

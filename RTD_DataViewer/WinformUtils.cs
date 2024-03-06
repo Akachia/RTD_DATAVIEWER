@@ -20,6 +20,7 @@ using UserWinfromControl;
 using CustomUtills;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace RTD_DataViewer
 {
@@ -27,15 +28,18 @@ namespace RTD_DataViewer
     //데이터는 사용자가 가지고 있다.
     internal class WinformUtils
     {
-        MainViewer main;
-
+        public MainViewer main;
+        public DBConnectionString correntConnectionStringSetting;
+ 
         public WinformUtils()
         {
+
         }
 
         public WinformUtils(MainViewer mainViewer)
         {
             main = mainViewer;
+            correntConnectionStringSetting = main.correntConnectionStringSetting;
         }
 
         /// <summary>
@@ -153,7 +157,65 @@ namespace RTD_DataViewer
                         paramaterDic.Add(numberUpDown.VariableName, numberUpDown.Number.ToString());
                         continue;
                     }
+
+                    if (item is UWC_CheckListBox)
+                    {
+                        UWC_CheckListBox checkListBox = item as UWC_CheckListBox;
+
+                        string CheckeditemListToString = string.Empty;
+                        foreach (string key in checkListBox.CheckedItem)
+                        {
+                            if (CheckeditemListToString == string.Empty)
+                            {
+                                CheckeditemListToString += @$"'{key}'";
+                            }
+                            else
+                            {
+                                CheckeditemListToString += @$",'{key}'";
+                            }
+                        }
+
+
+                        //if (checkListBox.DataObject is StkComCodeList)
+                        //{
+                        //    StkComCodeList stkComCodes = checkListBox.DataObject as StkComCodeList;
+
+                        //    foreach (string key in checkListBox.CheckedItem)
+                        //    {
+                        //        string str = stkComCodes.StkComCodeDic[key];
+
+                        //        if (CmdStatCodeList == string.Empty)
+                        //        {
+                        //            CmdStatCodeList += @$"'{str}'";
+                        //        }
+                        //        else
+                        //        {
+                        //            CmdStatCodeList += @$",'{str}'";
+                        //        }
+                        //    }
+                        //}
+
+                        paramaterDic.Add(checkListBox.VariableName, CheckeditemListToString);
+                        continue;
+                    }
+
+                    if (item is UWC_ListBox)
+                    {
+                        UWC_ListBox listBox = item as UWC_ListBox;
+                        StkComCodeList stkComCodes = listBox.DataObject as StkComCodeList;
+                        string stkComCode = listBox.SelectedItems[0].ToString();
+
+                        paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
+                        continue;
+                    }
                 }
+
+                string areaID = main.correntConnectionStringSetting.AreaID;
+                string plantId = main.correntConnectionStringSetting.PlantID;
+                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+                paramaterDic.Add("EQPTID", systemTypeCode);
+                paramaterDic.Add("EQGRID", plantId);
+                paramaterDic.Add("AREA_ID", areaID);
 
                 return paramaterDic;
             }
@@ -658,12 +720,18 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
-        public SqlResultData ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultData sqlResultData, Dictionary<string, string> paramaterDic)
+        public SqlResultDataImpl ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultDataImpl sqlResultData, Dictionary<string, string> paramaterDic)
         {
             DataGridView data = dataGridView.DgvData;
             dataGridView.Lb_Text = methodName;
+
+            data.DataSource = null;
+            data.Rows.Clear();
+            data.Columns.Clear();
             try
             {
+                Type type = typeof(SqlResultDataImpl);
+
                 if (sqlResultData == null)
                 {
                     sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
@@ -676,7 +744,7 @@ namespace RTD_DataViewer
 
                 if (sqlResultData.ErrMsg == string.Empty)
                 {
-                    main.AppendLog(sqlResultData.SqlStr);
+                    main.AppendLog($@"{methodName} : \n {sqlResultData.SqlStr}");
                     DataGridView_Coloring(data, main.sqlList[methodName]);
                 }
                 else
@@ -712,13 +780,43 @@ namespace RTD_DataViewer
 
                 if (sqlResultData.ErrMsg == string.Empty)
                 {
-                    main.AppendLog(sqlResultData.SqlStr);
+                    main.AppendLog($@"{methodName} : \n {sqlResultData.SqlStr}");
                     DataGridView_Coloring(data, main.sqlList[methodName]);
                 }
                 else
                 {
                     MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
                 }
+
+                string carrierMismatchInfo = sqlResultData.CarrierMismatchInfo;
+
+                if (carrierMismatchInfo == string.Empty)
+                {
+                    dataGridView.Lb_Text2 = "Normal Tray";
+                    foreach (DataGridViewRow item in dataGridView.DgvData.Rows)
+                    {
+                        item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                    }
+                }
+                else
+                {
+                    int rowCount = 0;
+                    foreach (DataGridViewRow item in dataGridView.DgvData.Rows)
+                    {
+                        if (rowCount == 0)
+                        {
+                            item.DefaultCellStyle.BackColor = Color.FromArgb(179, 255, 174);
+                            rowCount++;
+                        }
+                        else
+                        {
+                            item.DefaultCellStyle.BackColor = Color.FromArgb(255, 214, 165);
+                        }
+                    }
+
+                    dataGridView.Lb_Text2 = carrierMismatchInfo;
+                }
+
 
                 return sqlResultData;
             }
@@ -729,7 +827,84 @@ namespace RTD_DataViewer
                 return null;
             }
         }
-        public void GetDataGridViewDataByColumnToEventData(ref SqlResultData sqlResultData)
+
+        public CommonCodeData GetCommonCodes(string methodName, UserControl userControl, CommonCodeData sqlResultData, Dictionary<string, string> paramaterDic = null)
+        {
+            if (paramaterDic == null)
+            {
+                paramaterDic = new Dictionary<string, string>();
+            }
+            object ExcuteData = new object();
+            CommonCodeData commonCodeData = null;
+            CommonCodes commonCodes = null;
+            string plantId = main.correntConnectionStringSetting.PlantID;
+            string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+            string area_Id = main.correntConnectionStringSetting.AreaID;
+
+            paramaterDic.Add($"PLANT_ID", @$"{plantId}%");
+            paramaterDic.Add($"SYSTEM_TYPE_CODE", systemTypeCode);
+            paramaterDic.Add($"AREA_ID", area_Id);
+            try
+            {
+                // Type과 Object로 DIc이나 튜플로 넘기는 내용은 생각해보길...
+                Type type = typeof(SqlResultDataImpl);
+
+                if (sqlResultData == null)
+                {
+                    sqlResultData = new CommonCodeData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    ExcuteData = sqlResultData.ExcuteSql();
+                }
+                else
+                {
+                    ExcuteData = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                }
+
+                if (sqlResultData.ErrMsg == string.Empty)
+                {
+                    main.AppendLog(sqlResultData.SqlStr);
+                }
+                else
+                {
+                    MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
+                }
+
+                if (ExcuteData is CommonCodes)
+                {
+                    commonCodes = ExcuteData as CommonCodes;
+                } 
+
+                if (userControl is UWC_CheckListBox)
+                {
+                    UWC_CheckListBox uWC_CheckListBox = userControl as UWC_CheckListBox;
+                    uWC_CheckListBox.Item.Clear();
+                    foreach (CommonCode item in commonCodes)
+                    {
+                        uWC_CheckListBox.Item.Add(item.EQPTID);
+                    }
+                }
+
+                if (userControl is UWC_ListBox)
+                {
+                    UWC_ListBox uWC_ListBox = userControl as UWC_ListBox;
+                    uWC_ListBox.Item.Clear();
+                    foreach (CommonCode item in commonCodes)
+                    {
+                        uWC_ListBox.Item.Add(item.EQGRID);
+                    }
+                }
+
+                return sqlResultData;
+            }
+            catch (Exception ex)
+            {
+                main.AppendLog(ex.Source);
+                MessageBox.Show($"{ex.Message} : {methodName}");
+                return null;
+            }
+        }
+
+
+        public void GetDataGridViewDataByColumnToEventData(ref SqlResultDataImpl sqlResultData)
         {
 
 

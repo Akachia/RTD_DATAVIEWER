@@ -31,11 +31,13 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             reqATransfer_dgvReq = new TabControl();
             tp_ReqInfomation = new TabPage();
+            tp_PortRequestRecord = new TabPage();
             tp_TransportList = new TabPage();
-            tp_ReqAndTransfer = new TabPage();
+            tp_TransportRecode = new TabPage();
             tp_CstInfo = new TabPage();
             tp_CstHist = new TabPage();
             tp_EqpState = new TabPage();
+            tp_PortCurrState = new TabPage();
             tp_StockerInventory = new TabPage();
             tp_RollSituation = new TabPage();
             tp_WaitWips = new TabPage();
@@ -81,11 +83,13 @@
             // reqATransfer_dgvReq
             // 
             reqATransfer_dgvReq.Controls.Add(tp_ReqInfomation);
+            reqATransfer_dgvReq.Controls.Add(tp_PortRequestRecord);
             reqATransfer_dgvReq.Controls.Add(tp_TransportList);
-            reqATransfer_dgvReq.Controls.Add(tp_ReqAndTransfer);
+            reqATransfer_dgvReq.Controls.Add(tp_TransportRecode);
             reqATransfer_dgvReq.Controls.Add(tp_CstInfo);
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
+            reqATransfer_dgvReq.Controls.Add(tp_PortCurrState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
             reqATransfer_dgvReq.Controls.Add(tp_RollSituation);
             reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
@@ -106,8 +110,17 @@
             tp_ReqInfomation.Padding = new Padding(3);
             tp_ReqInfomation.Size = new Size(1570, 763);
             tp_ReqInfomation.TabIndex = 0;
-            tp_ReqInfomation.Text = "요청정보";
+            tp_ReqInfomation.Text = "요청 목록";
             tp_ReqInfomation.UseVisualStyleBackColor = true;
+            // 
+            // tp_PortRequestRecord
+            // 
+            tp_PortRequestRecord.Location = new Point(4, 24);
+            tp_PortRequestRecord.Name = "tp_PortRequestRecord";
+            tp_PortRequestRecord.Size = new Size(1570, 763);
+            tp_PortRequestRecord.TabIndex = 12;
+            tp_PortRequestRecord.Text = "요청 이력 ";
+            tp_PortRequestRecord.UseVisualStyleBackColor = true;
             // 
             // tp_TransportList
             // 
@@ -116,18 +129,18 @@
             tp_TransportList.Padding = new Padding(3);
             tp_TransportList.Size = new Size(1570, 763);
             tp_TransportList.TabIndex = 1;
-            tp_TransportList.Text = "반송목록";
+            tp_TransportList.Text = "반송 목록";
             tp_TransportList.UseVisualStyleBackColor = true;
             // 
-            // tp_ReqAndTransfer
+            // tp_TransportRecode
             // 
-            tp_ReqAndTransfer.Location = new Point(4, 24);
-            tp_ReqAndTransfer.Name = "tp_ReqAndTransfer";
-            tp_ReqAndTransfer.Padding = new Padding(3);
-            tp_ReqAndTransfer.Size = new Size(1570, 763);
-            tp_ReqAndTransfer.TabIndex = 3;
-            tp_ReqAndTransfer.Text = "요청/반송 이력";
-            tp_ReqAndTransfer.UseVisualStyleBackColor = true;
+            tp_TransportRecode.Location = new Point(4, 24);
+            tp_TransportRecode.Name = "tp_TransportRecode";
+            tp_TransportRecode.Padding = new Padding(3);
+            tp_TransportRecode.Size = new Size(1570, 763);
+            tp_TransportRecode.TabIndex = 3;
+            tp_TransportRecode.Text = "반송 이력";
+            tp_TransportRecode.UseVisualStyleBackColor = true;
             // 
             // tp_CstInfo
             // 
@@ -157,6 +170,15 @@
             tp_EqpState.TabIndex = 5;
             tp_EqpState.Text = "설비 상태";
             tp_EqpState.UseVisualStyleBackColor = true;
+            // 
+            // tp_PortCurrState
+            // 
+            tp_PortCurrState.Location = new Point(4, 24);
+            tp_PortCurrState.Name = "tp_PortCurrState";
+            tp_PortCurrState.Size = new Size(1570, 763);
+            tp_PortCurrState.TabIndex = 13;
+            tp_PortCurrState.Text = "포트 상태";
+            tp_PortCurrState.UseVisualStyleBackColor = true;
             // 
             // tp_StockerInventory
             // 
@@ -364,7 +386,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainViewer";
-            Text = "RTD_DataViewer v0.1";
+            Text = "RTD_DataViewer v0.4";
             tableLayoutPanel1.ResumeLayout(false);
             reqATransfer_dgvReq.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
@@ -400,7 +422,7 @@
         private Button bt_DataRefresh;
         internal UserWinfromControl.UWC_DataGridView transList_dgvCstHist;
         internal UserWinfromControl.UWC_TextBox utb_RtdDataViewerLog;
-        internal TabPage tp_ReqAndTransfer;
+        internal TabPage tp_TransportRecode;
         private TabPage tp_CstHist;
         private TabPage tp_EqpState;
         private TabPage tp_LnsPkgState;
@@ -418,5 +440,7 @@
         private TabPage tp_RollSituation;
         private TabPage tp_WaitWips;
         private TabPage tp_BizRuleErr;
+        private TabPage tp_PortRequestRecord;
+        private TabPage tp_PortCurrState;
     }
 }

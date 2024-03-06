@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PortCurrentState));
             tableLayoutPanel1 = new TableLayoutPanel();
-            dgv_PortCurrentState = new UserWinfromControl.UWC_DataGridView();
-            dgv_PortStateHistory = new UserWinfromControl.UWC_DataGridView();
-            clb_EqpGroupList = new CheckedListBox();
+            dgv_PortCurrentList = new UserWinfromControl.UWC_DataGridView();
+            dgv_PortEioRecord = new UserWinfromControl.UWC_DataGridView();
             bt_EqpStateSearch = new Button();
             bt_GetEqpGroup = new Button();
-            dgv_PortStateHist = new UserWinfromControl.UWC_DataGridView();
+            dgv_PortStateRecord = new UserWinfromControl.UWC_DataGridView();
+            lb_EqpGroupList = new UserWinfromControl.UWC_ListBox();
+            clb_EquipmentList = new UserWinfromControl.UWC_CheckListBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,76 +53,47 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Controls.Add(dgv_PortCurrentState, 0, 1);
-            tableLayoutPanel1.Controls.Add(dgv_PortStateHistory, 6, 1);
-            tableLayoutPanel1.Controls.Add(clb_EqpGroupList, 9, 2);
+            tableLayoutPanel1.Controls.Add(dgv_PortCurrentList, 0, 1);
+            tableLayoutPanel1.Controls.Add(dgv_PortEioRecord, 6, 1);
             tableLayoutPanel1.Controls.Add(bt_EqpStateSearch, 9, 0);
             tableLayoutPanel1.Controls.Add(bt_GetEqpGroup, 9, 1);
-            tableLayoutPanel1.Controls.Add(dgv_PortStateHist, 6, 3);
+            tableLayoutPanel1.Controls.Add(dgv_PortStateRecord, 6, 3);
+            tableLayoutPanel1.Controls.Add(lb_EqpGroupList, 9, 2);
+            tableLayoutPanel1.Controls.Add(clb_EquipmentList, 9, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // dgv_PortCurrentState
+            // dgv_PortCurrentList
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_PortCurrentState, 6);
-            dgv_PortCurrentState.Dock = DockStyle.Fill;
-            dgv_PortCurrentState.Lb_Text = "SqlName";
-            dgv_PortCurrentState.Lb_Text2 = "";
-            dgv_PortCurrentState.Location = new Point(3, 33);
-            dgv_PortCurrentState.Name = "dgv_PortCurrentState";
-            tableLayoutPanel1.SetRowSpan(dgv_PortCurrentState, 3);
-            dgv_PortCurrentState.Size = new Size(834, 564);
-            dgv_PortCurrentState.TabIndex = 0;
+            tableLayoutPanel1.SetColumnSpan(dgv_PortCurrentList, 6);
+            dgv_PortCurrentList.Dock = DockStyle.Fill;
+            dgv_PortCurrentList.Lb_Text = "SqlName";
+            dgv_PortCurrentList.Lb_Text2 = "";
+            dgv_PortCurrentList.Location = new Point(3, 33);
+            dgv_PortCurrentList.Name = "dgv_PortCurrentList";
+            tableLayoutPanel1.SetRowSpan(dgv_PortCurrentList, 3);
+            dgv_PortCurrentList.Size = new Size(834, 564);
+            dgv_PortCurrentList.TabIndex = 0;
             // 
-            // dgv_PortStateHistory
+            // dgv_PortEioRecord
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_PortStateHistory, 3);
-            dgv_PortStateHistory.Dock = DockStyle.Fill;
-            dgv_PortStateHistory.Lb_Text = "SqlName";
-            dgv_PortStateHistory.Lb_Text2 = "";
-            dgv_PortStateHistory.Location = new Point(843, 33);
-            dgv_PortStateHistory.Name = "dgv_PortStateHistory";
-            tableLayoutPanel1.SetRowSpan(dgv_PortStateHistory, 2);
-            dgv_PortStateHistory.Size = new Size(414, 186);
-            dgv_PortStateHistory.TabIndex = 2;
-            // 
-            // clb_EqpGroupList
-            // 
-            clb_EqpGroupList.Dock = DockStyle.Fill;
-            clb_EqpGroupList.FormattingEnabled = true;
-            clb_EqpGroupList.Location = new Point(1263, 63);
-            clb_EqpGroupList.Name = "clb_EqpGroupList";
-            tableLayoutPanel1.SetRowSpan(clb_EqpGroupList, 2);
-            clb_EqpGroupList.Size = new Size(134, 534);
-            clb_EqpGroupList.TabIndex = 3;
+            tableLayoutPanel1.SetColumnSpan(dgv_PortEioRecord, 3);
+            dgv_PortEioRecord.Dock = DockStyle.Fill;
+            dgv_PortEioRecord.Lb_Text = "SqlName";
+            dgv_PortEioRecord.Lb_Text2 = "";
+            dgv_PortEioRecord.Location = new Point(843, 33);
+            dgv_PortEioRecord.Name = "dgv_PortEioRecord";
+            tableLayoutPanel1.SetRowSpan(dgv_PortEioRecord, 2);
+            dgv_PortEioRecord.Size = new Size(414, 240);
+            dgv_PortEioRecord.TabIndex = 2;
             // 
             // bt_EqpStateSearch
             // 
@@ -144,16 +117,38 @@
             bt_GetEqpGroup.UseVisualStyleBackColor = true;
             bt_GetEqpGroup.Click += bt_GetEqpGroup_Click;
             // 
-            // dgv_PortStateHist
+            // dgv_PortStateRecord
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_PortStateHist, 3);
-            dgv_PortStateHist.Dock = DockStyle.Fill;
-            dgv_PortStateHist.Lb_Text = "SqlName";
-            dgv_PortStateHist.Lb_Text2 = "";
-            dgv_PortStateHist.Location = new Point(843, 225);
-            dgv_PortStateHist.Name = "dgv_PortStateHist";
-            dgv_PortStateHist.Size = new Size(414, 372);
-            dgv_PortStateHist.TabIndex = 6;
+            tableLayoutPanel1.SetColumnSpan(dgv_PortStateRecord, 3);
+            dgv_PortStateRecord.Dock = DockStyle.Fill;
+            dgv_PortStateRecord.Lb_Text = "SqlName";
+            dgv_PortStateRecord.Lb_Text2 = "";
+            dgv_PortStateRecord.Location = new Point(843, 279);
+            dgv_PortStateRecord.Name = "dgv_PortStateRecord";
+            dgv_PortStateRecord.Size = new Size(414, 318);
+            dgv_PortStateRecord.TabIndex = 6;
+            // 
+            // lb_EqpGroupList
+            // 
+            lb_EqpGroupList.DataObject = resources.GetObject("lb_EqpGroupList.DataObject");
+            lb_EqpGroupList.Dock = DockStyle.Fill;
+            lb_EqpGroupList.Lb_Text = "EquipmentGroupList";
+            lb_EqpGroupList.Location = new Point(1263, 63);
+            lb_EqpGroupList.Name = "lb_EqpGroupList";
+            lb_EqpGroupList.Size = new Size(134, 210);
+            lb_EqpGroupList.TabIndex = 7;
+            lb_EqpGroupList.VariableName = "EquipmentGroupList";
+            // 
+            // clb_EquipmentList
+            // 
+            clb_EquipmentList.DataObject = resources.GetObject("clb_EquipmentList.DataObject");
+            clb_EquipmentList.Dock = DockStyle.Fill;
+            clb_EquipmentList.Lb_Text = "EquipmentList";
+            clb_EquipmentList.Location = new Point(1263, 279);
+            clb_EquipmentList.Name = "clb_EquipmentList";
+            clb_EquipmentList.Size = new Size(134, 318);
+            clb_EquipmentList.TabIndex = 8;
+            clb_EquipmentList.VariableName = "EquipmentList";
             // 
             // PortCurrentState
             // 
@@ -169,11 +164,12 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private UserWinfromControl.UWC_DataGridView dgv_PortCurrentState;
-        private UserWinfromControl.UWC_DataGridView dgv_PortStateHistory;
-        private CheckedListBox clb_EqpGroupList;
+        private UserWinfromControl.UWC_DataGridView dgv_PortCurrentList;
+        private UserWinfromControl.UWC_DataGridView dgv_PortEioRecord;
         private Button bt_EqpStateSearch;
         private Button bt_GetEqpGroup;
-        private UserWinfromControl.UWC_DataGridView dgv_PortStateHist;
+        private UserWinfromControl.UWC_DataGridView dgv_PortStateRecord;
+        private UserWinfromControl.UWC_ListBox lb_EqpGroupList;
+        private UserWinfromControl.UWC_CheckListBox clb_EquipmentList;
     }
 }

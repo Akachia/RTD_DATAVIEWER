@@ -45,15 +45,15 @@ namespace RTD_DataViewer.View
             lAdtp_TransList_EndDate.Dtp_Value = tomorrow;
             lAdtp_TransList_StartDate.Dtp_Value = yesterday;
             dgv_CurrentTransportJobList.DgvData.CellClick += CurrentTransportJobListCellClick;
- 
 
-            variableControls.Add(lAdtp_TransList_EndDate);
-            variableControls.Add(lAdtp_TransList_StartDate);
-            variableControls.Add(lAtb_TransList_CarrierId);
-            variableControls.Add(lAtb_TransList_LaneId);
-            variableControls.Add(lAtb_TransList_ReqEqp);
-            variableControls.Add(lAtb_TransList_ToEqp);
-            variableControls.Add(cb_CarrierStat);
+
+            foreach (Control control in this.Controls[0].Controls)
+            {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
 
             //dgv_CurrentTransportJobList.DgvData.CellDoubleClick += SearchCstInfo;
 

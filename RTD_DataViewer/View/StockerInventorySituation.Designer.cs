@@ -35,10 +35,11 @@
             dgv_StockerCurrState = new UserWinfromControl.UWC_DataGridView();
             dgv_TransportJobInfomation = new UserWinfromControl.UWC_DataGridView();
             bt_GetStockerGroupList = new Button();
-            clb_StockerCommonCodeList = new UserWinfromControl.UWC_CheckListBox();
             cb_CarrierStat = new UserWinfromControl.UWC_ComboBox();
-            uwC_LabelAndTextBox1 = new UserWinfromControl.UWC_LabelAndTextBox();
-            cb_TrfStatCode = new ComboBox();
+            tb_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
+            cb_TrfStatCode = new UserWinfromControl.UWC_ComboBox();
+            clb_StockerList = new UserWinfromControl.UWC_CheckListBox();
+            clb_StockerCommonCodeList = new UserWinfromControl.UWC_ListBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,20 +59,22 @@
             tableLayoutPanel1.Controls.Add(bt_Search, 9, 0);
             tableLayoutPanel1.Controls.Add(dgv_StockerInventory, 0, 1);
             tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 6, 1);
-            tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 0, 3);
+            tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 0, 4);
             tableLayoutPanel1.Controls.Add(bt_GetStockerGroupList, 9, 1);
-            tableLayoutPanel1.Controls.Add(clb_StockerCommonCodeList, 9, 2);
             tableLayoutPanel1.Controls.Add(cb_CarrierStat, 8, 0);
-            tableLayoutPanel1.Controls.Add(uwC_LabelAndTextBox1, 7, 0);
+            tableLayoutPanel1.Controls.Add(tb_CarrierId, 7, 0);
             tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 6, 0);
+            tableLayoutPanel1.Controls.Add(clb_StockerList, 9, 3);
+            tableLayoutPanel1.Controls.Add(clb_StockerCommonCodeList, 9, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
+            tableLayoutPanel1.RowCount = 5;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -94,8 +97,8 @@
             dgv_StockerInventory.Lb_Text2 = "";
             dgv_StockerInventory.Location = new Point(3, 33);
             dgv_StockerInventory.Name = "dgv_StockerInventory";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 2);
-            dgv_StockerInventory.Size = new Size(869, 454);
+            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 3);
+            dgv_StockerInventory.Size = new Size(869, 444);
             dgv_StockerInventory.TabIndex = 13;
             // 
             // dgv_StockerCurrState
@@ -106,8 +109,8 @@
             dgv_StockerCurrState.Lb_Text2 = "";
             dgv_StockerCurrState.Location = new Point(878, 33);
             dgv_StockerCurrState.Name = "dgv_StockerCurrState";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 2);
-            dgv_StockerCurrState.Size = new Size(379, 454);
+            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 3);
+            dgv_StockerCurrState.Size = new Size(379, 444);
             dgv_StockerCurrState.TabIndex = 14;
             // 
             // dgv_TransportJobInfomation
@@ -116,9 +119,9 @@
             dgv_TransportJobInfomation.Dock = DockStyle.Fill;
             dgv_TransportJobInfomation.Lb_Text = "SqlName";
             dgv_TransportJobInfomation.Lb_Text2 = "";
-            dgv_TransportJobInfomation.Location = new Point(3, 493);
+            dgv_TransportJobInfomation.Location = new Point(3, 483);
             dgv_TransportJobInfomation.Name = "dgv_TransportJobInfomation";
-            dgv_TransportJobInfomation.Size = new Size(1394, 104);
+            dgv_TransportJobInfomation.Size = new Size(1394, 114);
             dgv_TransportJobInfomation.TabIndex = 15;
             // 
             // bt_GetStockerGroupList
@@ -132,17 +135,6 @@
             bt_GetStockerGroupList.UseVisualStyleBackColor = true;
             bt_GetStockerGroupList.Click += bt_GetStockerGroupList_Click;
             // 
-            // clb_StockerCommonCodeList
-            // 
-            clb_StockerCommonCodeList.DataObject = resources.GetObject("clb_StockerCommonCodeList.DataObject");
-            clb_StockerCommonCodeList.Dock = DockStyle.Fill;
-            clb_StockerCommonCodeList.Lb_Text = "StockerCommonCode";
-            clb_StockerCommonCodeList.Location = new Point(1263, 63);
-            clb_StockerCommonCodeList.Name = "clb_StockerCommonCodeList";
-            clb_StockerCommonCodeList.Size = new Size(134, 424);
-            clb_StockerCommonCodeList.TabIndex = 17;
-            clb_StockerCommonCodeList.VariableName = "StockerCommonCode";
-            // 
             // cb_CarrierStat
             // 
             cb_CarrierStat.ComboBoxSelectedIndex = -1;
@@ -155,28 +147,51 @@
             cb_CarrierStat.TabIndex = 12;
             cb_CarrierStat.VariableName = "CSTSTAT";
             // 
-            // uwC_LabelAndTextBox1
+            // tb_CarrierId
             // 
-            uwC_LabelAndTextBox1.Dock = DockStyle.Fill;
-            uwC_LabelAndTextBox1.IsMultiInputTextControl = false;
-            uwC_LabelAndTextBox1.Lb_Text = "Carrier_ID";
-            uwC_LabelAndTextBox1.Location = new Point(1018, 3);
-            uwC_LabelAndTextBox1.Name = "uwC_LabelAndTextBox1";
-            uwC_LabelAndTextBox1.Size = new Size(134, 24);
-            uwC_LabelAndTextBox1.TabIndex = 11;
-            uwC_LabelAndTextBox1.Tb_Text = "";
-            uwC_LabelAndTextBox1.VariableName = "CSTID";
+            tb_CarrierId.Dock = DockStyle.Fill;
+            tb_CarrierId.IsMultiInputTextControl = false;
+            tb_CarrierId.Lb_Text = "Carrier_ID";
+            tb_CarrierId.Location = new Point(1018, 3);
+            tb_CarrierId.Name = "tb_CarrierId";
+            tb_CarrierId.Size = new Size(134, 24);
+            tb_CarrierId.TabIndex = 11;
+            tb_CarrierId.Tb_Text = "";
+            tb_CarrierId.VariableName = "CSTID";
             // 
             // cb_TrfStatCode
             // 
+            cb_TrfStatCode.ComboBoxSelectedIndex = -1;
+            cb_TrfStatCode.ComboBoxText = "TransportState";
+            cb_TrfStatCode.DataSource = null;
             cb_TrfStatCode.Dock = DockStyle.Fill;
-            cb_TrfStatCode.FormattingEnabled = true;
-            cb_TrfStatCode.Items.AddRange(new object[] { "FINAL", "MOVING", "RESERVED" });
             cb_TrfStatCode.Location = new Point(878, 3);
             cb_TrfStatCode.Name = "cb_TrfStatCode";
-            cb_TrfStatCode.Size = new Size(134, 23);
-            cb_TrfStatCode.TabIndex = 9;
-            cb_TrfStatCode.Text = "TRF_STAT_CODE";
+            cb_TrfStatCode.Size = new Size(134, 24);
+            cb_TrfStatCode.TabIndex = 18;
+            cb_TrfStatCode.VariableName = "TransportState";
+            // 
+            // clb_StockerList
+            // 
+            clb_StockerList.DataObject = resources.GetObject("clb_StockerList.DataObject");
+            clb_StockerList.Dock = DockStyle.Fill;
+            clb_StockerList.Lb_Text = "StockerList";
+            clb_StockerList.Location = new Point(1263, 231);
+            clb_StockerList.Name = "clb_StockerList";
+            clb_StockerList.Size = new Size(134, 246);
+            clb_StockerList.TabIndex = 19;
+            clb_StockerList.VariableName = "StockerList";
+            // 
+            // clb_StockerCommonCodeList
+            // 
+            clb_StockerCommonCodeList.DataObject = resources.GetObject("clb_StockerCommonCodeList.DataObject");
+            clb_StockerCommonCodeList.Dock = DockStyle.Fill;
+            clb_StockerCommonCodeList.Lb_Text = "StockerCommonCode";
+            clb_StockerCommonCodeList.Location = new Point(1263, 63);
+            clb_StockerCommonCodeList.Name = "clb_StockerCommonCodeList";
+            clb_StockerCommonCodeList.Size = new Size(134, 162);
+            clb_StockerCommonCodeList.TabIndex = 20;
+            clb_StockerCommonCodeList.VariableName = "StockerCommonCode";
             // 
             // StockerInventorySituation
             // 
@@ -193,13 +208,14 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private Button bt_Search;
-        private ComboBox cb_TrfStatCode;
-        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox1;
+        private UserWinfromControl.UWC_LabelAndTextBox tb_CarrierId;
         private UserWinfromControl.UWC_ComboBox cb_CarrierStat;
         private UserWinfromControl.UWC_DataGridView dgv_StockerInventory;
         private UserWinfromControl.UWC_DataGridView dgv_StockerCurrState;
         private UserWinfromControl.UWC_DataGridView dgv_TransportJobInfomation;
         private Button bt_GetStockerGroupList;
-        private UserWinfromControl.UWC_CheckListBox clb_StockerCommonCodeList;
+        private UserWinfromControl.UWC_ComboBox cb_TrfStatCode;
+        private UserWinfromControl.UWC_CheckListBox clb_StockerList;
+        private UserWinfromControl.UWC_ListBox clb_StockerCommonCodeList;
     }
 }

@@ -45,13 +45,13 @@ namespace RTD_DataViewer.View
             lAdtp_ReqInfo_EndDate.IsChecked = false;
             lAdtp_ReqInfo_StartDate.IsChecked = true;
 
-            variableControls.Add(lAdtp_ReqInfo_StartDate);
-            variableControls.Add(lAdtp_ReqInfo_EndDate);
-            variableControls.Add(lAtb_ReqInfo_Cstid);
-            variableControls.Add(lAtb_ReqInfo_ReqEqp);
-            variableControls.Add(lAtb_ReqInfo_RuleText);
-            variableControls.Add(cb_CarrierState);
-            variableControls.Add(cb_ReqState);
+            foreach (Control control in this.Controls[0].Controls)
+            {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
 
             cb_CarrierState.SetCstStatData();
             cb_ReqState.SetReqStatCodeData();

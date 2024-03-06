@@ -47,46 +47,74 @@ namespace RTD_DataViewer
             appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
             appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
 
+            //To-Do : 물류 현황
+
+            //요청 목록
             PortRequestList reqInfomation = new PortRequestList(this);
             tp_ReqInfomation.Controls.Add(reqInfomation);
             reqInfomation.Dock = DockStyle.Fill;
 
+            //요청 이력
+            PortRequestRecord portRequestRecord = new PortRequestRecord(this);
+            tp_PortRequestRecord.Controls.Add(portRequestRecord);
+            portRequestRecord.Dock = DockStyle.Fill;
+
+            //반송 목록
             TransportJobList transportList = new TransportJobList(this);
             tp_TransportList.Controls.Add(transportList);
             transportList.Dock = DockStyle.Fill;
 
-            TransportJobAndPortRequestRecord reqAndTransfer = new TransportJobAndPortRequestRecord(this);
-            tp_ReqAndTransfer.Controls.Add(reqAndTransfer);
+            //반송 이력
+            TransportJobRecord reqAndTransfer = new TransportJobRecord(this);
+            tp_TransportRecode.Controls.Add(reqAndTransfer);
             reqAndTransfer.Dock = DockStyle.Fill;
 
-            CarrierHistory cstHist = new CarrierHistory(this);
-            tp_CstHist.Controls.Add(cstHist);
-            cstHist.Dock = DockStyle.Fill;
-
+            //케리어 정보
             CarrierInfomation cstInfo = new CarrierInfomation(this);
             tp_CstInfo.Controls.Add(cstInfo);
             cstInfo.Dock = DockStyle.Fill;
 
+            //To-Do : 케리어 정보(Multi)
+
+            //케리어 이력
+            CarrierHistory cstHist = new CarrierHistory(this);
+            tp_CstHist.Controls.Add(cstHist);
+            cstHist.Dock = DockStyle.Fill;
+
+            //To-Do : Wip 정보
+            //To-Do : Wip 이력
+
+            //TO-DO : 설비 현황 정리
             EquipmentCurrentState eqpState = new EquipmentCurrentState(this);
             tp_EqpState.Controls.Add(eqpState);
             eqpState.Dock = DockStyle.Fill;
 
+            //포트 현황
+            PortCurrentState portCurrState = new PortCurrentState(this);
+            tp_PortCurrState.Controls.Add(portCurrState);
+            portCurrState.Dock = DockStyle.Fill;
+
+            //대기 랏 현황
             WaitingLotInfomation waitWips = new WaitingLotInfomation(this);
             tp_WaitWips.Controls.Add(waitWips);
             waitWips.Dock = DockStyle.Fill;
 
-            LnsPkgState lnsPkgState = new LnsPkgState(this);
-            tp_LnsPkgState.Controls.Add(lnsPkgState);
-            lnsPkgState.Dock = DockStyle.Fill;
-
+            //스토커 현황
             StockerInventorySituation stockerInventory = new StockerInventorySituation(this);
             tp_StockerInventory.Controls.Add(stockerInventory);
             stockerInventory.Dock = DockStyle.Fill;
 
+            //lnsPkgState -> 삭제 예정
+            LnsPkgState lnsPkgState = new LnsPkgState(this);
+            tp_LnsPkgState.Controls.Add(lnsPkgState);
+            lnsPkgState.Dock = DockStyle.Fill;
+
+            //롤 화면
             RollCurrentSituation rollSituation = new RollCurrentSituation(this);
             tp_RollSituation.Controls.Add(rollSituation);
             rollSituation.Dock = DockStyle.Fill;
 
+            //비즈 룰 에러
             BizRuleErr bizRuleErr = new BizRuleErr(this);
             tp_BizRuleErr.Controls.Add(bizRuleErr);
             bizRuleErr.Dock = DockStyle.Fill;

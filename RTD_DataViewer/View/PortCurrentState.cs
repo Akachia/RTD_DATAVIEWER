@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using CustomUtills;
+using Dapper;
+using DBManagement;
 using DBManagemnet;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic;
@@ -18,139 +20,70 @@ namespace RTD_DataViewer.View
 {
     public partial class PortCurrentState : UserControl
     {
-        MainViewer main;
+
+        #region Variable
+        WinformUtils winformUtils;
+        DefaultSqlData? SearchPortCurrentListData = null;
+        DefaultSqlData? SearchPortEioRecordData = null;
+        DefaultSqlData? SearchPortStateRecordData = null;
+        CommonCodeData? SearchCommonCodeData = null;
+        Dictionary<string, string>? eventCallVal = null;
+        Dictionary<string, string>? stkComCodeList = null;
+        List<Control>? variableControls = new List<Control>();
+        #endregion
+
+        #region Construction
         public PortCurrentState(MainViewer main)
         {
             InitializeComponent();
-            this.main = main;
-            SearchEqpGroup();
-            dgv_PortCurrentState.DgvData.CellClick += SearchPortState;
-            dgv_PortStateHistory.DgvData.CellClick += SearchPortStateHist;
-            dgv_PortStateHistory.DgvData.CellDoubleClick += SearchPortEioHist;
-        }
+            //SearchEquipmentGroupList();
+           // dgv_EquipmentCurrentState.DgvData.CellClick += SearchPortCurrentState;
+            dgv_PortEioRecord.DgvData.CellClick += SearchPortStateHistory;
+            dgv_PortEioRecord.DgvData.CellDoubleClick += SearchPortEioHistory;
 
+            foreach (Control control in this.Controls[0].Controls)
+            {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
+
+            winformUtils = new(main);
+            this.lb_EqpGroupList.ListBox.SelectedValueChanged += ListBox_SelectedValueChanged;
+        }
+        #endregion
+
+        #region Events for UI Controls
         private void DgvData_CellValidated(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 8)
             {
-                dgv_PortStateHistory.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
+                dgv_PortEioRecord.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
             }
         }
-
-        private void SearchPortState(object? sender, DataGridViewCellEventArgs e)
+        private void bt_EqpStateSearch_Click(object sender, EventArgs e)
         {
-            try
-            {
-                WinformUtils winformUtils = new WinformUtils(main);
-                string eqptId = (sender as DataGridView).CurrentRow.Cells["EQPTID"].Value.ToString();
-                string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
-
-                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-                string areaID = main.correntConnectionStringSetting.AreaID;
-
-                paramaterDic.Add("EQPTID", eqptId);
-                paramaterDic.Add("EQGRID", "%%");
-                paramaterDic.Add("AREA_ID", areaID);
-
-                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateHistory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-
-              //  winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            SearchPortCurrentList();
         }
-
-        private void SearchPortStateHist(object? sender, DataGridViewCellEventArgs e)
+        private void bt_GetEqpGroup_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
-                //string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
-
-                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-                string areaID = main.correntConnectionStringSetting.AreaID;
-
-                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
-
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_PortStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            SearchEquipmentGroupList();
         }
-
-        private void SearchPortEioHist(object? sender, DataGridViewCellEventArgs e)
+        private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
         {
-            try
-            {
-                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
-                //string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
+            ListBox listBox = sender as ListBox;
 
-                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-                string areaID = main.correntConnectionStringSetting.AreaID;
-
-                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
-
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_PortStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            SearchEquipmentList(listBox.SelectedItem.ToString());
         }
+        #endregion
 
-        /// <summary>
-        /// 	<AreaID>EO</AreaID>
-        ///     <PlantID>U2</PlantID>
-        /// </summary>
-        private void SearchEqpGroup()
-        {
-            try
-            {
-                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
-                {
-                    return;
-                }
-                clb_EqpGroupList.Items.Clear();
-                XmlOptionData sqldata = main.sqlList["SearchEqpGroup"];
-                string cquery = sqldata.Sql;
-                string plantId = main.correntConnectionStringSetting.PlantID;
-                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
-
-                DynamicParameters parameters = new DynamicParameters();
-
-                parameters.Add($"@PLANT_ID", @$"{plantId}%");
-                //parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
-
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
-                {
-                    List<GetEQGRID> getEQGRID = connection.Query<GetEQGRID>(cquery, parameters).ToList();
-
-                    foreach (var item in getEQGRID)
-                    {
-                        clb_EqpGroupList.Items.Add(item.EQGRID);
-                    }
-
-                    main.AppendLog(cquery, parameters);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
+        #region Utilities for Ui
         private string MakeEqpGroup()
         {
             string CmdStatCodeList = string.Empty;
 
-            foreach (var item in this.clb_EqpGroupList.CheckedItems)
+            foreach (var item in this.clb_EquipmentList.CheckedItem)
             {
                 if (CmdStatCodeList == string.Empty)
                 {
@@ -163,33 +96,92 @@ namespace RTD_DataViewer.View
             }
             return CmdStatCodeList;
         }
+        #endregion
 
-        private void bt_EqpStateSearch_Click(object sender, EventArgs e)
-        {
-            SearchEqpState();
-        }
+        #region Assign SqlData to DataGrid view functuons Section 
 
-        private void SearchEqpState()
+        private void SearchPortCurrentList()
         {
-            WinformUtils winformUtils = new WinformUtils(main);
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            string methodName = MethodBase.GetCurrentMethod().Name;
             string _EQP_GROUP_LIST = MakeEqpGroup();
-            string areaID = main.correntConnectionStringSetting.AreaID;
-            paramaterDic.Add("EQP_GROUP_ID_LIST", _EQP_GROUP_LIST);
-            paramaterDic.Add("AREA_ID", @$"'{areaID}%'");
+            paramaterDic.Add("EQPTID_LIST", _EQP_GROUP_LIST);
+            paramaterDic.Add("SYSTEM_TYPE_CODE", winformUtils.main.correntConnectionStringSetting.SystemTypeCode);
 
-           winformUtils.ExcuteSql(paramaterDic, dgv_PortCurrentState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            SearchPortCurrentListData = winformUtils.ShowDgv(
+                methodName,
+                dgv_PortCurrentList, 
+                SearchPortCurrentListData, 
+                paramaterDic) as DefaultSqlData;
         }
 
-
-        private void bt_GetEqpGroup_Click(object sender, EventArgs e)
+        private void SearchPortEioHistory(object? sender, DataGridViewCellEventArgs e)
         {
-            SearchEqpGroup();
-        }
-    }
+            try
+            {
+                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
 
-    public class GetEQGRID
-    {
-        public string EQGRID { get; set; }
+                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+                string areaID = winformUtils.correntConnectionStringSetting.AreaID;
+
+                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
+
+                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateRecord.DgvData, winformUtils.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void SearchPortStateHistory(object? sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
+                //string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
+
+                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+                string areaID = winformUtils.correntConnectionStringSetting.AreaID;
+
+                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
+
+                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateRecord.DgvData, winformUtils.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void SearchEquipmentList(string EquipmentGroupName)
+        {
+            try
+            {
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+                paramaterDic.Add($"EQP_GROUP_ID_LIST", EquipmentGroupName);
+                SearchCommonCodeData = winformUtils.GetCommonCodes(methodName, clb_EquipmentList, SearchCommonCodeData, paramaterDic);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        private void SearchEquipmentGroupList()
+        {
+            try
+            {
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                SearchCommonCodeData = winformUtils.GetCommonCodes(methodName, lb_EqpGroupList, SearchCommonCodeData);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }

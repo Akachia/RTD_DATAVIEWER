@@ -13,6 +13,9 @@
     <Compile Update="UWC_LabelAndTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UWC_ListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UWC_NumberUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>

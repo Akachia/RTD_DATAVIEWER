@@ -156,7 +156,6 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortRequestList.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.RollCurrentSituation.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.StockerInventorySituation.resources
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportJobAndPortRequestRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportJobList.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.WaitingLotInfomation.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.csproj.GenerateResource.cache
@@ -259,3 +258,5 @@ C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.pdb
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.genruntimeconfig.cache
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\ref\RTD_DataViewer.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortRequestRecord.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportJobRecord.resources

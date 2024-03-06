@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using CustomUtills;
+using Dapper;
 using DBManagemnet;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic;
@@ -18,33 +19,26 @@ namespace RTD_DataViewer.View
 {
     public partial class EquipmentCurrentState : UserControl
     {
-
-        #region Variable
-
         MainViewer main;
-        #endregion
-
-        #region Construction
         public EquipmentCurrentState(MainViewer main)
         {
             InitializeComponent();
             this.main = main;
-            SearchEquipmentGroupList();
-            dgv_EquipmentCurrentState.DgvData.CellClick += SearchPortCurrentState;
-            dgv_EquipmentEioHist.DgvData.CellClick += SearchPortStateHistory;
-            dgv_EquipmentEioHist.DgvData.CellDoubleClick += SearchPortEioHistory;
+            //SearchEqpGroup();
+            dgv_PortCurrentState.DgvData.CellClick += SearchPortState;
+            dgv_PortStateHistory.DgvData.CellClick += SearchPortStateHist;
+            dgv_PortStateHistory.DgvData.CellDoubleClick += SearchPortEioHist;
         }
-        #endregion
 
-        #region Events for UI Controls
         private void DgvData_CellValidated(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 8)
             {
-                dgv_EquipmentEioHist.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
+                dgv_PortStateHistory.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
             }
         }
-        private void SearchPortCurrentState(object? sender, DataGridViewCellEventArgs e)
+
+        private void SearchPortState(object? sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -59,19 +53,17 @@ namespace RTD_DataViewer.View
                 paramaterDic.Add("EQGRID", "%%");
                 paramaterDic.Add("AREA_ID", areaID);
 
-                winformUtils.ExcuteSql(paramaterDic, dgv_EquipmentEioHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateHistory.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
 
-                //  winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
+              //  winformUtils.DataGridView_EioColoring(dgv_PortState.DgvData);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-
-        private void SearchPortStateHistory(object? sender, DataGridViewCellEventArgs e)
+        private void SearchPortStateHist(object? sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -83,7 +75,7 @@ namespace RTD_DataViewer.View
 
                 paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
 
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_EquipmentStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_PortStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }
             catch (Exception)
             {
@@ -92,7 +84,7 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchPortEioHistory(object? sender, DataGridViewCellEventArgs e)
+        private void SearchPortEioHist(object? sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -104,7 +96,7 @@ namespace RTD_DataViewer.View
 
                 paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
 
-                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_EquipmentStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                new WinformUtils(main).ExcuteSql(paramaterDic, dgv_PortStateHist.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
             }
             catch (Exception)
             {
@@ -112,6 +104,63 @@ namespace RTD_DataViewer.View
                 throw;
             }
         }
+
+        /// <summary>
+        /// 	<AreaID>EO</AreaID>
+        ///     <PlantID>U2</PlantID>
+        /// </summary>
+        private void SearchEquipmentGroupList()
+        {
+            try
+            {
+                clb_EquipmentGroupList.Item.Clear();
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                XmlOptionData sqldata = main.sqlList[methodName];
+                string cquery = sqldata.Sql;
+                string plantId = main.correntConnectionStringSetting.PlantID;
+                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+
+                DynamicParameters parameters = new DynamicParameters();
+
+                parameters.Add($"@PLANT_ID", @$"{plantId}%");
+                parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
+                parameters.Add($"@EQP_GROUP_ID_LIST", MakeEqpGroup());
+
+                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                {
+                    List<EquipmentGroup> getEQGRID = connection.Query<EquipmentGroup>(cquery, parameters).ToList();
+
+                    foreach (var item in getEQGRID)
+                    {
+                        clb_EquipmentGroupList.Item.Add(item.EQGRID);
+                    }
+                    main.AppendLog(cquery, parameters);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string MakeEqpGroup()
+        {
+            string CmdStatCodeList = string.Empty;
+
+            foreach (var item in this.clb_EquipmentGroupList.CheckedItem)
+            {
+                if (CmdStatCodeList == string.Empty)
+                {
+                    CmdStatCodeList += @$"'{item}'";
+                }
+                else
+                {
+                    CmdStatCodeList += @$",'{item}'";
+                }
+            }
+            return CmdStatCodeList;
+        }
+
         private void bt_EqpStateSearch_Click(object sender, EventArgs e)
         {
             SearchEquipmentCurrentState();
@@ -126,7 +175,7 @@ namespace RTD_DataViewer.View
             paramaterDic.Add("EQP_GROUP_ID_LIST", _EQP_GROUP_LIST);
             paramaterDic.Add("AREA_ID", @$"'{areaID}%'");
 
-            winformUtils.ExcuteSql(paramaterDic, dgv_EquipmentCurrentState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+           winformUtils.ExcuteSql(paramaterDic, dgv_PortCurrentState.DgvData, main.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
         }
 
 
@@ -134,67 +183,5 @@ namespace RTD_DataViewer.View
         {
             SearchEquipmentGroupList();
         }
-
-        #endregion
-
-        #region Utilities for Ui
-        private string MakeEqpGroup()
-        {
-            string CmdStatCodeList = string.Empty;
-
-            foreach (var item in this.clb_EqpGroupList.CheckedItems)
-            {
-                if (CmdStatCodeList == string.Empty)
-                {
-                    CmdStatCodeList += @$"'{item}'";
-                }
-                else
-                {
-                    CmdStatCodeList += @$",'{item}'";
-                }
-            }
-            return CmdStatCodeList;
-        }
-        #endregion
-
-        #region Assign SqlData to DataGrid view functuons Section 
-        private void SearchEquipmentGroupList()
-        {
-            try
-            {
-                if (!main.correntConnectionStringSetting.IsConnection)
-                {
-                    return;
-                }
-                clb_EqpGroupList.Items.Clear();
-                string methodName = MethodBase.GetCurrentMethod().Name;
-                XmlOptionData sqldata = main.sqlList[methodName];
-                string cquery = sqldata.Sql;
-                string plantId = main.correntConnectionStringSetting.PlantID;
-                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
-
-                DynamicParameters parameters = new DynamicParameters();
-
-                parameters.Add($"@PLANT_ID", @$"{plantId}%");
-                parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
-
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
-                {
-                    List<GetEQGRID> getEQGRID = connection.Query<GetEQGRID>(cquery, parameters).ToList();
-
-                    foreach (var item in getEQGRID)
-                    {
-                        clb_EqpGroupList.Items.Add(item.EQGRID);
-                    }
-
-                    main.AppendLog(cquery, parameters);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
     }
 }

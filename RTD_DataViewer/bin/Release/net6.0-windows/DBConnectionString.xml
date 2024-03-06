@@ -10,16 +10,6 @@
 		<PlantID>AE</PlantID>
 		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM2_BMES_FORM_P01>
-	<ORACLE>
-		<Server>218.235.203.61:49157</Server>
-		<Database>xe</Database>
-		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>system</UserId>
-		<Password>oracle</Password>
-		<AreaID>C1</AreaID>
-		<PlantID>EO</PlantID>
-		<SystemTypeCode>F</SystemTypeCode>
-	</ORACLE>
 	<ESGM2_BMES_ELTR_P01>
 		<Server>10.95.105.161,7433</Server>
 		<Database>ESGM2_BMES_ELTR_P01</Database>
@@ -38,7 +28,7 @@
 		<Password>##r51T1980D@!</Password>
 		<AreaID>C1</AreaID>
 		<PlantID>AE</PlantID>
-		<SystemTypeCode>C</SystemTypeCode>
+		<SystemTypeCode>A</SystemTypeCode>
 	</ESGM2_BMES_CELL_P01>	
 	<ESGM_BMES_CELL_P01>
 		<Server>10.95.9.52,7433;</Server>
@@ -47,7 +37,7 @@
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
 		<AreaID>U1</AreaID>
-		<PlantID>EI</PlantID>
+		<PlantID>AB</PlantID>
 		<SystemTypeCode>C</SystemTypeCode>
 	</ESGM_BMES_CELL_P01>
 	<ESGM_BMES_FORM_P01>
@@ -67,7 +57,7 @@
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
 		<AreaID>U1</AreaID>
-		<PlantID>AB</PlantID>
+		<PlantID>EI</PlantID>
 		<SystemTypeCode>E</SystemTypeCode>
 	</ESGM_BMES_ELTR_P01>
 	<ESGM2_BMES_FORM_R01>
@@ -80,14 +70,14 @@
 		<PlantID>AE</PlantID>
 		<SystemTypeCode>F</SystemTypeCode>
 	</ESGM2_BMES_FORM_R01>
-	<ESGM2_BMES_ELTR_R01>
-		<Server>10.95.106.88,7433;</Server>
-		<Database>ESGM2_BMES_ELTR_R01</Database>
-		<DatabaseProvider>MSSQL</DatabaseProvider>
-		<UserId>smkim93</UserId>
-		<Password>ekwns99!@</Password>
+	<ORACLE>
+		<Server>218.235.203.61:49157</Server>
+		<Database>xe</Database>
+		<DatabaseProvider>ORACLE</DatabaseProvider>
+		<UserId>system</UserId>
+		<Password>oracle</Password>
 		<AreaID>C1</AreaID>
-		<PlantID>AE</PlantID>
+		<PlantID>EO</PlantID>
 		<SystemTypeCode>F</SystemTypeCode>
-	</ESGM2_BMES_ELTR_R01>
+	</ORACLE>
 </ConnectionStrings>

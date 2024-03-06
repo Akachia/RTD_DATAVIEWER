@@ -37,7 +37,7 @@
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
 		<AreaID>U1</AreaID>
-		<PlantID>EI</PlantID>
+		<PlantID>AB</PlantID>
 		<SystemTypeCode>C</SystemTypeCode>
 	</ESGM_BMES_CELL_P01>
 	<ESGM_BMES_FORM_P01>
@@ -57,7 +57,7 @@
 		<UserId>rtd_app</UserId>
 		<Password>##r51T1980D@!</Password>
 		<AreaID>U1</AreaID>
-		<PlantID>AB</PlantID>
+		<PlantID>EI</PlantID>
 		<SystemTypeCode>E</SystemTypeCode>
 	</ESGM_BMES_ELTR_P01>
 	<ESGM2_BMES_FORM_R01>

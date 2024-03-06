@@ -26,7 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\PortCurrentState.cs">
+    <Compile Update="View\EquipmentCurrentState.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="View\PortRequestRecord.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

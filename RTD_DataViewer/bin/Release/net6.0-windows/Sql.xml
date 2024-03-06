@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SqlList>
-	<SearchTransportReq>
+	<SearchCurrentTransportJobList>
 		<MainSQL>
 			SELECT CC.CSTID
 			, H.FROM_PORT_iD AS 요청포트
@@ -11,8 +11,10 @@
 			, W.EQSGID AS 라인
 			, W.ROUTID AS ROUT
 			, H.CMD_STAT_CODE AS 현황
+			, W.PRODID AS PRODID
 			, W.PROCID AS PROCID
 			, W.WIPSTAT AS WIP
+			, L.LOTTYPE
 			, CONVERT(CHAR(23), H.INSDTTM, 20) AS 요청시각
 			, CONVERT(CHAR(23), H.UPDDTTM, 20) AS 수정시각
 			, CC.ABNORM_TRF_RSN_CODE AS ATRC
@@ -28,9 +30,10 @@
 			FROM CARRIER CC with(nolock)
 			INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
 			LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
+			LEFT JOIN Lot L with(nolock) ON W.LOTID = L.LOTID
 			LEFT JOIN WIPATTR WA with(nolock) ON WA.LOTID = W.LOTID
 			LEFT JOIN COMMONCODE C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = H.RSPN_CODE
-			WHERE H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
+			WHERE 1=1
 			AND ISNULL(H.CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
 			+Option1
 			+Option2
@@ -39,16 +42,17 @@
 			+Option5
 			+Option6
 			+Option7
+			<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]>
 		</MainSQL>
 		<Option>
-			<Option1 type="IF" condition="not_equal" key="LaneId" dataType="string" default="">
+			<Option1 type="IF" condition="not_equal" key="LANE_ID" dataType="string" default="">
 				AND WA.LANE_ID LIKE @LANE_ID
 			</Option1>
 			<Option2 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
 				AND H.CSTSTAT = @CSTSTAT
 			</Option2>
-			<Option3 type="IF" condition="not_equal" key="CstId" dataType="string" default="">
-				AND H.CSTID LIKE @CSTID
+			<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND (H.CSTID IN (@CSTID) OR H.CSTID LIKE @CSTID)
 			</Option3>
 			<Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
 				AND H.FROM_PORT_ID LIKE @ReqPortId
@@ -59,11 +63,11 @@
 			<Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
 				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR 
 			</Option6>
-			<Option7 type="NONE" condition="" key="" dataType="" default="">
-				<![CDATA[AND H.INSUSER <> 'MCS(SYNC)' ORDER BY H.INSDTTM DESC]]></Option7>
+			<Option7 type="IF" condition="not_equal" key="CMD_STAT_CODE_LIST" dataType="string" default="">
+				AND H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
+			</Option7>
 		</Option>
 		<AdditionalVariable>
-			<CMD_STAT_CODE_LIST dataType="List" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -79,9 +83,12 @@
 				<Y Red="255" Green="155" Blue="155" IsColoringRow="true"/>
 			</HOLD>
 		</Coloring>
-		<EventValues/>
-	</SearchTransportReq>
-	<SearchTrf>
+		<EventValues>
+			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
+			<TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
+		</EventValues>/>
+	</SearchCurrentTransportJobList>
+	<SearchTransportJobHistory>
 		<MainSQL>
 			select
 			PORT_ID
@@ -89,17 +96,20 @@
 			, TRF_END_CODE as TEC 
 			, EVENT_CODE
 			, INSDTTM
-			from TB_MHS_TRF_EVENT_HIST with (NOLOCK) WHERE TRF_CODE = @TRF_CODE
+			from TB_MHS_TRF_EVENT_HIST with (NOLOCK) 
+			WHERE 1=1
+			AND TRF_CODE = @TRF_CODE
 			order by INSDTTM desc
 		</MainSQL>
-		<Option/>
+		<Option>
+			<Option1 type="VAR" condition="" key="TRF_CODE" dataType="string" default=""/>
+		</Option>
 		<AdditionalVariable>
-			<CMD_STAT_CODE_LIST dataType="List" default=""/>
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchTrf>
-	<SearchTrfInfo>
+	</SearchTransportJobHistory>
+	<SearchTransportJobInfomation>
 		<MainSQL>
 			select
 			THTC.CSTID
@@ -117,12 +127,14 @@
 			from TB_MHS_TRF_CMD THTC (NOLOCK)
 			INNER JOIN CARRIER C (NOLOCK) ON C.CSTID = THTC.CSTID
 			WHERE 1 = 1
+			+Option1
+			+Option2
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND (THTC.CSTID like @CSTID OR  THTC.CSTID = (SELECT LOAD_REP_CSTID FROM CARRIER WITH (NOLOCK) WHERE CSTID like @CSTID))
 			</Option1>
-				<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
+			<Option2 type="IF" condition="not_equal" key="REQ_SEQNO" dataType="Bigint" default="0">
 				AND REQ_SEQNO LIKE @REQ_SEQNO
 			</Option2>
 		</Option>
@@ -139,33 +151,35 @@
 			</CMD_STAT_CODE>
 		</Coloring>
 		<EventValues/>
-	</SearchTrfInfo>
-	<ReqList>
+	</SearchTransportJobInfomation>
+	<SearchPortRequestList>
 		<MainSQL>
 			SELECT
 			REQ.REQ_SEQNO as 번호
 			, REQ.CSTID AS CSTID
 			, REQ.CSTSTAT as 상태
-			, EA.s02 AS 극성
+			, EA.S02 AS 극성
 			, REQ.EQPTID AS 설비명
 			, REQ.PORT_ID AS 포트명
-			, REQ.REQ_TYPE_CODE AS 요청코드
-			, REQ.PRCS_TYPE_CODE AS 코드
+			, REQ.REQ_TYPE_CODE AS 요청
 			, REQ.RTD_RULE_ID
-			, REQ.INSUSER AS 요청자
+			, REQ_TRGT_EQPTID AS 최종EQPT
+			, REQ.TRGT_EQPT_MOUNT_PSTN_ID AS UWD번호
 			, CONVERT(CHAR(23), REQ.INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), REQ.UPDDTTM, 20) AS UPDDTTM
+			, REQ.ERR_CODE
+			, C.CMCDNAME AS ERR_DESC
 			, REQ.REQ_STAT_CODE
 			, REQ.REQ_SEQS
-			, REQ.RTD_EXEC_LOG_CNTT
-			, REQ.ERR_CODE
+			, REQ.PRCS_TYPE_CODE AS 코드
+			, REQ.INSUSER AS 요청자
 			, REQ.REQ_SEQNO
-			, C.CMCDNAME AS ERR_DESC
+			, REQ.RTD_EXEC_LOG_CNTT
 			FROM TB_MHS_TRF_REQ REQ with(nolock)
 			LEFT JOIN COMMONCODE     C with(nolock) ON C.CMCDTYPE = 'TRF_REQ_ERR_CODE' AND C.CMCODE = REQ.ERR_CODE
 			LEFT OUTER JOIN EquipmentAttr  EA With (NOLOCK) ON EA.EQPTID = REQ.EQPTID
-			WHERE 1=1
-			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartDate AND @EndDate
+			WHERE 1 = 1
+			AND CONVERT(CHAR(10), REQ.INSDTTM, 20) BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 			+Option3
@@ -175,10 +189,10 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND REQ.CSTID like @CSTID 
+				AND (REQ.CSTID IN (@CSTID) OR REQ.CSTID LIKE @CSTID)
 			</Option1>
-			<Option2 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="">
-				AND REQ.EQPTID LIKE @EQPTID 
+			<Option2 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
+				AND REQ.PORT_ID LIKE @PORTID
 			</Option2>
 			<Option3 type="IF" condition="not_equal" key="RULEID" dataType="string" default="">
 			   AND REQ.RTD_RULE_ID LIKE @RULEID
@@ -186,13 +200,13 @@
 			<Option4 type="IF" condition="not_equal" key="REQ_STAT_CODE" dataType="string" default="">
 				AND REQ.REQ_STAT_CODE like @REQ_STAT_CODE
 			</Option4>
-			<Option5 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="-1">
-				AND H.CSTSTAT = @CSTSTAT
+			<Option5 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
+				AND REQ.CSTSTAT = @CSTSTAT
 			</Option5>
+			<Option6 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option7 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -205,12 +219,12 @@
 			</상태>
 		</Coloring>
 		<EventValues>
-			<CSTID TYPE='string' CallSQL = 'SearchCstInfo' EventType='Click'/>
-			<REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTrfInfo' EventType='Click'/>
+			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
+			<REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
 			<RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = '' EventType='Click'/>
 		</EventValues>
-	</ReqList>
-	<SearchTransfer>
+	</SearchPortRequestList>
+	<SearchTransportJobRecord>
 		<MainSQL>
 			SELECT
 			CSTID
@@ -223,11 +237,13 @@
 			, RTD_RULE_ID
 			, CMD_STAT_CODE
 			, INSUSER
+			, TRF_CLSS_CODE AS 반송주체
+			, TRF_CODE
 			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
 			, (CASE WHEN (DATEDIFF(minute, INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
 			FROM TB_MHS_TRF_CMD_HIST with(nolock)
-			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
+			WHERE INSDTTM BETWEEN @StartTime AND @EndTime
 			+Option1
 			+Option2
 			+Option3
@@ -238,15 +254,15 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="" default="">
-				AND CSTID LIKE @CSTID
+				AND CSTID IN (@CSTID)
 			</Option1>
-			<Option2 type="IF" condition="not_equal" key="ReqEQP" dataType="" default="">
-				AND FROM_PORT_ID LIKE @ReqEQP
+			<Option2 type="IF" condition="not_equal" key="ReqPortId" dataType="" default="">
+				AND FROM_PORT_ID LIKE @ReqPortId
 			</Option2>
-			<Option3 type="IF" condition="not_equal" key="ToEQP" dataType="" default="">
-				AND TO_PORT_ID LIKE @ToEQP
+			<Option3 type="IF" condition="not_equal" key="ToPortId" dataType="" default="">
+				AND TO_PORT_ID LIKE @ToPortId
 			</Option3>
-			<Option4 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
+			<Option4 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="">
 				AND CSTSTAT = @CSTSTAT
 			</Option4>
 			<Option5 type="MOVINGSTATE" condition="MOVINGSTATE" key="MOVINGSTATE" dataType="" default="0">
@@ -255,10 +271,10 @@
 			<Option6 type="IF" condition="not_equal" key="RuleId" dataType="" default="">
 				AND RTD_RULE_ID = @RuleId
 			</Option6>
+			<Option7 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option8 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<CSTSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -267,13 +283,13 @@
 			</CSTSTAT>
 		</Coloring>
 		<EventValues/>
-	</SearchTransfer>
-	<SearchReq>
+	</SearchTransportJobRecord>
+	<SearchPortRequestHistory>
 		<MainSQL>
 			WITH TT_DATA AS (
 			SELECT top 1000 *
 			FROM TB_MHS_TRF_REQ_HIST with(nolock)
-			WHERE INSDTTM BETWEEN @StartDate AND @EndDate
+			WHERE INSDTTM BETWEEN @StartTime AND @EndTime
 			+Option01 --AND CSTID LIKE @CSTID
 			+Option02 --AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
 			+Option03
@@ -302,21 +318,21 @@
 		</MainSQL>
 		<Option>
 			<Option01 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND CSTID LIKE @CSTID
+				AND CSTID IN (@CSTID)
 			</Option01>
-			<Option02 type="IF" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="0">
+			<Option02 type="IF" condition="not_equal" key="PRCS_TYPE_CODE" dataType="string" default="">
 				AND PRCS_TYPE_CODE like @PRCS_TYPE_CODE
 			</Option02>
-			<Option03 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
-				AND PORT_ID LIKE @PORTID
+			<Option03 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
+				AND PORT_ID LIKE @ReqPortId
 			</Option03>
 			<Option04 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
 				AND CSTSTAT = @CSTSTAT
 			</Option04>
+			<Option05 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option06 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -324,7 +340,7 @@
 			</REQ_STAT_CODE>
 		</Coloring>
 		<EventValues/>
-	</SearchReq>
+	</SearchPortRequestHistory>
 	<SearchDeleteTransfer>
 		<MainSQL>
 			SELECT
@@ -340,11 +356,11 @@
 			, CONVERT(NVARCHAR(20), MAX(INSDTTM),20) AS LASTINSDTTM
 			, COUNT(CSTID)  AS CNT
 			FROM TB_MHS_TRF_CMD_HIST with(nolock)
-			WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartDate AND @EndDate
+			WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartTime AND @EndTime
 			AND CMD_STAT_CODE = 'DELETE'
 			GROUP BY CSTID, FROM_EQPTID, FROM_PORT_ID, TO_EQPTID, TO_PORT_ID, CSTSTAT, RTD_RULE_ID, CMD_STAT_CODE, INSUSER
-      +Option1
-      +Option2
+		      +Option1
+		      +Option2
 			--ORDER BY MAX(INSDTTM) DESC
 		</MainSQL>
 		<Option>
@@ -359,7 +375,88 @@
 		<Coloring/> 
 		<EventValues/>
 	</SearchDeleteTransfer>
-	<CstActHistSearch>
+	<SearchCarrierActAbbreviatedRecord>
+		<MainSQL>
+			SELECT
+			+Option1
+			CSTID
+			, LOAD_REP_CSTID
+			, ACTID
+			, CONVERT(CHAR(23), ACTDTTM, 20)  AS ACTDTTM
+			, CSTSTAT
+			, EQPTID
+			, PROCID
+			, LOTID
+			, TRF_STAT_CODE
+			, CST_LOAD_LOCATION_CODE
+			, PORT_ID
+			, RACK_ID
+			, CSTIUSE
+			, INSUSER
+			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
+			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
+			FROM tb_sfc_cst_act_hist with(nolock)
+			where 1=1
+			+Option2
+			+Option3
+			ORDER BY ACTDTTM DESC
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND CSTID IN (@CSTID)
+			</Option2>
+			<Option3 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+				AND PORT_ID LIKE @PORT_ID
+			</Option3>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>
+		<EventValues/>
+	</SearchCarrierActAbbreviatedRecord>
+	<SearchCarrierEventAbbreviatedRecord>
+		<MainSQL>
+			SELECT
+			+Option1
+			CSTID
+			, CSTSTAT as 상태
+			, LOTID
+			, PROCID
+			, EQPTID
+			, PORT_ID
+			, RACK_ID
+			, EVENT_CODE
+			, EVENT_TYPE_CODE as ETC
+			, TRF_END_CODE AS TEC
+			, FINL_TO_EQPTID as TO_EQPT_ID
+			, FINL_TO_PORT_ID as TO_PORT_ID
+			, INSUSER
+			, CONVERT(CHAR(23), INSDTTM, 20)  AS INSDTTM
+			, CONVERT(CHAR(23), UPDDTTM, 20)  AS UPDDTTM
+			FROM TB_MHS_TRF_EVENT_HIST with(nolock)
+			where 1=1
+			+Option2
+			+Option3
+			ORDER BY INSDTTM DESC
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="NUM" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND CSTID IN (@CSTID)
+			</Option2>
+			<Option3 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+				AND PORT_ID LIKE @PORT_ID
+			</Option3>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>  
+		<EventValues/>
+	</SearchCarrierEventAbbreviatedRecord>
+	<SearchCarrierActHistory>
 		<MainSQL>
 			SELECT
 			CSTID
@@ -379,26 +476,27 @@
 			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
 			FROM tb_sfc_cst_act_hist with(nolock)
-			where ACTDTTM BETWEEN @StartDate AND @EndDate
+			where 1=1
 			+Option1
 			+Option2
+			AND ACTDTTM BETWEEN @StartTime AND @EndTime
+			ORDER BY ACTDTTM DESC
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND CSTID like @CSTID
+				AND CSTID IN (@CSTID)
 			</Option1>
-			<Option2 type="NONE" condition="" key="" dataType="" default="">
-				ORDER BY ACTDTTM DESC
+			<Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+				AND PORT_ID LIKE @PORT_ID
 			</Option2>
+			<Option3 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option4 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
 		</Option>
-		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
-		</AdditionalVariable>
+		<AdditionalVariable/>
 		<Coloring/>
 		<EventValues/>
-	</CstActHistSearch>
-	<CstEventHistSearch>
+	</SearchCarrierActHistory>
+	<SearchCarrierEventHistory>
 		<MainSQL>
 			SELECT
 			CSTID
@@ -411,26 +509,33 @@
 			, EVENT_CODE
 			, EVENT_TYPE_CODE as ETC
 			, TRF_END_CODE AS TEC
-			, FINL_TO_EQPTID as EQPT_ID
-			, FINL_TO_PORT_ID as PORT_ID
+			, FINL_TO_EQPTID as TO_EQPT_ID
+			, FINL_TO_PORT_ID as TO_PORT_ID
 			, INSUSER
 			, CONVERT(CHAR(23), INSDTTM, 20)  AS INSDTTM
 			, CONVERT(CHAR(23), UPDDTTM, 20)  AS UPDDTTM
 			FROM TB_MHS_TRF_EVENT_HIST with(nolock)
-			where CSTID like @CSTID
-			and INSDTTM BETWEEN @StartDate AND @EndDate
+			where 1=1
+			+Option1
+			+Option2
+			AND INSDTTM BETWEEN @StartTime AND @EndTime
 			ORDER BY INSDTTM DESC
 		</MainSQL>
-		<Option/>
-		<AdditionalVariable>
-			<StartDate dataType="DateTime" default=""/>
-			<EndDate dataType="DateTime" default=""/>
-			<CSTID dataType="string" default=""/>
-		</AdditionalVariable>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND CSTID IN (@CSTID)
+			</Option1>
+			<Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+				AND PORT_ID LIKE @PORT_ID
+			</Option2>
+			<Option3 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option4 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
+		</Option>
+		<AdditionalVariable/>
 		<Coloring/>  
 		<EventValues/>
-	</CstEventHistSearch>
-	<SearchLnsPkgLot>
+	</SearchCarrierEventHistory>
+	<SearchWaitingLotList>
 		<MainSQL>
 			SELECT
 				C.CSTID
@@ -486,8 +591,8 @@
 		<AdditionalVariable/>
 		<Coloring/>  
 		<EventValues/>
-	</SearchLnsPkgLot>
-	<SearchLnsPkgEqp>
+	</SearchWaitingLotList>
+	<SearchEquipmentCurrentInfomation>
 		<MainSQL>
 			select
 			EA.EQPTID
@@ -509,25 +614,26 @@
 		</AdditionalVariable>
 		<Coloring/>  
 		<EventValues/>
-	</SearchLnsPkgEqp>
-	<SearchCstInfo>
+	</SearchEquipmentCurrentInfomation>
+	<SearchCarrierInfomation>
 		<MainSQL>
-			SELECT C.CSTID
-			, C.CSTSTAT AS 상태
-			, C.LOAD_REP_CSTID AS 대표CST
-			, C.CST_LOAD_LOCATION_CODE AS 단위치
-			, C.CURR_RACK_ID AS Rack위치
-			, C.CURR_LOTID AS LOT_ID
-			, C.ABNORM_TRF_RSN_CODE AS 이상코드
-			, C.EQPT_CUR AS EQPTID
-			, C.PORT_CUR AS PORT_ID
+			SELECT 
+			C.CSTID
+			, C.CSTSTAT
+			, C.LOAD_REP_CSTID
+			, C.CST_LOAD_LOCATION_CODE
+			, C.CURR_RACK_ID
+			, C.CURR_LOTID
+			, C.ABNORM_TRF_RSN_CODE
+			, C.EQPT_CUR
+			, C.PORT_CUR
 			, W.ROUTID
 			, W.WIPSTAT
 			, L.LOTTYPE
-			, WA.DAY_GR_LOTID AS ASSY_LOTID
+			, WA.DAY_GR_LOTID
 			, WA.FORM_FORC_MANL_PORT
 			, WA.SPCL_FLAG
-			, WA.SMPL_ISS_TYPE_CODE AS 샘플코드
+			, WA.SMPL_ISS_TYPE_CODE
 			, WA.LOT_DETL_TYPE_CODE
 			, WA.DFCT_LIMIT_OVER_FLAG
 			, WA.SPCL_NOTE
@@ -550,48 +656,8 @@
 		<AdditionalVariable/>
 		<Coloring/>  
 		<EventValues/>
-	</SearchCstInfo>
-	<SearchCstInfo2>
-		<MainSQL>
-			SELECT C.CSTID
-			, C.CSTSTAT
-			, C.LOAD_REP_CSTID 
-			, C.CST_LOAD_LOCATION_CODE 
-			, C.CURR_RACK_ID 
-			, C.CURR_LOTID 
-			, C.ABNORM_TRF_RSN_CODE
-			, C.EQPT_CUR 
-			, C.PORT_CUR 
-			, W.ROUTID
-			, W.WIPSTAT
-			, L.LOTTYPE
-			, WA.DAY_GR_LOTID 
-			, WA.SPCL_FLAG
-			, WA.SMPL_ISS_TYPE_CODE 
-			, WA.LOT_DETL_TYPE_CODE
-			, WA.DFCT_LIMIT_OVER_FLAG
-			, WA.SPCL_NOTE
-			, WA.FORM_SPCL_GR_ID
-			, W.PROCID
-			, C.TRAY_TYPE_CODE
-			, CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM
-			, WA.DFCT_OCCR_EQPTID
-			, CONVERT(CHAR(23),WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM
-			, WA.SCRP_TRAY_FLAG
-			, WA.TRAY_CNVR_BCR_SCAN_COUNT
-			FROM Carrier C with(nolock)
-			LEFT JOIN WIP W WITH(NOLOCK) ON C.CURR_LOTID = W.LOTID
-			LEFT JOIN WIPATTR WA WITH(NOLOCK) ON WA.LOTID = W.LOTID
-			LEFT JOIN LOT L WITH(NOLOCK) ON L.LOTID = WA.LOTID
-			WHERE (LOAD_REP_CSTID LIKE @CSTID or C.CSTID LIKE @CSTID )
-			ORDER BY UPDDTTM DESC,CST_LOAD_LOCATION_CODE DESC
-		</MainSQL>
-		<Option/>
-		<AdditionalVariable/>
-		<Coloring/>  
-		<EventValues/>
-	</SearchCstInfo2>
-	<SearchEqpState>
+	</SearchCarrierInfomation>
+	<SearchEquipmentCurrentState>
 		<MainSQL>
 			WITH TT_BUF_SUM AS (
 			SELECT
@@ -693,24 +759,85 @@
 			</INSDTTM>
 		</Coloring>
 		<EventValues/>
-	</SearchEqpState>
-	<SearchEqpGroup>
+	</SearchEquipmentCurrentState>
+	<SearchEquipmentGroupList>
 		<MainSQL>
 			SELECT DISTINCT 
 				EQGRID
 			FROM EQUIPMENT E (NOLOCK)
 				INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
 			ON E.EQSGID = ESA.EQSGID
-			WHERE E.EQSGID like @PLANT_ID
+			WHERE 
+			 1=1
+			AND E.EQSGID like @PLANT_ID
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND EQGRID NOT IN ('MCS')
 		</MainSQL>
-		<Option/>
+		<Option>
+			<Option1 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>
+		<EventValues/>
+	</SearchEquipmentGroupList>
+	<SearchEquipmentStateHistory>
+		<MainSQL>
+			select 
+			+Option1 
+			PORT_ID
+			, PORT_STAT_CODE AS 상태
+			, ACTDTTM
+			, ACTID
+			from TB_MCS_PORT_STAT_HIST with (NOLOCK)
+			where PORT_ID like @PORT_ID
+			ORDER BY ACTDTTM desc
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="VAR" condition="" key="PORT_ID" dataType="string" default="0"/>
+		</Option>
 		<AdditionalVariable>
-			<PLANT_ID dataType="List" default=""/>
+			<PORT_ID dataType="string" default=""/>
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchEqpGroup>
-	<SearchPortState>
+	</SearchEquipmentStateHistory>
+	<SearchEquipmentEioHistory>
+		<MainSQL>
+			SELECT
+			+Option1
+			EIO.EQPTID,
+			EIO.EIOSTAT,
+			CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM,
+			MP.MAX_TRF_QTY,
+			CE.CMD_QTY
+			FROM EIO EIO WITH(NOLOCK)
+			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
+			LEFT JOIN(
+			SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_EQPTID, TO_PORT_ID
+			) CE ON EIO.EQPTID = CE.TO_PORT_ID
+			WHERE EIO.EQPTID like @PORT_ID
+			ORDER BY EIO_DTTM desc
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+				TOP @TOPNUMBER
+			</Option1>
+			<Option2 type="VAR" condition="" key="PORT_ID" dataType="string" default="0"/>
+		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
+		<Coloring/>
+		<EventValues/>
+	</SearchEquipmentEioHistory>
+	<SearchPortCurrentState>
 		<MainSQL>
 			select TMCP.PORT_ID
 				, TMCP.PORT_STAT_CODE AS 요청
@@ -756,8 +883,8 @@
 			</MAINT_FLAG>
 		</Coloring>
 		<EventValues/>
-	</SearchPortState>
-	<SearchPortStateHist>
+	</SearchPortCurrentState>
+	<SearchPortStateHistory>
 		<MainSQL>
 			select TOP 20
 			PORT_ID
@@ -774,8 +901,8 @@
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchPortStateHist>
-	<SearchPortEioHist>
+	</SearchPortStateHistory>
+	<SearchPortEioHistory>
 		<MainSQL>
 			SELECT TOP 20 EIO.EQPTID, EIO.EIOSTAT, CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM, MP.MAX_TRF_QTY, CE.CMD_QTY
 			FROM EIO EIO WITH(NOLOCK)
@@ -796,8 +923,8 @@
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchPortEioHist>
-	<SearchStkComCode>
+	</SearchPortEioHistory>
+	<SearchStockerCommonCodeList>
 		<MainSQL>
 			SELECT DISTINCT S70 AS Code,
 			CASE
@@ -833,8 +960,8 @@
 		</AdditionalVariable>
 		<Coloring/>
 		<EventValues/>
-	</SearchStkComCode>
-	<SearchStkInventory>
+	</SearchStockerCommonCodeList>
+	<SearchStockerInventory>
 		<MainSQL>
 			SELECT
 			C.CSTID
@@ -882,7 +1009,10 @@
 			, C.UPDDTTM
 			FROM Carrier C WITH(NOLOCK)
 			INNER JOIN EQUIPMENTATTR EA WITH(NOLOCK)  ON C.EQPT_CUR =  EA.EQPTID
-			WHERE C.CURR_AREAID = @PLANT_ID AND EA.S70 = @STO_CODE
+			WHERE 1 = 1
+			AND	C.CURR_AREAID = @PLANT_ID
+			--AND EA.S70 = @StockerCommonCode
+			AND EA.EQPTID IN (@StockerList)
 			) AS C1
 			INNER JOIN CARRIER C2 WITH(NOLOCK) ON C1.LOAD_REP_CSTID = C2.CSTID
 			) AS C
@@ -903,35 +1033,40 @@
 			+Option1
 			+Option2
 			+Option3
+			ORDER BY
+			CASE
+			WHEN ISNULL(W.LOTID,'') ='' THEN '1'
+			WHEN R.RACK_STAT_CODE ='DISABLE' THEN '2'
+			WHEN (AGING_ISS_PRIORITY_NO='8' OR AGING_ISS_PRIORITY_NO='9') THEN '3'
+			ELSE '4' END ASC, WA.AGING_ISS_SCHD_DTTM,  (CASE WHEN C.LOAD_REP_CSTID IS NULL THEN C.CSTID ELSE C.LOAD_REP_CSTID END), CST_LOAD_LOCATION_CODE
 		</MainSQL>
 		<Option>
-			<Option1 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
+			<Option1 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
 				AND C.CSTSTAT = @CSTSTAT
 			</Option1>
-			<Option2 type="IF" condition="not_equal" key="TRF_STAT_CODE" dataType="string" default="">
-				AND C.TRF_STAT_CODE like @TRF_STAT_CODE
+			<Option2 type="IF" condition="not_equal" key="TransportState" dataType="string" default="">
+				AND C.TRF_STAT_CODE = @TransportState
 			</Option2>
-			<Option3 type="NONE" condition="NONE" key="NONE" dataType="NONE" default="NONE">
-				ORDER BY
-				CASE
-				WHEN ISNULL(W.LOTID,'') ='' THEN '1'
-				WHEN R.RACK_STAT_CODE ='DISABLE' THEN '2'
-				WHEN (AGING_ISS_PRIORITY_NO='8' OR AGING_ISS_PRIORITY_NO='9') THEN '3'
-				ELSE '4' END ASC, WA.AGING_ISS_SCHD_DTTM,  (CASE WHEN C.LOAD_REP_CSTID IS NULL THEN C.CSTID ELSE C.LOAD_REP_CSTID END), CST_LOAD_LOCATION_CODE
+			<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+				AND C.CSTID in (@CSTID)
 			</Option3>
+			<Option4 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option5 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
+			<Option6 type="VAR" condition="" key="StockerList" dataType="string" default=""/>
 		</Option>
 		<AdditionalVariable>
-			<PLANT_ID dataType="string" default=""/>
-			<STO_CODE dataType="string" default=""/>
 		</AdditionalVariable>
 		<Coloring>
 			<TRF_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<RESERVED Red="248" Green="255" Blue="219" IsColoringRow="true"/>
 				<MOVING Red="179" Green="255" Blue="174" IsColoringRow="true"/>
 			</TRF_STAT_CODE>
+			<AGING_ISS_PRIORITY_NO Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				
+			</AGING_ISS_PRIORITY_NO>
 		</Coloring>
 		<EventValues/>
-	</SearchStkInventory>
+	</SearchStockerInventory>
 	<SearchAgingUIHist>
 		<MainSQL>
 			Select top 100 * from TB_SFC_UI_EVENT_HIST With(nolock)
@@ -943,7 +1078,7 @@
 		<Coloring/>
 		<EventValues/>
 	</SearchAgingUIHist>
-	<SearchStockerCurrState>
+	<SearchStockerCurrentState>
 		<MainSQL>
 			SELECT
 			e.EQPTID
@@ -998,15 +1133,15 @@
 			AND E.EQSGID like @PLANT_ID
 			AND E.EQGRID = 'STO'
 			AND ESA.S38 = @SYSTEM_TYPE_CODE
-			AND EA.S70 = @STO_CODE
+			AND EA.S70 = @StockerCommonCode
 			ORDER BY e.EQPTID
 		</MainSQL>
-		<Option/>
-		<AdditionalVariable>
-			<PLANT_ID dataType="string" default=""/>
-			<STO_CODE dataType="string" default=""/>
-			<SYSTEM_TYPE_CODE dataType="string" default=""/>
-		</AdditionalVariable>
+		<Option>
+			<Option1 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option3 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
 		<Coloring>
 			<EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
@@ -1021,7 +1156,7 @@
 			</EIOIFMODE>
 		</Coloring>
 		<EventValues/>
-	</SearchStockerCurrState>
+	</SearchStockerCurrentState>
 	<SearchWaitingWips>
 		<MainSQL>
 			With WipList AS(
@@ -1138,7 +1273,7 @@
 		</Coloring>
 		<EventValues/>
 	</SearchWaitingWips>
-	<RollCurrentSituation>
+	<SearchRollCurrentSituation>
 		<MainSQL>
 			<![CDATA[
 			DECLARE @SKID_USE_CHECK BIT =
@@ -1266,5 +1401,60 @@
 			</EIOIFMODE>
 		</Coloring>
 		<EventValues/>
-	</RollCurrentSituation>
+	</SearchRollCurrentSituation>
+	<SearchBizRuleError>
+		<MainSQL>
+			SELECT TOP 1000
+			INSDTTM
+			, EXCT_PARA
+			, BZRULE_ID
+			, EXCT_MSG
+			, DATASET
+			, UPDDTTM
+			, EXCT_TYPE
+			, EXCT_LOCATION
+			FROM TB_SOM_BZRULE_ERR_HIST WITH (NOLOCK)
+			WHERE 1=1
+			AND INSDTTM BETWEEN @StartTime AND @EndTime
+			+Option1
+			+Option2
+			ORDER BY INSDTTM DESC
+		</MainSQL>
+		<Option>
+			<Option1 type="IF" condition="not_equal" key="ErrorText" dataType="string" default="">
+				AND	EXCT_MSG like @ErrorText
+			</Option1>
+			<Option2 type="IF" condition="not_equal" key="BizRuleID" dataType="string" default="">
+				AND	BZRULE_ID like @BizRuleID
+			</Option2>
+			<Option3 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+			<Option4 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
+		</Option>
+		<AdditionalVariable>
+		</AdditionalVariable>
+		<Coloring/>
+		<EventValues>
+			<EXCT_TYPE TYPE='string' CallSQL = '' EventType='Click'/>
+			<EXCT_LOCATION TYPE='string' CallSQL = '' EventType='Click'/>
+		</EventValues>
+	</SearchBizRuleError>
+	<SearchStockerList>
+		<MainSQL>
+			select E.EQPTID
+			FROM Equipment E (NOLOCK)
+			INNER JOIN EQUIPMENTATTR EA (NOLOCK)
+			ON E.EQPTID =  EA.EQPTID
+			WHERE 1=1
+			AND EQGRID = 'STO'
+			AND EA.S70 = @StockerCommonCode
+			AND E.EQSGID like @PLANT_ID
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>
+		<EventValues/>
+	</SearchStockerList>
 </SqlList>

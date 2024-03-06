@@ -48,6 +48,11 @@ namespace RTD_DataViewer.View
         #region Events for UI Controls
         private void bt_CstInfoSearch_Click(object sender, EventArgs e)
         {
+
+            dgv_CarrierInfomation.DgvData.DataSource = null;
+            dgv_CarrierActAbbreviatedRecord.DgvData.DataSource = null;
+            dgv_CarrierEventAbbreviatedRecord.DgvData.DataSource = null;
+
             SearchCarrierInfomation();
             SearchCarrierEventAbbreviatedRecord();
 
@@ -59,6 +64,7 @@ namespace RTD_DataViewer.View
             {
                 SearchCarrierActAbbreviatedRecord();
             }
+
         }
         #endregion
 
@@ -81,6 +87,7 @@ namespace RTD_DataViewer.View
                         searchCarrierInfomationData,
                         paramaterDic
                     );
+
             }
             catch (Exception ex)
             {

@@ -10,9 +10,6 @@
     <Compile Update="View\CarrierInfomation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\EquipmentCurrentState.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="View\LnsPkgState.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -22,7 +19,10 @@
     <Compile Update="View\LogBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\TransportJobAndPortRequestRecord.cs">
+    <Compile Update="View\PortCurrentState.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="View\TransportJobRecord.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="View\PortRequestList.cs">

@@ -8,7 +8,7 @@ using XmlManagement;
 
 namespace DBManagement
 {
-    public class DefaultSqlData : SqlResultData
+    public class DefaultSqlData : SqlResultDataImpl
     {
         public DefaultSqlData(Dictionary<string, string> paramaterDic, XmlOptionData sqldata, DBConnectionString dBConnectionString) 
             : base(paramaterDic, sqldata, dBConnectionString)

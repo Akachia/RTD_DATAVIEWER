@@ -41,6 +41,7 @@
             textBox.TabIndex = 0;
             textBox.Click += textBox_Click;
             textBox.Enter += textBox_Enter;
+            textBox.KeyDown += textBox_KeyDown;
             textBox.Leave += textBox_Leave;
             // 
             // lb_Txt

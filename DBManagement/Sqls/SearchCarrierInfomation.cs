@@ -33,10 +33,13 @@ namespace DBManagement
         public string ROUTID { get; set; }
         public string WIPSTAT { get; set; }
         public string LOTTYPE { get; set; }
+        [DisplayName("ASSY_LOT")]
         public string DAY_GR_LOTID { get; set; }
         public string SPCL_FLAG { get; set; }
+        [DisplayName("샘플코드")]
         public string SMPL_ISS_TYPE_CODE { get; set; }
         public string LOT_DETL_TYPE_CODE { get; set; }
+        public string FORM_FORC_MANL_PORT { get; set; }
         public string DFCT_LIMIT_OVER_FLAG { get; set; }
         public string SPCL_NOTE { get; set; }
         public string FORM_SPCL_GR_ID { get; set; }
@@ -49,7 +52,7 @@ namespace DBManagement
         public string TRAY_CNVR_BCR_SCAN_COUNT { get; set; }
     }
 
-    public class SearchCarrierInfomation : SqlResultData
+    public class SearchCarrierInfomation : SqlResultDataImpl
     {
         string carrierMismatchInfo = string.Empty;
 
@@ -68,67 +71,99 @@ namespace DBManagement
              * 3. SCRP_TRAY_FLAG = Y
              * 4. SMPL_ISS_TYPE_CODE = Y
              */
+            Carrier? firstCarrier = carriers[0];
+            Carrier? secondCarrier = null;
+            if (carriers.Count > 1)
+            {
+               secondCarrier = carriers[1];
+            }
+
             string routid = ""; string dfct = "F"; string scrp = "N"; string sltc = "N";
             if (carriers.Count != 0)
             {
-                dfct = carriers[0].DFCT_LIMIT_OVER_FLAG;
-                routid = carriers[0].ROUTID;
-                scrp = carriers[0].SCRP_TRAY_FLAG;
-                sltc = carriers[0].SMPL_ISS_TYPE_CODE;
+                dfct = firstCarrier.DFCT_LIMIT_OVER_FLAG;
+                routid = firstCarrier.ROUTID;
+                scrp = firstCarrier.SCRP_TRAY_FLAG;
+                sltc = firstCarrier.SMPL_ISS_TYPE_CODE;
 
-                if (carriers.Count == 2)
+                if (firstCarrier.FORM_FORC_MANL_PORT == "F")
+                {
+                    return CSTErrMsg.typeErr + "강제배출 트레이";
+                }
+
+                if (firstCarrier.FORM_FORC_MANL_PORT == "N")
+                {
+                    return CSTErrMsg.typeErr + "폐기 트레이";
+                }
+
+                if (firstCarrier.FORM_FORC_MANL_PORT == "O")
+                {
+                    return CSTErrMsg.typeErr + "과불량 트레이";
+                }
+
+                if (!(firstCarrier.ABNORM_TRF_RSN_CODE != string.Empty || firstCarrier.ABNORM_TRF_RSN_CODE is not null))
+                {
+                    return CSTErrMsg.typeErr + " 상하단 미스매치 판정된 트레이";
+                }
+
+                if (secondCarrier != null)
                 {
                     //--------------------------------------------------------------------------------------------------------------------------------------------------
-                    if (carriers[0].CSTSTAT != carriers[1].CSTSTAT)
+                    if (firstCarrier.CSTSTAT != secondCarrier.CSTSTAT)
                     {
                         return CSTErrMsg.typeErr + "(실,공 다름)";
                     }
-                    if (carriers[0].TRAY_TYPE_CODE != carriers[1].TRAY_TYPE_CODE) // cststat, 트레이 타입
+                    if (firstCarrier.TRAY_TYPE_CODE != secondCarrier.TRAY_TYPE_CODE) // cststat, 트레이 타입
                     {
                         return CSTErrMsg.typeErr + "(트레이 타입 다름)";
                     }
                     //--------------------------------------------------------------------------------------------------------------------------------------------------
-                    if (carriers[0].DAY_GR_LOTID != carriers[1].DAY_GR_LOTID)
+                    if (firstCarrier.DAY_GR_LOTID != secondCarrier.DAY_GR_LOTID)
                     {
                         return CSTErrMsg.upDownErr + "(조립 LOT ID 다름)";
                     }
-                    if (carriers[0].ROUTID != carriers[1].ROUTID)
+                    if (firstCarrier.ROUTID != secondCarrier.ROUTID)
                     {
                         return CSTErrMsg.upDownErr + "(RoutId 다름)";
                     }
-                    if (carriers[0].PROCID != carriers[1].PROCID)
+                    if (firstCarrier.PROCID != secondCarrier.PROCID)
                     {
                         return CSTErrMsg.upDownErr + "(PROCID 다름)";
                     }
-                    if (carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG)
+                    if (firstCarrier.SPCL_FLAG != secondCarrier.SPCL_FLAG)
                     {
                         return CSTErrMsg.upDownErr + "(스페셜 타입 다름)";
                     }
-                    if (carriers[0].LOTTYPE != carriers[1].LOTTYPE)
+                    if (firstCarrier.LOTTYPE != secondCarrier.LOTTYPE)
                     {
                         return CSTErrMsg.upDownErr + "(Lot 타입 다름)";
                     }
-                    if (carriers[0].WIPSTAT != carriers[1].WIPSTAT)
+                    if (firstCarrier.WIPSTAT != secondCarrier.WIPSTAT)
                     {
                         return CSTErrMsg.upDownErr + "(Lot 상태 다름)";
                     }
                 }
                 //--------------------------------------------------------------------------------------------------------------------------------------------------
-                if (carriers[0].SPCL_FLAG == "Y")
+                if (firstCarrier.SPCL_FLAG == "Y")
                 {
-                    if (carriers.Count == 2)
+                    if (secondCarrier != null)
                     {
-                        if (carriers[0].DAY_GR_LOTID != carriers[1].DAY_GR_LOTID ||
-                    carriers[0].ROUTID != carriers[1].ROUTID ||
-                    carriers[0].PROCID != carriers[1].PROCID ||
-                    carriers[0].SPCL_FLAG != carriers[1].SPCL_FLAG ||
-                    carriers[0].LOTTYPE != carriers[1].LOTTYPE ||
-                    carriers[0].FORM_SPCL_GR_ID != carriers[1].FORM_SPCL_GR_ID
+                        if (firstCarrier.DAY_GR_LOTID != secondCarrier.DAY_GR_LOTID ||
+                    firstCarrier.ROUTID != secondCarrier.ROUTID ||
+                    firstCarrier.PROCID != secondCarrier.PROCID ||
+                    firstCarrier.SPCL_FLAG != secondCarrier.SPCL_FLAG ||
+                    firstCarrier.LOTTYPE != secondCarrier.LOTTYPE ||
+                    firstCarrier.FORM_SPCL_GR_ID != secondCarrier.FORM_SPCL_GR_ID
                     )
                         {
                             return CSTErrMsg.spcCstErr;
                         }
                     }
+                }
+
+                if (dfct == "Y")
+                {
+                    return CSTErrMsg.allCellErr;
                 }
 
                 if (dfct == "Y")
@@ -149,6 +184,8 @@ namespace DBManagement
 
         public new object ExcuteSql()
         {
+            errMsg = string.Empty;
+            carrierMismatchInfo = string.Empty;
             try
             {
                 string cquery = sqldata.Sql;

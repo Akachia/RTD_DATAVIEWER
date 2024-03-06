@@ -110,21 +110,25 @@ namespace CustomUtills
         {
             string[] ruleResultArr = ruleResultStr.Split('|');
 
-            if (ruleResultArr[0].Contains("-"))
+            if (ruleResultArr[0] != string.Empty)
             {
-                string[] parentRuleIdArr = ruleResultArr[0].Split("-");
+                if (ruleResultArr[0].Contains("-"))
+                {
+                    string[] parentRuleIdArr = ruleResultArr[0].Split("-");
 
-                ParentRuleId = int.Parse(parentRuleIdArr[0]);
-                RuleId = int.Parse(parentRuleIdArr[1]);
+                    ParentRuleId = int.Parse(parentRuleIdArr[0]);
+                    RuleId = int.Parse(parentRuleIdArr[1]);
+                }
+                else
+                {
+                    ParentRuleId = 0;
+                    RuleId = int.Parse(ruleResultArr[0]);
+                }
+                RuleName = ruleResultArr[1];
+                SpentTime = int.Parse(ruleResultArr[2]);
+                ResultNum = int.Parse(ruleResultArr[3]);
+
             }
-            else
-            {
-                ParentRuleId = 0;
-                RuleId = int.Parse(ruleResultArr[0]);
-            }
-            RuleName = ruleResultArr[1];
-            SpentTime = int.Parse(ruleResultArr[2]);
-            ResultNum = int.Parse(ruleResultArr[3]);
 
         }
 
