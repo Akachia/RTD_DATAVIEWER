@@ -92,7 +92,7 @@
             dtp__StartTime.Dock = DockStyle.Fill;
             dtp__StartTime.Dtp_Value = new DateTime(2023, 11, 28, 9, 4, 55, 992);
             dtp__StartTime.IsChecked = true;
-            dtp__StartTime.Lb_Text = "시간 시간";
+            dtp__StartTime.Lb_Text = "시작 시간";
             dtp__StartTime.Location = new Point(577, 3);
             dtp__StartTime.Name = "dtp__StartTime";
             dtp__StartTime.Size = new Size(274, 24);

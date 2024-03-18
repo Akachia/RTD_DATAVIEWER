@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+254e8a74cf5d02978fb6d2c153b9c5f04ecc618d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e920462e739760d1e665a3a28e356c7ba3216324")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

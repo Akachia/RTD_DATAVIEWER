@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UserWinfromControl;
 using XmlManagement;
 
 namespace RTD_DataViewer.View
@@ -70,12 +71,12 @@ namespace RTD_DataViewer.View
                 }
                 XmlOptionData sqldata = main.sqlList["SearchStockerList"];
                 string cquery = sqldata.Sql;
-                string plantId = main.correntConnectionStringSetting.PlantID;
+                string area_Id = main.correntConnectionStringSetting.AreaID;
                 StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
                 string systemTypeCode = stkComCodes.StkComCodeDic[listBox.SelectedItem.ToString()];
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add($"@PLANT_ID", @$"{plantId}%");
+                parameters.Add($"@AREA_ID", @$"{area_Id}%");
                 parameters.Add($"@StockerCommonCode", systemTypeCode);
 
                 using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
@@ -115,17 +116,48 @@ namespace RTD_DataViewer.View
         {
             string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
             SearchTransportJobInfomation(cstId);
+
+            string RoutId = (sender as DataGridView).CurrentRow.Cells["ROUT"].Value.ToString();
+            SearchRouteInfo(RoutId);
         }
 
         private void bt_Search_Click(object sender, EventArgs e)
         {
             SearchStockerInventory();
-            SearchStockerCurrentState();
+            //SearchStockerCurrentState();
         }
         #endregion
 
         #region Utilities for Ui
+        private string MakeTransferStatusCountString(string columnName, UWC_DataGridView dataGridView)
+        {
+            List<string> list = new List<string>();
+            int count = dataGridView.DgvData.RowCount;
 
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(dataGridView.DgvData.Rows[i].Cells[columnName].Value.ToString());
+            }
+
+            var counters = from r in list
+                           group r by r into grp
+                           select new { key = grp.Key, cnt = grp.Count() };
+
+            string str = $"{columnName}\n" ;
+            foreach (var row in counters)
+            {
+                if (row.key == string.Empty)
+                {
+                    str += $"Empty : {row.cnt} \n";
+                }
+                else
+                {
+                    str += $"{row.key} : {row.cnt} \n";
+                }
+            }
+
+            return str;
+        }
         #endregion
 
         #region Assign SqlData to DataGrid view functuons Section 
@@ -143,12 +175,12 @@ namespace RTD_DataViewer.View
                 }
                 XmlOptionData sqldata = main.sqlList[methodName];
                 string cquery = sqldata.Sql;
-                string plantId = main.correntConnectionStringSetting.PlantID;
+                string area_Id = main.correntConnectionStringSetting.AreaID;
                 string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
 
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add($"@PLANT_ID", @$"{plantId}%");
+                parameters.Add($"@AREA_ID", @$"{area_Id}%");
                 parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
 
                 using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
@@ -228,7 +260,7 @@ namespace RTD_DataViewer.View
         {
             Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
             string plantId = main.correntConnectionStringSetting.PlantID;
-            paramaterDic.Add("PLANT_ID", $"{plantId}");
+            //paramaterDic.Add("PLANT_ID", $"{plantId}");
             string methodName = MethodBase.GetCurrentMethod().Name;
 
             SearchStockerInventoryData =
@@ -239,7 +271,7 @@ namespace RTD_DataViewer.View
                     SearchStockerInventoryData,
                     paramaterDic
                 ) as DefaultSqlData;
-
+            
 
             DateTime date1 = DateTime.Now;
 
@@ -298,8 +330,17 @@ namespace RTD_DataViewer.View
 
                 //string eioIfMode = dgv_StoInventory.DgvData.Rows[i].Cells["EIOIFMODE"].Value.ToString();
                 // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
-
+                
             }
+
+            lb_WipStat.Text = MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
+            lb_CstStat.Text = MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory);
+            lb_Prodid.Text = MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
+            lb_RackStatCode.Text = MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory);
+            lb_TrfStatCode.Text = MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory);
+            lb_AgingIssPriortyNo.Text = MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory);
+            lb_NextProcid.Text = MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory);
+            lb_Procid.Text = MakeTransferStatusCountString("PROCID", dgv_StockerInventory);
         }
         private void SearchStockerCurrentState()
         {
@@ -308,8 +349,30 @@ namespace RTD_DataViewer.View
             string plantId = main.correntConnectionStringSetting.PlantID;
             string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
 
-            paramaterDic.Add("PLANT_ID", @$"'{plantId}%'");
-            paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
+            //paramaterDic.Add("PLANT_ID", @$"'{plantId}%'");
+            //paramaterDic.Add("SYSTEM_TYPE_CODE", $"'{systemTypeCode}'");
+
+            SearchStockerCurrentStateData =
+                winformUtils.ShowDgv
+                (
+                    methodName,
+                    dgv_StockerCurrState,
+                    SearchStockerCurrentStateData,
+                    paramaterDic
+                ) as DefaultSqlData;
+
+        }
+
+        private void SearchRouteInfo(string RoutId)
+        {
+            Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            string plantId = main.correntConnectionStringSetting.PlantID;
+            string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+
+            //paramaterDic.Add("PLANT_ID", @$"{plantId}");
+            //paramaterDic.Add("SYSTEM_TYPE_CODE", $"{systemTypeCode}");
+            paramaterDic.Add("ROUT", $"{RoutId}");
 
             SearchStockerCurrentStateData =
                 winformUtils.ShowDgv

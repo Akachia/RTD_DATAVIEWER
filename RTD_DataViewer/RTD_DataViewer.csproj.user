@@ -10,7 +10,7 @@
     <Compile Update="View\CarrierInfomation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="View\LnsPkgState.cs">
+    <Compile Update="View\CarrierInfomationList.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="MainViewer.cs">

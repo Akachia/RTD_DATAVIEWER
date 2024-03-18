@@ -210,13 +210,6 @@ namespace RTD_DataViewer
                     }
                 }
 
-                string areaID = main.correntConnectionStringSetting.AreaID;
-                string plantId = main.correntConnectionStringSetting.PlantID;
-                string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
-                paramaterDic.Add("EQPTID", systemTypeCode);
-                paramaterDic.Add("EQGRID", plantId);
-                paramaterDic.Add("AREA_ID", areaID);
-
                 return paramaterDic;
             }
             catch (Exception)
@@ -725,6 +718,14 @@ namespace RTD_DataViewer
             DataGridView data = dataGridView.DgvData;
             dataGridView.Lb_Text = methodName;
 
+            string areaID = main.correntConnectionStringSetting.AreaID;
+            string plantId = main.correntConnectionStringSetting.PlantID;
+            string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+            paramaterDic.Add("SYSTEM_TYPE_CODE", systemTypeCode);
+            paramaterDic.Add("PLANT_ID", plantId);
+            paramaterDic.Add("AREA_ID", areaID);
+
+
             data.DataSource = null;
             data.Rows.Clear();
             data.Columns.Clear();
@@ -756,7 +757,7 @@ namespace RTD_DataViewer
             }
             catch (Exception ex)
             {
-                main.AppendLog(ex.Source);
+                main.AppendLog($@"{methodName} : \n {sqlResultData.SqlStr}");
                 MessageBox.Show($"{ex.Message} : {methodName}");
                 return null;
             }
@@ -766,6 +767,17 @@ namespace RTD_DataViewer
         {
             DataGridView data = dataGridView.DgvData;
             dataGridView.Lb_Text = methodName;
+
+            string areaID = main.correntConnectionStringSetting.AreaID;
+            string plantId = main.correntConnectionStringSetting.PlantID;
+            string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+            paramaterDic.Add("SYSTEM_TYPE_CODE", systemTypeCode);
+            paramaterDic.Add("PLANT_ID", plantId);
+            paramaterDic.Add("AREA_ID", areaID);
+
+            data.DataSource = null;
+            data.Rows.Clear();
+            data.Columns.Clear();
             try
             {
                 if (sqlResultData == null)
@@ -879,7 +891,15 @@ namespace RTD_DataViewer
                     uWC_CheckListBox.Item.Clear();
                     foreach (CommonCode item in commonCodes)
                     {
-                        uWC_CheckListBox.Item.Add(item.EQPTID);
+                        if (item.EQPTID != null)
+                        {
+                            uWC_CheckListBox.Item.Add(item.EQPTID);
+                        }
+
+                        if (item.EQGRID != null)
+                        {
+                            uWC_CheckListBox.Item.Add(item.EQGRID);
+                        }
                     }
                 }
 
@@ -902,7 +922,6 @@ namespace RTD_DataViewer
                 return null;
             }
         }
-
 
         public void GetDataGridViewDataByColumnToEventData(ref SqlResultDataImpl sqlResultData)
         {

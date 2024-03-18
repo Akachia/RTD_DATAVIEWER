@@ -40,32 +40,50 @@
             cb_TrfStatCode = new UserWinfromControl.UWC_ComboBox();
             clb_StockerList = new UserWinfromControl.UWC_CheckListBox();
             clb_StockerCommonCodeList = new UserWinfromControl.UWC_ListBox();
+            lb_CstStat = new Label();
+            lb_AgingIssPriortyNo = new Label();
+            lb_RackStatCode = new Label();
+            lb_TrfStatCode = new Label();
+            lb_Prodid = new Label();
+            lb_WipStat = new Label();
+            lb_Procid = new Label();
+            lb_NextProcid = new Label();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 10;
+            tableLayoutPanel1.ColumnCount = 12;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Controls.Add(bt_Search, 9, 0);
-            tableLayoutPanel1.Controls.Add(dgv_StockerInventory, 0, 1);
-            tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 6, 1);
+            tableLayoutPanel1.Controls.Add(bt_Search, 11, 0);
+            tableLayoutPanel1.Controls.Add(dgv_StockerInventory, 0, 2);
+            tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 8, 1);
             tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 0, 4);
-            tableLayoutPanel1.Controls.Add(bt_GetStockerGroupList, 9, 1);
-            tableLayoutPanel1.Controls.Add(cb_CarrierStat, 8, 0);
-            tableLayoutPanel1.Controls.Add(tb_CarrierId, 7, 0);
-            tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 6, 0);
-            tableLayoutPanel1.Controls.Add(clb_StockerList, 9, 3);
-            tableLayoutPanel1.Controls.Add(clb_StockerCommonCodeList, 9, 2);
+            tableLayoutPanel1.Controls.Add(bt_GetStockerGroupList, 11, 1);
+            tableLayoutPanel1.Controls.Add(cb_CarrierStat, 10, 0);
+            tableLayoutPanel1.Controls.Add(tb_CarrierId, 9, 0);
+            tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 8, 0);
+            tableLayoutPanel1.Controls.Add(clb_StockerList, 11, 3);
+            tableLayoutPanel1.Controls.Add(clb_StockerCommonCodeList, 11, 2);
+            tableLayoutPanel1.Controls.Add(lb_CstStat, 5, 0);
+            tableLayoutPanel1.Controls.Add(lb_AgingIssPriortyNo, 6, 0);
+            tableLayoutPanel1.Controls.Add(lb_RackStatCode, 7, 0);
+            tableLayoutPanel1.Controls.Add(lb_TrfStatCode, 4, 0);
+            tableLayoutPanel1.Controls.Add(lb_Prodid, 1, 0);
+            tableLayoutPanel1.Controls.Add(lb_WipStat, 0, 0);
+            tableLayoutPanel1.Controls.Add(lb_Procid, 2, 0);
+            tableLayoutPanel1.Controls.Add(lb_NextProcid, 3, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -91,14 +109,14 @@
             // 
             // dgv_StockerInventory
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_StockerInventory, 6);
+            tableLayoutPanel1.SetColumnSpan(dgv_StockerInventory, 8);
             dgv_StockerInventory.Dock = DockStyle.Fill;
             dgv_StockerInventory.Lb_Text = "SqlName";
             dgv_StockerInventory.Lb_Text2 = "";
-            dgv_StockerInventory.Location = new Point(3, 33);
+            dgv_StockerInventory.Location = new Point(3, 63);
             dgv_StockerInventory.Name = "dgv_StockerInventory";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 3);
-            dgv_StockerInventory.Size = new Size(869, 444);
+            tableLayoutPanel1.SetRowSpan(dgv_StockerInventory, 2);
+            dgv_StockerInventory.Size = new Size(876, 414);
             dgv_StockerInventory.TabIndex = 13;
             // 
             // dgv_StockerCurrState
@@ -107,15 +125,15 @@
             dgv_StockerCurrState.Dock = DockStyle.Fill;
             dgv_StockerCurrState.Lb_Text = "SqlName";
             dgv_StockerCurrState.Lb_Text2 = "";
-            dgv_StockerCurrState.Location = new Point(878, 33);
+            dgv_StockerCurrState.Location = new Point(885, 33);
             dgv_StockerCurrState.Name = "dgv_StockerCurrState";
             tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 3);
-            dgv_StockerCurrState.Size = new Size(379, 444);
+            dgv_StockerCurrState.Size = new Size(372, 444);
             dgv_StockerCurrState.TabIndex = 14;
             // 
             // dgv_TransportJobInfomation
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_TransportJobInfomation, 10);
+            tableLayoutPanel1.SetColumnSpan(dgv_TransportJobInfomation, 12);
             dgv_TransportJobInfomation.Dock = DockStyle.Fill;
             dgv_TransportJobInfomation.Lb_Text = "SqlName";
             dgv_TransportJobInfomation.Lb_Text2 = "";
@@ -141,9 +159,9 @@
             cb_CarrierStat.ComboBoxText = "실/공";
             cb_CarrierStat.DataSource = null;
             cb_CarrierStat.Dock = DockStyle.Fill;
-            cb_CarrierStat.Location = new Point(1158, 3);
+            cb_CarrierStat.Location = new Point(1165, 3);
             cb_CarrierStat.Name = "cb_CarrierStat";
-            cb_CarrierStat.Size = new Size(99, 24);
+            cb_CarrierStat.Size = new Size(92, 24);
             cb_CarrierStat.TabIndex = 12;
             cb_CarrierStat.VariableName = "CSTSTAT";
             // 
@@ -152,7 +170,7 @@
             tb_CarrierId.Dock = DockStyle.Fill;
             tb_CarrierId.IsMultiInputTextControl = false;
             tb_CarrierId.Lb_Text = "Carrier_ID";
-            tb_CarrierId.Location = new Point(1018, 3);
+            tb_CarrierId.Location = new Point(1025, 3);
             tb_CarrierId.Name = "tb_CarrierId";
             tb_CarrierId.Size = new Size(134, 24);
             tb_CarrierId.TabIndex = 11;
@@ -165,7 +183,7 @@
             cb_TrfStatCode.ComboBoxText = "TransportState";
             cb_TrfStatCode.DataSource = null;
             cb_TrfStatCode.Dock = DockStyle.Fill;
-            cb_TrfStatCode.Location = new Point(878, 3);
+            cb_TrfStatCode.Location = new Point(885, 3);
             cb_TrfStatCode.Name = "cb_TrfStatCode";
             cb_TrfStatCode.Size = new Size(134, 24);
             cb_TrfStatCode.TabIndex = 18;
@@ -193,6 +211,102 @@
             clb_StockerCommonCodeList.TabIndex = 20;
             clb_StockerCommonCodeList.VariableName = "StockerCommonCode";
             // 
+            // lb_CstStat
+            // 
+            lb_CstStat.AutoSize = true;
+            lb_CstStat.Dock = DockStyle.Fill;
+            lb_CstStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_CstStat.Location = new Point(577, 0);
+            lb_CstStat.Name = "lb_CstStat";
+            tableLayoutPanel1.SetRowSpan(lb_CstStat, 2);
+            lb_CstStat.Size = new Size(78, 60);
+            lb_CstStat.TabIndex = 21;
+            lb_CstStat.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_AgingIssPriortyNo
+            // 
+            lb_AgingIssPriortyNo.AutoSize = true;
+            lb_AgingIssPriortyNo.Dock = DockStyle.Fill;
+            lb_AgingIssPriortyNo.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_AgingIssPriortyNo.Location = new Point(661, 0);
+            lb_AgingIssPriortyNo.Name = "lb_AgingIssPriortyNo";
+            tableLayoutPanel1.SetRowSpan(lb_AgingIssPriortyNo, 2);
+            lb_AgingIssPriortyNo.Size = new Size(106, 60);
+            lb_AgingIssPriortyNo.TabIndex = 22;
+            lb_AgingIssPriortyNo.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_RackStatCode
+            // 
+            lb_RackStatCode.AutoSize = true;
+            lb_RackStatCode.Dock = DockStyle.Fill;
+            lb_RackStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_RackStatCode.Location = new Point(773, 0);
+            lb_RackStatCode.Name = "lb_RackStatCode";
+            tableLayoutPanel1.SetRowSpan(lb_RackStatCode, 2);
+            lb_RackStatCode.Size = new Size(106, 60);
+            lb_RackStatCode.TabIndex = 23;
+            lb_RackStatCode.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_TrfStatCode
+            // 
+            lb_TrfStatCode.AutoSize = true;
+            lb_TrfStatCode.Dock = DockStyle.Fill;
+            lb_TrfStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_TrfStatCode.Location = new Point(493, 0);
+            lb_TrfStatCode.Name = "lb_TrfStatCode";
+            tableLayoutPanel1.SetRowSpan(lb_TrfStatCode, 2);
+            lb_TrfStatCode.Size = new Size(78, 60);
+            lb_TrfStatCode.TabIndex = 24;
+            lb_TrfStatCode.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_Prodid
+            // 
+            lb_Prodid.AutoSize = true;
+            lb_Prodid.Dock = DockStyle.Fill;
+            lb_Prodid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_Prodid.Location = new Point(115, 0);
+            lb_Prodid.Name = "lb_Prodid";
+            tableLayoutPanel1.SetRowSpan(lb_Prodid, 2);
+            lb_Prodid.Size = new Size(190, 60);
+            lb_Prodid.TabIndex = 25;
+            lb_Prodid.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_WipStat
+            // 
+            lb_WipStat.AutoSize = true;
+            lb_WipStat.Dock = DockStyle.Fill;
+            lb_WipStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_WipStat.Location = new Point(3, 0);
+            lb_WipStat.Name = "lb_WipStat";
+            tableLayoutPanel1.SetRowSpan(lb_WipStat, 2);
+            lb_WipStat.Size = new Size(106, 60);
+            lb_WipStat.TabIndex = 26;
+            lb_WipStat.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_Procid
+            // 
+            lb_Procid.AutoSize = true;
+            lb_Procid.Dock = DockStyle.Fill;
+            lb_Procid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_Procid.Location = new Point(311, 0);
+            lb_Procid.Name = "lb_Procid";
+            tableLayoutPanel1.SetRowSpan(lb_Procid, 2);
+            lb_Procid.Size = new Size(92, 60);
+            lb_Procid.TabIndex = 27;
+            lb_Procid.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_NextProcid
+            // 
+            lb_NextProcid.AutoSize = true;
+            lb_NextProcid.Dock = DockStyle.Fill;
+            lb_NextProcid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_NextProcid.Location = new Point(409, 0);
+            lb_NextProcid.Name = "lb_NextProcid";
+            tableLayoutPanel1.SetRowSpan(lb_NextProcid, 2);
+            lb_NextProcid.Size = new Size(78, 60);
+            lb_NextProcid.TabIndex = 28;
+            lb_NextProcid.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // StockerInventorySituation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -201,6 +315,7 @@
             Name = "StockerInventorySituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -217,5 +332,13 @@
         private UserWinfromControl.UWC_ComboBox cb_TrfStatCode;
         private UserWinfromControl.UWC_CheckListBox clb_StockerList;
         private UserWinfromControl.UWC_ListBox clb_StockerCommonCodeList;
+        private Label lb_CstStat;
+        private Label lb_AgingIssPriortyNo;
+        private Label lb_RackStatCode;
+        private Label lb_TrfStatCode;
+        private Label lb_Prodid;
+        private Label lb_WipStat;
+        private Label lb_Procid;
+        private Label lb_NextProcid;
     }
 }

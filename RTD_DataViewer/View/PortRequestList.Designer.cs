@@ -49,10 +49,10 @@
             // tableLayoutPanel4
             // 
             tableLayoutPanel4.ColumnCount = 9;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
@@ -181,12 +181,13 @@
             // 
             lb_TransferStatus.AutoSize = true;
             lb_TransferStatus.Dock = DockStyle.Fill;
-            lb_TransferStatus.Location = new Point(423, 0);
+            lb_TransferStatus.Font = new Font("맑은 고딕", 6.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_TransferStatus.Location = new Point(381, 0);
             lb_TransferStatus.Name = "lb_TransferStatus";
             tableLayoutPanel4.SetRowSpan(lb_TransferStatus, 2);
-            lb_TransferStatus.Size = new Size(92, 60);
+            lb_TransferStatus.Size = new Size(134, 60);
             lb_TransferStatus.TabIndex = 10;
-            lb_TransferStatus.TextAlign = ContentAlignment.MiddleCenter;
+            lb_TransferStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ckb_IsOpenReqSituation
             // 

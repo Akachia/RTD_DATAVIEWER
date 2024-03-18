@@ -143,7 +143,8 @@ namespace RTD_DataViewer.View
 
             if (main.correntConnectionStringSetting.IsConnection)
             {
-                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST", "QUERY" }, dgv_PortRequestList.DgvData.RowCount);
+                //개별 옵션으로 내부 STR, 표기 STR을 따로 하게 수정필요
+                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST", "REQUEST_WRTD", "QUERY", "QUERY_WRTD" }, dgv_PortRequestList.DgvData.RowCount);
             }
         }
 
@@ -206,7 +207,7 @@ namespace RTD_DataViewer.View
             string str = string.Empty;
             foreach (string row in keyValuePairs.Keys)
             {
-                str += $"{row} : {keyValuePairs[row]} \t";
+                str += $"{row} : {keyValuePairs[row]} \n";
             }
 
             return str;

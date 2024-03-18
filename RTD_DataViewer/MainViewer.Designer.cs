@@ -35,13 +35,13 @@
             tp_TransportList = new TabPage();
             tp_TransportRecode = new TabPage();
             tp_CstInfo = new TabPage();
+            tp_CarrierInformationList = new TabPage();
             tp_CstHist = new TabPage();
             tp_EqpState = new TabPage();
             tp_PortCurrState = new TabPage();
             tp_StockerInventory = new TabPage();
             tp_RollSituation = new TabPage();
             tp_WaitWips = new TabPage();
-            tp_LnsPkgState = new TabPage();
             tp_BizRuleErr = new TabPage();
             tp_LogBox = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -87,13 +87,13 @@
             reqATransfer_dgvReq.Controls.Add(tp_TransportList);
             reqATransfer_dgvReq.Controls.Add(tp_TransportRecode);
             reqATransfer_dgvReq.Controls.Add(tp_CstInfo);
+            reqATransfer_dgvReq.Controls.Add(tp_CarrierInformationList);
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
             reqATransfer_dgvReq.Controls.Add(tp_PortCurrState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
             reqATransfer_dgvReq.Controls.Add(tp_RollSituation);
             reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
-            reqATransfer_dgvReq.Controls.Add(tp_LnsPkgState);
             reqATransfer_dgvReq.Controls.Add(tp_BizRuleErr);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
@@ -150,6 +150,16 @@
             tp_CstInfo.TabIndex = 7;
             tp_CstInfo.Text = "케리어 정보";
             tp_CstInfo.UseVisualStyleBackColor = true;
+            // 
+            // tp_CarrierInformationList
+            // 
+            tp_CarrierInformationList.Location = new Point(4, 24);
+            tp_CarrierInformationList.Name = "tp_CarrierInformationList";
+            tp_CarrierInformationList.Padding = new Padding(3);
+            tp_CarrierInformationList.Size = new Size(1570, 763);
+            tp_CarrierInformationList.TabIndex = 6;
+            tp_CarrierInformationList.Text = "케리어 목록";
+            tp_CarrierInformationList.UseVisualStyleBackColor = true;
             // 
             // tp_CstHist
             // 
@@ -209,16 +219,6 @@
             tp_WaitWips.TabIndex = 10;
             tp_WaitWips.Text = "WaitWips";
             tp_WaitWips.UseVisualStyleBackColor = true;
-            // 
-            // tp_LnsPkgState
-            // 
-            tp_LnsPkgState.Location = new Point(4, 24);
-            tp_LnsPkgState.Name = "tp_LnsPkgState";
-            tp_LnsPkgState.Padding = new Padding(3);
-            tp_LnsPkgState.Size = new Size(1570, 763);
-            tp_LnsPkgState.TabIndex = 6;
-            tp_LnsPkgState.Text = "LnsPkgState";
-            tp_LnsPkgState.UseVisualStyleBackColor = true;
             // 
             // tp_BizRuleErr
             // 
@@ -425,7 +425,7 @@
         internal TabPage tp_TransportRecode;
         private TabPage tp_CstHist;
         private TabPage tp_EqpState;
-        private TabPage tp_LnsPkgState;
+        private TabPage tp_CarrierInformationList;
         private UserWinfromControl.UWC_TextBox utb_RtdMessageText;
         private Button bt_beautifierJson;
         private Button bt_beautifierXml;

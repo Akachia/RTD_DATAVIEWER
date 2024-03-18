@@ -105,8 +105,8 @@ namespace RTD_DataViewer
             stockerInventory.Dock = DockStyle.Fill;
 
             //lnsPkgState -> 삭제 예정
-            LnsPkgState lnsPkgState = new LnsPkgState(this);
-            tp_LnsPkgState.Controls.Add(lnsPkgState);
+            CarrierInfomationList lnsPkgState = new CarrierInfomationList(this);
+            tp_CarrierInformationList.Controls.Add(lnsPkgState);
             lnsPkgState.Dock = DockStyle.Fill;
 
             //롤 화면

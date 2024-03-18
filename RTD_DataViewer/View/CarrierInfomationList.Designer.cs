@@ -1,6 +1,6 @@
 ﻿namespace RTD_DataViewer
 {
-    partial class LnsPkgState
+    partial class CarrierInfomationList
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            dgv_LnsPkgLot = new UserWinfromControl.UWC_DataGridView();
-            dgv_lnsPkgEqp = new UserWinfromControl.UWC_DataGridView();
+            dgv_CarrierInfomationList = new UserWinfromControl.UWC_DataGridView();
             bt_LnsPkgSearch = new Button();
+            uwC_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,9 +46,9 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(dgv_LnsPkgLot, 0, 2);
-            tableLayoutPanel1.Controls.Add(dgv_lnsPkgEqp, 4, 2);
-            tableLayoutPanel1.Controls.Add(bt_LnsPkgSearch, 7, 1);
+            tableLayoutPanel1.Controls.Add(dgv_CarrierInfomationList, 0, 1);
+            tableLayoutPanel1.Controls.Add(bt_LnsPkgSearch, 7, 0);
+            tableLayoutPanel1.Controls.Add(uwC_CarrierId, 6, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -59,28 +59,22 @@
             tableLayoutPanel1.Size = new Size(1400, 600);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // dgv_LnsPkgLot
+            // dgv_CarrierInfomationList
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_LnsPkgLot, 4);
-            dgv_LnsPkgLot.Dock = DockStyle.Fill;
-            dgv_LnsPkgLot.Location = new Point(3, 63);
-            dgv_LnsPkgLot.Name = "dgv_LnsPkgLot";
-            dgv_LnsPkgLot.Size = new Size(694, 534);
-            dgv_LnsPkgLot.TabIndex = 0;
-            // 
-            // dgv_lnsPkgEqp
-            // 
-            tableLayoutPanel1.SetColumnSpan(dgv_lnsPkgEqp, 4);
-            dgv_lnsPkgEqp.Dock = DockStyle.Fill;
-            dgv_lnsPkgEqp.Location = new Point(703, 63);
-            dgv_lnsPkgEqp.Name = "dgv_lnsPkgEqp";
-            dgv_lnsPkgEqp.Size = new Size(694, 534);
-            dgv_lnsPkgEqp.TabIndex = 1;
+            tableLayoutPanel1.SetColumnSpan(dgv_CarrierInfomationList, 8);
+            dgv_CarrierInfomationList.Dock = DockStyle.Fill;
+            dgv_CarrierInfomationList.Lb_Text = "SqlName";
+            dgv_CarrierInfomationList.Lb_Text2 = "";
+            dgv_CarrierInfomationList.Location = new Point(3, 33);
+            dgv_CarrierInfomationList.Name = "dgv_CarrierInfomationList";
+            tableLayoutPanel1.SetRowSpan(dgv_CarrierInfomationList, 2);
+            dgv_CarrierInfomationList.Size = new Size(1394, 564);
+            dgv_CarrierInfomationList.TabIndex = 0;
             // 
             // bt_LnsPkgSearch
             // 
             bt_LnsPkgSearch.Dock = DockStyle.Fill;
-            bt_LnsPkgSearch.Location = new Point(1298, 33);
+            bt_LnsPkgSearch.Location = new Point(1298, 3);
             bt_LnsPkgSearch.Name = "bt_LnsPkgSearch";
             bt_LnsPkgSearch.Size = new Size(99, 24);
             bt_LnsPkgSearch.TabIndex = 2;
@@ -88,12 +82,23 @@
             bt_LnsPkgSearch.UseVisualStyleBackColor = true;
             bt_LnsPkgSearch.Click += bt_LnsPkgSearch_Click;
             // 
-            // LnsPkgState
+            // uwC_CarrierId
+            // 
+            uwC_CarrierId.IsMultiInputTextControl = false;
+            uwC_CarrierId.Lb_Text = "CarrierId";
+            uwC_CarrierId.Location = new Point(1123, 3);
+            uwC_CarrierId.Name = "uwC_CarrierId";
+            uwC_CarrierId.Size = new Size(169, 24);
+            uwC_CarrierId.TabIndex = 3;
+            uwC_CarrierId.Tb_Text = "";
+            uwC_CarrierId.VariableName = "Carrier_Id";
+            // 
+            // CarrierInfomationList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
-            Name = "LnsPkgState";
+            Name = "CarrierInfomationList";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -102,8 +107,8 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private UserWinfromControl.UWC_DataGridView dgv_LnsPkgLot;
-        private UserWinfromControl.UWC_DataGridView dgv_lnsPkgEqp;
+        private UserWinfromControl.UWC_DataGridView dgv_CarrierInfomationList;
         private Button bt_LnsPkgSearch;
+        private UserWinfromControl.UWC_LabelAndTextBox uwC_CarrierId;
     }
 }

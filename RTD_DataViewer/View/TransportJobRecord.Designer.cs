@@ -89,7 +89,7 @@
             lAdtp_ReqATransfer_StartDate.Dock = DockStyle.Fill;
             lAdtp_ReqATransfer_StartDate.Dtp_Value = new DateTime(2023, 11, 28, 9, 4, 55, 992);
             lAdtp_ReqATransfer_StartDate.IsChecked = true;
-            lAdtp_ReqATransfer_StartDate.Lb_Text = "시간 시간";
+            lAdtp_ReqATransfer_StartDate.Lb_Text = "시작 시간";
             lAdtp_ReqATransfer_StartDate.Location = new Point(577, 3);
             lAdtp_ReqATransfer_StartDate.Name = "lAdtp_ReqATransfer_StartDate";
             lAdtp_ReqATransfer_StartDate.Size = new Size(274, 24);

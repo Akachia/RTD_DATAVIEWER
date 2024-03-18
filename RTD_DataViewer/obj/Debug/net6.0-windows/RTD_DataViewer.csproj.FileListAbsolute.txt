@@ -150,7 +150,6 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CarrierHistory.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.CarrierInfomation.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.EquipmentCurrentState.resources
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.LnsPkgState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.LogBox.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortCurrentState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortRequestList.resources
@@ -260,3 +259,4 @@ C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\
 C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\ref\RTD_DataViewer.dll
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortRequestRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportJobRecord.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.CarrierInfomationList.resources

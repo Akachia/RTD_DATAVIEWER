@@ -50,7 +50,6 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\ne
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\bin\Release\net6.0-windows\XmlManagement.pdb
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.csproj.AssemblyReference.cache
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.MainViewer.resources
-C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.LnsPkgState.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.LogBox.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.csproj.GenerateResource.cache
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.GeneratedMSBuildEditorConfig.editorconfig
@@ -171,3 +170,4 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\ne
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_Data.4419DE9C.Up2Date
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.PortRequestRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.TransportJobRecord.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.CarrierInfomationList.resources

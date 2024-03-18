@@ -68,6 +68,8 @@ namespace UserWinfromControl
 
         private void textBox_TextChanged(object sender, EventArgs e)
         {
+            this.textBox.Text = this.textBox.Text.Trim();
+
             if (this.textBox.Text == string.Empty)
             {
                 lb_Txt.Visible = true;

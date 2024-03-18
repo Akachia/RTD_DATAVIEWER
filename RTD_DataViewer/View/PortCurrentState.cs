@@ -38,8 +38,7 @@ namespace RTD_DataViewer.View
             InitializeComponent();
             //SearchEquipmentGroupList();
            // dgv_EquipmentCurrentState.DgvData.CellClick += SearchPortCurrentState;
-            dgv_PortEioRecord.DgvData.CellClick += SearchPortStateHistory;
-            dgv_PortEioRecord.DgvData.CellDoubleClick += SearchPortEioHistory;
+            dgv_PortCurrentList.DgvData.CellClick += SearchPortHistory;
 
             foreach (Control control in this.Controls[0].Controls)
             {
@@ -55,13 +54,6 @@ namespace RTD_DataViewer.View
         #endregion
 
         #region Events for UI Controls
-        private void DgvData_CellValidated(object? sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 8)
-            {
-                dgv_PortEioRecord.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
-            }
-        }
         private void bt_EqpStateSearch_Click(object sender, EventArgs e)
         {
             SearchPortCurrentList();
@@ -106,7 +98,7 @@ namespace RTD_DataViewer.View
             string methodName = MethodBase.GetCurrentMethod().Name;
             string _EQP_GROUP_LIST = MakeEqpGroup();
             paramaterDic.Add("EQPTID_LIST", _EQP_GROUP_LIST);
-            paramaterDic.Add("SYSTEM_TYPE_CODE", winformUtils.main.correntConnectionStringSetting.SystemTypeCode);
+        //    paramaterDic.Add("SYSTEM_TYPE_CODE", winformUtils.main.correntConnectionStringSetting.SystemTypeCode);
 
             SearchPortCurrentListData = winformUtils.ShowDgv(
                 methodName,
@@ -115,18 +107,27 @@ namespace RTD_DataViewer.View
                 paramaterDic) as DefaultSqlData;
         }
 
-        private void SearchPortEioHistory(object? sender, DataGridViewCellEventArgs e)
+        private void SearchPortHistory(object? sender, DataGridViewCellEventArgs e)
+        {
+
+            string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
+            SearchPortStateRecord(port_Id);
+            SearchPortEioRecord(port_Id);
+        }
+
+        private void SearchPortStateRecord(string portId)
         {
             try
             {
-                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
-
+                string methodName = MethodBase.GetCurrentMethod().Name;
                 Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-                string areaID = winformUtils.correntConnectionStringSetting.AreaID;
+                paramaterDic.Add("PORT_ID", @$"'%{portId}%'");
 
-                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
-
-                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateRecord.DgvData, winformUtils.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                SearchPortStateRecordData = winformUtils.ShowDgv(
+                      methodName,
+                      dgv_PortStateRecord,
+                      SearchPortStateRecordData,
+                      paramaterDic) as DefaultSqlData;
             }
             catch (Exception)
             {
@@ -135,19 +136,20 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchPortStateHistory(object? sender, DataGridViewCellEventArgs e)
+        private void SearchPortEioRecord(string portId)
         {
             try
             {
-                string port_Id = (sender as DataGridView).CurrentRow.Cells["PORT_ID"].Value.ToString();
-                //string eqgrId = (sender as DataGridView).CurrentRow.Cells["EQGRID"].Value.ToString();
-
+                string methodName = MethodBase.GetCurrentMethod().Name;
                 Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-                string areaID = winformUtils.correntConnectionStringSetting.AreaID;
 
-                paramaterDic.Add("PORT_ID", @$"'%{port_Id}%'");
+                paramaterDic.Add("PORT_ID", @$"'%{portId}%'");
 
-                winformUtils.ExcuteSql(paramaterDic, dgv_PortStateRecord.DgvData, winformUtils.correntConnectionStringSetting, MethodBase.GetCurrentMethod().Name);
+                SearchPortEioRecordData = winformUtils.ShowDgv(
+                    methodName, 
+                    dgv_PortEioRecord,
+                    SearchPortEioRecordData,
+                    paramaterDic) as DefaultSqlData;
             }
             catch (Exception)
             {

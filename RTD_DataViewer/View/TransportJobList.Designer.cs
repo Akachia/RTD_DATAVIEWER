@@ -47,13 +47,16 @@
             ckb_Moving = new CheckBox();
             ckb_Cancel = new CheckBox();
             cb_CarrierStat = new UserWinfromControl.UWC_ComboBox();
+            lb_TransportJobStatus = new Label();
+            dgv_RouteInfo = new UserWinfromControl.UWC_DataGridView();
             tableLayoutPanel5.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel5
             // 
-            tableLayoutPanel5.ColumnCount = 9;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22F));
+            tableLayoutPanel5.ColumnCount = 10;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
@@ -62,31 +65,34 @@
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12F));
-            tableLayoutPanel5.Controls.Add(ckb_Send, 2, 0);
-            tableLayoutPanel5.Controls.Add(ckb_Receive, 3, 0);
-            tableLayoutPanel5.Controls.Add(ckb_Delete, 2, 1);
-            tableLayoutPanel5.Controls.Add(lAdtp_TransList_StartDate, 1, 0);
-            tableLayoutPanel5.Controls.Add(lAdtp_TransList_EndDate, 1, 1);
-            tableLayoutPanel5.Controls.Add(tAbt_TransList_Search, 8, 0);
-            tableLayoutPanel5.Controls.Add(lAtb_TransList_CarrierId, 6, 0);
-            tableLayoutPanel5.Controls.Add(lAtb_TransList_ReqEqp, 7, 0);
-            tableLayoutPanel5.Controls.Add(lAtb_TransList_LaneId, 6, 1);
-            tableLayoutPanel5.Controls.Add(lAtb_TransList_ToEqp, 7, 1);
+            tableLayoutPanel5.Controls.Add(ckb_Send, 3, 0);
+            tableLayoutPanel5.Controls.Add(ckb_Receive, 4, 0);
+            tableLayoutPanel5.Controls.Add(ckb_Delete, 3, 1);
+            tableLayoutPanel5.Controls.Add(lAdtp_TransList_StartDate, 2, 0);
+            tableLayoutPanel5.Controls.Add(lAdtp_TransList_EndDate, 2, 1);
+            tableLayoutPanel5.Controls.Add(tAbt_TransList_Search, 9, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_CarrierId, 7, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_ReqEqp, 8, 0);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_LaneId, 7, 1);
+            tableLayoutPanel5.Controls.Add(lAtb_TransList_ToEqp, 8, 1);
             tableLayoutPanel5.Controls.Add(dgv_CurrentTransportJobList, 0, 2);
-            tableLayoutPanel5.Controls.Add(dgv_TransportJobHistory, 7, 2);
-            tableLayoutPanel5.Controls.Add(dgv_CarrierInfomation, 7, 3);
-            tableLayoutPanel5.Controls.Add(ckb_IsFaulty, 5, 1);
-            tableLayoutPanel5.Controls.Add(ckb_Abnormal, 3, 1);
-            tableLayoutPanel5.Controls.Add(ckb_Moving, 4, 0);
-            tableLayoutPanel5.Controls.Add(ckb_Cancel, 4, 1);
-            tableLayoutPanel5.Controls.Add(cb_CarrierStat, 5, 0);
+            tableLayoutPanel5.Controls.Add(dgv_TransportJobHistory, 8, 2);
+            tableLayoutPanel5.Controls.Add(dgv_CarrierInfomation, 8, 4);
+            tableLayoutPanel5.Controls.Add(ckb_IsFaulty, 6, 1);
+            tableLayoutPanel5.Controls.Add(ckb_Abnormal, 4, 1);
+            tableLayoutPanel5.Controls.Add(ckb_Moving, 5, 0);
+            tableLayoutPanel5.Controls.Add(ckb_Cancel, 5, 1);
+            tableLayoutPanel5.Controls.Add(cb_CarrierStat, 6, 0);
+            tableLayoutPanel5.Controls.Add(lb_TransportJobStatus, 1, 0);
+            tableLayoutPanel5.Controls.Add(dgv_RouteInfo, 8, 3);
             tableLayoutPanel5.Dock = DockStyle.Fill;
             tableLayoutPanel5.Location = new Point(0, 0);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 4;
+            tableLayoutPanel5.RowCount = 5;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
             tableLayoutPanel5.Size = new Size(1400, 600);
             tableLayoutPanel5.TabIndex = 1;
@@ -216,13 +222,13 @@
             // 
             // dgv_CurrentTransportJobList
             // 
-            tableLayoutPanel5.SetColumnSpan(dgv_CurrentTransportJobList, 7);
+            tableLayoutPanel5.SetColumnSpan(dgv_CurrentTransportJobList, 8);
             dgv_CurrentTransportJobList.Dock = DockStyle.Fill;
             dgv_CurrentTransportJobList.Lb_Text = "SqlName";
             dgv_CurrentTransportJobList.Lb_Text2 = "";
             dgv_CurrentTransportJobList.Location = new Point(3, 63);
             dgv_CurrentTransportJobList.Name = "dgv_CurrentTransportJobList";
-            tableLayoutPanel5.SetRowSpan(dgv_CurrentTransportJobList, 2);
+            tableLayoutPanel5.SetRowSpan(dgv_CurrentTransportJobList, 3);
             dgv_CurrentTransportJobList.Size = new Size(1072, 534);
             dgv_CurrentTransportJobList.TabIndex = 19;
             // 
@@ -234,7 +240,7 @@
             dgv_TransportJobHistory.Lb_Text2 = "";
             dgv_TransportJobHistory.Location = new Point(1081, 63);
             dgv_TransportJobHistory.Name = "dgv_TransportJobHistory";
-            dgv_TransportJobHistory.Size = new Size(316, 414);
+            dgv_TransportJobHistory.Size = new Size(316, 162);
             dgv_TransportJobHistory.TabIndex = 20;
             // 
             // dgv_CarrierInfomation
@@ -310,6 +316,28 @@
             cb_CarrierStat.TabIndex = 25;
             cb_CarrierStat.VariableName = "CSTSTAT";
             // 
+            // lb_TransportJobStatus
+            // 
+            lb_TransportJobStatus.AutoSize = true;
+            lb_TransportJobStatus.Dock = DockStyle.Fill;
+            lb_TransportJobStatus.Location = new Point(227, 0);
+            lb_TransportJobStatus.Name = "lb_TransportJobStatus";
+            tableLayoutPanel5.SetRowSpan(lb_TransportJobStatus, 2);
+            lb_TransportJobStatus.Size = new Size(78, 60);
+            lb_TransportJobStatus.TabIndex = 26;
+            lb_TransportJobStatus.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // dgv_RouteInfo
+            // 
+            tableLayoutPanel5.SetColumnSpan(dgv_RouteInfo, 2);
+            dgv_RouteInfo.Dock = DockStyle.Fill;
+            dgv_RouteInfo.Lb_Text = "SqlName";
+            dgv_RouteInfo.Lb_Text2 = "";
+            dgv_RouteInfo.Location = new Point(1081, 231);
+            dgv_RouteInfo.Name = "dgv_RouteInfo";
+            dgv_RouteInfo.Size = new Size(316, 246);
+            dgv_RouteInfo.TabIndex = 27;
+            // 
             // TransportJobList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -343,5 +371,7 @@
         private CheckBox ckb_Moving;
         private CheckBox ckb_Cancel;
         private UserWinfromControl.UWC_ComboBox cb_CarrierStat;
+        private Label lb_TransportJobStatus;
+        private UserWinfromControl.UWC_DataGridView dgv_RouteInfo;
     }
 }

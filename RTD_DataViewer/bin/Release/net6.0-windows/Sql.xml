@@ -27,6 +27,7 @@
 			, (CASE WHEN (DATEDIFF(minute, H.INSDTTM, GETDATE())>=60) THEN '1' ELSE 'O' END)  AS CMDCHK
 			, H.RSPN_CODE AS RSPN
 			, C.CMCDNAME AS ERR_MSG
+			, H.CMD_STAT_CODE
 			FROM CARRIER CC with(nolock)
 			INNER JOIN TB_MHS_TRF_CMD H with(nolock) ON H.CSTID = CC.CSTID
 			LEFT JOIN WIP W with(nolock) ON W.LOTID = CC.CURR_LOTID
@@ -52,7 +53,7 @@
 				AND H.CSTSTAT = @CSTSTAT
 			</Option2>
 			<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND (H.CSTID IN (@CSTID) OR H.CSTID LIKE @CSTID)
+				AND H.CSTID IN (@CSTID)
 			</Option3>
 			<Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
 				AND H.FROM_PORT_ID LIKE @ReqPortId
@@ -74,11 +75,11 @@
 				<U Red="164" Green="201" Blue="255" IsColoringRow="false"/>
 				<E Red="228" Green="239" Blue="255" IsColoringRow="false"/>
 			</상태>
-			<진행상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<현황 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<MOVING Red="255" Green="227" Blue="238" IsColoringRow="false"/>
 				<RECEIVE Red="255" Green="164" Blue="201" IsColoringRow="false"/>
 				<SEND Red="255" Green="100" Blue="163" IsColoringRow="false"/>
-			</진행상태>
+			</현황>
 			<HOLD Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<Y Red="255" Green="155" Blue="155" IsColoringRow="true"/>
 			</HOLD>
@@ -86,6 +87,7 @@
 		<EventValues>
 			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
 			<TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
+			<ROUT TYPE='string' CallSQL = 'SearchRouteInfo' EventType='Click'/>
 		</EventValues>/>
 	</SearchCurrentTransportJobList>
 	<SearchTransportJobHistory>
@@ -189,7 +191,7 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-				AND (REQ.CSTID IN (@CSTID) OR REQ.CSTID LIKE @CSTID)
+				AND (REQ.CSTID IN (@CSTID) OR REQ.CSTID IN (@CSTID))
 			</Option1>
 			<Option2 type="IF" condition="not_equal" key="PORTID" dataType="string" default="">
 				AND REQ.PORT_ID LIKE @PORTID
@@ -211,6 +213,7 @@
 		<Coloring>
 			<REQ_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<REQUEST Red="255" Green="212" Blue="212" IsColoringRow="true"/>
+				<REQUEST_WRTD Red="255" Green="212" Blue="212" IsColoringRow="true"/>
 				<QUERY Red="255" Green="212" Blue="212" IsColoringRow="true"/>
 			</REQ_STAT_CODE>
 			<상태 Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
@@ -262,10 +265,10 @@
 			<Option3 type="IF" condition="not_equal" key="ToPortId" dataType="" default="">
 				AND TO_PORT_ID LIKE @ToPortId
 			</Option3>
-			<Option4 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="">
+			<Option4 type="IF" condition="not_equal" key="CSTSTAT" dataType="" default="">
 				AND CSTSTAT = @CSTSTAT
 			</Option4>
-			<Option5 type="MOVINGSTATE" condition="MOVINGSTATE" key="MOVINGSTATE" dataType="" default="0">
+			<Option5 type="IF" condition="not_equal" key="MOVINGSTATE" dataType="" default="">
 			  AND CMD_STAT_CODE = @MOVINGSTATE
 			</Option5>
 			<Option6 type="IF" condition="not_equal" key="RuleId" dataType="" default="">
@@ -301,6 +304,8 @@
 			, REQ_STAT_CODE
 			, EQPTID
 			, PORT_ID
+			, REQ_TRGT_EQPTID
+			, TRGT_EQPT_MOUNT_PSTN_ID AS UWD_ID
 			, REQ_TYPE_CODE AS 요청
 			, CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
 			, CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
@@ -326,7 +331,7 @@
 			<Option03 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
 				AND PORT_ID LIKE @ReqPortId
 			</Option03>
-			<Option04 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="" default="0">
+			<Option04 type="IF" condition="not_equal" key="CSTSTAT" dataType="" default="">
 				AND CSTSTAT = @CSTSTAT
 			</Option04>
 			<Option05 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
@@ -665,7 +670,9 @@
 			ISNULL(sum(CP.MAX_TRF_QTY),0) AS MAX_QTY
 			FROM TB_MCS_PORT(NOLOCK) P
 			INNER JOIN TB_MCS_CURR_PORT(NOLOCK) CP     ON P.PORT_ID = CP.PORT_ID
-			where p.EQPTID like 'C1%'
+			INNER JOIN Equipment E (NOLOCK) ON E.EQPTID= P.PORT_ID
+			INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID = ES.EQSGID
+			where ES.AREAID = @AREA_ID
 			GROUP  BY P.EQPTID
 			HAVING ISNULL(sum(CP.MAX_TRF_QTY), 0) >= 0
 			),
@@ -701,40 +708,109 @@
 			LEFT JOIN TT_EMPTY_QTY CE ON TOT.EQPTID = CE.TO_EQPTID
 			)
 			SELECT
-			e.EQPTID
-			, e.EQGRID
-			, e.EQPTIUSE AS 사용
-			, ei.EIOSTAT
-			, ei.EIOIFMODE
-			, ea.S71 AS LANE_ID
-			, CONVERT(VARCHAR(23), ei.UPDDTTM, 20) AS UPDDTTM
+			EQ.EQPTID
+			, EQ.EQGRID
+			, EQ.EQPTIUSE AS 사용
+			, E.EIOSTAT
+			, E.EIOIFMODE
+			, EQA.S71 AS LANE_ID
+			, WO.PRODID
+			, CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
 			, ISNULL(Q.MAX_QTY,0) AS MAX_CMD
 			, ISNULL(Q.CMD_USING_QTY,0) AS 실반송
 			, ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
-			FROM EQUIPMENT e with(nolock)
-			INNER JOIN EQUIPMENTATTR ea with(nolock) ON E.EQPTID = ea.EQPTID
-			INNER JOIN EIO ei with(nolock) ON e.EQPTID = ei.EQPTID
+			FROM EQUIPMENT EQ with(nolock)
+			INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+			INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+			INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+			LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+			LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+			LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
 			LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
 			WHERE 1 = 1
-			--AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
-			AND (E.EQPTIUSE = 'Y'
-			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
-			AND E.EQPTID like @AREA_ID
-			AND E.EQGRID IN ('CNV','STO','PKG','EOL','FOR','LAM','NND','ROL','COT','STK')
-			and LEN(E.EQPTID) = 11)
-			OR
-			(E.EQPTIUSE = 'Y'
-			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
-			AND E.EQPTID like @AREA_ID
-			AND E.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV')
-			and LEN(E.EQPTID) = 9)
-			Order by E.EQPTID
+			--AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND EQ.EQPTIUSE = 'Y'
+			AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID like @AREA_ID
+			AND EQ.EQGRID IN ('CNV','STO','EOL','FOR','LAM','NND','STK')
+			AND PD.PRODID IS NOT NULL
+			and LEN(EQ.EQPTID) = 11
+			UNION
+			SELECT
+			EQ.EQPTID
+			, EQ.EQGRID
+			, EQ.EQPTIUSE AS 사용
+			, E.EIOSTAT
+			, E.EIOIFMODE
+			, EQA.S71 AS LANE_ID
+			, WO.PRODID
+			, CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
+			, ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+			, ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+			, ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+			FROM EQUIPMENT EQ with(nolock)
+			INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+			INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+			INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+			LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+			LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+			LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+			LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+			WHERE 1 = 1
+			--AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND EQ.EQPTIUSE = 'Y'
+			AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID like @AREA_ID
+			AND EQ.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV','ROL','COT')
+			AND PD.PRODID IS NOT NULL
+			AND LEN(EQ.EQPTID) = 9
+			UNION
+			SELECT
+			EQ.EQPTID
+			, EQ.EQGRID
+			, EQ.EQPTIUSE AS 사용
+			, E.EIOSTAT
+			, E.EIOIFMODE
+			, EQA.S71 AS LANE_ID
+			, PD.PRODID
+			, CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
+			, ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+			, ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+			, ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+			FROM EQUIPMENT EQ with(nolock)
+			INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+			INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+			INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+			LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+			LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+			LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+			LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+			LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+			WHERE 1 = 1
+			--AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND EQ.EQPTIUSE = 'Y'
+			AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID like @AREA_ID
+			AND EQ.EQGRID IN ('PKG')
+			AND LEN(EQ.EQPTID) = 11
+			Order by EQ.EQPTID
 		</MainSQL>
-		<Option/>
-		<AdditionalVariable>
-			<EQP_GROUP_ID_LIST dataType="NONE" default=""/>
-			<AREA_ID dataType="NONE" default=""/>
-		</AdditionalVariable>
+		<Option>
+			<Option1 type="VAR" condition="" key="EQP_GROUP_ID_LIST" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+			<Option3 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
 		<Coloring>
 			<EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				<F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
@@ -762,25 +838,108 @@
 	</SearchEquipmentCurrentState>
 	<SearchEquipmentGroupList>
 		<MainSQL>
-			SELECT DISTINCT 
-				EQGRID
+			SELECT DISTINCT
+			EQGRID
 			FROM EQUIPMENT E (NOLOCK)
-				INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
-			ON E.EQSGID = ESA.EQSGID
-			WHERE 
-			 1=1
-			AND E.EQSGID like @PLANT_ID
+			INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID =  ES.EQSGID
+			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK) ON E.EQSGID = ESA.EQSGID
+			WHERE 1=1
+			AND ES.AREAID = @AREA_ID
 			AND ESA.S38 = @SYSTEM_TYPE_CODE
 			AND EQGRID NOT IN ('MCS')
+			UNION
+			SELECT DISTINCT
+			EQGRID
+			FROM EQUIPMENT E (NOLOCK)
+			INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID =  ES.EQSGID
+			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK) ON E.EQSGID = ESA.EQSGID
+			WHERE 1=1
+			AND ES.AREAID = @AREA_ID
+			AND EQGRID = 'PKG'
 		</MainSQL>
 		<Option>
-			<Option1 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option1 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
 			<Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
 		</Option>
 		<AdditionalVariable/>
 		<Coloring/>
 		<EventValues/>
 	</SearchEquipmentGroupList>
+	<SearchEquipmentList>
+		<MainSQL>
+			SELECT DISTINCT
+			e.EQPTID
+			FROM EQUIPMENT e with(nolock)
+			INNER JOIN EQUIPMENTATTR ea (nolock)
+			ON E.EQPTID = ea.EQPTID
+			INNER JOIN EquipmentSegment ES (NOLOCK)
+			ON E.EQSGID = ES.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA (NOLOCK)
+			ON ESA.EQSGID = ES.EQSGID
+			INNER JOIN EIO ei (nolock)
+			ON e.EQPTID = ei.EQPTID
+			INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+			ON TMP.EQPTID = E.EQPTID
+			WHERE 1 = 1
+			--AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND E.EQPTIUSE = 'Y'
+			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID = @AREA_ID
+			AND E.EQGRID IN ('CNV','STO','EOL','FOR','LAM','NND','STK')
+			and E.EQPTID = LEFT(TMP.PORT_ID, 11)
+			UNION
+			SELECT DISTINCT
+			e.EQPTID
+			FROM EQUIPMENT e with(nolock)
+			INNER JOIN EQUIPMENTATTR ea (nolock)
+			ON E.EQPTID = ea.EQPTID
+			INNER JOIN EquipmentSegment ES (NOLOCK)
+			ON E.EQSGID = ES.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA (NOLOCK)
+			ON ESA.EQSGID = ES.EQSGID
+			INNER JOIN EIO ei (nolock)
+			ON e.EQPTID = ei.EQPTID
+			INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+			ON TMP.EQPTID = E.EQPTID
+			WHERE 1 = 1
+			--AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND E.EQPTIUSE = 'Y'
+			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID = @AREA_ID
+			AND E.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV','ROL','COT')
+			and E.EQPTID = LEFT(TMP.PORT_ID, 9)
+			UNION
+			SELECT DISTINCT
+			e.EQPTID
+			FROM EQUIPMENT e with(nolock)
+			INNER JOIN EQUIPMENTATTR ea (nolock)
+			ON E.EQPTID = ea.EQPTID
+			INNER JOIN EquipmentSegment ES (NOLOCK)
+			ON E.EQSGID = ES.EQSGID
+			INNER JOIN EIO ei (nolock)
+			ON e.EQPTID = ei.EQPTID
+			INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+			ON TMP.EQPTID = E.EQPTID
+			WHERE 1 = 1
+			--AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+			AND E.EQPTIUSE = 'Y'
+			AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+			AND ES.AREAID = @AREA_ID
+			AND E.EQGRID IN ('PKG')
+			and E.EQPTID = LEFT(TMP.PORT_ID, 11)
+			Order by E.EQPTID
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="" key="EQP_GROUP_ID_LIST" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+			<Option3 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>
+		<EventValues/>
+	</SearchEquipmentList>
 	<SearchEquipmentStateHistory>
 		<MainSQL>
 			select 
@@ -808,21 +967,21 @@
 	<SearchEquipmentEioHistory>
 		<MainSQL>
 			SELECT
-			+Option1
-			EIO.EQPTID,
-			EIO.EIOSTAT,
-			CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM,
-			MP.MAX_TRF_QTY,
-			CE.CMD_QTY
+				+Option1
+				EIO.EQPTID,
+				EIO.EIOSTAT,
+				CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM,
+				MP.MAX_TRF_QTY,
+				CE.CMD_QTY
 			FROM EIO EIO WITH(NOLOCK)
-			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
+				INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
 			LEFT JOIN(
-			SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
+				SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
 			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
 			WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
-			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+				AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
 			GROUP BY TO_EQPTID, TO_PORT_ID
-			) CE ON EIO.EQPTID = CE.TO_PORT_ID
+				) CE ON EIO.EQPTID = CE.TO_PORT_ID
 			WHERE EIO.EQPTID like @PORT_ID
 			ORDER BY EIO_DTTM desc
 		</MainSQL>
@@ -839,12 +998,14 @@
 	</SearchEquipmentEioHistory>
 	<SearchPortCurrentState>
 		<MainSQL>
-			select TMCP.PORT_ID
-				, TMCP.PORT_STAT_CODE AS 요청
-				, E.EIOSTAT AS ES
-				, MAX_TRF_QTY AS 버퍼
-				, E.EIOIFMODE AS EIM
-				, EA.EQPT_MAINT_FLAG AS MAINT_FLAG
+			select
+			TMCP.PORT_ID
+			, TMCP.PORT_STAT_CODE AS 요청
+			, E.EIOSTAT AS ES
+			, MAX_TRF_QTY AS 버퍼
+			, E.EIOIFMODE AS EIM
+			, EA.EQPT_MAINT_FLAG AS MAINT_FLAG
+			, TMCP.PORT_WRK_MODE
 			from TB_MCS_CURR_PORT TMCP (NOLOCK)
 			INNER JOIN EIO E (NOLOCK) on e.EQPTID = LEFT(TMCP.PORT_ID, 15)
 			INNER JOIN EQUIPMENT EM (NOLOCK) on e.EQPTID = em.EQPTID
@@ -852,18 +1013,15 @@
 			where 1=1
 			+Option1
 			+Option2
-			+Option3
+			Order by TMCP.PORT_ID
 		</MainSQL>
 		<Option>
-			<Option1 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="%%">
+			<Option1 type="IF" condition="not_equal" key="EQPTID" dataType="string" default="">
 				AND E.EQPTID like @EQPTID
 			</Option1>
 			<Option2 type="IF" condition="not_equal" key="AREA_ID" dataType="string" default="">
 				AND E.EQPTID like @AREA_ID
 			</Option2>
-			<Option3 type="NONE" condition="" key="" dataType="" default="">
-				Order by TMCP.PORT_ID
-			</Option3>
 		</Option>
 		<AdditionalVariable/>
 		<Coloring>
@@ -884,9 +1042,122 @@
 		</Coloring>
 		<EventValues/>
 	</SearchPortCurrentState>
-	<SearchPortStateHistory>
+	<SearchPortCurrentList>
 		<MainSQL>
-			select TOP 20
+			WITH TT_BUF_SUM AS (
+			SELECT
+			P.PORT_ID,
+			ISNULL(sum(CP.MAX_TRF_QTY),0) AS MAX_QTY
+			FROM TB_MCS_PORT(NOLOCK) P
+			INNER JOIN TB_MCS_CURR_PORT(NOLOCK) CP     ON P.PORT_ID = CP.PORT_ID
+			where 1=1
+			AND (LEFT(P.PORT_ID,11) IN (@EQPTID_LIST) OR LEFT(P.PORT_ID,9) IN (@EQPTID_LIST))
+			GROUP  BY P.PORT_ID
+			HAVING ISNULL(sum(CP.MAX_TRF_QTY), 0) >= 0
+			),
+			TT_USING_QTY AS (
+			SELECT
+			TO_PORT_ID
+			, ISNULL(COUNT(CSTID),0) AS CMD_USING_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE 1=1
+			AND CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND CSTSTAT = 'U'
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_PORT_ID
+			),
+			TT_EMPTY_QTY AS (
+			SELECT
+			TO_PORT_ID
+			, ISNULL(COUNT(CSTID),0) AS CMD_EMPTY_QTY
+			FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+			WHERE 1=1
+			AND CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+			AND CSTSTAT = 'E'
+			AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+			GROUP BY TO_PORT_ID
+			)
+			,
+			TT_TOTAL_QTY AS (
+			SELECT
+			TOT.PORT_ID
+			, TOT.MAX_QTY
+			, CU.CMD_USING_QTY
+			, CE.CMD_EMPTY_QTY
+			FROM TT_BUF_SUM  TOT
+			LEFT JOIN TT_USING_QTY CU ON TOT.PORT_ID = CU.TO_PORT_ID
+			LEFT JOIN TT_EMPTY_QTY CE ON TOT.PORT_ID = CE.TO_PORT_ID
+			)
+			SELECT
+			TMP.PORT_ID,
+			TMCP.PORT_STAT_CODE AS 상태,
+			TMCP.PORT_WRK_MODE AS 모드,
+			eio.EIOSTAT AS ES,
+			eio.EIOIFMODE AS EIM,
+			TTQ.MAX_QTY AS 버퍼,
+			TTQ.CMD_USING_QTY AS 실반송량,
+			TTQ.CMD_EMPTY_QTY AS 공반송량,
+			TMP.PORT_TYPE_CODE AS PORT_TYPE,
+			TMP.INOUT_TYPE_CODE AS INOUT,
+			TMP.USE_FLAG AS 사용여부,
+			TMP.ELTR_TYPE_CODE AS 극성,
+			TMP.EQPTID,
+			TMP.IF_EQPTID,
+			TMP.REP_PORT_FLAG AS 대표포트,
+			TMP.TRF_REQ_SKIP_FLAG AS 요청스킵,
+			TMP.MANL_PORT_TYPE_CODE AS 포트,
+			TMP.MAX_TRF_QTY_MNGT_FLAG AS 버퍼사용,
+			TMP.SKIP_TRGT_REQ_TRF_TYPE_CODE AS 스킵유형,
+			TMP.INPUT_ENABLE_CSTSTAT AS 투입CSTSTAT,
+			TMP.LOAD_ENABLE_WIPSTAT_LST AS 투입WIPSTAT,
+			TMP.STACK_MODE_CODE AS 적재모드,
+			E.EQPTSHORTNAME,
+			TMCP.CA_BUF_QTY AS C버퍼,
+			TMCP.AN_BUF_QTY AS A버퍼
+			FROM TB_MCS_PORT TMP (NOLOCK)
+			INNER JOIN TB_MCS_CURR_PORT TMCP (NOLOCK)
+			ON TMCP.PORT_ID = TMP.PORT_ID
+			INNER JOIN Equipment E (NOLOCK)
+			ON E.EQPTID = TMP.EQPTID
+			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+			ON E.EQSGID = ESA.EQSGID
+			INNER JOIN TT_TOTAL_QTY TTQ (NOLOCK)
+			ON TMCP.PORT_ID = TTQ.PORT_ID
+			INNER JOIN Eio eio (NOLOCK)
+			ON TMCP.PORT_ID = eio.EQPTID
+			WHERE 1 = 1
+			AND E.EQPTIUSE = 'Y'
+			--AND ESA.S38 like @SYSTEM_TYPE_CODE
+			Order by E.EQPTID
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="not_equal" key="EQPTID_LIST" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring>
+			<ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+				<T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+				<U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+				<W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+				<R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+			</ES>
+			<EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+				<ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+			</EIM>
+			<MAINT_FLAG Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<M Red="255" Green="158" Blue="158" IsColoringRow="true"/>
+			</MAINT_FLAG>
+		</Coloring>
+		<EventValues/>
+	</SearchPortCurrentList>
+	<SearchPortStateRecord>
+		<MainSQL>
+			select
+			TOP 40
+			+Option2
 			PORT_ID
 			, PORT_STAT_CODE AS 상태
 			, ACTDTTM
@@ -895,16 +1166,27 @@
 			where PORT_ID like @PORT_ID
 			ORDER BY ACTDTTM desc
 		</MainSQL>
-		<Option/>
-		<AdditionalVariable>
-			<PORT_ID dataType="string" default=""/>
-		</AdditionalVariable>
+		<Option>
+			<Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
+			<Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
+				TOP @TOPNUMBER
+			</Option2>
+		</Option>
+		<AdditionalVariable/>
 		<Coloring/>
 		<EventValues/>
-	</SearchPortStateHistory>
-	<SearchPortEioHistory>
+	</SearchPortStateRecord>
+	<SearchPortEioRecord>
 		<MainSQL>
-			SELECT TOP 20 EIO.EQPTID, EIO.EIOSTAT, CONVERT(CHAR(23), EIO.EIODTTM , 20) AS EIO_DTTM, MP.MAX_TRF_QTY, CE.CMD_QTY
+			SELECT
+			TOP 40
+			+Option2
+			EIO.EQPTID, 
+			EIO.EIOSTAT, 
+			CONVERT(CHAR(23), 
+			EIO.EIODTTM , 20) AS EIO_DTTM, 
+			MP.MAX_TRF_QTY, 
+			CE.CMD_QTY
 			FROM EIO EIO WITH(NOLOCK)
 			INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
 			LEFT JOIN(
@@ -917,13 +1199,16 @@
 			WHERE EIO.EQPTID like @PORT_ID
 			ORDER BY EIO_DTTM desc
 		</MainSQL>
-		<Option/>
-		<AdditionalVariable>
-			<PORT_ID dataType="string" default=""/>
-		</AdditionalVariable>
+		<Option>
+			<Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
+			<Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
+				TOP @TOPNUMBER
+			</Option2>
+		</Option>
+		<AdditionalVariable/>
 		<Coloring/>
 		<EventValues/>
-	</SearchPortEioHistory>
+	</SearchPortEioRecord>
 	<SearchStockerCommonCodeList>
 		<MainSQL>
 			SELECT DISTINCT S70 AS Code,
@@ -948,14 +1233,14 @@
 			ON E.EQSGID = ESA.EQSGID
 			INNER JOIN EquipmentAttr EA
 			ON E.EQPTID = EA.EQPTID
-			WHERE E.EQSGID like @PLANT_ID
+			WHERE E.EQSGID like @AREA_ID
 			and E.EQGRID = 'STO'
 			and ESA.S38 = @SYSTEM_TYPE_CODE
 			and EA.S70 is not NULL
 		</MainSQL>
 		<Option/>
 		<AdditionalVariable>
-			<PLANT_ID dataType="string" default=""/>
+			<AREA_ID dataType="string" default=""/>
 			<SYSTEM_TYPE_CODE dataType="string" default=""/>
 		</AdditionalVariable>
 		<Coloring/>
@@ -972,8 +1257,13 @@
 			, C.EQPT_CUR
 			, CONVERT(CHAR(23), WA.AGING_ISS_SCHD_DTTM, 20) AS AGING_ISS_SCHD_DTTM
 			, W.WIPSTAT
-			, W.ROUTID
+			, W.REWORK
+			, W.WIPHOLD AS HOLD
+			, WA.LANE_ID
+			, W.ROUTID AS ROUT
 			, W.PROCID
+			, W.PRODID
+			, B.FINL_HOLD_FLAG AS GQMS_FINL_HOLD_FLAG
 			, ISNULL(RP2.PROCID, '')  AS NEXT_PROCID
 			, ISNULL(RP2.LANE_ID, '')  AS NEXT_LANEID
 			, W.LOTID
@@ -986,6 +1276,7 @@
 			, CONVERT(CHAR(23), C.UPDDTTM, 20) AS UPDDTTM_C
 			, AGING_ISS_PRIORITY_NO
 			, CASE WHEN DATEDIFF(minute, GETDATE(), AGING_ISS_SCHD_DTTM)> 0 THEN '0' ELSE '1' END AS OUTFLAG
+			, CSTSTAT
 			FROM  (
 			SELECT
 			C1.CSTID
@@ -1010,7 +1301,7 @@
 			FROM Carrier C WITH(NOLOCK)
 			INNER JOIN EQUIPMENTATTR EA WITH(NOLOCK)  ON C.EQPT_CUR =  EA.EQPTID
 			WHERE 1 = 1
-			AND	C.CURR_AREAID = @PLANT_ID
+			AND	C.CURR_AREAID = @AREA_ID
 			--AND EA.S70 = @StockerCommonCode
 			AND EA.EQPTID IN (@StockerList)
 			) AS C1
@@ -1022,6 +1313,9 @@
 			ON C.CURR_LOTID = W.LOTID
 			LEFT JOIN WIPATTR WA WITH(NOLOCK)
 			ON WA.LOTID = W.LOTID
+			LEFT JOIN TB_SFC_WIP_BLOCK_RSLT B (NOLOCK)
+			ON W.LOTID=B.LOTID
+			AND B.BLOCK_TYPE_CODE	='MOVE_SHOP'
 			LEFT JOIN TB_MMD_FORM_ROUT_PROC RP WITH(NOLOCK)
 			ON RP.ROUTID = W.ROUTID AND RP.PROCID = W.PROCID
 			AND RP.USE_FLAG = 'Y'
@@ -1050,7 +1344,7 @@
 			<Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
 				AND C.CSTID in (@CSTID)
 			</Option3>
-			<Option4 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option4 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
 			<Option5 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
 			<Option6 type="VAR" condition="" key="StockerList" dataType="string" default=""/>
 		</Option>
@@ -1064,6 +1358,17 @@
 			<AGING_ISS_PRIORITY_NO Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
 				
 			</AGING_ISS_PRIORITY_NO>
+			<HOLD Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<Y Red="255" Green="155" Blue="155" IsColoringRow="true"/>
+			</HOLD>
+			<WIPSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<WAIT Red="123" Green="211" Blue="211" IsColoringRow="false"/>
+				<PROC Red="161" Green="238" Blue="189" IsColoringRow="false"/>
+				<MOVING Red="161" Green="238" Blue="189" IsColoringRow="false"/>
+				<EQPT_END Red="246" Green="247" Blue="196" IsColoringRow="false"/>
+				<END Red="246" Green="247" Blue="196" IsColoringRow="false"/>
+				<TERM Red="246" Green="214" Blue="214" IsColoringRow="false"/>
+			</WIPSTAT>
 		</Coloring>
 		<EventValues/>
 	</SearchStockerInventory>
@@ -1092,7 +1397,8 @@
 			, ISNULL(R.DISABLE_QTY, 0) AS DISABLE_QTY
 			FROM EQUIPMENT e WITH(NOLOCK)
 			INNER JOIN EQUIPMENTATTR EA WITH(NOLOCK) ON e.EQPTID = EA.EQPTID
-			INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK) ON E.EQSGID = ESA.EQSGID
+			INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
 			INNER JOIN EIO ei WITH(NOLOCK) ON e.EQPTID = ei.EQPTID
 			LEFT JOIN (
 			SELECT
@@ -1130,7 +1436,7 @@
 			) AS R
 			ON  E.EQPTID = R.EQPTID
 			WHERE 1 = 1
-			AND E.EQSGID like @PLANT_ID
+			AND ES.AREAID like @AREA_ID
 			AND E.EQGRID = 'STO'
 			AND ESA.S38 = @SYSTEM_TYPE_CODE
 			AND EA.S70 = @StockerCommonCode
@@ -1138,7 +1444,7 @@
 		</MainSQL>
 		<Option>
 			<Option1 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
-			<Option2 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
 			<Option3 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
 		</Option>
 		<AdditionalVariable/>
@@ -1442,19 +1748,96 @@
 		<MainSQL>
 			select E.EQPTID
 			FROM Equipment E (NOLOCK)
-			INNER JOIN EQUIPMENTATTR EA (NOLOCK)
-			ON E.EQPTID =  EA.EQPTID
+			INNER JOIN EQUIPMENTATTR EA (NOLOCK) ON E.EQPTID =  EA.EQPTID
+			INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID =  ES.EQSGID
 			WHERE 1=1
 			AND EQGRID = 'STO'
 			AND EA.S70 = @StockerCommonCode
-			AND E.EQSGID like @PLANT_ID
+			AND E.EQSGID like @AREA_ID
 		</MainSQL>
 		<Option>
 			<Option1 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
-			<Option2 type="VAR" condition="" key="PLANT_ID" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
 		</Option>
 		<AdditionalVariable/>
 		<Coloring/>
 		<EventValues/>
 	</SearchStockerList>
+	<SearchRouteInfo>
+		<MainSQL>
+			WITH TT_EQPT_SMPL AS
+			(
+			SELECT DISTINCT
+			EQGRID
+			, EA.S71
+			, P.PROCID --DISTINCT PE.EQPTID
+			FROM PROCESSEQUIPMENT           PE   (NOLOCK)
+			INNER JOIN EQUIPMENT            E    (NOLOCK) ON E.EQPTID = PE.EQPTID
+			INNER JOIN EQUIPMENTATTR		EA   (NOLOCK) ON EA.EQPTID = E.EQPTID
+			INNER JOIN EquipmentSegment		ES   (NOLOCK) ON ES.EQSGID = E.EQSGID
+			INNER JOIN EquipmentSegmentAttr ESA  (NOLOCK) ON ESA.EQSGID = E.EQSGID
+			INNER JOIN Process              P    (NOLOCK) ON P.PROCID = PE.PROCID
+			WHERE 1=1
+			AND ES.AREAID = @AREA_ID
+			AND ESA.S38 = @SYSTEM_TYPE_CODE
+			AND PE.USE_FLAG = 'Y'
+			)
+			SELECT
+			T1.EQGRID AS EQPTID
+			, R.ROUTID AS ROUT
+			, RP.PROCID AS 공정
+			, RP.LANE_ID
+			, '' AS EQGRID
+			, '' AS 극성
+			, '' AS LOTTYPE
+			, RP.PROC_SEQNO AS 순서
+			FROM TB_MMD_FORM_ROUT            R    (NOLOCK)
+			INNER JOIN TB_MMD_FORM_ROUT_PROC RP   (NOLOCK) ON R.ROUTID = RP.ROUTID
+			INNER JOIN TT_EQPT_SMPL          T1   (NOLOCK) ON T1.S71 = RP.LANE_ID  AND T1.PROCID = RP.PROCID
+			WHERE R.ROUTID = @ROUT
+			AND RP.USE_FLAG = 'Y'
+			UNION
+			SELECT
+			E.EQPTID
+			, PD.PRODID AS ROUT
+			, P.PROCID AS 공정
+			, LT.DEMAND_TYPE AS LANE_ID
+			, E.EQGRID
+			, PDA.S13 AS 극성
+			, LT.LOTTYPE
+			, 0 AS 순서
+			FROM PROCESSEQUIPMENT               PE   (NOLOCK)
+			INNER JOIN EQUIPMENT            E    (NOLOCK) ON E.EQPTID = PE.EQPTID
+			INNER JOIN EQUIPMENTATTR		EA   (NOLOCK) ON EA.EQPTID = E.EQPTID
+			INNER JOIN EquipmentSegment		ES   (NOLOCK) ON ES.EQSGID = E.EQSGID AND ES.AREAID = @AREA_ID
+			INNER JOIN EquipmentSegmentAttr ESA  (NOLOCK) ON ESA.EQSGID = E.EQSGID AND ESA.S38 = @SYSTEM_TYPE_CODE
+			INNER JOIN Process              P    (NOLOCK) ON P.PROCID = PE.PROCID
+			INNER JOIN EIOATTR              EioA (NOLOCK) ON EioA.EQPTID = E.EQPTID
+			INNER JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EioA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+			INNER JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+			INNER JOIN ProductAttr			PDA  (NOLOCK) ON PDA.PRODID = TSWM.MTRLID
+			INNER JOIN TB_SFC_FP_DETL_PLAN  TSFDP(NOLOCK) ON TSWM.WOID = TSFDP.WO_DETL_ID
+			INNER JOIN LotType              LT   (NOLOCK) ON LT.DEMAND_TYPE = TSFDP.DEMAND_TYPE
+			WHERE 1=1
+			AND PE.USE_FLAG = 'Y'
+			AND EQGRID IN ('PKG','LAM','NND','ROL','COT')
+			Order by 순서, EQPTID
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+			<Option3 type="VAR" condition="" key="ROUT" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring>
+			<ROUT Red="255" Green="155" Blue="155" IsColoringColumn="true" IsTimeCompare="false"/>
+			<LANE_ID Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<AEUPPER Red="246" Green="247" Blue="196" IsColoringRow="false"/>
+				<AELOWER Red="246" Green="214" Blue="214" IsColoringRow="false"/>
+			</LANE_ID>
+		</Coloring>
+		<EventValues/>
+	</SearchRouteInfo>
+
+
 </SqlList>
