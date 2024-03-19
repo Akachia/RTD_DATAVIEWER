@@ -144,7 +144,7 @@ namespace RTD_DataViewer.View
             if (main.correntConnectionStringSetting.IsConnection)
             {
                 //개별 옵션으로 내부 STR, 표기 STR을 따로 하게 수정필요
-                lb_TransferStatus.Text = MakeTransferStatusCountString("REQ_STAT_CODE", new string[] { "CREATED", "REQUEST", "REQUEST_WRTD", "QUERY", "QUERY_WRTD" }, dgv_PortRequestList.DgvData.RowCount);
+                lb_TransferStatus.Text = winformUtils.MakeTransferStatusCountString("REQ_STAT_CODE",dgv_PortRequestList);
             }
         }
 
@@ -185,32 +185,6 @@ namespace RTD_DataViewer.View
                     rootNode.Nodes.Add(childNode);
                 }
             }
-        }
-
-        private string MakeTransferStatusCountString(string columnName, string[] atrr, int rowCount)
-        {
-            List<string> list = new List<string>();
-            int count = dgv_PortRequestList.DgvData.RowCount;
-
-            for (int i = 0; i < count; i++)
-            {
-                list.Add(dgv_PortRequestList.DgvData.Rows[i].Cells[columnName].Value.ToString());
-            }
-
-            Dictionary<string, int> keyValuePairs = new();
-
-            foreach (string row in atrr)
-            {
-                keyValuePairs.Add(row, list.Count(a => a.ToString() == row));
-            }
-
-            string str = string.Empty;
-            foreach (string row in keyValuePairs.Keys)
-            {
-                str += $"{row} : {keyValuePairs[row]} \n";
-            }
-
-            return str;
         }
 
         private void MakeSituations()

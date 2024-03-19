@@ -47,3 +47,4 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Releas
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Release\net6.0-windows\UserWinfromControl.UWC_NumberUpDown.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Release\net6.0-windows\UserWinfromControl.sourcelink.json
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Release\net6.0-windows\UserWinf.D9374DD0.Up2Date
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Release\net6.0-windows\UserWinfromControl.UWC_SituationBorad.resources

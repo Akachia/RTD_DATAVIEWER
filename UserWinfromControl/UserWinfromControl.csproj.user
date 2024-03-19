@@ -19,6 +19,9 @@
     <Compile Update="UWC_NumberUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UWC_SituationBorad.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UWC_TimerAndButton.cs">
       <SubType>UserControl</SubType>
     </Compile>

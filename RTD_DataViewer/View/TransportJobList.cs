@@ -208,33 +208,8 @@ namespace RTD_DataViewer.View
             if (main.correntConnectionStringSetting.IsConnection)
             {
                 //개별 옵션으로 내부 STR, 표기 STR을 따로 하게 수정필요
-                lb_TransportJobStatus.Text = MakeTransferStatusCountString("CMD_STAT_CODE", new string[] { "SEND", "RECEIVE", "MOVING"}, dgv_CurrentTransportJobList.DgvData.RowCount);
+                lb_TransportJobStatus.Text = winformUtils.MakeTransferStatusCountString("CMD_STAT_CODE", dgv_CurrentTransportJobList, "반송상태");
             }
-        }
-        private string MakeTransferStatusCountString(string columnName, string[] atrr, int rowCount)
-        {
-            List<string> list = new List<string>();
-            int count = dgv_CurrentTransportJobList.DgvData.RowCount;
-
-            for (int i = 0; i < count; i++)
-            {
-                list.Add(dgv_CurrentTransportJobList.DgvData.Rows[i].Cells[columnName].Value.ToString());
-            }
-
-            Dictionary<string, int> keyValuePairs = new();
-
-            foreach (string row in atrr)
-            {
-                keyValuePairs.Add(row, list.Count(a => a.ToString() == row));
-            }
-
-            string str = string.Empty;
-            foreach (string row in keyValuePairs.Keys)
-            {
-                str += $"{row} : {keyValuePairs[row]} \n";
-            }
-
-            return str;
         }
         #endregion
 

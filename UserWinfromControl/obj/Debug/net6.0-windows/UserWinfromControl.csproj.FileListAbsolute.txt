@@ -84,3 +84,4 @@ C:\Users\carry\Documents\GitHub\Tester1\UserWinfromControl\obj\Debug\net6.0-wind
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_CheckListBox.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_NumberUpDown.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_ListBox.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_SituationBorad.resources

@@ -713,6 +713,45 @@ namespace RTD_DataViewer
             return string.Empty;
         }
 
+        public string MakeTransferStatusCountString(string columnName, UWC_DataGridView dataGridView, string displayName = null)
+        {
+            List<string> list = new List<string>();
+            int count = dataGridView.DgvData.RowCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(dataGridView.DgvData.Rows[i].Cells[columnName].Value.ToString());
+            }
+
+            var counters = from r in list
+                           group r by r into grp
+                           select new { key = grp.Key, cnt = grp.Count() };
+
+            string str;
+            if (displayName == null)
+            {
+                str = $"{columnName}\n";
+            }
+            else
+            {
+                str = $"{displayName}\n";
+            }
+
+            foreach (var row in counters)
+            {
+                if (row.key == string.Empty)
+                {
+                    str += $"Empty : {row.cnt}\n";
+                }
+                else
+                {
+                    str += $"{row.key} : {row.cnt}\n";
+                }
+            }
+
+            return str;
+        }
+
         public SqlResultDataImpl ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultDataImpl sqlResultData, Dictionary<string, string> paramaterDic)
         {
             DataGridView data = dataGridView.DgvData;
