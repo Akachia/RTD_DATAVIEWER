@@ -40,17 +40,23 @@
             cb_TrfStatCode = new UserWinfromControl.UWC_ComboBox();
             clb_StockerList = new UserWinfromControl.UWC_CheckListBox();
             clb_StockerCommonCodeList = new UserWinfromControl.UWC_ListBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             lb_CstStat = new Label();
+            lb_WipStat = new Label();
+            lb_TrayLevel = new Label();
             lb_AgingIssPriortyNo = new Label();
             lb_RackStatCode = new Label();
             lb_TrfStatCode = new Label();
             lb_Prodid = new Label();
-            lb_WipStat = new Label();
+            lb_Route = new Label();
             lb_Procid = new Label();
             lb_NextProcid = new Label();
-            panel1 = new Panel();
+            lb_DateOverRowCount = new Label();
+            cb_AgingIssPriortyNo = new UserWinfromControl.UWC_ComboBox();
+            cb_WipStat = new UserWinfromControl.UWC_ComboBox();
+            chb_IsDatetimeOver = new UserWinfromControl.UWC_CheckBox();
             tableLayoutPanel1.SuspendLayout();
-            panel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -70,7 +76,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.Controls.Add(bt_Search, 11, 0);
             tableLayoutPanel1.Controls.Add(dgv_StockerInventory, 0, 2);
-            tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 8, 1);
+            tableLayoutPanel1.Controls.Add(dgv_StockerCurrState, 8, 2);
             tableLayoutPanel1.Controls.Add(dgv_TransportJobInfomation, 0, 4);
             tableLayoutPanel1.Controls.Add(bt_GetStockerGroupList, 11, 1);
             tableLayoutPanel1.Controls.Add(cb_CarrierStat, 10, 0);
@@ -78,7 +84,10 @@
             tableLayoutPanel1.Controls.Add(cb_TrfStatCode, 8, 0);
             tableLayoutPanel1.Controls.Add(clb_StockerList, 11, 3);
             tableLayoutPanel1.Controls.Add(clb_StockerCommonCodeList, 11, 2);
-            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(cb_AgingIssPriortyNo, 8, 1);
+            tableLayoutPanel1.Controls.Add(cb_WipStat, 9, 1);
+            tableLayoutPanel1.Controls.Add(chb_IsDatetimeOver, 10, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -123,10 +132,10 @@
             dgv_StockerCurrState.Dock = DockStyle.Fill;
             dgv_StockerCurrState.Lb_Text = "SqlName";
             dgv_StockerCurrState.Lb_Text2 = "";
-            dgv_StockerCurrState.Location = new Point(885, 33);
+            dgv_StockerCurrState.Location = new Point(885, 63);
             dgv_StockerCurrState.Name = "dgv_StockerCurrState";
-            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 3);
-            dgv_StockerCurrState.Size = new Size(372, 444);
+            tableLayoutPanel1.SetRowSpan(dgv_StockerCurrState, 2);
+            dgv_StockerCurrState.Size = new Size(372, 414);
             dgv_StockerCurrState.TabIndex = 14;
             // 
             // dgv_TransportJobInfomation
@@ -209,22 +218,65 @@
             clb_StockerCommonCodeList.TabIndex = 20;
             clb_StockerCommonCodeList.VariableName = "StockerCommonCode";
             // 
+            // flowLayoutPanel1
+            // 
+            tableLayoutPanel1.SetColumnSpan(flowLayoutPanel1, 8);
+            flowLayoutPanel1.Controls.Add(lb_CstStat);
+            flowLayoutPanel1.Controls.Add(lb_WipStat);
+            flowLayoutPanel1.Controls.Add(lb_TrayLevel);
+            flowLayoutPanel1.Controls.Add(lb_AgingIssPriortyNo);
+            flowLayoutPanel1.Controls.Add(lb_RackStatCode);
+            flowLayoutPanel1.Controls.Add(lb_TrfStatCode);
+            flowLayoutPanel1.Controls.Add(lb_Prodid);
+            flowLayoutPanel1.Controls.Add(lb_Route);
+            flowLayoutPanel1.Controls.Add(lb_Procid);
+            flowLayoutPanel1.Controls.Add(lb_NextProcid);
+            flowLayoutPanel1.Controls.Add(lb_DateOverRowCount);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(3, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            tableLayoutPanel1.SetRowSpan(flowLayoutPanel1, 2);
+            flowLayoutPanel1.Size = new Size(876, 54);
+            flowLayoutPanel1.TabIndex = 30;
+            // 
             // lb_CstStat
             // 
             lb_CstStat.AutoSize = true;
             lb_CstStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_CstStat.Location = new Point(577, 7);
+            lb_CstStat.Location = new Point(3, 0);
             lb_CstStat.Name = "lb_CstStat";
             lb_CstStat.Size = new Size(43, 13);
             lb_CstStat.TabIndex = 21;
             lb_CstStat.Text = "CstStat";
             lb_CstStat.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // lb_WipStat
+            // 
+            lb_WipStat.AutoSize = true;
+            lb_WipStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_WipStat.Location = new Point(52, 0);
+            lb_WipStat.Name = "lb_WipStat";
+            lb_WipStat.Size = new Size(47, 13);
+            lb_WipStat.TabIndex = 26;
+            lb_WipStat.Text = "WipStat";
+            lb_WipStat.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lb_TrayLevel
+            // 
+            lb_TrayLevel.AutoSize = true;
+            lb_TrayLevel.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_TrayLevel.Location = new Point(105, 0);
+            lb_TrayLevel.Name = "lb_TrayLevel";
+            lb_TrayLevel.Size = new Size(53, 13);
+            lb_TrayLevel.TabIndex = 30;
+            lb_TrayLevel.Text = "TrayLevel";
+            lb_TrayLevel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // lb_AgingIssPriortyNo
             // 
             lb_AgingIssPriortyNo.AutoSize = true;
             lb_AgingIssPriortyNo.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_AgingIssPriortyNo.Location = new Point(647, 7);
+            lb_AgingIssPriortyNo.Location = new Point(164, 0);
             lb_AgingIssPriortyNo.Name = "lb_AgingIssPriortyNo";
             lb_AgingIssPriortyNo.Size = new Size(98, 13);
             lb_AgingIssPriortyNo.TabIndex = 22;
@@ -235,7 +287,7 @@
             // 
             lb_RackStatCode.AutoSize = true;
             lb_RackStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_RackStatCode.Location = new Point(780, 7);
+            lb_RackStatCode.Location = new Point(268, 0);
             lb_RackStatCode.Name = "lb_RackStatCode";
             lb_RackStatCode.Size = new Size(78, 13);
             lb_RackStatCode.TabIndex = 23;
@@ -246,40 +298,40 @@
             // 
             lb_TrfStatCode.AutoSize = true;
             lb_TrfStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_TrfStatCode.Location = new Point(479, 7);
+            lb_TrfStatCode.Location = new Point(352, 0);
             lb_TrfStatCode.Name = "lb_TrfStatCode";
             lb_TrfStatCode.Size = new Size(67, 13);
             lb_TrfStatCode.TabIndex = 24;
             lb_TrfStatCode.Text = "TrfStatCode";
             lb_TrfStatCode.TextAlign = ContentAlignment.MiddleLeft;
+            lb_TrfStatCode.Click += lb_TrfStatCode_Click;
             // 
             // lb_Prodid
             // 
             lb_Prodid.AutoSize = true;
             lb_Prodid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_Prodid.Location = new Point(94, 7);
+            lb_Prodid.Location = new Point(425, 0);
             lb_Prodid.Name = "lb_Prodid";
             lb_Prodid.Size = new Size(41, 13);
             lb_Prodid.TabIndex = 25;
             lb_Prodid.Text = "Prodid";
             lb_Prodid.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lb_WipStat
+            // lb_Route
             // 
-            lb_WipStat.AutoSize = true;
-            lb_WipStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_WipStat.Location = new Point(10, 7);
-            lb_WipStat.Name = "lb_WipStat";
-            lb_WipStat.Size = new Size(47, 13);
-            lb_WipStat.TabIndex = 26;
-            lb_WipStat.Text = "WipStat";
-            lb_WipStat.TextAlign = ContentAlignment.MiddleLeft;
+            lb_Route.AutoSize = true;
+            lb_Route.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_Route.Location = new Point(472, 0);
+            lb_Route.Name = "lb_Route";
+            lb_Route.Size = new Size(37, 13);
+            lb_Route.TabIndex = 29;
+            lb_Route.Text = "Route";
             // 
             // lb_Procid
             // 
             lb_Procid.AutoSize = true;
             lb_Procid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_Procid.Location = new Point(241, 7);
+            lb_Procid.Location = new Point(515, 0);
             lb_Procid.Name = "lb_Procid";
             lb_Procid.Size = new Size(39, 13);
             lb_Procid.TabIndex = 27;
@@ -290,30 +342,57 @@
             // 
             lb_NextProcid.AutoSize = true;
             lb_NextProcid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_NextProcid.Location = new Point(353, 7);
+            lb_NextProcid.Location = new Point(560, 0);
             lb_NextProcid.Name = "lb_NextProcid";
             lb_NextProcid.Size = new Size(62, 13);
             lb_NextProcid.TabIndex = 28;
             lb_NextProcid.Text = "NextProcid";
             lb_NextProcid.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // panel1
+            // lb_DateOverRowCount
             // 
-            tableLayoutPanel1.SetColumnSpan(panel1, 8);
-            panel1.Controls.Add(lb_TrfStatCode);
-            panel1.Controls.Add(lb_NextProcid);
-            panel1.Controls.Add(lb_Procid);
-            panel1.Controls.Add(lb_WipStat);
-            panel1.Controls.Add(lb_Prodid);
-            panel1.Controls.Add(lb_RackStatCode);
-            panel1.Controls.Add(lb_AgingIssPriortyNo);
-            panel1.Controls.Add(lb_CstStat);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            tableLayoutPanel1.SetRowSpan(panel1, 2);
-            panel1.Size = new Size(876, 54);
-            panel1.TabIndex = 29;
+            lb_DateOverRowCount.AutoSize = true;
+            lb_DateOverRowCount.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_DateOverRowCount.Location = new Point(628, 0);
+            lb_DateOverRowCount.Name = "lb_DateOverRowCount";
+            lb_DateOverRowCount.Size = new Size(107, 13);
+            lb_DateOverRowCount.TabIndex = 31;
+            lb_DateOverRowCount.Text = "DateOverRowCount";
+            lb_DateOverRowCount.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // cb_AgingIssPriortyNo
+            // 
+            cb_AgingIssPriortyNo.ComboBoxSelectedIndex = -1;
+            cb_AgingIssPriortyNo.ComboBoxText = "AgingIssPriortyNo";
+            cb_AgingIssPriortyNo.DataSource = null;
+            cb_AgingIssPriortyNo.Dock = DockStyle.Fill;
+            cb_AgingIssPriortyNo.Location = new Point(885, 33);
+            cb_AgingIssPriortyNo.Name = "cb_AgingIssPriortyNo";
+            cb_AgingIssPriortyNo.Size = new Size(134, 24);
+            cb_AgingIssPriortyNo.TabIndex = 32;
+            cb_AgingIssPriortyNo.VariableName = "AGING_ISS_PRIORITY_NO";
+            // 
+            // cb_WipStat
+            // 
+            cb_WipStat.ComboBoxSelectedIndex = -1;
+            cb_WipStat.ComboBoxText = "WipStat";
+            cb_WipStat.DataSource = null;
+            cb_WipStat.Dock = DockStyle.Fill;
+            cb_WipStat.Location = new Point(1025, 33);
+            cb_WipStat.Name = "cb_WipStat";
+            cb_WipStat.Size = new Size(134, 24);
+            cb_WipStat.TabIndex = 33;
+            cb_WipStat.VariableName = "WIPSTAT";
+            // 
+            // chb_IsDatetimeOver
+            // 
+            chb_IsDatetimeOver.CheckBoxText = "출고예정";
+            chb_IsDatetimeOver.Dock = DockStyle.Fill;
+            chb_IsDatetimeOver.Location = new Point(1165, 33);
+            chb_IsDatetimeOver.Name = "chb_IsDatetimeOver";
+            chb_IsDatetimeOver.Size = new Size(92, 24);
+            chb_IsDatetimeOver.TabIndex = 34;
+            chb_IsDatetimeOver.VariableName = "ISCHECKED";
             // 
             // StockerInventorySituation
             // 
@@ -323,8 +402,8 @@
             Name = "StockerInventorySituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -349,6 +428,12 @@
         private Label lb_WipStat;
         private Label lb_Procid;
         private Label lb_NextProcid;
-        private Panel panel1;
+        private Label lb_Route;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label lb_TrayLevel;
+        private Label lb_DateOverRowCount;
+        private UserWinfromControl.UWC_ComboBox cb_AgingIssPriortyNo;
+        private UserWinfromControl.UWC_ComboBox cb_WipStat;
+        private UserWinfromControl.UWC_CheckBox chb_IsDatetimeOver;
     }
 }

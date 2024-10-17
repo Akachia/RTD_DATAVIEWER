@@ -40,6 +40,7 @@ namespace CustomUtils
         {
             public static string IF = "IF";
             public static string VAR = "VAR";
+            public static string CHECK = "CHECK";
             public static string NONE = "NONE";
             public static string CSTSTAT = "CSTSTAT";
             public static string MOVINGSTATE = "MOVINGSTATE";

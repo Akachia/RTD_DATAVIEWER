@@ -158,6 +158,13 @@ namespace RTD_DataViewer
                         continue;
                     }
 
+                    if (item is UWC_CheckBox)
+                    {
+                        UWC_CheckBox checkBox = item as UWC_CheckBox;
+                        paramaterDic.Add(checkBox.VariableName, checkBox.IsChecked);
+                        continue;
+                    }
+
                     if (item is UWC_CheckListBox)
                     {
                         UWC_CheckListBox checkListBox = item as UWC_CheckListBox;
@@ -751,6 +758,8 @@ namespace RTD_DataViewer
 
             return str;
         }
+
+
 
         public SqlResultDataImpl ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultDataImpl sqlResultData, Dictionary<string, string> paramaterDic)
         {

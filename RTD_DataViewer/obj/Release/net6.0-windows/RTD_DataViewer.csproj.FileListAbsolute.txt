@@ -171,3 +171,4 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\ne
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.PortRequestRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.TransportJobRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.CarrierInfomationList.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Release\net6.0-windows\RTD_DataViewer.View.WipActHistory.resources

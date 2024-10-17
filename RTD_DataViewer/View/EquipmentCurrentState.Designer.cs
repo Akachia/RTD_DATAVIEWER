@@ -34,7 +34,7 @@
             dgv_EquipmentStateHistory = new UserWinfromControl.UWC_DataGridView();
             bt_EqpStateSearch = new Button();
             bt_GetEqpGroup = new Button();
-            dgv_EquipmentStateHist = new UserWinfromControl.UWC_DataGridView();
+            dgv_EquipmentEioHistory = new UserWinfromControl.UWC_DataGridView();
             clb_EquipmentGroupList = new UserWinfromControl.UWC_CheckListBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -56,7 +56,7 @@
             tableLayoutPanel1.Controls.Add(dgv_EquipmentStateHistory, 6, 1);
             tableLayoutPanel1.Controls.Add(bt_EqpStateSearch, 9, 0);
             tableLayoutPanel1.Controls.Add(bt_GetEqpGroup, 9, 1);
-            tableLayoutPanel1.Controls.Add(dgv_EquipmentStateHist, 6, 3);
+            tableLayoutPanel1.Controls.Add(dgv_EquipmentEioHistory, 6, 3);
             tableLayoutPanel1.Controls.Add(clb_EquipmentGroupList, 9, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
@@ -135,16 +135,16 @@
             bt_GetEqpGroup.UseVisualStyleBackColor = true;
             bt_GetEqpGroup.Click += bt_GetEqpGroup_Click;
             // 
-            // dgv_EquipmentStateHist
+            // dgv_EquipmentEioHistory
             // 
-            tableLayoutPanel1.SetColumnSpan(dgv_EquipmentStateHist, 3);
-            dgv_EquipmentStateHist.Dock = DockStyle.Fill;
-            dgv_EquipmentStateHist.Lb_Text = "SqlName";
-            dgv_EquipmentStateHist.Lb_Text2 = "";
-            dgv_EquipmentStateHist.Location = new Point(843, 225);
-            dgv_EquipmentStateHist.Name = "dgv_EquipmentStateHist";
-            dgv_EquipmentStateHist.Size = new Size(414, 372);
-            dgv_EquipmentStateHist.TabIndex = 6;
+            tableLayoutPanel1.SetColumnSpan(dgv_EquipmentEioHistory, 3);
+            dgv_EquipmentEioHistory.Dock = DockStyle.Fill;
+            dgv_EquipmentEioHistory.Lb_Text = "SqlName";
+            dgv_EquipmentEioHistory.Lb_Text2 = "";
+            dgv_EquipmentEioHistory.Location = new Point(843, 225);
+            dgv_EquipmentEioHistory.Name = "dgv_EquipmentEioHistory";
+            dgv_EquipmentEioHistory.Size = new Size(414, 372);
+            dgv_EquipmentEioHistory.TabIndex = 6;
             // 
             // clb_EquipmentGroupList
             // 
@@ -176,7 +176,7 @@
         private UserWinfromControl.UWC_DataGridView dgv_EquipmentStateHistory;
         private Button bt_EqpStateSearch;
         private Button bt_GetEqpGroup;
-        private UserWinfromControl.UWC_DataGridView dgv_EquipmentStateHist;
+        private UserWinfromControl.UWC_DataGridView dgv_EquipmentEioHistory;
         private UserWinfromControl.UWC_CheckListBox clb_EquipmentGroupList;
     }
 }

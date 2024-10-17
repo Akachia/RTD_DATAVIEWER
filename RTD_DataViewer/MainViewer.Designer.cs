@@ -37,11 +37,11 @@
             tp_CstInfo = new TabPage();
             tp_CarrierInformationList = new TabPage();
             tp_CstHist = new TabPage();
+            tp_WipActHistory = new TabPage();
             tp_EqpState = new TabPage();
             tp_PortCurrState = new TabPage();
             tp_StockerInventory = new TabPage();
             tp_RollSituation = new TabPage();
-            tp_WaitWips = new TabPage();
             tp_BizRuleErr = new TabPage();
             tp_LogBox = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -89,11 +89,11 @@
             reqATransfer_dgvReq.Controls.Add(tp_CstInfo);
             reqATransfer_dgvReq.Controls.Add(tp_CarrierInformationList);
             reqATransfer_dgvReq.Controls.Add(tp_CstHist);
+            reqATransfer_dgvReq.Controls.Add(tp_WipActHistory);
             reqATransfer_dgvReq.Controls.Add(tp_EqpState);
             reqATransfer_dgvReq.Controls.Add(tp_PortCurrState);
             reqATransfer_dgvReq.Controls.Add(tp_StockerInventory);
             reqATransfer_dgvReq.Controls.Add(tp_RollSituation);
-            reqATransfer_dgvReq.Controls.Add(tp_WaitWips);
             reqATransfer_dgvReq.Controls.Add(tp_BizRuleErr);
             reqATransfer_dgvReq.Controls.Add(tp_LogBox);
             reqATransfer_dgvReq.Dock = DockStyle.Fill;
@@ -171,6 +171,16 @@
             tp_CstHist.Text = "케리어 이력";
             tp_CstHist.UseVisualStyleBackColor = true;
             // 
+            // tp_WipActHistory
+            // 
+            tp_WipActHistory.Location = new Point(4, 24);
+            tp_WipActHistory.Name = "tp_WipActHistory";
+            tp_WipActHistory.Padding = new Padding(3);
+            tp_WipActHistory.Size = new Size(1570, 763);
+            tp_WipActHistory.TabIndex = 10;
+            tp_WipActHistory.Text = "Lot 이력";
+            tp_WipActHistory.UseVisualStyleBackColor = true;
+            // 
             // tp_EqpState
             // 
             tp_EqpState.Location = new Point(4, 24);
@@ -209,16 +219,6 @@
             tp_RollSituation.TabIndex = 9;
             tp_RollSituation.Text = "RollSituation";
             tp_RollSituation.UseVisualStyleBackColor = true;
-            // 
-            // tp_WaitWips
-            // 
-            tp_WaitWips.Location = new Point(4, 24);
-            tp_WaitWips.Name = "tp_WaitWips";
-            tp_WaitWips.Padding = new Padding(3);
-            tp_WaitWips.Size = new Size(1570, 763);
-            tp_WaitWips.TabIndex = 10;
-            tp_WaitWips.Text = "WaitWips";
-            tp_WaitWips.UseVisualStyleBackColor = true;
             // 
             // tp_BizRuleErr
             // 
@@ -386,7 +386,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainViewer";
-            Text = "RTD_DataViewer v0.4";
+            Text = "RTD_DataViewer v0.5";
             tableLayoutPanel1.ResumeLayout(false);
             reqATransfer_dgvReq.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
@@ -438,7 +438,7 @@
         private TabPage tp_CstInfo;
         private TabPage tp_StockerInventory;
         private TabPage tp_RollSituation;
-        private TabPage tp_WaitWips;
+        private TabPage tp_WipActHistory;
         private TabPage tp_BizRuleErr;
         private TabPage tp_PortRequestRecord;
         private TabPage tp_PortCurrState;

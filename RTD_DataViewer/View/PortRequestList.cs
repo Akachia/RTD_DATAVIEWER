@@ -102,7 +102,7 @@ namespace RTD_DataViewer.View
 
                 if (cstId != "")
                 {
-                    SearchCarrierInfomation();
+                    SearchCarrierInfomation(cstId);
                 }
 
 
@@ -222,20 +222,23 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchCarrierInfomation()
+        private void SearchCarrierInfomation(string carrierId)
         {
             try
             {
                 if (searchPortRequestListData != null)
                 {
+                    Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
                     string methodName = MethodBase.GetCurrentMethod().Name;
+                    paramaterDic.Add("CSTID", carrierId);
+
                     searchCarrierInfomationData =
                         winformUtils.ShowDgv
                         (
                             methodName,
                             dgv_CarrierInfomation,
                             searchCarrierInfomationData,
-                            searchPortRequestListData.Sqldata.getEventDicByFunctionName(methodName)
+                            paramaterDic
                         );
 
                 }

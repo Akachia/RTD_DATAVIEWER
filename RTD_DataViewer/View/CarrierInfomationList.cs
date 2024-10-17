@@ -1,10 +1,12 @@
 ﻿using Dapper;
+using DBManagement;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,36 +16,69 @@ namespace RTD_DataViewer
 {
     public partial class CarrierInfomationList : UserControl
     {
-        MainViewer mainViewer;
 
+        #region Variable
+        DefaultSqlData? searchCarrierInfomationListData = null;
+        WinformUtils? winformUtils = null;
+        List<Control>? variableControls = new List<Control>();
+        #endregion
+
+        #region Construction
         public CarrierInfomationList(MainViewer mainViewer)
         {
             InitializeComponent();
-            this.mainViewer = mainViewer;
-        }
+            winformUtils = new(mainViewer);
 
-        private void bt_LnsPkgSearch_Click(object sender, EventArgs e)
+            foreach (Control control in this.Controls[0].Controls)
+            {
+                if (control is UserControl)
+                {
+                    variableControls.Add(control);
+                }
+            }
+        }
+        #endregion
+
+        #region Events for UI Controls
+        private void bt_Search_Click(object sender, EventArgs e)
         {
-            SearchLnsPkgLot();
+            searchCarrierInfomationList();
         }
+        #endregion
 
-        private void SearchLnsPkgLot()
+        #region Utilities for Ui
+
+        #endregion
+
+        #region Assign SqlData to DataGrid view functuons Section 
+        private void searchCarrierInfomationList()
         {
             try
             {
-                XmlOptionData sqldata = mainViewer.sqlList["SearchLnsPkgLot"];
-                Dictionary<string, string> parameterDic = new Dictionary<string, string>();
-                string cquery = sqldata.Sql;
-                var parameters = new DynamicParameters();
-                //WHERE INSDTTM BETWEEN '" + txtFrom.Text + "' AND '" + txtTo.Text + "'
+                Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                string methodName = MethodBase.GetCurrentMethod().Name;
+                searchCarrierInfomationListData =
+                    winformUtils.ShowDgv
+                    (
+                        methodName,
+                        dgv_CarrierInfomationList,
+                        searchCarrierInfomationListData,
+                        paramaterDic
+                    ) as DefaultSqlData;
 
-                new WinformUtils(mainViewer).ShowSqltoDGV(this.dgv_CarrierInfomationList.DgvData, cquery, parameters, mainViewer.correntConnectionStringSetting);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} : SearchLnsPkgLot");
+                MessageBox.Show(ex.Message);
             }
         }
+
+        #endregion
+
+
+
+
+
     }
 
 

@@ -95,8 +95,8 @@ namespace RTD_DataViewer
             portCurrState.Dock = DockStyle.Fill;
 
             //대기 랏 현황
-            WaitingLotInfomation waitWips = new WaitingLotInfomation(this);
-            tp_WaitWips.Controls.Add(waitWips);
+            WipActHistory waitWips = new WipActHistory(this);
+            tp_WipActHistory.Controls.Add(waitWips);
             waitWips.Dock = DockStyle.Fill;
 
             //스토커 현황

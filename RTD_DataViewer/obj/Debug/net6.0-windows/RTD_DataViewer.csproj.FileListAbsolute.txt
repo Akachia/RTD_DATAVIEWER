@@ -260,3 +260,4 @@ C:\Users\carry\Documents\GitHub\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.PortRequestRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.TransportJobRecord.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.CarrierInfomationList.resources
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\RTD_DataViewer\obj\Debug\net6.0-windows\RTD_DataViewer.View.WipActHistory.resources

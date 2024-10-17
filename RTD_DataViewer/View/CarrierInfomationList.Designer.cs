@@ -30,7 +30,7 @@
         {
             tableLayoutPanel1 = new TableLayoutPanel();
             dgv_CarrierInfomationList = new UserWinfromControl.UWC_DataGridView();
-            bt_LnsPkgSearch = new Button();
+            bt_Search = new Button();
             uwC_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -47,8 +47,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
             tableLayoutPanel1.Controls.Add(dgv_CarrierInfomationList, 0, 1);
-            tableLayoutPanel1.Controls.Add(bt_LnsPkgSearch, 7, 0);
-            tableLayoutPanel1.Controls.Add(uwC_CarrierId, 6, 0);
+            tableLayoutPanel1.Controls.Add(bt_Search, 7, 0);
+            tableLayoutPanel1.Controls.Add(uwC_CarrierId, 5, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -71,27 +71,29 @@
             dgv_CarrierInfomationList.Size = new Size(1394, 564);
             dgv_CarrierInfomationList.TabIndex = 0;
             // 
-            // bt_LnsPkgSearch
+            // bt_Search
             // 
-            bt_LnsPkgSearch.Dock = DockStyle.Fill;
-            bt_LnsPkgSearch.Location = new Point(1298, 3);
-            bt_LnsPkgSearch.Name = "bt_LnsPkgSearch";
-            bt_LnsPkgSearch.Size = new Size(99, 24);
-            bt_LnsPkgSearch.TabIndex = 2;
-            bt_LnsPkgSearch.Text = "Search";
-            bt_LnsPkgSearch.UseVisualStyleBackColor = true;
-            bt_LnsPkgSearch.Click += bt_LnsPkgSearch_Click;
+            bt_Search.Dock = DockStyle.Fill;
+            bt_Search.Location = new Point(1298, 3);
+            bt_Search.Name = "bt_Search";
+            bt_Search.Size = new Size(99, 24);
+            bt_Search.TabIndex = 2;
+            bt_Search.Text = "Search";
+            bt_Search.UseVisualStyleBackColor = true;
+            bt_Search.Click += bt_Search_Click;
             // 
             // uwC_CarrierId
             // 
-            uwC_CarrierId.IsMultiInputTextControl = false;
+            tableLayoutPanel1.SetColumnSpan(uwC_CarrierId, 2);
+            uwC_CarrierId.Dock = DockStyle.Fill;
+            uwC_CarrierId.IsMultiInputTextControl = true;
             uwC_CarrierId.Lb_Text = "CarrierId";
-            uwC_CarrierId.Location = new Point(1123, 3);
+            uwC_CarrierId.Location = new Point(913, 3);
             uwC_CarrierId.Name = "uwC_CarrierId";
-            uwC_CarrierId.Size = new Size(169, 24);
+            uwC_CarrierId.Size = new Size(379, 24);
             uwC_CarrierId.TabIndex = 3;
             uwC_CarrierId.Tb_Text = "";
-            uwC_CarrierId.VariableName = "Carrier_Id";
+            uwC_CarrierId.VariableName = "CSTID";
             // 
             // CarrierInfomationList
             // 
@@ -108,7 +110,7 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private UserWinfromControl.UWC_DataGridView dgv_CarrierInfomationList;
-        private Button bt_LnsPkgSearch;
+        private Button bt_Search;
         private UserWinfromControl.UWC_LabelAndTextBox uwC_CarrierId;
     }
 }

@@ -79,10 +79,33 @@ namespace UserWinfromControl
 
         public void SetTransportStateCodeData()
         {
+            this.comboBox1.Items.Add("ALL");
             this.comboBox1.Items.Add("FINAL");
             this.comboBox1.Items.Add("MOVING");
             this.comboBox1.Items.Add("RESERVED");
             this.comboBox1.Items.Add("SEND");
+        }
+
+        public void SetAgingIssPriortyNo()
+        {
+            this.comboBox1.Items.Add("ALL");
+            this.comboBox1.Items.Add("9");
+            this.comboBox1.Items.Add("8");
+            this.comboBox1.Items.Add("7");
+            this.comboBox1.Items.Add("6");
+            this.comboBox1.Items.Add("5");
+            this.comboBox1.Items.Add("4");
+        }
+
+        public void SetWipStat()
+        {
+            this.comboBox1.Items.Add("ALL");
+            this.comboBox1.Items.Add("PROC");
+            this.comboBox1.Items.Add("WAIT");
+            this.comboBox1.Items.Add("7");
+            this.comboBox1.Items.Add("6");
+            this.comboBox1.Items.Add("5");
+            this.comboBox1.Items.Add("4");
         }
 
         public void SetTransportStatCodeData()

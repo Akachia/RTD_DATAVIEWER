@@ -225,6 +225,20 @@ namespace DBManagement
                     }
                 }
 
+                if (item.Type == CommonXml.Type.CHECK)
+                {
+                    bool check = bool.Parse(dicValue);
+                    if (check)
+                    {
+                        SqlVarMappingFunction(item, ref cquery, true);
+                        continue;
+                    }
+                    else {
+                        SqlVarMappingFunction(item, ref cquery, false);
+                        continue;
+                    }
+                }
+
                 if (item.Type == CommonXml.Type.VAR)
                 {
                     if (dicValue != item.Default)

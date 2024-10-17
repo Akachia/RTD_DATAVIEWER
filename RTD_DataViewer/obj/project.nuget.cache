@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HSNIWz+6t04i+sGzBImsVvzNVRkkYTxoYkIJg3xdIbFh33SOpna+bq84EzghUk3RTaC70D65OgS7bajqQrW3GA==",
+  "dgSpecHash": "stW4BSmjxKT0V6X46145ak775raAPuJR58sSWdylVOs1FJE5huLHPsMsnmajCQa2xlMLS6c4i+ASUG3TloS3KQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\RTD_DataViewer\\RTD_DataViewer.csproj",
   "expectedPackageFiles": [
@@ -52,7 +52,8 @@
     "C:\\Users\\smkim\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\smkim\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\smkim\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\smkim\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\smkim\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\smkim\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512"
   ],
   "logs": []
 }

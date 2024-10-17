@@ -31,6 +31,16 @@ namespace RTD_DataViewer.View
         Dictionary<string, string>? eventCallVal = null;
         Dictionary<string, string>? stkComCodeList = null;
         List<Control>? variableControls = new List<Control>();
+
+
+        ToolTip toolTipProdid = new ToolTip();
+        ToolTip toolTipNextProcid = new ToolTip();
+        ToolTip toolTipRoute = new ToolTip();
+        ToolTip toolProcid = new ToolTip();
+        ToolTip toolWipStat = new ToolTip();
+        ToolTip toolCstStat = new ToolTip();
+        ToolTip toolRackStatCode = new ToolTip();
+        ToolTip toolAgingIssPriortyNo = new ToolTip();
         #endregion
 
         #region Construction
@@ -41,6 +51,8 @@ namespace RTD_DataViewer.View
             dgv_StockerInventory.DgvData.CellClick += Dgv_StoInventory_CellClick;
             cb_CarrierStat.SetCstStatData();
             cb_TrfStatCode.SetTransportStateCodeData();
+            cb_AgingIssPriortyNo.SetAgingIssPriortyNo();
+            cb_WipStat.SetWipStat();
             tb_CarrierId.IsMultiInputTextControl = true;
 
             foreach (Control control in this.Controls[0].Controls)
@@ -54,6 +66,18 @@ namespace RTD_DataViewer.View
             this.clb_StockerCommonCodeList.ListBox.SelectedValueChanged += ListBox_SelectedValueChanged;
 
             winformUtils = new(main);
+
+
+
+            toolTipProdid.SetToolTip(lb_Prodid, lb_Prodid.Text);
+            toolTipNextProcid.SetToolTip(lb_NextProcid, lb_NextProcid.Text);
+            toolTipRoute.SetToolTip(lb_Route, lb_Route.Text);
+            toolProcid.SetToolTip(lb_Procid, lb_Procid.Text);
+            toolProcid.SetToolTip(lb_WipStat, lb_WipStat.Text);
+            toolProcid.SetToolTip(lb_CstStat, lb_CstStat.Text);
+            toolProcid.SetToolTip(lb_RackStatCode, lb_RackStatCode.Text);
+            toolProcid.SetToolTip(lb_AgingIssPriortyNo, lb_AgingIssPriortyNo.Text) ;
+
         }
 
         private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
@@ -123,8 +147,17 @@ namespace RTD_DataViewer.View
 
         private void bt_Search_Click(object sender, EventArgs e)
         {
-            SearchStockerInventory();
-            SearchStockerCurrentState();
+            if (clb_StockerList.Item.Count == 0)
+            {
+                SearchStockerCommonCodeList();
+            }
+            else
+            {
+                SearchStockerInventory();
+                SearchStockerCurrentState();
+            }
+
+
         }
         #endregion
 
@@ -243,7 +276,7 @@ namespace RTD_DataViewer.View
                     SearchStockerInventoryData,
                     paramaterDic
                 ) as DefaultSqlData;
-            
+
 
             DateTime date1 = DateTime.Now;
 
@@ -253,11 +286,12 @@ namespace RTD_DataViewer.View
             {
                 row.Cells["AGING_ISS_SCHD_DTTM"].Style.BackColor = Color.FromArgb(222, 245, 229); // 색상 변경
             }
-
+            int dateOverRowCount = 0;
             for (int i = 0; i < rowCount; i++)
             {
                 try
                 {
+
                     string agingDttm = dgv_StockerInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
                     string agingPriority = dgv_StockerInventory.DgvData.Rows[i].Cells["AGING_ISS_PRIORITY_NO"].Value.ToString();
                     string trf_Stat_Code = dgv_StockerInventory.DgvData.Rows[i].Cells["TRF_STAT_CODE"].Value.ToString();
@@ -270,24 +304,37 @@ namespace RTD_DataViewer.View
                         {
                             //FFD4D4
                             dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 212, 212);
+                            dateOverRowCount++;
                         }
                     }
 
                     if (agingPriority != string.Empty)
                     {
-                        if (agingPriority == "8")
+                        if (agingPriority == "8") //
                         {
                             //FFD4D4
                             dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(45, 149, 150);
                         }
 
-                        if (agingPriority == "7")
+                        if (agingPriority == "7") //
                         {
                             //FFD4D4
                             dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(45, 149, 150);
                         }
 
-                        if (agingPriority == "9")
+                        if (agingPriority == "4") //적재 출고
+                        {
+                            //FFD4D4
+                            dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(45, 149, 150);
+                        }
+
+                        if (agingPriority == "6") //스토커 이동
+                        {
+                            //FFD4D4
+                            dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(45, 149, 150);
+                        }
+
+                        if (agingPriority == "9") //강제 출고
                         {
                             //FFD4D4
                             dgv_StockerInventory.DgvData.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(45, 149, 150);
@@ -302,18 +349,22 @@ namespace RTD_DataViewer.View
 
                 //string eioIfMode = dgv_StoInventory.DgvData.Rows[i].Cells["EIOIFMODE"].Value.ToString();
                 // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
-                
             }
 
             lb_WipStat.Text = winformUtils.MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
             lb_CstStat.Text = winformUtils.MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory, "상태");
+            lb_TrayLevel.Text = winformUtils.MakeTransferStatusCountString("단", dgv_StockerInventory, "단");
             lb_Prodid.Text = winformUtils.MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
-            lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
+            lb_Route.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
+            lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory, "Rack현황");
             lb_TrfStatCode.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
             lb_AgingIssPriortyNo.Text = winformUtils.MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory, "출고 번호");
             lb_NextProcid.Text = winformUtils.MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory, "다음공정");
-            lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory,"현공정");
+            lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory, "현공정");
+            lb_DateOverRowCount.Text = $"반송 대기 : {dateOverRowCount}\n";
         }
+
+
         private void SearchStockerCurrentState()
         {
             Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
@@ -358,5 +409,9 @@ namespace RTD_DataViewer.View
         #endregion
 
 
+        private void lb_TrfStatCode_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

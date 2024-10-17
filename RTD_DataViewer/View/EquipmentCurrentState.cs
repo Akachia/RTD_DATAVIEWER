@@ -21,15 +21,15 @@ namespace RTD_DataViewer.View
     public partial class EquipmentCurrentState : UserControl
     {
         WinformUtils? winformUtils = null;
+        DefaultSqlData? sarchEquipmentStateHistoryData = null;
+        DefaultSqlData? searchEquipmentEioHistoryData = null;
         DefaultSqlData? searchEquipmentCurrentStateData = null;
-        SearchCarrierInfomation? searchCarrierInfomationData = null;
-        DefaultSqlData? searchTransportJobHistoryData = null;
         CommonCodeData? SearchCommonCodeData = null;
         List<Control>? variableControls = new List<Control>();
         public EquipmentCurrentState(MainViewer main)
         {
             InitializeComponent();
-            dgv_EquipmentStateHistory.DgvData.CellClick += SearchPortStateHist;
+            dgv_EquipmentCurrentState.DgvData.CellClick += EquipmentStateHistory;
 
 
             foreach (Control control in this.Controls[0].Controls)
@@ -42,22 +42,38 @@ namespace RTD_DataViewer.View
             winformUtils = new(main);
         }
 
-        private void DgvData_CellValidated(object? sender, DataGridViewCellEventArgs e)
+        private void EquipmentStateHistory(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 8)
-            {
-                dgv_EquipmentStateHistory.DgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.HotPink;
-            }
+            string eqpt_Id = (sender as DataGridView).CurrentRow.Cells["EQPTID"].Value.ToString();
+            SearchEquipmentStateHistory(eqpt_Id);
+            SearchEquipmentEioHistory(eqpt_Id);
         }
 
-        private void SearchPortStateHist(object? sender, DataGridViewCellEventArgs e)
+            private void SearchEquipmentStateHistory(string eqpt_id)
         {
-
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            string _EQP_GROUP_LIST = MakeEqpGroup();
+            paramaterDic.Add("TOPNUMBER", "40");
+            paramaterDic.Add("EQPT_ID", eqpt_id);
+            sarchEquipmentStateHistoryData = winformUtils.ShowDgv(
+                methodName,
+                dgv_EquipmentStateHistory,
+                sarchEquipmentStateHistoryData,
+                paramaterDic) as DefaultSqlData;
         }
 
-        private void SearchPortEioHist(object? sender, DataGridViewCellEventArgs e)
+        private void SearchEquipmentEioHistory(string eqpt_id)
         {
-
+            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            paramaterDic.Add("TOPNUMBER", "40");
+            paramaterDic.Add("EQPT_ID", eqpt_id);
+            searchEquipmentEioHistoryData = winformUtils.ShowDgv(
+                methodName,
+                dgv_EquipmentEioHistory,
+                searchEquipmentEioHistoryData,
+                paramaterDic) as DefaultSqlData;
         }
 
         /// <summary>
