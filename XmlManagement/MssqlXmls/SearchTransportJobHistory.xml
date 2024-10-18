@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchTransportJobHistory>
+    <MainSQL>
+        select
+        PORT_ID
+        , EVENT_TYPE_CODE as ETC
+        , TRF_END_CODE as TEC
+        , EVENT_CODE
+        , INSDTTM
+        from TB_MHS_TRF_EVENT_HIST with (NOLOCK)
+        WHERE 1=1
+        AND TRF_CODE = @TRF_CODE
+        order by INSDTTM desc
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="" key="TRF_CODE" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable>
+    </AdditionalVariable>
+    <Coloring/>
+    <EventValues/>
+</SearchTransportJobHistory>

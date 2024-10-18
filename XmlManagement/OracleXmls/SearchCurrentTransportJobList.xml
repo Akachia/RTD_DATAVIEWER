@@ -25,7 +25,7 @@
         , H.CNCL_REQ_FLAG AS 취소
         , (CASE WHEN (SYSDATE - INTERVAL '60' MINUTE >= H.INSDTTM) THEN '1' ELSE 'O' END) AS CMDCHK  <!--  TODO 60분 이상인지 확인하는 로직 확인필요-->
         , H.RSPN_CODE AS RSPN
-        , C.CMCDNAME AS ERR_MSG
+        , C.BUSINESS_USAGE_CODE_DESC AS ERR_MSG
         , H.CMD_STAT_CODE
         FROM TB_EGN_DURB_INFO DURB
         INNER JOIN TB_MHS_TRF_CMD H ON H.CSTID = DURB.DURABLE_ID
@@ -47,7 +47,7 @@
     </MainSQL>
     <Option>
         <Option1 type="IF" condition="not_equal" key="LANE_ID" dataType="string" default="">
-            AND WA.LANE_ID LIKE :LANE_ID <!--  TODO  변수 삭제 확인 필요       -->
+            AND LOT.LANE_ID LIKE :LANE_ID <!--  TODO  전극조립에는 없음 수정필요   -->
         </Option1>
         <Option2 type="CSTSTAT" condition="CSTSTAT" key="CSTSTAT" dataType="int" default="0">
             AND H.CSTSTAT = :CSTSTAT
@@ -55,11 +55,11 @@
         <Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
             AND H.CSTID IN (:CSTID)
         </Option3>
-        <Option4 type="IF" condition="not_equal" key="ReqPortId" dataType="string" default="">
-            AND H.FROM_PORT_ID LIKE :ReqPortId
+        <Option4 type="IF" condition="not_equal" key="FROM_PORT_ID" dataType="string" default="">
+            AND H.FROM_PORT_ID LIKE :FROM_PORT_ID
         </Option4>
-        <Option5 type="IF" condition="not_equal" key="ToPortId" dataType="string" default="">
-            AND H.TO_PORT_ID LIKE :ToPortId
+        <Option5 type="IF" condition="not_equal" key="TO_PORT_ID" dataType="string" default="">
+            AND H.TO_PORT_ID LIKE :TO_PORT_ID
         </Option5>
         <Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
             AND DURB.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR'

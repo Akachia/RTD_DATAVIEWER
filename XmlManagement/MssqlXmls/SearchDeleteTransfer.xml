@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchDeleteTransfer>
+    <MainSQL>
+        SELECT
+        CSTID
+        , FROM_EQPTID
+        , FROM_PORT_iD
+        , TO_EQPTID
+        , TO_PORT_ID
+        , CSTSTAT
+        , RTD_RULE_ID
+        , CMD_STAT_CODE
+        , INSUSER
+        , CONVERT(NVARCHAR(20), MAX(INSDTTM),20) AS LASTINSDTTM
+        , COUNT(CSTID)  AS CNT
+        FROM TB_MHS_TRF_CMD_HIST with(nolock)
+        WHERE CONVERT(NVARCHAR(10), INSDTTM, 20) BETWEEN @StartTime AND @EndTime
+        AND CMD_STAT_CODE = 'DELETE'
+        GROUP BY CSTID, FROM_EQPTID, FROM_PORT_ID, TO_EQPTID, TO_PORT_ID, CSTSTAT, RTD_RULE_ID, CMD_STAT_CODE, INSUSER
+        +Option1
+        +Option2
+        --ORDER BY MAX(INSDTTM) DESC
+    </MainSQL>
+    <Option>
+        <Option1 type="NONE" condition="" key="" dataType="" default="">
+            AND (EXCT_MSG LIKE @ErrText OR EXCT_TYPE LIKE @ErrText)
+        </Option1>
+        <Option2 type="NONE" condition="" key="" dataType="" default="">
+            ORDER BY INSDTTM DESC
+        </Option2>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchDeleteTransfer>
