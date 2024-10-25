@@ -73,7 +73,7 @@
 				AND H.TO_PORT_ID LIKE @ToPortId
 			</Option5>
 			<Option6 type="IF" condition="equal" key="isFaulty" dataType="bool" default="True">
-				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR 
+				AND CC.ABNORM_TRF_RSN_CODE = 'STACK_VALID_ERROR'
 			</Option6>
 			<Option7 type="IF" condition="not_equal" key="CMD_STAT_CODE_LIST" dataType="string" default="">
 				AND H.CMD_STAT_CODE IN (@CMD_STAT_CODE_LIST)
@@ -110,7 +110,7 @@
 			<CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
 			<TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
 			<ROUT TYPE='string' CallSQL = 'SearchRouteInfo' EventType='Click'/>
-		</EventValues>/>
+		</EventValues>
 	</SearchCurrentTransportJobList>
 	<SearchTransportJobHistory>
 		<MainSQL>

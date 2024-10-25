@@ -4,6 +4,6 @@
 		C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\DBConnectionString.xml
 	</DBConDirectory>
 	<SqlDirectory>
-		C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\SqlXmls
+		C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\OracleXmls
 	</SqlDirectory>
 </AppConfig>
