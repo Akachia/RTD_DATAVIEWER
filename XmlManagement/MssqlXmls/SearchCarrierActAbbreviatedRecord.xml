@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchCarrierActAbbreviatedRecord>
+    <MainSQL>
+        SELECT
+        +Option1
+        CSTID
+        , LOAD_REP_CSTID
+        , ACTID
+        , CONVERT(CHAR(23), ACTDTTM, 20)  AS ACTDTTM
+        , CSTSTAT
+        , EQPTID
+        , PROCID
+        , LOTID
+        , TRF_STAT_CODE
+        , CST_LOAD_LOCATION_CODE
+        , PORT_ID
+        , RACK_ID
+        , CSTIUSE
+        , INSUSER
+        , CONVERT(CHAR(23), INSDTTM, 20) AS INSDTTM
+        , CONVERT(CHAR(23), UPDDTTM, 20) AS UPDDTTM
+        FROM tb_sfc_cst_act_hist with(nolock)
+        where 1=1
+        +Option2
+        +Option3
+        ORDER BY ACTDTTM DESC
+    </MainSQL>
+    <Option>
+        <Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+            TOP @TOPNUMBER
+        </Option1>
+        <Option2 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+            AND CSTID IN (@CSTID)
+        </Option2>
+        <Option3 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+            AND PORT_ID LIKE @PORT_ID
+        </Option3>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchCarrierActAbbreviatedRecord>
