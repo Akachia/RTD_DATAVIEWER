@@ -9,7 +9,7 @@
         INSDTTM
         FROM TB_MHS_TRF_EVENT_HIST
         WHERE 1=1
-        AND TRF_CODE = :TRF_CODE
+        AND TRF_CODE = @TRF_CODE
         ORDER BY INSDTTM DESC;
     </MainSQL>
     <Option>
