@@ -10,7 +10,7 @@ namespace CustomUtils
 {
     public static class CommonConstants
     {
-        public static readonly string sqlXmlPath = $@"./Sql.xml";
+        //public static readonly string sqlXmlPath = $@"./AppConfig.xml";
         public static string GetCurrentXmlPath(string className, string methodName) 
         {
             return $@"/SqlList/{className}/{methodName}";

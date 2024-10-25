@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AppConfig>
+	<DBConDirectory>
+		C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\DBConnectionString.xml
+	</DBConDirectory>
+	<SqlDirectory>
+		C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\SqlXmls
+	</SqlDirectory>
+</AppConfig>

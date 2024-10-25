@@ -107,18 +107,18 @@ namespace DBManagement
         {
             try
             {
-                string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+               // string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
 
                 using (var connection = new OracleConnection(connectionString))
                 {
                     if (parameters != null)
                     {
-                        return connection.Query(testcquery, parameters).ToList();
+                        return connection.Query(cquery, parameters).ToList();
                         //main.AppendLog(cquery, parameters);
                     }
                     else
                     {
-                        return connection.Query(testcquery).ToList();
+                        return connection.Query(cquery).ToList();
                         //main.AppendLog(cquery);
                     }
                 }
@@ -133,10 +133,10 @@ namespace DBManagement
         {
             try
             {
-                string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+                //string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
                 using (var connection = new OracleConnection(connectionString))
                 {
-                    return connection.Query(testcquery).ToList();
+                    return connection.Query(cquery).ToList();
                 }
             }
             catch (Exception ex)

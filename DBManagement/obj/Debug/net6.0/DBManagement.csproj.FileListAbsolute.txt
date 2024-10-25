@@ -53,3 +53,4 @@ C:\Users\carry\Documents\GitHub\Tester1\DBManagement\obj\Debug\net6.0\DBManageme
 C:\Users\carry\Documents\GitHub\Tester1\DBManagement\obj\Debug\net6.0\refint\DBManagement.dll
 C:\Users\carry\Documents\GitHub\Tester1\DBManagement\obj\Debug\net6.0\DBManagement.pdb
 C:\Users\carry\Documents\GitHub\Tester1\DBManagement\obj\Debug\net6.0\ref\DBManagement.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\DBManagement\bin\Debug\net6.0\AppConfig.xml

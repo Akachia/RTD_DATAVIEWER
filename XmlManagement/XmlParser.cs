@@ -20,7 +20,7 @@ namespace XmlManagement
         public XmlParser(string xmlFilePath, string sqlPath)
         {
 
-            this.xmlData = new XmlData(xmlFilePath, sqlPath);
+            this.xmlData = new XmlData(sqlPath);
         }
 
         public string MakeOptionSql(string sql, XmlData xmlData, int squence)

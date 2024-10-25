@@ -139,7 +139,7 @@ namespace RTD_DataViewer
         {
             try
             {
-                xml = new XmlData(CommonConstants.sqlXmlPath);
+                xml = new XmlData();
                 sqlList = xml.OptionSqlListparser();
                 strs = new DatabaseUtilities().GetConfigList();
 

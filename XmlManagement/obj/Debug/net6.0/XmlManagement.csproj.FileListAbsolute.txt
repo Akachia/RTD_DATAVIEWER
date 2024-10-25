@@ -53,3 +53,4 @@ C:\Users\carry\Documents\GitHub\Tester1\XmlManagement\obj\Debug\net6.0\XmlManage
 C:\Users\carry\Documents\GitHub\Tester1\XmlManagement\obj\Debug\net6.0\refint\XmlManagement.dll
 C:\Users\carry\Documents\GitHub\Tester1\XmlManagement\obj\Debug\net6.0\XmlManagement.pdb
 C:\Users\carry\Documents\GitHub\Tester1\XmlManagement\obj\Debug\net6.0\ref\XmlManagement.dll
+C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\XmlManagement\bin\Debug\net6.0\AppConfig.xml
