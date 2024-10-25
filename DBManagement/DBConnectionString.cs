@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,20 +55,48 @@ namespace DBManagemnet
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(MssqlConnectionString()))
+
+                if (DatabaseProvider.ToString() == "ORACLE")
                 {
-                    connection.Open(); // 데이터베이스 연결 시도
-                    if (connection.State == System.Data.ConnectionState.Open)
+                    string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
+
+                    using (var connection = new OracleConnection(ConnectionString()))
                     {
-                        // 연결 상태 확인
-                        isConnection = true;
-                        return true;
+                        try
+                        {
+                            connection.Query(testcquery).ToList();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+
+                            return false;
+                        }
+
+
                     }
-                    else
+                }
+                else if (DatabaseProvider.ToString() == "MSSQL")
+                {
+                    using (SqlConnection connection = new SqlConnection(MssqlConnectionString()))
                     {
-                        isConnection = false;
-                        return false;
+                        connection.Open(); // 데이터베이스 연결 시도
+                        if (connection.State == System.Data.ConnectionState.Open)
+                        {
+                            // 연결 상태 확인
+                            isConnection = true;
+                            return true;
+                        }
+                        else
+                        {
+                            isConnection = false;
+                            return false;
+                        }
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception ex)
