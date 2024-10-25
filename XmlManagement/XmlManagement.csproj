@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SqlXmls\**" />
+    <EmbeddedResource Remove="SqlXmls\**" />
+    <None Remove="SqlXmls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.4" />
   </ItemGroup>
 
@@ -24,10 +30,6 @@
     <None Update="Sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SqlXmls\" />
   </ItemGroup>
 
 </Project>

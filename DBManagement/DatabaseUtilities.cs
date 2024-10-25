@@ -142,7 +142,7 @@ namespace DBManagement
             catch (Exception ex)
             {
                 errMsg = ex.Message;
-                return null;
+                throw new Exception(errMsg, ex);
             }
         }
 

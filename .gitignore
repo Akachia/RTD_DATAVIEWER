@@ -122,3 +122,9 @@ XmlManagement/obj/XmlManagement.csproj.nuget.dgspec.json
 RTD_DataViewer/.vs/RTD_DataViewer/v17/.suo
 XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfo.cs
 XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfoInputs.cache
+XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfoInputs.cache
+XmlManagement/XmlManagement.csproj
+XmlManagement/obj/Debug/net6.0/XmlManagement.pdb
+XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfoInputs.cache
+*.dll
+*.cache
