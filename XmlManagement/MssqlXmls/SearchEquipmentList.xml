@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentList>
+    <MainSQL>
+        SELECT DISTINCT
+        e.EQPTID
+        FROM EQUIPMENT e with(nolock)
+        INNER JOIN EQUIPMENTATTR ea (nolock)
+        ON E.EQPTID = ea.EQPTID
+        INNER JOIN EquipmentSegment ES (NOLOCK)
+        ON E.EQSGID = ES.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA (NOLOCK)
+        ON ESA.EQSGID = ES.EQSGID
+        INNER JOIN EIO ei (nolock)
+        ON e.EQPTID = ei.EQPTID
+        INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+        ON TMP.EQPTID = E.EQPTID
+        WHERE 1 = 1
+        --AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND E.EQPTIUSE = 'Y'
+        AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID = @AREA_ID
+        AND E.EQGRID IN ('CNV','STO','EOL','FOR','LAM','NND','STK')
+        and E.EQPTID = LEFT(TMP.PORT_ID, 11)
+        UNION
+        SELECT DISTINCT
+        e.EQPTID
+        FROM EQUIPMENT e with(nolock)
+        INNER JOIN EQUIPMENTATTR ea (nolock)
+        ON E.EQPTID = ea.EQPTID
+        INNER JOIN EquipmentSegment ES (NOLOCK)
+        ON E.EQSGID = ES.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA (NOLOCK)
+        ON ESA.EQSGID = ES.EQSGID
+        INNER JOIN EIO ei (nolock)
+        ON e.EQPTID = ei.EQPTID
+        INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+        ON TMP.EQPTID = E.EQPTID
+        WHERE 1 = 1
+        --AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND E.EQPTIUSE = 'Y'
+        AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID = @AREA_ID
+        AND E.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV','ROL','COT')
+        and E.EQPTID = LEFT(TMP.PORT_ID, 9)
+        UNION
+        SELECT DISTINCT
+        e.EQPTID
+        FROM EQUIPMENT e with(nolock)
+        INNER JOIN EQUIPMENTATTR ea (nolock)
+        ON E.EQPTID = ea.EQPTID
+        INNER JOIN EquipmentSegment ES (NOLOCK)
+        ON E.EQSGID = ES.EQSGID
+        INNER JOIN EIO ei (nolock)
+        ON e.EQPTID = ei.EQPTID
+        INNER JOIN TB_MCS_PORT TMP (NOLOCK)
+        ON TMP.EQPTID = E.EQPTID
+        WHERE 1 = 1
+        --AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND E.EQPTIUSE = 'Y'
+        AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID = @AREA_ID
+        AND E.EQGRID IN ('PKG')
+        and E.EQPTID = LEFT(TMP.PORT_ID, 11)
+        UNION
+        SELECT DISTINCT
+        e.EQPTID
+        FROM EQUIPMENT e with(nolock)
+        INNER JOIN EQUIPMENTATTR ea (nolock)
+        ON E.EQPTID = ea.EQPTID
+        INNER JOIN EquipmentSegment ES (NOLOCK)
+        ON E.EQSGID = ES.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA (NOLOCK)
+        ON ESA.EQSGID = ES.EQSGID
+        INNER JOIN EIO ei (nolock)
+        ON e.EQPTID = ei.EQPTID
+        WHERE 1 = 1
+        --AND E.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND E.EQPTIUSE = 'Y'
+        AND E.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID = @AREA_ID
+        AND E.EQGRID IN ('FOR')
+        AND LEN(E.EQPTID) = 11
+        Order by E.EQPTID
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="" key="EQP_GROUP_ID_LIST" dataType="string" default=""/>
+        <Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+        <Option3 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchEquipmentList>

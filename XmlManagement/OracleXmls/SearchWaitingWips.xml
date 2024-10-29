@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchWaitingWips>
+    <MainSQL>
+        WITH WipList AS (
+        SELECT
+        C.CSTID,
+        W.LOTID,
+        COUNT(*) AS SectionCount,
+        C.EQPT_CUR AS FROM_EQPTID,
+        C.PORT_CUR AS FROM_PORT_ID,
+        EA.S70 AS TO_EQPT_GROUP_ID,
+        R.EQSGID,
+        W.PROCID,
+        RP.ROUTID,
+        WA.PROD_LOTID,
+        C.CSTSTAT,
+        -- E.EQPTID AS TRGT_EQPT_ID
+        MP.PORT_ID AS TRGT_PORT_ID
+        -- CM.ATTRIBUTE1 AS AGING
+        FROM CARRIER C
+        INNER JOIN WIP W ON C.CURR_LOTID = W.LOTID
+        INNER JOIN WIPATTR WA ON W.LOTID = WA.LOTID
+        INNER JOIN TB_MMD_FORM_ROUT_PROC RP ON RP.ROUTID = W.ROUTID AND RP.PROCID = W.PROCID AND RP.USE_FLAG = 'Y'
+        INNER JOIN TB_MMD_FORM_ROUT R ON RP.ROUTID = R.ROUTID AND R.USE_FLAG = 'Y'
+        INNER JOIN PROCESS P ON W.PROCID = P.PROCID
+        -- 2023-09-18 쿼리 수정
+        INNER JOIN PROCESSEQUIPMENT PE ON W.PROCID = PE.PROCID AND PE.USE_FLAG = 'Y' AND SUBSTR(PE.EQPTID, 1, 3) = 'C1F' -- 2022-12-25 조건 추가
+        INNER JOIN EQUIPMENTATTR EA ON PE.EQPTID = EA.EQPTID
+        INNER JOIN EQUIPMENT E ON EA.EQPTID = E.EQPTID AND E.EQPTIUSE = 'Y'
+        INNER JOIN EquipmentSegment EQS ON EQS.EQSGID = E.EQSGID AND R.AREAID = EQS.AREAID
+        -- INNER JOIN EquipmentSegment EQS ON EQS.EQSGID = R.EQSGID AND R.AREAID = EQS.AREAID
+        -- INNER JOIN EQUIPMENT E ON E.EQSGID = EQS.EQSGID AND E.EQPTIUSE = 'Y'
+        -- INNER JOIN EQUIPMENTATTR EA ON EA.EQPTID = E.EQPTID
+        -- INNER JOIN PROCESSEQUIPMENT PE ON PE.EQPTID = E.EQPTID AND W.PROCID = PE.PROCID AND PE.USE_FLAG = 'Y'
+        -- INNER JOIN PROCESSEQUIPMENT PE ON W.PROCID = PE.PROCID AND PE.USE_FLAG = 'Y' AND SUBSTR(PE.EQPTID, 1, 3) = 'C1F' -- 2022-12-25 조건 추가
+        -- INNER JOIN EQUIPMENTATTR EA ON PE.EQPTID = EA.EQPTID
+        -- INNER JOIN EQUIPMENT E ON EA.EQPTID = E.EQPTID AND E.EQPTIUSE = 'Y'
+        -- INNER JOIN EquipmentSegment EQS ON EQS.EQSGID = E.EQSGID AND R.AREAID = EQS.AREAID
+        INNER JOIN TB_MMD_LANE ML ON ML.LANE_ID = RP.LANE_ID
+        INNER JOIN TB_MMD_LANE ML2 ON ML2.LANE_ID = EA.S71
+        INNER JOIN TB_MMD_MHS_TRF_REQ_EQPT_SECTION ES ON
+        -- ES.REQ_PORT_ID ='C1FSTO12301-' AND
+        ES.TRGT_EQPT_ID = E.EQPTID
+        AND ES.CSTSTAT = C.CSTSTAT
+        AND ES.USE_FLAG ='Y'
+        INNER JOIN TB_MCS_PORT MP ON MP.IF_EQPTID = E.EQPTID
+        AND MP.USE_FLAG ='Y'
+        INNER JOIN EioAttr EIA ON EA.EQPTID = EIA.EQPTID
+        INNER JOIN Eio EIO ON EA.EQPTID = EIO.EQPTID
+        INNER JOIN TB_MMD_EQPT_PROG_ENABLE_ROUT PEM ON PEM.EQPTID = E.EQPTID AND PEM.ROUTID = W.ROUTID AND PEM.USE_FLAG ='Y'
+        INNER JOIN TB_MMD_EQPT_PROG_ENABLE_MDLLOT PEL ON PEM.EQPTID = PEL.EQPTID AND PEL.MDLLOT_ID = R.MDLLOT_ID AND PEL.USE_FLAG = 'Y'
+        WHERE C.TRAY_TYPE_CODE IN ('TKAD', 'TKAE')
+        GROUP BY C.CSTID, EA.S70, R.EQSGID, W.PROCID, W.LOTID, RP.ROUTID, WA.PROD_LOTID, C.EQPT_CUR, C.PORT_CUR, C.CSTSTAT, MP.PORT_ID
+        )
+        SELECT
+        wl.CSTID,
+        wl.LOTID,
+        wl.CSTSTAT,
+        TMTR.REQ_STAT_CODE,
+        wl.SectionCount,
+        wl.FROM_PORT_ID,
+        TMTC.TO_PORT_ID,
+        wl.TRGT_PORT_ID,
+        MP.PORT_STAT_CODE,
+        wl.TO_EQPT_GROUP_ID,
+        wl.EQSGID,
+        wl.PROCID,
+        wl.ROUTID,
+        wl.PROD_LOTID
+        FROM WipList wl
+        INNER JOIN COMMONCODE CM ON CM.CMCDTYPE = 'EQPT_GR_TYPE_CODE' AND CM.CMCDIUSE= 'Y' AND CM.CMCODE = wl.TO_EQPT_GROUP_ID
+        INNER JOIN WIPATTR WA ON wl.LOTID = WA.LOTID
+        INNER JOIN TB_MCS_CURR_PORT MP ON MP.PORT_ID = wl.TRGT_PORT_ID
+        LEFT OUTER JOIN TB_MHS_TRF_REQ TMTR ON TMTR.CSTID = wl.CSTID
+        LEFT OUTER JOIN TB_MHS_TRF_CMD TMTC ON TMTC.CSTID = wl.CSTID
+        WHERE CM.ATTRIBUTE1 IS NULL
+        ORDER BY wl.CSTID;
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring>
+        <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </EIOSTAT>
+        <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIOIFMODE>
+    </Coloring>
+    <EventValues/>
+</SearchWaitingWips>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortEioRecord>
+    <MainSQL>
+        SELECT
+        TOP 40
+        +Option2
+        EIO.EQPTID,
+        EIO.EIOSTAT,
+        CONVERT(CHAR(23),
+        EIO.EIODTTM , 20) AS EIO_DTTM,
+        MP.MAX_TRF_QTY,
+        CE.CMD_QTY
+        FROM EIO EIO WITH(NOLOCK)
+        INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK) ON EIO.EQPTID = MP.PORT_ID
+        LEFT JOIN(
+        SELECT TO_EQPTID, TO_PORT_ID, ISNULL(COUNT(CSTID),0) AS CMD_QTY
+        FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+        WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+        AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+        GROUP BY TO_EQPTID, TO_PORT_ID
+        ) CE ON EIO.EQPTID = CE.TO_PORT_ID
+        WHERE EIO.EQPTID like @PORT_ID
+        ORDER BY EIO_DTTM desc
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
+        <Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
+            TOP @TOPNUMBER
+        </Option2>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchPortEioRecord>

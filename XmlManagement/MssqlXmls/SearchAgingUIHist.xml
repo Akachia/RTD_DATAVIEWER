@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchAgingUIHist>
+    <MainSQL>
+        Select top 100 * from TB_SFC_UI_EVENT_HIST With(nolock)
+        WHERE UPDDTTM > CONVERT(DATE,'2023-12-20')
+        and EVENT_CNTT LIKE '%AGING%'
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchAgingUIHist>

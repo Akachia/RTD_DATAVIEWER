@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchWaitingLotList>
+    <MainSQL>
+        SELECT
+        C.CSTID
+        , C.CSTSTAT as 유형
+        , TMR.EQPTID as 설비
+        , TMR.RACK_ID as 위치
+        , TMR.RACK_STAT_CODE as 상태
+        , 'RACK IN' as 자재유형
+        , TSFD.DEMAND_TYPE
+        , L.LOTTYPE as LT
+        , WA.LOTID
+        , W.WOID
+        , W.PRODID
+        , W.PROCID
+        FROM WIPATTR WA (NOLOCK)
+        INNER JOIN TB_MCS_RACK TMR (NOLOCK)
+        ON WA.CSTID = TMR.MCS_CST_ID
+        INNER JOIN Carrier c (NOLOCK)
+        ON C.CSTID = TMR.MCS_CST_ID
+        INNER JOIN LOT L (NOLOCK)
+        ON L.LOTID = WA.LOTID
+        INNER JOIN WIP W (NOLOCK)
+        ON W.LOTID = WA.LOTID
+        INNER JOIN TB_SFC_FP_DETL_PLAN TSFD (NOLOCK)
+        ON TSFD.WOID = W.WOID
+        UNION ALL
+        SELECT
+        C.CSTID
+        , C.CSTSTAT as 유형
+        , THTR.EQPTID as 설비
+        , THTR.PORT_ID as 위치
+        , THTR.REQ_STAT_CODE as 상태
+        , 'REQ IN' as 자재유형
+        , TSFD.DEMAND_TYPE
+        , L.LOTTYPE as LT
+        , WA.LOTID
+        , W.WOID
+        , W.PRODID
+        , W.PROCID
+        FROM WIPATTR WA (NOLOCK)
+        INNER JOIN TB_MHS_TRF_REQ THTR (NOLOCK)
+        ON WA.CSTID = THTR.CSTID
+        INNER JOIN Carrier c (NOLOCK)
+        ON C.CSTID = THTR.CSTID
+        INNER JOIN LOT L (NOLOCK)
+        ON L.LOTID = WA.LOTID
+        INNER JOIN WIP W (NOLOCK)
+        ON W.LOTID = WA.LOTID
+        INNER JOIN TB_SFC_FP_DETL_PLAN TSFD (NOLOCK)
+        ON TSFD.WOID = W.WOID
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchWaitingLotList>

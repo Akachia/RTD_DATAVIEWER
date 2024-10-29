@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchWaitingWips>
+    <MainSQL>
+        With WipList AS(
+        SELECT
+        C.CSTID
+        , W.LOTID
+        , COUNT(*) AS SectionCount
+        , C.EQPT_CUR AS FROM_EQPTID
+        , C.PORT_CUR AS FROM_PORT_ID
+        , EA.S70 AS TO_EQPT_GROUP_ID
+        , R.EQSGID
+        , W.PROCID
+        , RP.ROUTID
+        , WA.PROD_LOTID
+        , C.CSTSTAT
+        --, E.EQPTID AS TRGT_EQPT_ID
+        , MP.PORT_ID AS TRGT_PORT_ID
+        --, CM.ATTRIBUTE1  AS AGING
+        FROM  CARRIER C (NOLOCK)
+        INNER JOIN WIP W (NOLOCK) 							ON C.CURR_LOTID = W.LOTID
+        INNER JOIN WIPATTR WA (NOLOCK) 						ON W.LOTID = WA.LOTID
+        INNER JOIN TB_MMD_FORM_ROUT_PROC RP (NOLOCK) 		ON RP.ROUTID = W.ROUTID      	AND RP.PROCID = W.PROCID	                AND RP.USE_FLAG = 'Y'
+        INNER JOIN TB_MMD_FORM_ROUT R (NOLOCK) 				ON RP.ROUTID = R.ROUTID	        AND R.USE_FLAG='Y'
+        INNER JOIN PROCESS P (NOLOCK) 						ON W.PROCID = P.PROCID
+
+        -- 2023-09-18 쿼리 수정
+        INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 			ON W.PROCID = PE.PROCID	        AND PE.USE_FLAG = 'Y'			 AND SUBSTRING (PE.EQPTID ,1,3) = 'C1F'    -- 2022-12-25 조건 추가
+        INNER LOOP JOIN EQUIPMENTATTR EA (NOLOCK) 			ON PE.EQPTID = EA.EQPTID
+        INNER LOOP JOIN EQUIPMENT E (NOLOCK) 				ON EA.EQPTID = E.EQPTID			AND E.EQPTIUSE = 'Y'
+        INNER LOOP JOIN EquipmentSegment EQS WITH(NOLOCK)	ON EQS.EQSGID = E.EQSGID        AND R.AREAID = EQS.AREAID
+
+        -- INNER JOIN EquipmentSegment EQS WITH(NOLOCK)		ON EQS.EQSGID = R.EQSGID		AND R.AREAID = EQS.AREAID
+        -- INNER JOIN EQUIPMENT E (NOLOCK) 					ON E.EQSGID = EQS.EQSGID    	AND E.EQPTIUSE = 'Y'
+        -- INNER JOIN EQUIPMENTATTR EA (NOLOCK) 				ON EA.EQPTID = E.EQPTID
+        -- INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 			ON PE.EQPTID = E.EQPTID    		AND W.PROCID = PE.PROCID	                AND PE.USE_FLAG = 'Y'
+
+        -- INNER JOIN PROCESSEQUIPMENT PE (NOLOCK) 					ON W.PROCID = PE.PROCID	                AND PE.USE_FLAG = 'Y'			 AND SUBSTRING (PE.EQPTID ,1,3) = 'C1F'    -- 2022-12-25 조건 추가
+        -- INNER JOIN EQUIPMENTATTR EA (NOLOCK) 					ON PE.EQPTID = EA.EQPTID
+        -- INNER JOIN EQUIPMENT E (NOLOCK) 					ON EA.EQPTID = E.EQPTID					AND E.EQPTIUSE = 'Y'
+        -- INNER JOIN EquipmentSegment EQS WITH(NOLOCK)					ON EQS.EQSGID = E.EQSGID                					AND R.AREAID = EQS.AREAID
+
+        INNER JOIN TB_MMD_LANE ML (NOLOCK)
+        ON ML.LANE_ID = RP.LANE_ID
+        INNER JOIN TB_MMD_LANE ML2 (NOLOCK)
+        ON ML2.LANE_ID = EA.S71
+        INNER JOIN TB_MMD_MHS_TRF_REQ_EQPT_SECTION ES WITH(NOLOCK)
+        ON
+        --ES.REQ_PORT_ID ='C1FSTO12301-'					AND
+        ES.TRGT_EQPT_ID = E.EQPTID
+        AND ES.CSTSTAT = C.CSTSTAT
+        AND ES.USE_FLAG ='Y'
+        INNER JOIN TB_MCS_PORT MP WITH(NOLOCK)
+        ON MP.IF_EQPTID = E.EQPTID
+        AND MP.USE_FLAG ='Y'
+        INNER JOIN EioAttr EIA (NOLOCK)
+        ON EA.EQPTID = EIA.EQPTID
+        INNER JOIN Eio EIO (NOLOCK)
+        ON EA.EQPTID = EIO.EQPTID
+        INNER JOIN TB_MMD_EQPT_PROG_ENABLE_ROUT PEM WITH(NOLOCK)
+        ON PEM.EQPTID = E.EQPTID
+        AND PEM.ROUTID = W.ROUTID
+        AND PEM.USE_FLAG ='Y'
+        INNER JOIN TB_MMD_EQPT_PROG_ENABLE_MDLLOT PEL WITH(NOLOCK)
+        ON PEM.EQPTID = PEL.EQPTID
+        AND PEL.MDLLOT_ID  = R.MDLLOT_ID
+        AND PEL.USE_FLAG = 'Y'
+        where C.TRAY_TYPE_CODE IN ('TKAD', 'TKAE')
+        group by C.CSTID, EA.S70, R.EQSGID, W.PROCID, W.LOTID, RP.ROUTID, WA.PROD_LOTID, C.EQPT_CUR , C.PORT_CUR, C.CSTSTAT, MP.PORT_ID
+        )
+        select 	wl.CSTID
+        , wl.LOTID
+        , wl.CSTSTAT
+        , TMTR.REQ_STAT_CODE
+        , wl.SectionCount
+        , wl.FROM_PORT_ID
+        , TMTC.TO_PORT_ID
+        , wl.TRGT_PORT_ID
+        , MP.PORT_STAT_CODE
+        , wl.TO_EQPT_GROUP_ID
+        , wl.EQSGID
+        , wl.PROCID
+        , wl.ROUTID
+        , wl.PROD_LOTID
+        from WipList wl
+        INNER JOIN COMMONCODE CM (NOLOCK)
+        ON CM.CMCDTYPE = 'EQPT_GR_TYPE_CODE'
+        AND CM.CMCDIUSE= 'Y'
+        AND CM.CMCODE = wl.TO_EQPT_GROUP_ID
+        INNER JOIN WIPATTR WA (NOLOCK)
+        ON wl.LOTID = WA.LOTID
+        INNER JOIN TB_MCS_CURR_PORT MP WITH(NOLOCK)
+        ON MP.PORT_ID = wl.TRGT_PORT_ID
+        LEFT OUTER JOIN TB_MHS_TRF_REQ TMTR (NOLOCK)
+        ON TMTR.CSTID = wl.CSTID
+        LEFT OUTER JOIN TB_MHS_TRF_CMD TMTC (NOLOCK)
+        ON TMTC.CSTID = wl.CSTID
+        where CM.ATTRIBUTE1 is null
+        order by CSTID
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring>
+        <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </EIOSTAT>
+        <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIOIFMODE>
+    </Coloring>
+    <EventValues/>
+</SearchWaitingWips>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentEioHistory>
+    <MainSQL>
+        SELECT
+        +Option1
+        EQPTID
+        , EIOSTAT
+        , EIOSTAT_PV
+        , ACTDTTM
+        , ACTID
+        , UPDUSER
+        , SRCTYPE
+        FROM EioActHistory with (NOLOCK)
+        WHERE 1=1
+        AND EQPTID = @EQPT_ID
+        ORDER BY ACTDTTM DESC
+    </MainSQL>
+    <Option>
+        <Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+            TOP @TOPNUMBER
+        </Option1>
+        <Option2 type="VAR" condition="" key="EQPT_ID" dataType="string" default="0"/>
+    </Option>
+    <AdditionalVariable>
+    </AdditionalVariable>
+    <Coloring/>
+    <EventValues/>
+</SearchEquipmentEioHistory>

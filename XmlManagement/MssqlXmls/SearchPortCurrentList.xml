@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortCurrentList>
+    <MainSQL>
+        WITH TT_BUF_SUM AS (
+        SELECT
+        P.PORT_ID,
+        ISNULL(sum(CP.MAX_TRF_QTY),0) AS MAX_QTY
+        FROM TB_MCS_PORT(NOLOCK) P
+        INNER JOIN TB_MCS_CURR_PORT(NOLOCK) CP     ON P.PORT_ID = CP.PORT_ID
+        where 1=1
+        AND (LEFT(P.PORT_ID,11) IN (@EQPTID_LIST) OR LEFT(P.PORT_ID,9) IN (@EQPTID_LIST))
+        GROUP  BY P.PORT_ID
+        HAVING ISNULL(sum(CP.MAX_TRF_QTY), 0) >= 0
+        ),
+        TT_USING_QTY AS (
+        SELECT
+        TO_PORT_ID
+        , ISNULL(COUNT(CSTID),0) AS CMD_USING_QTY
+        FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+        WHERE 1=1
+        AND CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+        AND CSTSTAT = 'U'
+        AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+        GROUP BY TO_PORT_ID
+        ),
+        TT_EMPTY_QTY AS (
+        SELECT
+        TO_PORT_ID
+        , ISNULL(COUNT(CSTID),0) AS CMD_EMPTY_QTY
+        FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+        WHERE 1=1
+        AND CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+        AND CSTSTAT = 'E'
+        AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+        GROUP BY TO_PORT_ID
+        )
+        ,
+        TT_TOTAL_QTY AS (
+        SELECT
+        TOT.PORT_ID
+        , TOT.MAX_QTY
+        , CU.CMD_USING_QTY
+        , CE.CMD_EMPTY_QTY
+        FROM TT_BUF_SUM  TOT
+        LEFT JOIN TT_USING_QTY CU ON TOT.PORT_ID = CU.TO_PORT_ID
+        LEFT JOIN TT_EMPTY_QTY CE ON TOT.PORT_ID = CE.TO_PORT_ID
+        )
+        SELECT
+        TMP.PORT_ID,
+        TMCP.PORT_STAT_CODE AS 상태,
+        TMCP.PORT_WRK_MODE AS 모드,
+        eio.EIOSTAT AS ES,
+        eio.EIOIFMODE AS EIM,
+        TTQ.MAX_QTY AS 버퍼,
+        TTQ.CMD_USING_QTY AS 실반송량,
+        TTQ.CMD_EMPTY_QTY AS 공반송량,
+        TMP.PORT_TYPE_CODE AS PORT_TYPE,
+        TMP.INOUT_TYPE_CODE AS INOUT,
+        TMP.USE_FLAG AS 사용여부,
+        TMP.ELTR_TYPE_CODE AS 극성,
+        TMP.EQPTID,
+        TMP.IF_EQPTID,
+        TMP.REP_PORT_FLAG AS 대표포트,
+        TMP.TRF_REQ_SKIP_FLAG AS 요청스킵,
+        TMP.MANL_PORT_TYPE_CODE AS 포트,
+        TMP.MAX_TRF_QTY_MNGT_FLAG AS 버퍼사용,
+        TMP.SKIP_TRGT_REQ_TRF_TYPE_CODE AS 스킵유형,
+        TMP.INPUT_ENABLE_CSTSTAT AS 투입CSTSTAT,
+        TMP.LOAD_ENABLE_WIPSTAT_LST AS 투입WIPSTAT,
+        TMP.STACK_MODE_CODE AS 적재모드,
+        E.EQPTSHORTNAME,
+        TMCP.CA_BUF_QTY AS C버퍼,
+        TMCP.AN_BUF_QTY AS A버퍼
+        FROM TB_MCS_PORT TMP (NOLOCK)
+        INNER JOIN TB_MCS_CURR_PORT TMCP (NOLOCK)
+        ON TMCP.PORT_ID = TMP.PORT_ID
+        INNER JOIN Equipment E (NOLOCK)
+        ON E.EQPTID = TMP.EQPTID
+        INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+        ON E.EQSGID = ESA.EQSGID
+        INNER JOIN TT_TOTAL_QTY TTQ (NOLOCK)
+        ON TMCP.PORT_ID = TTQ.PORT_ID
+        INNER JOIN Eio eio (NOLOCK)
+        ON TMCP.PORT_ID = eio.EQPTID
+        WHERE 1 = 1
+        AND E.EQPTIUSE = 'Y'
+        --AND ESA.S38 like @SYSTEM_TYPE_CODE
+        Order by E.EQPTID
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="not_equal" key="EQPTID_LIST" dataType="string" default=""/>
+        <Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring>
+        <ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </ES>
+        <EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIM>
+        <MAINT_FLAG Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <M Red="255" Green="158" Blue="158" IsColoringRow="true"/>
+        </MAINT_FLAG>
+    </Coloring>
+    <EventValues/>
+</SearchPortCurrentList>

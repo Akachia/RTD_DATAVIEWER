@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchStockerCommonCodeList>
+    <MainSQL>
+        SELECT DISTINCT S70 AS Code,
+        CASE
+        WHEN S70 = '9' THEN 'PRE AGING STO'
+        WHEN S70 = '4' THEN 'HIGH AGING STO'
+        WHEN S70 = '3' THEN 'NORM AGING STO'
+        WHEN S70 = '7' THEN 'SHIP AGING STO'
+        WHEN S70 = 'E' THEN '2nd Empty STO'
+        WHEN S70 = '1' THEN 'CDC STO'
+        WHEN S70 = 'J' THEN 'JIG STO'
+        WHEN S70 = 'LWW' THEN 'LAMI WAIT STO'
+        WHEN S70 = 'NPW' THEN 'NND PROD STO'
+        WHEN S70 = 'NWW' THEN 'NND WAIT STO'
+        WHEN S70 = 'FWW' THEN 'FOIL WAIT STO'
+        WHEN S70 = 'JRW' THEN 'JUMBO ROLL STO'
+        WHEN S70 = 'PCW' THEN 'PROD COMP STO'
+        ELSE 'ETC'
+        END AS Sto_Desc
+        FROM EQUIPMENT E (NOLOCK)
+        INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK)
+        ON E.EQSGID = ESA.EQSGID
+        INNER JOIN EquipmentAttr EA
+        ON E.EQPTID = EA.EQPTID
+        WHERE E.EQSGID like @AREA_ID
+        and E.EQGRID = 'STO'
+        and ESA.S38 = @SYSTEM_TYPE_CODE
+        and EA.S70 is not NULL
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable>
+        <AREA_ID dataType="string" default=""/>
+        <SYSTEM_TYPE_CODE dataType="string" default=""/>
+    </AdditionalVariable>
+    <Coloring/>
+    <EventValues/>
+</SearchStockerCommonCodeList>

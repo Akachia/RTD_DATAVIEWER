@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentCurrentState>
+    <MainSQL>
+        WITH TT_BUF_SUM AS (
+        SELECT
+        P.EQPTID,
+        ISNULL(sum(CP.MAX_TRF_QTY),0) AS MAX_QTY
+        FROM TB_MCS_PORT(NOLOCK) P
+        INNER JOIN TB_MCS_CURR_PORT(NOLOCK) CP     ON P.PORT_ID = CP.PORT_ID
+        INNER JOIN Equipment E (NOLOCK) ON E.EQPTID= P.PORT_ID
+        INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID = ES.EQSGID
+        where ES.AREAID = @AREA_ID
+        GROUP  BY P.EQPTID
+        HAVING ISNULL(sum(CP.MAX_TRF_QTY), 0) >= 0
+        ),
+        TT_USING_QTY AS (
+        SELECT
+        TO_EQPTID
+        , ISNULL(COUNT(CSTID),0) AS CMD_USING_QTY
+        FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+        WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+        AND CSTSTAT = 'U'
+        AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+        GROUP BY TO_EQPTID
+        ),
+        TT_EMPTY_QTY AS (
+        SELECT
+        TO_EQPTID
+        , ISNULL(COUNT(CSTID),0) AS CMD_EMPTY_QTY
+        FROM TB_MHS_TRF_CMD WITH(NOLOCK)
+        WHERE CMD_STAT_CODE IN('RECEIVE', 'MOVING')
+        AND CSTSTAT = 'E'
+        AND ISNULL(CNCL_REQ_FLAG, '') NOT IN('Y', 'S')
+        GROUP BY TO_EQPTID
+        )
+        ,
+        TT_TOTAL_QTY AS (
+        SELECT
+        TOT.EQPTID
+        , TOT.MAX_QTY
+        , CU.CMD_USING_QTY
+        , CE.CMD_EMPTY_QTY
+        FROM TT_BUF_SUM  TOT
+        LEFT JOIN TT_USING_QTY CU ON TOT.EQPTID = CU.TO_EQPTID
+        LEFT JOIN TT_EMPTY_QTY CE ON TOT.EQPTID = CE.TO_EQPTID
+        )
+        SELECT
+        EQ.EQPTID
+        , EQ.EQGRID
+        , EQ.EQPTIUSE AS 사용
+        , E.EIOSTAT
+        , E.EIOIFMODE
+        , EQA.S71 AS LANE_ID
+        , WO.PRODID
+        , CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
+        , ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+        , ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+        , ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+        FROM EQUIPMENT EQ with(nolock)
+        INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+        INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+        INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+        LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+        LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+        LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+        LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+        WHERE 1 = 1
+        --AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND EQ.EQPTIUSE = 'Y'
+        AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID like @AREA_ID
+        AND EQ.EQGRID IN ('CNV','STO','EOL','FOR','LAM','NND','STK')
+        --AND PD.PRODID IS NOT NULL
+        and LEN(EQ.EQPTID) = 11
+        UNION
+        SELECT
+        EQ.EQPTID
+        , EQ.EQGRID
+        , EQ.EQPTIUSE AS 사용
+        , E.EIOSTAT
+        , E.EIOIFMODE
+        , EQA.S71 AS LANE_ID
+        , WO.PRODID
+        , CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
+        , ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+        , ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+        , ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+        FROM EQUIPMENT EQ with(nolock)
+        INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+        INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+        INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+        LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+        LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+        LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+        LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+        WHERE 1 = 1
+        --AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND EQ.EQPTIUSE = 'Y'
+        AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID like @AREA_ID
+        AND EQ.EQGRID IN ('SEL','HPC','DEG','JGF','DIS','OCV','ROL','COT')
+        --AND PD.PRODID IS NOT NULL
+        AND LEN(EQ.EQPTID) = 9
+        UNION
+        SELECT
+        EQ.EQPTID
+        , EQ.EQGRID
+        , EQ.EQPTIUSE AS 사용
+        , E.EIOSTAT
+        , E.EIOIFMODE
+        , EQA.S71 AS LANE_ID
+        , PD.PRODID
+        , CONVERT(VARCHAR(23), E.UPDDTTM, 20) AS UPDDTTM
+        , ISNULL(Q.MAX_QTY,0) AS MAX_CMD
+        , ISNULL(Q.CMD_USING_QTY,0) AS 실반송
+        , ISNULL(Q.CMD_EMPTY_QTY,0) AS 공반송
+        FROM EQUIPMENT EQ with(nolock)
+        INNER JOIN EQUIPMENTATTR EQA with(nolock) ON EQ.EQPTID = EQA.EQPTID
+        INNER JOIN EquipmentSegment ES with(nolock) ON ES.EQSGID = EQ.EQSGID
+        INNER JOIN EquipmentSegmentAttr ESA with(nolock) ON ESA.EQSGID = EQ.EQSGID
+        INNER JOIN EIO E with(nolock) ON EQ.EQPTID = E.EQPTID
+        LEFT JOIN EioAttr EA with(nolock) ON EA.EQPTID = LEFT(E.EQPTID,9)
+        LEFT JOIN WorkOrder WO with(nolock) ON WO.WOID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_FP_DETL_PLAN TSFDP (NOLOCK) ON TSFDP.WO_DETL_ID = EA.WO_DETL_ID
+        LEFT JOIN TB_SFC_WO_MTRL       TSWM (NOLOCK) ON EA.WO_DETL_ID = TSWM.WOID AND TSWM.USE_FLAG = 'Y' --AND TSWM.UNIT_CODE = 'EA'
+        LEFT JOIN Product				PD   (NOLOCK) ON PD.PRODID = TSWM.MTRLID AND PD.PRODIUSE = 'Y'
+        LEFT JOIN TT_TOTAL_QTY Q ON e.EQPTID = Q.EQPTID
+        WHERE 1 = 1
+        --AND EQ.EQGRID IN ('CNV','PKG','SEL','HPC','DEG','JGF','FOR','DIS','STO','OCV','EOL','OHS')
+        AND EQ.EQPTIUSE = 'Y'
+        AND EQ.EQGRID IN (@EQP_GROUP_ID_LIST)
+        AND ES.AREAID like @AREA_ID
+        AND EQ.EQGRID IN ('PKG')
+        AND LEN(EQ.EQPTID) = 11
+        Order by EQ.EQPTID
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="" key="EQP_GROUP_ID_LIST" dataType="string" default=""/>
+        <Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+        <Option3 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring>
+        <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </EIOSTAT>
+        <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIOIFMODE>
+        <CSTTYPE Red="255" Green="254" Blue="196" IsColoringColumn="true" IsTimeCompare="false">
+            <TRAY Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <TKAE Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="FALSE"/>
+        </CSTTYPE>
+        <INSDTTM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="true">
+            <TODAY Red="255" Green="155" Blue="155" IsColoringRow="true" condition="FUTURE"/>
+            <TOMORROW Red="155" Green="255" Blue="155" IsColoringRow="true" condition="PAST"/>
+            <YESTERDAY Red="155" Green="155" Blue="255" IsColoringRow="true" condition="EQUAL"/>
+        </INSDTTM>
+    </Coloring>
+    <EventValues/>
+</SearchEquipmentCurrentState>

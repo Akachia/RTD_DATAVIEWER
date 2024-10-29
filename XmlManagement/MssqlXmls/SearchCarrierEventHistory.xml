@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchCarrierEventHistory>
+    <MainSQL>
+        SELECT
+        CSTID
+        , CSTSTAT as 상태
+        , LOTID
+        , PROCID
+        , EQPTID
+        , PORT_ID
+        , RACK_ID
+        , EVENT_CODE
+        , EVENT_TYPE_CODE as ETC
+        , TRF_END_CODE AS TEC
+        , FINL_TO_EQPTID as TO_EQPT_ID
+        , FINL_TO_PORT_ID as TO_PORT_ID
+        , INSUSER
+        , CONVERT(CHAR(23), INSDTTM, 20)  AS INSDTTM
+        , CONVERT(CHAR(23), UPDDTTM, 20)  AS UPDDTTM
+        FROM TB_MHS_TRF_EVENT_HIST with(nolock)
+        where 1=1
+        +Option1
+        +Option2
+        AND INSDTTM BETWEEN @StartTime AND @EndTime
+        ORDER BY INSDTTM DESC
+    </MainSQL>
+    <Option>
+        <Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
+            AND CSTID IN (@CSTID)
+        </Option1>
+        <Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
+            AND PORT_ID LIKE @PORT_ID
+        </Option2>
+        <Option3 type="VAR" condition="" key="StartTime" dataType="DateTime" default=""/>
+        <Option4 type="VAR" condition="" key="EndTime" dataType="DateTime" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchCarrierEventHistory>

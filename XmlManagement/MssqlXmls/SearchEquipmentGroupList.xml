@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentGroupList>
+    <MainSQL>
+        SELECT DISTINCT
+        EQGRID
+        FROM EQUIPMENT E (NOLOCK)
+        INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID =  ES.EQSGID
+        INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK) ON E.EQSGID = ESA.EQSGID
+        WHERE 1=1
+        AND ES.AREAID = @AREA_ID
+        AND ESA.S38 = @SYSTEM_TYPE_CODE
+        AND EQGRID NOT IN ('MCS')
+        UNION
+        SELECT DISTINCT
+        EQGRID
+        FROM EQUIPMENT E (NOLOCK)
+        INNER JOIN EquipmentSegment ES (NOLOCK) ON E.EQSGID =  ES.EQSGID
+        INNER JOIN EQUIPMENTSEGMENTATTR ESA (NOLOCK) ON E.EQSGID = ESA.EQSGID
+        WHERE 1=1
+        AND ES.AREAID = @AREA_ID
+        AND EQGRID = 'PKG'
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+        <Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchEquipmentGroupList>

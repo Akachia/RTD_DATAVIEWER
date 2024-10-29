@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortStateRecord>
+    <MainSQL>
+        select
+        TOP 40
+        +Option2
+        PORT_ID
+        , PORT_STAT_CODE AS 상태
+        , ACTDTTM
+        , ACTID
+        from TB_MCS_PORT_STAT_HIST with (NOLOCK)
+        where PORT_ID like @PORT_ID
+        ORDER BY ACTDTTM desc
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
+        <Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
+            TOP @TOPNUMBER
+        </Option2>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchPortStateRecord>
