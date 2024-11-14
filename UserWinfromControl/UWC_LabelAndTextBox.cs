@@ -96,11 +96,31 @@ namespace UserWinfromControl
             }
         }
 
-        public string TextToCarrierListByRex(string carrierText)
+        public string TextToCarrierListByRex(string carrierText, (string, string) TrayId, string areaId)
         {
             string carrierIds = string.Empty;
-            Regex regex_Form = new(@"(TKA[E|D][0-9]{6})");
-            Regex regex_Elec = new(@"([[B|E][B|X][A|E][E|O][C|A|R][A|S]\d{4})");
+            Regex regex_Elec = null;
+            Regex regex_Form = null;
+
+            if (TrayId.Equals(("LHAD","LHAE"))) {
+
+                regex_Form = new(@"(LHA[E|D][0-9]{6})");
+            }
+            else if(TrayId.Equals(("TKAD", "TKAE")))
+            {
+                regex_Form = new(@"(TKA[E|D][0-9]{6})");
+            }
+
+            if (areaId == "EU" || areaId == "AJ")
+            {
+                regex_Elec = new(@"([[B|E][B|X][A|E][J|U][C|A|R][A|S]\d{4})");
+            }
+            else if (areaId == "EO" || areaId == "AE")
+            {
+                regex_Elec = new(@"([[B|E][B|X][A|E][E|O][C|A|R][A|S]\d{4})");
+            }
+             
+            
 
             MatchCollection matches_Form = regex_Form.Matches(carrierText);
             MatchCollection matches_Elec = regex_Elec.Matches(carrierText);

@@ -114,7 +114,7 @@ namespace RTD_DataViewer
 
                         if (text.IsMultiInputTextControl)
                         {
-                            string carrierIds = text.TextToCarrierListByRex(text.Tb_Text);
+                            string carrierIds = text.TextToCarrierListByRex(text.Tb_Text, main.correntConnectionStringSetting.TrayID, main.correntConnectionStringSetting.AreaID);
                             paramaterDic.Add(text.VariableName, carrierIds);
                             if (text.Tb_Text.Equals(string.Empty))
                             {

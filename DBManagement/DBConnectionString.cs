@@ -13,7 +13,7 @@ namespace DBManagemnet
     {
         bool isConnection = false;
 
-        public DBConnectionString(string Server, string Database, string DatabaseProvider, string UserId, string Password, string AreaID, string PlantID, string SystemTypeCode)
+        public DBConnectionString(string Server, string Database, string DatabaseProvider, string UserId, string Password, string AreaID, string PlantID, (string, string) TrayID, string SystemTypeCode)
         {
             this.Server = Server;
             this.Database = Database;
@@ -22,6 +22,7 @@ namespace DBManagemnet
             this.Password = Password;
             this.AreaID = AreaID;
             this.PlantID = PlantID;
+            this.TrayID = TrayID;
             this.SystemTypeCode = SystemTypeCode;
         }
 
@@ -33,6 +34,7 @@ namespace DBManagemnet
         public string AreaID { get; }
         public string PlantID { get; }
 
+        public  (string, string) TrayID { get; }
         public string SystemTypeCode { get; }
 
         public bool IsConnection

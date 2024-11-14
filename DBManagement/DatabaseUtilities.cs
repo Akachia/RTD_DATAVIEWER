@@ -36,6 +36,7 @@ namespace DBManagement
                     node["Password"].InnerText,
                     node["AreaID"].InnerText,
                     node["PlantID"].InnerText,
+                    (node["TrayID"].InnerText.Split(',')[0], node["TrayID"].InnerText.Split(',')[1]),
                     node["SystemTypeCode"].InnerText)
                     );
             }
