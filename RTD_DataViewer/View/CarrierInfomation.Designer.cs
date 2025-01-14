@@ -117,13 +117,13 @@
             // 
             latb_CarrierId.Dock = DockStyle.Fill;
             latb_CarrierId.IsMultiInputTextControl = false;
-            latb_CarrierId.Lb_Text = "Carrier ID";
+            latb_CarrierId.Lb_Text = "DURABLE_ID";
             latb_CarrierId.Location = new Point(1088, 3);
             latb_CarrierId.Name = "latb_CarrierId";
             latb_CarrierId.Size = new Size(204, 24);
             latb_CarrierId.TabIndex = 3;
             latb_CarrierId.Tb_Text = "";
-            latb_CarrierId.VariableName = "CSTID";
+            latb_CarrierId.VariableName = "DURABLE_ID";
             // 
             // lb_MismatchMessage
             // 

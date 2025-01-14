@@ -176,31 +176,31 @@
             // 
             lAtb_TransList_CarrierId.Dock = DockStyle.Fill;
             lAtb_TransList_CarrierId.IsMultiInputTextControl = true;
-            lAtb_TransList_CarrierId.Lb_Text = "Carrier ID";
+            lAtb_TransList_CarrierId.Lb_Text = "DURABLE_ID";
             lAtb_TransList_CarrierId.Location = new Point(927, 3);
             lAtb_TransList_CarrierId.Name = "lAtb_TransList_CarrierId";
             lAtb_TransList_CarrierId.Size = new Size(148, 24);
             lAtb_TransList_CarrierId.TabIndex = 15;
             lAtb_TransList_CarrierId.Tb_Text = "";
-            lAtb_TransList_CarrierId.VariableName = "CSTID";
+            lAtb_TransList_CarrierId.VariableName = "DURABLE_ID";
             // 
             // lAtb_TransList_ReqEqp
             // 
             lAtb_TransList_ReqEqp.Dock = DockStyle.Fill;
             lAtb_TransList_ReqEqp.IsMultiInputTextControl = false;
-            lAtb_TransList_ReqEqp.Lb_Text = "출발지 설비";
+            lAtb_TransList_ReqEqp.Lb_Text = "FROM_PORT_ID";
             lAtb_TransList_ReqEqp.Location = new Point(1081, 3);
             lAtb_TransList_ReqEqp.Name = "lAtb_TransList_ReqEqp";
             lAtb_TransList_ReqEqp.Size = new Size(148, 24);
             lAtb_TransList_ReqEqp.TabIndex = 16;
             lAtb_TransList_ReqEqp.Tb_Text = "";
-            lAtb_TransList_ReqEqp.VariableName = "ReqPortId";
+            lAtb_TransList_ReqEqp.VariableName = "FROM_PORT_ID";
             // 
             // lAtb_TransList_LaneId
             // 
             lAtb_TransList_LaneId.Dock = DockStyle.Fill;
             lAtb_TransList_LaneId.IsMultiInputTextControl = false;
-            lAtb_TransList_LaneId.Lb_Text = "Lane ID";
+            lAtb_TransList_LaneId.Lb_Text = "LANE_ID";
             lAtb_TransList_LaneId.Location = new Point(927, 33);
             lAtb_TransList_LaneId.Name = "lAtb_TransList_LaneId";
             lAtb_TransList_LaneId.Size = new Size(148, 24);
@@ -212,13 +212,13 @@
             // 
             lAtb_TransList_ToEqp.Dock = DockStyle.Fill;
             lAtb_TransList_ToEqp.IsMultiInputTextControl = false;
-            lAtb_TransList_ToEqp.Lb_Text = "목적지 설비";
+            lAtb_TransList_ToEqp.Lb_Text = "TO_PORT_ID";
             lAtb_TransList_ToEqp.Location = new Point(1081, 33);
             lAtb_TransList_ToEqp.Name = "lAtb_TransList_ToEqp";
             lAtb_TransList_ToEqp.Size = new Size(148, 24);
             lAtb_TransList_ToEqp.TabIndex = 18;
             lAtb_TransList_ToEqp.Tb_Text = "";
-            lAtb_TransList_ToEqp.VariableName = "ToPortId";
+            lAtb_TransList_ToEqp.VariableName = "TO_PORT_ID";
             // 
             // dgv_CurrentTransportJobList
             // 
@@ -314,7 +314,7 @@
             cb_CarrierStat.Name = "cb_CarrierStat";
             cb_CarrierStat.Size = new Size(78, 24);
             cb_CarrierStat.TabIndex = 25;
-            cb_CarrierStat.VariableName = "CSTSTAT";
+            cb_CarrierStat.VariableName = "DURABLE_STATUS_CODE";
             // 
             // lb_TransportJobStatus
             // 

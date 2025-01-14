@@ -192,18 +192,18 @@ namespace DBManagement
                 string plantId = dBConnectionString.PlantID;
                 string systemTypeCode = dBConnectionString.SystemTypeCode;
 
-                if (paramaterDic[CommonXml.CSTID] == string.Empty)
+                if (paramaterDic[CommonXml.DURABLE_ID] == string.Empty)
                 {
-                    errMsg = "Carrier ID를 입력해주세요.";
+                    errMsg = "DURABLE ID를 입력해주세요.";
                     return null;
                 }
-                if (paramaterDic.ContainsKey(CommonXml.CSTID))
+                if (paramaterDic.ContainsKey(CommonXml.DURABLE_ID))
                 {
-                    cquery = cquery.Replace($"@{CommonXml.CSTID}", CustomUtills.CustomUtill.StringToDBStr(paramaterDic[CommonXml.CSTID]));
+                    cquery = cquery.Replace($"@{CommonXml.DURABLE_ID}", CustomUtills.CustomUtill.StringToDBStr(paramaterDic[CommonXml.DURABLE_ID]));
                 }
                 else
                 {
-                    errMsg = $" CSTID is null : {this.GetType().Name}";
+                    errMsg = $" DURABLE ID is null : {this.GetType().Name}";
                     return null;
                 }
                 List<Carrier> carriers;
@@ -215,8 +215,10 @@ namespace DBManagement
                     // dgv_CstInfo.DgvData.RowPostPaint -= DataGridView_RowPostPaint;
                     using (var connection = new OracleConnection(dBConnectionString.ConnectionString()))
                     {
+                        //errMsg = $" DURABLE ID is null : {cquery} : {this.GetType().Name}";
                         sqlStr = cquery;
-                        return connection.Query(testcquery).ToList();
+                        return connection.Query(cquery).ToList();
+                        
                     }
                 }
 

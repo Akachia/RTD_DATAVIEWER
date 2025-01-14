@@ -386,7 +386,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainViewer";
-            Text = "RTD_DataViewer v0.5";
+            Text = "RTD_DataViewer v0.8";
             tableLayoutPanel1.ResumeLayout(false);
             reqATransfer_dgvReq.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);

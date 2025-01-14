@@ -133,6 +133,7 @@ namespace CustomUtils
         public static string value = "value";
         public static string Default = "default";
         public static string CSTID = "CSTID";
+        public static string DURABLE_ID = "DURABLE_ID";
 
 
         public static string Coloring = "Coloring";

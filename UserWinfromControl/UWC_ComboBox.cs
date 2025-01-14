@@ -119,6 +119,13 @@ namespace UserWinfromControl
             this.comboBox1.Items.Add("MOVING");
         }
 
+        public void SetReqStateCodeData()
+        {
+            this.comboBox1.Items.Add("ALL");
+            this.comboBox1.Items.Add("BTCH_PRC");
+            this.comboBox1.Items.Add("EQPT_REQ");
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 

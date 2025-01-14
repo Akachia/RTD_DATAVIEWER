@@ -288,6 +288,7 @@ namespace DBManagement
             try
             {
                 sqlStr = MakeSql();
+
                 return databaseUtilities.GetSqlData(cquery, dBConnectionString, ref errMsg);
             }
             catch (Exception ex)

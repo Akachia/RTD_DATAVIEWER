@@ -97,24 +97,30 @@ namespace RTD_DataViewer
         public Dictionary<string, string> MakeParamaterDic(List<Control> variableControls)
         {
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
+            string errStr = "start";
             try
             {
                 foreach (var item in variableControls)
                 {
                     if (item is UWC_LabelAndDateTimePicker)
                     {
+                        errStr = "UWC_LabelAndDateTimePicker start";
                         UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
                         paramaterDic.Add(datePicker.VariableName, CustomUtill.StringToDBStr(datePicker.MakeNowDateStringAndSetting()));
+                        errStr = "UWC_LabelAndDateTimePicker end";
                         continue;
                     }
 
                     if (item is UWC_LabelAndTextBox)
                     {
+                        errStr = "UWC_LabelAndTextBox start";
                         UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;                   
 
                         if (text.IsMultiInputTextControl)
                         {
-                            string carrierIds = text.TextToCarrierListByRex(text.Tb_Text, main.correntConnectionStringSetting.TrayID, main.correntConnectionStringSetting.AreaID);
+                            errStr = "UWC_LabelAndTextBox if start";
+                            string carrierIds = text.TextToCarrierListByRex(text.Tb_Text, main.correntConnectionStringSetting.TrayID, main.correntConnectionStringSetting.AreaID, ref errStr);
+                            main.AppendLog($@"{this.GetType().FullName} : {errStr}");
                             paramaterDic.Add(text.VariableName, carrierIds);
                             if (text.Tb_Text.Equals(string.Empty))
                             {
@@ -124,49 +130,62 @@ namespace RTD_DataViewer
                             {
                                 text.Tb_Text = carrierIds;
                             }
-
+                            errStr = "UWC_LabelAndTextBox end";
                             continue;
                         }
                         else 
                         {
+                            errStr = "UWC_LabelAndTextBox else start";
                             paramaterDic.Add(text.VariableName, text.Tb_Text);
+                            errStr = "UWC_LabelAndTextBox end";
                             continue;
                         }
+
                     }
 
                     if (item is UWC_ComboBox)
                     {
+                        errStr = "UWC_ComboBox start";
                         UWC_ComboBox comboBox = item as UWC_ComboBox;
 
                         if (comboBox.ComboBoxSelectedIndex > 0)
                         {
+                            errStr = "UWC_ComboBox if start";
                             paramaterDic.Add(comboBox.VariableName, CustomUtill.StringToDBStr(comboBox.ComboBoxSelectedItem));
+                            errStr = "UWC_ComboBox end";
                             continue;
                         }
                         else
                         {
+                            errStr = "UWC_ComboBox else start";
                             paramaterDic.Add(comboBox.VariableName, $"");
+                            errStr = "UWC_ComboBox end";
                             continue;
                         }
                     }
 
                     if (item is UWC_NumberUpDown)
                     {
+                        errStr = "UWC_NumberUpDown start";
                         UWC_NumberUpDown numberUpDown = item as UWC_NumberUpDown;
 
                         paramaterDic.Add(numberUpDown.VariableName, numberUpDown.Number.ToString());
+                        errStr = "UWC_NumberUpDown end";
                         continue;
                     }
 
                     if (item is UWC_CheckBox)
                     {
+                        errStr = "UWC_CheckBox start";
                         UWC_CheckBox checkBox = item as UWC_CheckBox;
                         paramaterDic.Add(checkBox.VariableName, checkBox.IsChecked);
+                        errStr = "UWC_CheckBox end";
                         continue;
                     }
 
                     if (item is UWC_CheckListBox)
                     {
+                        errStr = "UWC_CheckListBox start";
                         UWC_CheckListBox checkListBox = item as UWC_CheckListBox;
 
                         string CheckeditemListToString = string.Empty;
@@ -203,24 +222,28 @@ namespace RTD_DataViewer
                         //}
 
                         paramaterDic.Add(checkListBox.VariableName, CheckeditemListToString);
+                        errStr = "UWC_CheckListBox End";
                         continue;
                     }
 
                     if (item is UWC_ListBox)
                     {
+                        errStr = "UWC_ListBox Start";
                         UWC_ListBox listBox = item as UWC_ListBox;
                         StkComCodeList stkComCodes = listBox.DataObject as StkComCodeList;
                         string stkComCode = listBox.SelectedItems[0].ToString();
 
                         paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
+                        errStr = "UWC_ListBox End";
                         continue;
                     }
                 }
 
                 return paramaterDic;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show($"{ex.Message} : {this.GetType().FullName} : {errStr}");
                 return null;
             }
         }
@@ -557,7 +580,8 @@ namespace RTD_DataViewer
                     {
                         if (parameters != null)
                         {
-                            dataGridView.DataSource = connection.Query(testcquery, parameters).ToList();
+                            main.AppendLog($"{this.GetType().FullName} : {cquery}");
+                            dataGridView.DataSource = connection.Query(cquery, parameters).ToList();
                             main.AppendLog(cquery, parameters);
                         }
                         else
@@ -759,36 +783,46 @@ namespace RTD_DataViewer
             return str;
         }
 
-
-
         public SqlResultDataImpl ShowDgv(string methodName, UWC_DataGridView dataGridView, SqlResultDataImpl sqlResultData, Dictionary<string, string> paramaterDic)
         {
+            main.AppendLog($@"{methodName} : \n Start SqlResultDataImpl");
             DataGridView data = dataGridView.DgvData;
             dataGridView.Lb_Text = methodName;
-
+            
             string areaID = main.correntConnectionStringSetting.AreaID;
+            main.AppendLog($@"{methodName} : \n Set AreaID : {main.correntConnectionStringSetting.AreaID}");
             string plantId = main.correntConnectionStringSetting.PlantID;
+            main.AppendLog($@"{methodName} : \n Set PlantID : {main.correntConnectionStringSetting.PlantID}");
             string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
+            main.AppendLog($@"{methodName} : \n Set SystemTypeCode : {main.correntConnectionStringSetting.SystemTypeCode}");
             paramaterDic.Add("SYSTEM_TYPE_CODE", systemTypeCode);
             paramaterDic.Add("PLANT_ID", plantId);
             paramaterDic.Add("AREA_ID", areaID);
 
 
             data.DataSource = null;
+            main.AppendLog($@"{methodName} : \n data.DataSource");
             data.Rows.Clear();
+            main.AppendLog($@"{methodName} : \n data.Rows.Clear()");
             data.Columns.Clear();
+            main.AppendLog($@"{methodName} : \n data.Columns.Clear()");
             try
             {
                 Type type = typeof(SqlResultDataImpl);
 
                 if (sqlResultData == null)
                 {
+                    main.AppendLog($@"{methodName} : \n (sqlResultData == null)");
                     sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    main.AppendLog($@"{methodName} : \n Start ExcuteSql : {main.correntConnectionStringSetting.ConnectionString()}");
                     data.DataSource = sqlResultData.ExcuteSql();
+                    main.AppendLog($@"{methodName} : \n Start EndSql");
                 }
                 else
                 {
+                    main.AppendLog($@"{methodName} : \n Start ExcuteSql");
                     data.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    main.AppendLog($@"{methodName} : \n Start EndSql");
                 }
 
                 if (sqlResultData.ErrMsg == string.Empty)
@@ -801,6 +835,7 @@ namespace RTD_DataViewer
                     MessageBox.Show($"{sqlResultData.ErrMsg} : {methodName}");
                 }
                 
+
                 return sqlResultData;
             }
             catch (Exception ex)

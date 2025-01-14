@@ -4,13 +4,25 @@
 		<Server>218.235.203.61:49157</Server>
 		<Database>xe</Database>
 		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>system</UserId>
-		<Password>oracle</Password>
+		<UserId>AKACHISCHEMA</UserId>
+		<Password>ekwns99!@</Password>
 		<AreaID>AE</AreaID>
 		<PlantID>G673</PlantID>
 		<TrayID>LHAD,LHAE</TrayID>
 		<SystemTypeCode>F</SystemTypeCode>
 	</ORACLE>
+	<FMES_APP>
+		<Server>10.99.60.118:1521</Server>
+		<Database>OCMESGD1</Database>
+		<DatabaseProvider>ORACLE</DatabaseProvider>
+		<UserId>EMES_MGR</UserId>
+		<Password>!Mesflqlfeld2024</Password>
+		<AreaID>F1</AreaID>
+		<PlantID>G673</PlantID>
+		<TrayID>LHAD,LHAE</TrayID>
+		<SystemTypeCode>F</SystemTypeCode>
+	</FMES_APP>
+
 	<EMES_APP>
 		<Server>10.99.60.118:1521</Server>
 		<Database>OCMESGD1</Database>
@@ -33,17 +45,6 @@
 		<TrayID>LHAD,LHAE</TrayID>
 		<SystemTypeCode>A</SystemTypeCode>
 	</AMES_APP>
-	<FMES_APP>
-		<Server>10.99.60.118:1521</Server>
-		<Database>OCMESGD1</Database>
-		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>EMES_MGR</UserId>
-		<Password>!Mesflqlfeld2024</Password>
-		<AreaID>F1</AreaID>
-		<PlantID>G673</PlantID>
-		<TrayID>LHAD,LHAE</TrayID>
-		<SystemTypeCode>F</SystemTypeCode>
-	</FMES_APP>
 	<ESGM2_BMES_FORM_P01>
 		<Server>10.95.105.181,7433</Server>
 		<Database>ESGM2_BMES_FORM_P01</Database>

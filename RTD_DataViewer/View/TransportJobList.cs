@@ -22,7 +22,7 @@ namespace RTD_DataViewer.View
         WinformUtils? winformUtils = null;
         DefaultSqlData? currentTransportJobListData = null;
         DefaultSqlData? SearchRouteInfoData = null;
-        SearchCarrierInfomation? searchCarrierInfomationData = null;
+        DefaultSqlData? searchCarrierInfomationData = null;
         DefaultSqlData? searchTransportJobHistoryData = null;
         List<Control>? variableControls = new List<Control>();
         public TransportJobList(MainViewer main)
@@ -96,7 +96,16 @@ namespace RTD_DataViewer.View
                 foreach (var item in currentTransportJobListData.Sqldata.EventValueDic.Keys)
                 {
                     EventValue eventValue = currentTransportJobListData.Sqldata.EventValueDic[item];
-                    eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                    try
+                    {
+                        eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                   
                 }
             }
 
@@ -253,7 +262,7 @@ namespace RTD_DataViewer.View
                             dgv_CarrierInfomation,
                             searchCarrierInfomationData,
                             currentTransportJobListData.Sqldata.getEventDicByFunctionName(methodName)
-                        );
+                        ) as DefaultSqlData;
                 }
             }
             catch (Exception ex)

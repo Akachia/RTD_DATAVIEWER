@@ -27,7 +27,7 @@ namespace RTD_DataViewer.View
         string errMsg;
         WinformUtils? winformUtils = null;
         DefaultSqlData? searchPortRequestListData = null;
-        SearchCarrierInfomation? searchCarrierInfomationData = null;
+        DefaultSqlData? searchCarrierInfomationData = null;
         DefaultSqlData? searchTransportJobHistoryData = null;
         Dictionary<string, string>? eventCallVal = null; 
         List<Control>? variableControls = new List<Control>();
@@ -86,13 +86,13 @@ namespace RTD_DataViewer.View
 
                 SearchTransportJobInfomation();
 
-                string cstId = searchPortRequestListData.Sqldata.EventValueDic["CSTID"].Value;
+                string cstId = searchPortRequestListData.Sqldata.EventValueDic["DURABLE_ID"].Value;
 
                 if (cstId == "")
                 {
                     try
                     {
-                        cstId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["CSTID"].Value.ToString();
+                        cstId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["DURABLE_ID"].Value.ToString();
                     }
                     catch (Exception)
                     {
@@ -230,7 +230,7 @@ namespace RTD_DataViewer.View
                 {
                     Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
                     string methodName = MethodBase.GetCurrentMethod().Name;
-                    paramaterDic.Add("CSTID", carrierId);
+                    paramaterDic.Add("DURABLE_ID", carrierId);
 
                     searchCarrierInfomationData =
                         winformUtils.ShowDgv
@@ -239,7 +239,7 @@ namespace RTD_DataViewer.View
                             dgv_CarrierInfomation,
                             searchCarrierInfomationData,
                             paramaterDic
-                        );
+                        ) as DefaultSqlData;
 
                 }
             }

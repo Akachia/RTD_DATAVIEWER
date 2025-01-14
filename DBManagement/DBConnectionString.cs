@@ -44,8 +44,10 @@ namespace DBManagemnet
 
         public string ConnectionString()
         {
-            return $@"Data Source = {Server}; User Id = {UserId}; Password = {Password};";
+            return $@"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST={Server.Split(':')[0]})(PORT={Server.Split(':')[1]}))(CONNECT_DATA=(SERVICE_NAME={Database})));User Id={UserId};Password={Password}";
+            //return $@"Data Source = {Server}; User Id = {UserId}; Password = {Password};";
             //return $@"Data Source = {Server};Initial catalog = {Database}; User Id={UserId}; Password={Password};";
+            //
         }
         public string MssqlConnectionString()
         {
@@ -57,16 +59,13 @@ namespace DBManagemnet
         {
             try
             {
-
                 if (DatabaseProvider.ToString() == "ORACLE")
                 {
-                    string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
-
                     using (var connection = new OracleConnection(ConnectionString()))
                     {
                         try
                         {
-                            connection.Query(testcquery).ToList();
+                            connection.Open();
                             return true;
                         }
                         catch (Exception)

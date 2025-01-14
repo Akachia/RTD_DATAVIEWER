@@ -21,11 +21,11 @@ namespace RTD_DataViewer.View
     public partial class CarrierInfomation : UserControl
     {
         #region Variable
-        WinformUtils? winformUtils = null;
-        DefaultSqlData? SearchCarrierEventAbbreviatedRecordData = null;
-        SearchCarrierInfomation? searchCarrierInfomationData = null;
-        DefaultSqlData? SearchCarrierActAbbreviatedRecordData = null;
-        List<Control>? variableControls = new List<Control>();
+        private readonly WinformUtils? _winformUtils = null;
+        private DefaultSqlData? _searchCarrierEventAbbreviatedRecordData = null;
+        private DefaultSqlData? _searchCarrierInfomationData = null;
+        private DefaultSqlData? _searchCarrierActAbbreviatedRecordData = null;
+        private readonly List<Control>? _variableControls = new List<Control>();
         #endregion
 
         #region Construction
@@ -37,11 +37,11 @@ namespace RTD_DataViewer.View
             {
                 if (control is UserControl)
                 {
-                    variableControls.Add(control);
+                    _variableControls.Add(control);
                 }
             }
 
-            winformUtils = new(main);
+            _winformUtils = new(main);
         }
         #endregion
 
@@ -77,16 +77,16 @@ namespace RTD_DataViewer.View
         {
             try
             {
-                Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                Dictionary<string, string> paramaterDic = _winformUtils.MakeParamaterDic(_variableControls);
                 string methodName = MethodBase.GetCurrentMethod().Name;
-                searchCarrierInfomationData =
-                    winformUtils.ShowDgv
+                _searchCarrierInfomationData =
+                    _winformUtils.ShowDgv
                     (
                         methodName,
                         dgv_CarrierInfomation,
-                        searchCarrierInfomationData,
+                        _searchCarrierInfomationData,
                         paramaterDic
-                    );
+                    ) as DefaultSqlData;
 
             }
             catch (Exception ex)
@@ -105,14 +105,14 @@ namespace RTD_DataViewer.View
             {
                 if (cstid != string.Empty)
                 {
-                    Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                    Dictionary<string, string> paramaterDic = _winformUtils.MakeParamaterDic(_variableControls);
 
-                    SearchCarrierActAbbreviatedRecordData =
-                        winformUtils.ShowDgv
+                    _searchCarrierActAbbreviatedRecordData =
+                        _winformUtils.ShowDgv
                         (
                             methodName,
                             dgv_CarrierActAbbreviatedRecord,
-                            SearchCarrierActAbbreviatedRecordData,
+                            _searchCarrierActAbbreviatedRecordData,
                             paramaterDic
                         ) as DefaultSqlData;
                 }
@@ -131,14 +131,14 @@ namespace RTD_DataViewer.View
             {
                 if (cstid != string.Empty)
                 {
-                    Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
+                    Dictionary<string, string> paramaterDic = _winformUtils.MakeParamaterDic(_variableControls);
 
-                    SearchCarrierEventAbbreviatedRecordData =
-                        winformUtils.ShowDgv
+                    _searchCarrierEventAbbreviatedRecordData =
+                        _winformUtils.ShowDgv
                         (
                             methodName,
                             dgv_CarrierEventAbbreviatedRecord,
-                            SearchCarrierEventAbbreviatedRecordData,
+                            _searchCarrierEventAbbreviatedRecordData,
                             paramaterDic
                         ) as DefaultSqlData;
                 }

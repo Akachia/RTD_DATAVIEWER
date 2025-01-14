@@ -126,49 +126,49 @@
             // 
             lAtb_ReqATransfer_StartPort.Dock = DockStyle.Fill;
             lAtb_ReqATransfer_StartPort.IsMultiInputTextControl = false;
-            lAtb_ReqATransfer_StartPort.Lb_Text = "출발 포트";
+            lAtb_ReqATransfer_StartPort.Lb_Text = "EQUIPMENT_ID";
             lAtb_ReqATransfer_StartPort.Location = new Point(1123, 3);
             lAtb_ReqATransfer_StartPort.Name = "lAtb_ReqATransfer_StartPort";
             lAtb_ReqATransfer_StartPort.Size = new Size(162, 24);
             lAtb_ReqATransfer_StartPort.TabIndex = 2;
             lAtb_ReqATransfer_StartPort.Tb_Text = "";
-            lAtb_ReqATransfer_StartPort.VariableName = "ReqPortId";
+            lAtb_ReqATransfer_StartPort.VariableName = "EQUIPMENT_ID";
             // 
             // lAtb_ReqATransfer_ArrPort
             // 
             lAtb_ReqATransfer_ArrPort.Dock = DockStyle.Fill;
             lAtb_ReqATransfer_ArrPort.IsMultiInputTextControl = false;
-            lAtb_ReqATransfer_ArrPort.Lb_Text = "도착 포트";
+            lAtb_ReqATransfer_ArrPort.Lb_Text = "PORT_ID";
             lAtb_ReqATransfer_ArrPort.Location = new Point(1123, 33);
             lAtb_ReqATransfer_ArrPort.Name = "lAtb_ReqATransfer_ArrPort";
             lAtb_ReqATransfer_ArrPort.Size = new Size(162, 24);
             lAtb_ReqATransfer_ArrPort.TabIndex = 4;
             lAtb_ReqATransfer_ArrPort.Tb_Text = "";
-            lAtb_ReqATransfer_ArrPort.VariableName = "ToPortId";
+            lAtb_ReqATransfer_ArrPort.VariableName = "PORT_ID";
             // 
             // lAtb_ReqATransfer_CarrierId
             // 
             lAtb_ReqATransfer_CarrierId.Dock = DockStyle.Fill;
             lAtb_ReqATransfer_CarrierId.IsMultiInputTextControl = false;
-            lAtb_ReqATransfer_CarrierId.Lb_Text = "Carrier ID";
+            lAtb_ReqATransfer_CarrierId.Lb_Text = "DURABLE_ID";
             lAtb_ReqATransfer_CarrierId.Location = new Point(955, 3);
             lAtb_ReqATransfer_CarrierId.Name = "lAtb_ReqATransfer_CarrierId";
             lAtb_ReqATransfer_CarrierId.Size = new Size(162, 24);
             lAtb_ReqATransfer_CarrierId.TabIndex = 1;
             lAtb_ReqATransfer_CarrierId.Tb_Text = "";
-            lAtb_ReqATransfer_CarrierId.VariableName = "CSTID";
+            lAtb_ReqATransfer_CarrierId.VariableName = "DURABLE_ID";
             // 
             // lAtb_ReqATransfer_RuleId
             // 
             lAtb_ReqATransfer_RuleId.Dock = DockStyle.Fill;
             lAtb_ReqATransfer_RuleId.IsMultiInputTextControl = false;
-            lAtb_ReqATransfer_RuleId.Lb_Text = "Rule ID";
+            lAtb_ReqATransfer_RuleId.Lb_Text = "RTD_RULE_ID";
             lAtb_ReqATransfer_RuleId.Location = new Point(955, 33);
             lAtb_ReqATransfer_RuleId.Name = "lAtb_ReqATransfer_RuleId";
             lAtb_ReqATransfer_RuleId.Size = new Size(162, 24);
             lAtb_ReqATransfer_RuleId.TabIndex = 3;
             lAtb_ReqATransfer_RuleId.Tb_Text = "";
-            lAtb_ReqATransfer_RuleId.VariableName = "RuleId";
+            lAtb_ReqATransfer_RuleId.VariableName = "RTD_RULE_ID";
             // 
             // cb_CarrierStat
             // 
@@ -192,7 +192,7 @@
             cb_TransportStatList.Name = "cb_TransportStatList";
             cb_TransportStatList.Size = new Size(92, 24);
             cb_TransportStatList.TabIndex = 15;
-            cb_TransportStatList.VariableName = "MOVINGSTATE";
+            cb_TransportStatList.VariableName = "PRCS_TYPE_CODE";
             // 
             // tv_SituationOrRuleResult
             // 

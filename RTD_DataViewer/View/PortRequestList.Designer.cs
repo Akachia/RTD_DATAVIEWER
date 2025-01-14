@@ -121,37 +121,37 @@
             // 
             lAtb_ReqInfo_ReqEqp.Dock = DockStyle.Fill;
             lAtb_ReqInfo_ReqEqp.IsMultiInputTextControl = false;
-            lAtb_ReqInfo_ReqEqp.Lb_Text = "EqptId";
+            lAtb_ReqInfo_ReqEqp.Lb_Text = "PORT_ID";
             lAtb_ReqInfo_ReqEqp.Location = new Point(1053, 3);
             lAtb_ReqInfo_ReqEqp.Name = "lAtb_ReqInfo_ReqEqp";
             lAtb_ReqInfo_ReqEqp.Size = new Size(162, 24);
             lAtb_ReqInfo_ReqEqp.TabIndex = 3;
             lAtb_ReqInfo_ReqEqp.Tb_Text = "";
-            lAtb_ReqInfo_ReqEqp.VariableName = "PORTID";
+            lAtb_ReqInfo_ReqEqp.VariableName = "PORT_ID";
             // 
             // lAtb_ReqInfo_RuleText
             // 
             lAtb_ReqInfo_RuleText.Dock = DockStyle.Fill;
             lAtb_ReqInfo_RuleText.IsMultiInputTextControl = false;
-            lAtb_ReqInfo_RuleText.Lb_Text = "Rule Name";
+            lAtb_ReqInfo_RuleText.Lb_Text = "RTD_RULE_ID";
             lAtb_ReqInfo_RuleText.Location = new Point(1053, 33);
             lAtb_ReqInfo_RuleText.Name = "lAtb_ReqInfo_RuleText";
             lAtb_ReqInfo_RuleText.Size = new Size(162, 24);
             lAtb_ReqInfo_RuleText.TabIndex = 4;
             lAtb_ReqInfo_RuleText.Tb_Text = "";
-            lAtb_ReqInfo_RuleText.VariableName = "RULEID";
+            lAtb_ReqInfo_RuleText.VariableName = "RTD_RULE_ID";
             // 
             // lAtb_ReqInfo_Cstid
             // 
             lAtb_ReqInfo_Cstid.Dock = DockStyle.Fill;
             lAtb_ReqInfo_Cstid.IsMultiInputTextControl = true;
-            lAtb_ReqInfo_Cstid.Lb_Text = "Carrier ID";
+            lAtb_ReqInfo_Cstid.Lb_Text = "DURABLE_ID";
             lAtb_ReqInfo_Cstid.Location = new Point(885, 3);
             lAtb_ReqInfo_Cstid.Name = "lAtb_ReqInfo_Cstid";
             lAtb_ReqInfo_Cstid.Size = new Size(162, 24);
             lAtb_ReqInfo_Cstid.TabIndex = 5;
             lAtb_ReqInfo_Cstid.Tb_Text = "";
-            lAtb_ReqInfo_Cstid.VariableName = "CSTID";
+            lAtb_ReqInfo_Cstid.VariableName = "DURABLE_ID";
             // 
             // lAdtp_ReqInfo_StartDate
             // 
@@ -221,7 +221,7 @@
             cb_CarrierState.Name = "cb_CarrierState";
             cb_CarrierState.Size = new Size(78, 24);
             cb_CarrierState.TabIndex = 16;
-            cb_CarrierState.VariableName = "CSTSTAT";
+            cb_CarrierState.VariableName = "DURABLE_STATUS_CODE";
             // 
             // cb_ReqState
             // 

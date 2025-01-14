@@ -74,6 +74,10 @@ namespace DBManagement
         {
             if (dBConnectionString.DatabaseProvider.ToString() == "ORACLE")
             {
+                if (dBConnectionString.UserId == "AKACHISCHEMA")
+                {
+                    cquery = "SELECT * FROM CARRIER";
+                }
                 return ShowSqltoDGV_ORACLE(cquery, dBConnectionString.ConnectionString(), ref errMsg);
             }
             else if (dBConnectionString.DatabaseProvider.ToString() == "MSSQL")
@@ -91,6 +95,10 @@ namespace DBManagement
         {
             if (dBConnectionString.DatabaseProvider.ToString() == "ORACLE")
             {
+                if (dBConnectionString.UserId == "AKACHISCHEMA")
+                {
+                    cquery = "SELECT * FROM CARRIER";
+                }
                 return ShowSqltoDGV_ORACLE(cquery, parameters, dBConnectionString.ConnectionString(), ref errMsg);
             }
             else if (dBConnectionString.DatabaseProvider.ToString() == "MSSQL")
@@ -108,8 +116,6 @@ namespace DBManagement
         {
             try
             {
-               // string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
-
                 using (var connection = new OracleConnection(connectionString))
                 {
                     if (parameters != null)
@@ -134,7 +140,6 @@ namespace DBManagement
         {
             try
             {
-                //string testcquery = "SELECT * FROM AKACHISCHEMA.CARRIER";
                 using (var connection = new OracleConnection(connectionString))
                 {
                     return connection.Query(cquery).ToList();

@@ -96,78 +96,105 @@ namespace UserWinfromControl
             }
         }
 
-        public string TextToCarrierListByRex(string carrierText, (string, string) TrayId, string areaId)
+        public string TextToCarrierListByRex(string carrierText, (string, string) TrayId, string areaId, ref string errStr)
         {
-            string carrierIds = string.Empty;
-            Regex regex_Elec = null;
-            Regex regex_Form = null;
-
-            if (TrayId.Equals(("LHAD","LHAE"))) {
-
-                regex_Form = new(@"(LHA[E|D][0-9]{6})");
-            }
-            else if(TrayId.Equals(("TKAD", "TKAE")))
+            try
             {
-                regex_Form = new(@"(TKA[E|D][0-9]{6})");
-            }
+                
+                string carrierIds = string.Empty;
+                Regex regex_Elec = null;
+                Regex regex_Form = null;
 
-            if (areaId == "EU" || areaId == "AJ")
-            {
-                regex_Elec = new(@"([[B|E][B|X][A|E][J|U][C|A|R][A|S]\d{4})");
-            }
-            else if (areaId == "EO" || areaId == "AE")
-            {
-                regex_Elec = new(@"([[B|E][B|X][A|E][E|O][C|A|R][A|S]\d{4})");
-            }
-             
-            
-
-            MatchCollection matches_Form = regex_Form.Matches(carrierText);
-            MatchCollection matches_Elec = regex_Elec.Matches(carrierText);
-
-            if (matches_Form.Count > 0)
-            {
-                foreach (Match s in matches_Form)
+                if (TrayId.Equals(("LHAD", "LHAE")))
                 {
-                    if (carrierIds.Equals(string.Empty))
-                    {
-                        carrierIds += @$"'{s.Value}'";
-                    }
-                    else
-                    {
-                        carrierIds += @$",'{s.Value}'";
-                    }
+                    errStr = "Create regex_Form (LHAD, LHAE) ";
+                    regex_Form = new(@"(LHA[E|D][0-9]{6})");
                 }
-            }
-            if (matches_Elec.Count > 0)
-            {
-                foreach (Match s in matches_Elec)
+                else if (TrayId.Equals(("TKAD", "TKAE")))
                 {
-                    if (carrierIds.Equals(string.Empty))
-                    {
-                        carrierIds += @$"'{s.Value}'";
-                    }
-                    else
-                    {
-                        carrierIds += @$",'{s.Value}'";
-                    }
+                    errStr = "Create regex_Form (TKAD, TKAE) ";
+                    regex_Form = new(@"(TKA[E|D][0-9]{6})");
                 }
-            }
+                else {
+                    errStr = "Create regex_Form defualt ";
+                    regex_Form = new("");
+                }
 
-            if (matches_Elec.Count == 0 && matches_Form.Count == 0)
-            {
-                if (carrierText == string.Empty)
+                if (areaId == "EU" || areaId == "AJ")
                 {
-                    return carrierText;
+                    errStr = "Create regex_Elec (EU, AJ) ";
+                    regex_Elec = new(@"([[B|E][B|X][A|E][J|U][C|A|R][A|S]\d{4})");
+                }
+                else if (areaId == "EO" || areaId == "AE")
+                {
+                    errStr = "Create regex_Elec (EO, AE) ";
+                    regex_Elec = new(@"([[B|E][B|X][A|E][E|O][C|A|R][A|S]\d{4})");
                 }
                 else
                 {
-                    return CustomUtills.CustomUtill.LikeStringMaskingByBoth(carrierText);
+                    errStr = "Create regex_Elec defualt ";
+                    regex_Elec = new("");
                 }
 
+
+                errStr = "Create matches_Form ";
+                MatchCollection matches_Form = regex_Form.Matches(carrierText);
+                errStr = "Create matches_Elec ";
+                MatchCollection matches_Elec = regex_Elec.Matches(carrierText);
+
+                if (matches_Form.Count > 0)
+                {
+                    errStr = "Make matches_Form Carriers";
+                    foreach (Match s in matches_Form)
+                    {
+                        if (carrierIds.Equals(string.Empty))
+                        {
+                            carrierIds += @$"'{s.Value}'";
+                        }
+                        else
+                        {
+                            carrierIds += @$",'{s.Value}'";
+                        }
+                    }
+                }
+                if (matches_Elec.Count > 0)
+                {
+                    errStr = "Make matches_Elec Carriers";
+                    foreach (Match s in matches_Elec)
+                    {
+                        if (carrierIds.Equals(string.Empty))
+                        {
+                            carrierIds += @$"'{s.Value}'";
+                        }
+                        else
+                        {
+                            carrierIds += @$",'{s.Value}'";
+                        }
+                    }
+                }
+
+                if (matches_Elec.Count == 0 && matches_Form.Count == 0)
+                {
+                    if (carrierText == string.Empty)
+                    {
+                        errStr = "Make carrierText Is Null";
+                        return carrierText;
+                    }
+                    else
+                    {
+                        errStr = "Make LikeStringMaskingByBoth(carrierText) start";
+                        return CustomUtills.CustomUtill.LikeStringMaskingByBoth(carrierText);
+                    }
+
+                }
+                errStr = "TextToCarrierListByRex End";
+                return carrierIds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return carrierIds;
         }
 
         private string MakeCmdStatCodeList()
