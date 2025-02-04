@@ -13,15 +13,15 @@ namespace XmlManagement
         public XmlParser()
         {
         }
-        public XmlParser(string xmlFilePath)
-        {
-            this.xmlData = new XmlData(xmlFilePath);
-        }
-        public XmlParser(string xmlFilePath, string sqlPath)
-        {
-
-            this.xmlData = new XmlData(sqlPath);
-        }
+        // public XmlParser(string xmlFilePath)
+        // {
+        //     this.xmlData = new XmlData(xmlFilePath);
+        // }
+        // public XmlParser(string xmlFilePath, string sqlPath)
+        // {
+        //
+        //     this.xmlData = new XmlData(sqlPath);
+        // }
 
         public string MakeOptionSql(string sql, XmlData xmlData, int squence)
         {

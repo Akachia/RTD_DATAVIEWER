@@ -4,7 +4,7 @@
 		<Server>218.235.203.61:49157</Server>
 		<Database>xe</Database>
 		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>AKACHISCHEMA</UserId>
+		<UserId>RTD</UserId>
 		<Password>ekwns99!@</Password>
 		<AreaID>AE</AreaID>
 		<PlantID>G673</PlantID>

@@ -19,7 +19,6 @@ C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\bin\Debug\net6
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\bin\Debug\net6.0-windows\CustomUtills.pdb
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.csproj.AssemblyReference.cache
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_DataGridView.resources
-C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_LabelAndComboBox.resources
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_LabelAndDateTimePicker.resources
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_LabelAndTextBox.resources
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_TextBox.resources
@@ -29,7 +28,6 @@ C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.AssemblyInfoInputs.cache
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.AssemblyInfo.cs
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.csproj.CoreCompileInputs.cache
-C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.csproj.CopyComplete
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.dll
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\refint\UserWinfromControl.dll
 C:\Users\carry\Documents\GitHub\RTD_DataViewer\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.pdb
@@ -87,3 +85,12 @@ C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_SituationBorad.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_Label.resources
 C:\Users\smkim\Documents\GitHub\RTD_Viewer\Tester1\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_CheckBox.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_CheckBox.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_CheckListBox.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_ComboBox.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_Label.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_ListBox.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_NumberUpDown.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.UWC_SituationBorad.resources
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinfromControl.sourcelink.json
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\UserWinfromControl\obj\Debug\net6.0-windows\UserWinf.D9374DD0.Up2Date

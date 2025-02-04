@@ -128,3 +128,5 @@ XmlManagement/obj/Debug/net6.0/XmlManagement.pdb
 XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfoInputs.cache
 *.dll
 *.cache
+/CustomUtills/bin
+/CustomUtills/obj

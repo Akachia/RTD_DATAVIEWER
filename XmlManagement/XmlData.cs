@@ -14,21 +14,20 @@ namespace XmlManagement
     {
         XmlDocument? xdoc;
         XmlDirectory? xmlDirectory;
-        private string mainSql;
-        private Dictionary<string, XmlOptionData> optionSql;
-        Dictionary<string, XmlOptionData> result;
+        private string? mainSql;
+        private Dictionary<string, XmlOptionData>? optionSql;
+        Dictionary<string, XmlOptionData>? result;
 
         public XmlData()
         {
             XmlSync();
         }
-        public XmlData(string sqlPath)
+
+        public XmlData(string databaseProvider)
         {
-            XmlSync();
-           // this.mainSql = MainSqlpaser($@"{xmlDirectory.SqlDirectory}/MainSQL");
-            this.mainSql = MainSqlpaser2(xmlDirectory.SqlDirectory);
-            this.optionSql = OptionSqlListparser(xmlDirectory.SqlDirectory);
+            XmlSync(databaseProvider);
         }
+
 
         public string MainSql { get => mainSql; set => mainSql = value; }
         public Dictionary<string, XmlOptionData> OptionSql { get => optionSql; set => optionSql = value; }
@@ -38,10 +37,12 @@ namespace XmlManagement
             this.xdoc = new XmlDocument();
             this.xmlDirectory = new XmlDirectory();
 
-            DirectoryInfo directoryInfo = new DirectoryInfo(xmlDirectory.SqlDirectory.Trim());
             try
             {
                 //실행 시 에러가 발생하는 것을 파악하기 위해 개별 파일로 분리함
+
+
+                DirectoryInfo directoryInfo = new DirectoryInfo(xmlDirectory.OracleSqlDirectory.Trim());
                 if (directoryInfo.Exists)
                 {
                     result = new Dictionary<string, XmlOptionData>();
@@ -55,7 +56,54 @@ namespace XmlManagement
                 }
                 else
                 {
-                    xdoc.Load(xmlDirectory.SqlDirectory);
+                    xdoc.Load(xmlDirectory.OracleSqlDirectory);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public void XmlSync(string DatabaseProvider)
+        {
+            this.xdoc = new XmlDocument();
+            this.xmlDirectory = new XmlDirectory();
+
+            try
+            {
+                //실행 시 에러가 발생하는 것을 파악하기 위해 개별 파일로 분리함
+                DirectoryInfo? directoryInfo = null;
+                if (DatabaseProvider.Equals("ORACLE"))
+                {
+                    directoryInfo = new DirectoryInfo(xmlDirectory.OracleSqlDirectory.Trim());
+                }
+                else if (DatabaseProvider.Equals("MSSQL"))
+                {
+                    directoryInfo = new DirectoryInfo(xmlDirectory.MssqlSqlDirectory.Trim());
+                }
+                else
+                {
+                    directoryInfo = new DirectoryInfo(xmlDirectory.OracleSqlDirectory.Trim());
+                }
+
+                if (directoryInfo.Exists)
+                {
+                    result = new Dictionary<string, XmlOptionData>();
+
+                    foreach (FileInfo file in directoryInfo.GetFiles())
+                    {
+
+                        XmlNode fileNode = ConvertFileInfoToXmlNode(file);
+                        result.Add(fileNode.Name, new XmlOptionData(fileNode));
+                    }
+                }
+                else
+                {
+                    xdoc.Load(xmlDirectory.OracleSqlDirectory);
                 }
 
             }

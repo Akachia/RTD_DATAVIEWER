@@ -139,8 +139,6 @@ namespace RTD_DataViewer
         {
             try
             {
-                xml = new XmlData();
-                sqlList = xml.OptionSqlListparser();
                 strs = new DatabaseUtilities().GetConfigList();
 
                 List<string> stringss = strs.Keys.ToList();
@@ -151,6 +149,9 @@ namespace RTD_DataViewer
                 correntConnectionStringSetting = strs[cb_DBString.Text];
                 correntConnectionStringSetting.TestConnection();
                 ChangeDBConn(cb_DBString.Text);
+
+                xml = new XmlData(correntConnectionStringSetting.DatabaseProvider);
+                sqlList = xml.OptionSqlListparser();
             }
             catch (Exception ex)
             {

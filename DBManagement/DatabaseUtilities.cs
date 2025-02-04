@@ -74,10 +74,10 @@ namespace DBManagement
         {
             if (dBConnectionString.DatabaseProvider.ToString() == "ORACLE")
             {
-                if (dBConnectionString.UserId == "AKACHISCHEMA")
-                {
-                    cquery = "SELECT * FROM CARRIER";
-                }
+                // if (dBConnectionString.UserId == "AKACHISCHEMA")
+                // {
+                //     cquery = "SELECT * FROM CARRIER";
+                // }
                 return ShowSqltoDGV_ORACLE(cquery, dBConnectionString.ConnectionString(), ref errMsg);
             }
             else if (dBConnectionString.DatabaseProvider.ToString() == "MSSQL")
@@ -95,10 +95,10 @@ namespace DBManagement
         {
             if (dBConnectionString.DatabaseProvider.ToString() == "ORACLE")
             {
-                if (dBConnectionString.UserId == "AKACHISCHEMA")
-                {
-                    cquery = "SELECT * FROM CARRIER";
-                }
+                // if (dBConnectionString.UserId == "AKACHISCHEMA")
+                // {
+                //     cquery = "SELECT * FROM CARRIER";
+                // }
                 return ShowSqltoDGV_ORACLE(cquery, parameters, dBConnectionString.ConnectionString(), ref errMsg);
             }
             else if (dBConnectionString.DatabaseProvider.ToString() == "MSSQL")

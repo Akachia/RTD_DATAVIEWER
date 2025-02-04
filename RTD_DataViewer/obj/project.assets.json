@@ -2309,23 +2309,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\smkim\\.nuget\\packages\\": {},
+    "C:\\Users\\carry\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\RTD_DataViewer\\RTD_DataViewer.csproj",
+      "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
       "projectName": "RTD_DataViewer",
-      "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\RTD_DataViewer\\RTD_DataViewer.csproj",
-      "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\RTD_DataViewer\\obj\\",
+      "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
+      "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2341,17 +2341,17 @@
         "net6.0-windows10.0.19041": {
           "targetAlias": "net6.0-windows10.0.19041.0",
           "projectReferences": {
-            "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj": {
-              "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\CustomUtills\\CustomUtills.csproj"
+            "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+              "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
             },
-            "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\DBManagement\\DBManagement.csproj": {
-              "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\DBManagement\\DBManagement.csproj"
+            "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj": {
+              "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj"
             },
-            "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\UserWinfromControl\\UserWinfromControl.csproj": {
-              "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\UserWinfromControl\\UserWinfromControl.csproj"
+            "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj": {
+              "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj"
             },
-            "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\XmlManagement\\XmlManagement.csproj": {
-              "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_Viewer\\Tester1\\XmlManagement\\XmlManagement.csproj"
+            "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
+              "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj"
             }
           }
         }
@@ -2364,7 +2364,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -2403,7 +2403,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.Windows.SDK.NET.Ref",
-            "version": "[10.0.19041.52, 10.0.19041.52]"
+            "version": "[10.0.19041.55, 10.0.19041.55]"
           }
         ],
         "frameworkReferences": {
@@ -2417,7 +2417,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

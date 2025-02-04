@@ -14,8 +14,36 @@ namespace XmlManagement
             XmlDocument appXmlData = new XmlDocument();
             appXmlData.Load(AppConfigDirectory);
             XmlNode xml = appXmlData.ChildNodes[1];
-            SqlDirectory = xml["SqlDirectory"].InnerText;
-            DatabaseDirectory = xml["DBConDirectory"].InnerText;
+            string mssqlPath = $@"{System.IO.Directory.GetCurrentDirectory()}\MssqlXmls";
+            string oraclePath = $@"{System.IO.Directory.GetCurrentDirectory()}\OracleXmls";
+            string dbConfigPath = $@"{System.IO.Directory.GetCurrentDirectory()}\DBConnectionString.xml";
+
+            if (System.IO.Directory.Exists(mssqlPath))
+            {
+                MssqlSqlDirectory = mssqlPath;
+            }
+            else
+            {
+                MssqlSqlDirectory = xml["SqlDirectory"].InnerText;
+            }
+
+            if (System.IO.Directory.Exists(oraclePath))
+            {
+                OracleSqlDirectory = oraclePath;
+            }
+            else
+            {
+                OracleSqlDirectory = xml["SqlDirectory"].InnerText;
+            }
+
+            if (System.IO.File.Exists(dbConfigPath))
+            {
+                DatabaseDirectory = dbConfigPath;
+            }
+            else
+            {
+                DatabaseDirectory = xml["DBConDirectory"].InnerText;
+            }
 
         }
 
@@ -24,11 +52,41 @@ namespace XmlManagement
             appXmlData.Load(appDirectory);
 
             XmlNode xml = appXmlData.ChildNodes[1];
-            SqlDirectory = xml["SqlDirectory"].InnerText;
-            DatabaseDirectory = xml["DBConDirectory"].InnerText;
+
+            string mssqlPath = $@"{System.IO.Directory.GetCurrentDirectory()}\MssqlXmls";
+            string oraclePath = $@"{System.IO.Directory.GetCurrentDirectory()}\OracleXmls";
+            string dbConfigPath = $@"{System.IO.Directory.GetCurrentDirectory()}\DBConnectionString.xml";
+
+            if (System.IO.Directory.Exists(mssqlPath))
+            {
+                MssqlSqlDirectory = mssqlPath;
+            }
+            else
+            {
+                MssqlSqlDirectory = xml["SqlDirectory"].InnerText;
+            }
+
+            if (System.IO.Directory.Exists(oraclePath))
+            {
+                OracleSqlDirectory = oraclePath;
+            }
+            else
+            {
+                OracleSqlDirectory = xml["SqlDirectory"].InnerText;
+            }
+
+            if (System.IO.Directory.Exists(dbConfigPath))
+            {
+                DatabaseDirectory = dbConfigPath;
+            }
+            else
+            {
+                DatabaseDirectory = xml["DBConDirectory"].InnerText;
+            }
         }
         private string AppConfigDirectory = $@"./AppConfig.xml";
-        internal string SqlDirectory { set; get; }
+        internal string MssqlSqlDirectory { set; get; }
+        internal string OracleSqlDirectory { set; get; }
         internal string DatabaseDirectory { set; get; }
     }
 }
