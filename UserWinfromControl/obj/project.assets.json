@@ -2195,23 +2195,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\carry\\.nuget\\packages\\": {},
+    "C:\\Users\\smkim\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
+      "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
       "projectName": "UserWinfromControl",
-      "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
-      "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\obj\\",
+      "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
+      "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2227,8 +2227,8 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
-              "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
+            "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+              "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
             }
           }
         }
@@ -2277,7 +2277,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

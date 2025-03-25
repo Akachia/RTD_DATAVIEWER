@@ -43,6 +43,13 @@ namespace RTD_DataViewer
             tp_LogBox.Controls.Add(logBox);
             logBox.Dock = DockStyle.Fill;
 
+            timer1.Interval = 1000;
+            timer2.Interval = 1000;
+            timer1.Tick += UsaCentralTime;
+            timer2.Tick += KoreaTime;
+            timer1.Start();
+            timer2.Start();
+
             appendTextCallback = logBox.appendTextCallback;
             appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
             appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
@@ -150,7 +157,9 @@ namespace RTD_DataViewer
                 correntConnectionStringSetting.TestConnection();
                 ChangeDBConn(cb_DBString.Text);
 
-                xml = new XmlData(correntConnectionStringSetting.DatabaseProvider);
+                xml = new XmlData(correntConnectionStringSetting.DatabaseProvider,
+                    correntConnectionStringSetting.SystemTypeCode);
+                lb_xmlPath.Text = xml.xmlPath;
                 sqlList = xml.OptionSqlListparser();
             }
             catch (Exception ex)
@@ -163,6 +172,7 @@ namespace RTD_DataViewer
         {
             lb_ServerIP.Text = strs[dbString].Server.ToString();
             lb_ServerName.Text = strs[dbString].Database.ToString();
+
             cstr = strs[dbString].ConnectionString();
         }
 
@@ -191,6 +201,26 @@ namespace RTD_DataViewer
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void UsaCentralTime(object sender, EventArgs args)
+        {
+            DateTime thisTime = DateTime.Now;
+            TimeZoneInfo tst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime tstTime = TimeZoneInfo.ConvertTime(thisTime, TimeZoneInfo.Local, tst);
+
+            string? timeName = tst.IsDaylightSavingTime(tstTime) ? tst.DaylightName : tst.StandardName;
+            DateTime usaCentralTime = TimeZoneInfo.ConvertTimeToUtc(tstTime, tst);
+            lb_CurLocTime.Text = @$"{timeName} : {usaCentralTime:yyyy-MM-dd HH:mm:ss}";
+
+        }
+
+        private void KoreaTime(object sender, EventArgs args)
+        {
+            DateTime utcNow = DateTime.Now;
+            TimeZoneInfo localTzInfo = TimeZoneInfo.Local;
+            string? timeName = localTzInfo.IsDaylightSavingTime(utcNow) ? localTzInfo.DaylightName : localTzInfo.StandardName;
+            lb_KorTime.Text = @$"{timeName} : {utcNow:yyyy-MM-dd HH:mm:ss}";
         }
     }
 }

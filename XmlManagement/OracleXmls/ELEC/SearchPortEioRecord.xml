@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortEioRecord>
+    <MainSQL>
+        SELECT
+        EI.EQUIPMENT_ID,
+        EI.EQUIPMENT_STATE_CODE,
+        TO_CHAR(EI.EIODTTM, 'YYYY-MM-DD HH24:MI:SS') AS EIO_DTTM,
+        PI.MAX_TRF_QTY,
+        CE.CMD_QTY
+        FROM TB_EGN_EQUIP_INFO EI
+        INNER JOIN TB_EGN_PORT_INFO PI ON EI.EQUIPMENT_ID = PI.PORT_ID
+        LEFT JOIN (
+        SELECT TO_EQPTID, TO_PORT_ID, NVL(COUNT(CSTID), 0) AS CMD_QTY
+        FROM TB_MHS_TRF_CMD
+        WHERE CMD_STAT_CODE IN ('RECEIVE', 'MOVING')
+        AND NVL(CNCL_REQ_FLAG, '') NOT IN ('Y', 'S')
+        GROUP BY TO_EQPTID, TO_PORT_ID
+        ) CE ON EI.EQUIPMENT_ID = CE.TO_PORT_ID
+        WHERE EI.EQUIPMENT_ID LIKE @PORT_ID    -- option1
+        ORDER BY EIO_DTTM DESC
+        FETCH FIRST 40 ROWS ONLY
+<!--        TODO 개수제한 로직 1~2번 적용 확인필요-->
+        +Option2
+
+    </MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
+        <Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
+            FETCH FIRST @TOPNUMBER ROWS ONLY
+        </Option2>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchPortEioRecord>

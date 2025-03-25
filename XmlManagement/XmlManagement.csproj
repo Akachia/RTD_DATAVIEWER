@@ -116,91 +116,274 @@
     <None Update="MssqlXmls\SearchWaitingWips.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchAgingUIHist.xml">
+    <None Update="OracleXmls\ASSY\SearchAgingUIHist.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCarrierActAbbreviatedRecord.xml">
+    <None Update="OracleXmls\ASSY\SearchCarrierActAbbreviatedRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCarrierActHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchCarrierActHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCarrierEventAbbreviatedRecord.xml">
+    <None Update="OracleXmls\ASSY\SearchCarrierEventAbbreviatedRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCarrierEventHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchCarrierEventHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCarrierInfomation.xml">
+    <None Update="OracleXmls\ASSY\SearchCarrierInfomation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchCurrentTransportJobList.xml">
+    <None Update="OracleXmls\ASSY\SearchCurrentTransportJobList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchDeleteTransfer.xml">
+    <None Update="OracleXmls\ASSY\SearchDeleteTransfer.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentCurrentInfomation.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentCurrentInfomation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentCurrentState.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentCurrentState.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentEioHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentEioHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentGroupList.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentGroupList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentList.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchEquipmentStateHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchEquipmentStateHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortCurrentList.xml">
+    <None Update="OracleXmls\ASSY\SearchPortCurrentList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortCurrentState.xml">
+    <None Update="OracleXmls\ASSY\SearchPortCurrentState.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortEioRecord.xml">
+    <None Update="OracleXmls\ASSY\SearchPortEioRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortRequestHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchPortRequestHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortRequestList.xml">
+    <None Update="OracleXmls\ASSY\SearchPortRequestList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchPortStateRecord.xml">
+    <None Update="OracleXmls\ASSY\SearchPortStateRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchRollCurrentSituation.xml">
+    <None Update="OracleXmls\ASSY\SearchRollCurrentSituation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchStockerCommonCodeList.xml">
+    <None Update="OracleXmls\ASSY\SearchRouteInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchStockerCurrentState.xml">
+    <None Update="OracleXmls\ASSY\SearchStockerCommonCodeList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchStockerInventory.xml">
+    <None Update="OracleXmls\ASSY\SearchStockerCurrentState.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchTransportJobHistory.xml">
+    <None Update="OracleXmls\ASSY\SearchStockerInventory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchTransportJobInfomation.xml">
+    <None Update="OracleXmls\ASSY\SearchTransportJobHistory.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchTransportJobRecord.xml">
+    <None Update="OracleXmls\ASSY\SearchTransportJobInfomation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchWaitingLotList.xml">
+    <None Update="OracleXmls\ASSY\SearchTransportJobRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OracleXmls\SearchWaitingWips.xml">
+    <None Update="OracleXmls\ASSY\SearchWaitingLotList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ASSY\SearchWaitingWips.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchAgingUIHist.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCarrierActAbbreviatedRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCarrierActHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCarrierEventAbbreviatedRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCarrierEventHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCarrierInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchCurrentTransportJobList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchDeleteTransfer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentCurrentInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentEioHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentGroupList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchEquipmentStateHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortCurrentList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortEioRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortRequestHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortRequestList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchPortStateRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchRollCurrentSituation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchRouteInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchStockerCommonCodeList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchStockerCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchStockerInventory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchTransportJobHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchTransportJobInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchTransportJobRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchWaitingLotList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\ELEC\SearchWaitingWips.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchAgingUIHist.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCarrierActAbbreviatedRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCarrierActHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCarrierEventAbbreviatedRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCarrierEventHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCarrierInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchCurrentTransportJobList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchDeleteTransfer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentCurrentInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentEioHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentGroupList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchEquipmentStateHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortCurrentList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortEioRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortRequestHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortRequestList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchPortStateRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchRollCurrentSituation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchRouteInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchStockerCommonCodeList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchStockerCurrentState.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchStockerInventory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchTransportJobHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchTransportJobInfomation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchTransportJobRecord.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchWaitingLotList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchWaitingWips.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Sql.xml">
