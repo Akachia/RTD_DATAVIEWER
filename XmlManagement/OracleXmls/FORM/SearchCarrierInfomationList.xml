@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchCarrierInfomationList>
+    <MainSQL>
+SELECT DURB.DURABLE_ID
+     , DURB.DURABLE_STATUS_CODE
+     , DURB.LOAD_REP_CSTID
+     , DURB.CST_LOAD_LOCATION_CODE
+     , DURB.RACK_ID
+     , DURB.ABNORM_TRF_RSN_CODE
+     , DURB.EQUIPMENT_ID
+     , DURB.PORT_ID
+     , LOT.ROUTE_ID
+     , LOT.LOT_DETAIL_STATUS_CODE
+     , LOT.PRODUCTION_TYPE_CODE
+     , LOT.DAY_GR_LOTID
+     , LOT.FORM_FORC_MANL_PORT
+     , LOT.SPCL_FLAG
+     , LOT.SMPL_ISS_TYPE_CODE
+     , LOT.LOT_DETL_TYPE_CODE
+     , LOT.DFCT_LIMIT_OVER_FLAG
+     , LOT.SPCL_NOTE
+     , LOT.FORM_SPCL_GR_ID
+     , LOT.PROCESS_CODE
+     , DURB.DURABLE_SPECIFICATION_ID
+     , DURB.LAST_TRANSACTION_DATE
+     , LOT.DFCT_OCCR_EQPTID
+     , AGING_ISS_SCHD_DTTM
+     , LOT.SCRP_TRAY_FLAG
+     , LOT.TRAY_CNVR_BCR_SCAN_COUNT
+FROM TB_EGN_DURB_INFO DURB
+         LEFT JOIN TB_EGN_LOT_INFO LOT ON DURB.DURABLE_ID = LOT.DURABLE_ID
+WHERE 1 = 1
++Option1
+ORDER BY DURB.LAST_TRANSACTION_DATE DESC, DURB.CST_LOAD_LOCATION_CODE DESC
+<!--		TODO Option 없이 입력받는 코드가 있음 확인 필요-->
+	</MainSQL>
+	<Option>
+		<Option1 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">
+		           AND DURB.DURABLE_ID IN (@DURABLE_ID)
+        </Option1>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+</SearchCarrierInfomationList>

@@ -14,8 +14,8 @@
         , LOT.PROCESS_CODE
         , LOT.LOT_DETAIL_STATUS_CODE
         , LOT.PRODUCTION_TYPE_CODE
-        , INSDTTM
-        , UPDDTTM
+        , H.INSDTTM
+        , H.UPDDTTM
         , DURB.ABNORM_TRF_RSN_CODE
         , LOT.HOLD_STATUS_CODE
         , H.RTD_RULE_ID

@@ -211,9 +211,14 @@ namespace RTD_DataViewer
                     {
                         UWC_ListBox listBox = item as UWC_ListBox;
                         StkComCodeList stkComCodes = listBox.DataObject as StkComCodeList;
-                        string stkComCode = listBox.SelectedItems[0].ToString();
 
-                        paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
+                        if (listBox.SelectedItems.Count > 0)
+                        {
+                            string stkComCode = listBox.SelectedItems[0].ToString();
+                            paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
+                            continue;
+                        }
+                        paramaterDic.Add(listBox.VariableName, "");
                         continue;
                     }
                 }

@@ -50,3 +50,16 @@ C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\Cus
 C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\refint\CustomUtills.dll
 C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.pdb
 C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\ref\CustomUtills.dll
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\bin\Debug\net6.0\CustomUtills.deps.json
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\bin\Debug\net6.0\CustomUtills.dll
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\bin\Debug\net6.0\CustomUtills.pdb
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.csproj.AssemblyReference.cache
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.AssemblyInfoInputs.cache
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.AssemblyInfo.cs
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.sourcelink.json
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.dll
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\refint\CustomUtills.dll
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\CustomUtills.pdb
+C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\CustomUtills\obj\Debug\net6.0\ref\CustomUtills.dll

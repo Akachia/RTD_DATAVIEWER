@@ -314,6 +314,9 @@
     <None Update="OracleXmls\FORM\SearchCarrierInfomation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OracleXmls\FORM\SearchCarrierInfomationList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OracleXmls\FORM\SearchCurrentTransportJobList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -359,6 +362,9 @@
     <None Update="OracleXmls\FORM\SearchRollCurrentSituation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OracleXmls\FORM\SearchRouteInfo - 복사.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OracleXmls\FORM\SearchRouteInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -369,6 +375,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OracleXmls\FORM\SearchStockerInventory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OracleXmls\FORM\SearchStockerList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OracleXmls\FORM\SearchTransportJobHistory.xml">

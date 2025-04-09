@@ -2175,23 +2175,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\smkim\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
       "projectName": "CustomUtills",
-      "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
-      "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\obj\\",
+      "projectPath": "C:\\Users\\User\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2219,7 +2219,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net6.0": {
@@ -2249,12 +2249,26 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -195,6 +195,12 @@ namespace RTD_DataViewer
                 {
                     correntConnectionStringSetting = strs[cb_DBString.Text];
                     correntConnectionStringSetting.TestConnection();
+                    ChangeDBConn(cb_DBString.Text);
+
+                    xml = new XmlData(correntConnectionStringSetting.DatabaseProvider,
+                        correntConnectionStringSetting.SystemTypeCode);
+                    lb_xmlPath.Text = xml.xmlPath;
+                    sqlList = xml.OptionSqlListparser();
                 }
             }
             catch (Exception ex)

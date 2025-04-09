@@ -1,7 +1,9 @@
 ﻿using CustomUtills;
 using Dapper;
 using DBManagement;
+using DBManagemnet;
 using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -80,30 +82,21 @@ namespace RTD_DataViewer.View
 
         }
 
-        private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
+        private void TestSearchStockerList()
         {
-            ListBox listBox = (ListBox)sender;
+            XmlOptionData sqldata = main.sqlList["SearchStockerList"];
+            string cquery = sqldata.Sql;
+            string area_Id = main.correntConnectionStringSetting.AreaID;
+            StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
+            string systemTypeCode = "7";
+            DynamicParameters parameters = new DynamicParameters();
 
-            clb_StockerList.Item.Clear();
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            try
+            parameters.Add($"@AREA_ID", area_Id);
+            parameters.Add($"@StockerCommonCode", systemTypeCode);
+
+            if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
             {
-
-                if (!main.correntConnectionStringSetting.IsConnection)
-                {
-                    return;
-                }
-                XmlOptionData sqldata = main.sqlList["SearchStockerList"];
-                string cquery = sqldata.Sql;
-                string area_Id = main.correntConnectionStringSetting.AreaID;
-                StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
-                string systemTypeCode = stkComCodes.StkComCodeDic[listBox.SelectedItem.ToString()];
-                DynamicParameters parameters = new DynamicParameters();
-
-                parameters.Add($"@AREA_ID", @$"{area_Id}%");
-                parameters.Add($"@StockerCommonCode", systemTypeCode);
-
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
                 {
                     List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
                     foreach (Stocker item in list)
@@ -114,6 +107,61 @@ namespace RTD_DataViewer.View
 
                     clb_StockerList.DataObject = list;
                     main.AppendLog(cquery, parameters);
+                }
+            }
+            clb_StockerCommonCodeList.Item.Add("TEST");
+            clb_StockerList.Item.Add(new Stocker() { EQPTID = "J1FSTO12307" }.EQPTID);
+            clb_StockerList.Item.Add(new Stocker() { EQPTID = "J1FSTO12308" }.EQPTID);
+        }
+
+
+        private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
+        {
+            ListBox listBox = (ListBox)sender;
+
+            clb_StockerList.Item.Clear();
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["SearchStockerList"];
+                string cquery = sqldata.Sql;
+                string area_Id = main.correntConnectionStringSetting.AreaID;
+                StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
+                string systemTypeCode = stkComCodes.StkComCodeDic[listBox.SelectedItem.ToString()];
+                DynamicParameters parameters = new DynamicParameters();
+
+                parameters.Add($"@AREA_ID", area_Id);
+                parameters.Add($"@StockerCommonCode", systemTypeCode);
+
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                {
+                    using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
+                    {
+                        List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
+                        foreach (Stocker item in list)
+                        {
+
+                            clb_StockerList.Item.Add(item.EQPTID);
+                        }
+
+                        clb_StockerList.DataObject = list;
+                        main.AppendLog(cquery, parameters);
+                    }
+                }
+                else
+                {
+                    using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                    {
+                        List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
+                        foreach (Stocker item in list)
+                        {
+
+                            clb_StockerList.Item.Add(item.EQPTID);
+                        }
+
+                        clb_StockerList.DataObject = list;
+                        main.AppendLog(cquery, parameters);
+                    }
                 }
             }
             catch (Exception)
@@ -138,7 +186,7 @@ namespace RTD_DataViewer.View
         #region Events for UI Controls
         private void Dgv_StoInventory_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+            string cstId = (sender as DataGridView).CurrentRow.Cells["DURABLE_ID"].Value.ToString();
             SearchTransportJobInfomation(cstId);
 
             //string RoutId = (sender as DataGridView).CurrentRow.Cells["ROUT"].Value.ToString();
@@ -174,10 +222,6 @@ namespace RTD_DataViewer.View
             try
             {
 
-                if (!main.correntConnectionStringSetting.IsConnection)
-                {
-                    return;
-                }
                 XmlOptionData sqldata = main.sqlList[methodName];
                 string cquery = sqldata.Sql;
                 string area_Id = main.correntConnectionStringSetting.AreaID;
@@ -185,20 +229,39 @@ namespace RTD_DataViewer.View
 
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add($"@AREA_ID", @$"{area_Id}%");
+                parameters.Add($"@AREA_ID", area_Id);
                 parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
 
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
                 {
-                    StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
-                    foreach (var item in stkComCodes)
+                    using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
                     {
-                        clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
-                    }
+                        StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
+                        foreach (var item in stkComCodes)
+                        {
+                            clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
+                        }
 
-                    clb_StockerCommonCodeList.DataObject = stkComCodes;
-                    main.AppendLog(cquery, parameters);
+                        clb_StockerCommonCodeList.DataObject = stkComCodes;
+                        main.AppendLog(cquery, parameters);
+                    }
                 }
+                else
+                {
+                    using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                    {
+                        StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
+                        foreach (var item in stkComCodes)
+                        {
+                            clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
+                        }
+
+                        clb_StockerCommonCodeList.DataObject = stkComCodes;
+                        main.AppendLog(cquery, parameters);
+                    }
+                }
+
+               // TestSearchStockerList();
             }
             catch (Exception)
             {
@@ -219,7 +282,7 @@ namespace RTD_DataViewer.View
             //catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTransportJobInfomation"); }
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
-            paramaterDic.Add("CSTID", $"{cstid}");
+            paramaterDic.Add("DURABLE_ID", $"{cstid}");
             try
             {
                 if (SearchStockerInventoryData != null)
