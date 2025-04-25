@@ -458,3 +458,9 @@ C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\DBManagement\obj\Debug\net6.0\DBMa
 C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\DBManagement\obj\Debug\net6.0\ref\DBManagement.dll
 C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\FORM\SearchCarrierInfomationList.xml
 C:\Users\User\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\FORM\SearchStockerList.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\FORM\SearchCarrierInfomationList.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\FORM\SearchStockerList.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\FORM\SearchWipActHistory.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\ASSY\SearchCarrierInfomationList.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\ASSY\SearchStockerList.xml
+C:\Users\smkim\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\ASSY\SearchWipActHistory.xml

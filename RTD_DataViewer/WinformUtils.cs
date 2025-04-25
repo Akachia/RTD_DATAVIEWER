@@ -907,6 +907,33 @@ namespace RTD_DataViewer
             }
         }
 
+        public void InvokeMethodDynamically(object classtype, string methodName, params object[] parameters)
+        {
+            try
+            {
+                // 현재 클래스 타입 가져오기
+                System.Type type = classtype.GetType();
+
+
+                // 메서드 검색 (메서드 이름과 매개변수 개수로 구분 가능)
+                MethodInfo method = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (method != null)
+                {
+                    // 메서드 실행
+                    method.Invoke(classtype, parameters);
+                }
+                else
+                {
+                    MessageBox.Show($"메서드 '{methodName}'를 찾을 수 없습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"메서드 실행 중 오류 발생: {ex.Message}");
+            }
+        }
+
         public CommonCodeData GetCommonCodes(string methodName, UserControl userControl, CommonCodeData sqlResultData, Dictionary<string, string> paramaterDic = null)
         {
             if (paramaterDic == null)
@@ -931,6 +958,7 @@ namespace RTD_DataViewer
                 if (sqlResultData == null)
                 {
                     sqlResultData = new CommonCodeData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    // Dapper의 기본 값으로 안되는 것 같다.
                     ExcuteData = sqlResultData.ExcuteSql();
                 }
                 else
@@ -950,7 +978,11 @@ namespace RTD_DataViewer
                 if (ExcuteData is CommonCodes)
                 {
                     commonCodes = ExcuteData as CommonCodes;
-                } 
+                }
+                else
+                {
+                    return null;
+                }
 
                 if (userControl is UWC_CheckListBox)
                 {

@@ -71,14 +71,14 @@ namespace RTD_DataViewer.View
 
 
 
-            toolTipProdid.SetToolTip(lb_Prodid, lb_Prodid.Text);
-            toolTipNextProcid.SetToolTip(lb_NextProcid, lb_NextProcid.Text);
-            toolTipRoute.SetToolTip(lb_Route, lb_Route.Text);
-            toolProcid.SetToolTip(lb_Procid, lb_Procid.Text);
-            toolProcid.SetToolTip(lb_WipStat, lb_WipStat.Text);
-            toolProcid.SetToolTip(lb_CstStat, lb_CstStat.Text);
-            toolProcid.SetToolTip(lb_RackStatCode, lb_RackStatCode.Text);
-            toolProcid.SetToolTip(lb_AgingIssPriortyNo, lb_AgingIssPriortyNo.Text) ;
+           // toolTipProdid.SetToolTip(lb_Prodid, lb_Prodid.Text);
+            //toolTipNextProcid.SetToolTip(lb_NextProcid, lb_NextProcid.Text);
+            //toolTipRoute.SetToolTip(lb_Route, lb_Route.Text);
+            //toolProcid.SetToolTip(lb_Procid, lb_Procid.Text);
+            //toolProcid.SetToolTip(lb_WipStat, lb_WipStat.Text);
+            //toolProcid.SetToolTip(lb_CstStat, lb_CstStat.Text);
+            //toolProcid.SetToolTip(lb_RackStatCode, lb_RackStatCode.Text);
+            //toolProcid.SetToolTip(lb_AgingIssPriortyNo, lb_AgingIssPriortyNo.Text) ;
 
         }
 
@@ -411,20 +411,38 @@ namespace RTD_DataViewer.View
                 }
 
                 //string eioIfMode = dgv_StoInventory.DgvData.Rows[i].Cells["EIOIFMODE"].Value.ToString();
-                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+                //string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
             }
 
-            lb_WipStat.Text = winformUtils.MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
-            lb_CstStat.Text = winformUtils.MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory, "상태");
-            lb_TrayLevel.Text = winformUtils.MakeTransferStatusCountString("단", dgv_StockerInventory, "단");
-            lb_Prodid.Text = winformUtils.MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
-            lb_Route.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
-            lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory, "Rack현황");
-            lb_TrfStatCode.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
-            lb_AgingIssPriortyNo.Text = winformUtils.MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory, "출고 번호");
-            lb_NextProcid.Text = winformUtils.MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory, "다음공정");
-            lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory, "현공정");
-            lb_DateOverRowCount.Text = $"반송 대기 : {dateOverRowCount}\n";
+            for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++)
+            {
+                object VARIABLE = flowLayoutPanel1.Controls[i];
+
+                if (VARIABLE is UWC_Label)
+                {
+                    UWC_Label lb_Del = VARIABLE as UWC_Label;
+                    lb_Del.Dispose();
+                }
+            }
+
+                UWC_Label lb_new = new UWC_Label();
+                //lb_new.Name = $"lb_{"TRF_STAT_CODE"}";
+                lb_new.Parent = this.flowLayoutPanel1;
+                lb_new.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
+                lb_new.AutoSize = true;
+                lb_new.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+                //lb_WipStat.Text = winformUtils.MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
+                //lb_CstStat.Text = winformUtils.MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory, "상태");
+                //lb_TrayLevel.Text = winformUtils.MakeTransferStatusCountString("단", dgv_StockerInventory, "단");
+                //lb_Prodid.Text = winformUtils.MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
+                //lb_Route.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
+                //lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory, "Rack현황");
+                //lb_TrfStatCode.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
+                //lb_AgingIssPriortyNo.Text = winformUtils.MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory, "출고 번호");
+                //lb_NextProcid.Text = winformUtils.MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory, "다음공정");
+                //lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory, "현공정");
+                //lb_DateOverRowCount.Text = $"반송 대기 : {dateOverRowCount}\n";
         }
 
 

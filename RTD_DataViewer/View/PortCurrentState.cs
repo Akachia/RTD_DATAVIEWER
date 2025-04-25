@@ -143,7 +143,8 @@ namespace RTD_DataViewer.View
                 string methodName = MethodBase.GetCurrentMethod().Name;
                 Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
-                paramaterDic.Add("PORT_ID", @$"'%{portId}%'");
+                paramaterDic.Add("TOPNUMBER", @$"'{50}'");
+                paramaterDic.Add("PORT_ID", @$"'{portId}'");
 
                 SearchPortEioRecordData = winformUtils.ShowDgv(
                     methodName, 

@@ -29,8 +29,6 @@ namespace UserWinfromControl
 
         public UWC_Label()
         {
-            toolTip.SetToolTip(label, label.Text);
-            toolTip.Active = true;
             InitializeComponent();
         }
     }

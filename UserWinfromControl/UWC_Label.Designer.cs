@@ -49,7 +49,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label);
             Name = "UWC_Label";
-            Size = new Size(89, 39);
+            Size = new Size(51, 16);
             ResumeLayout(false);
             PerformLayout();
         }

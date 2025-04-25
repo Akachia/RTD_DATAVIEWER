@@ -402,6 +402,7 @@
             MainMenuStrip = menuStrip1;
             Name = "MainViewer";
             Text = "RTD_DataViewer v0.8";
+            FormClosing += MainViewer_FormClosing;
             tableLayoutPanel1.ResumeLayout(false);
             reqATransfer_dgvReq.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);

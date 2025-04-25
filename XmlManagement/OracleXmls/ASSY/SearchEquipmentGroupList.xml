@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SearchEquipmentGroupList>
     <MainSQL>
-        SELECT DISTINCT
-        E.EQUIPMENT_ID
-        FROM
-        TB_EGN_EQUIP_SPEC_MST E
-        INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM ON E.FACTORY_AREA_ID = TEFAM.FACTORY_AREA_ID
-        WHERE
-        TEFAM.FACILITY_CODE = @FACILITY_CODE
-        AND TEFAM.MES_SYSTEM_TYPE_CODE = @SYSTEM_TYPE_CODE
-        AND E.EQUIPMENT_GROUP_ID NOT IN ('MCS')
-        UNION
-        SELECT DISTINCT
-        E.EQUIPMENT_ID
-        FROM
-        TB_EGN_EQUIP_SPEC_MST E
-        INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM ON E.FACTORY_AREA_ID = TEFAM.FACTORY_AREA_ID
-        WHERE
-        TEFAM.FACILITY_CODE = @FACILITY_CODE    -- option1
-        AND E.EQUIPMENT_GROUP_ID = 'PKG';
-
-    </MainSQL>
-    <Option>
-        <Option1 type="VAR" condition="" key="FACILITY_CODE" dataType="string" default=""/>
+	    SELECT DISTINCT ''                   AS EQPTID
+	    , E.EQUIPMENT_GROUP_ID AS EQGRID
+	    , ''                   AS Code
+	    , ''                   AS Sto_Desc
+	    FROM TB_EGN_EQUIP_SPEC_MST E
+	    INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM
+	    ON E.REPRESENTATIVE_FACTORY_CODE = TEFAM.REPRESENTATIVE_FACTORY_CODE
+	    AND E.FACTORY_AREA_ID = TEFAM.FACTORY_AREA_ID
+	    WHERE TEFAM.FACILITY_CODE = @AREA_ID
+	    AND TEFAM.MES_SYSTEM_TYPE_CODE = @SYSTEM_TYPE_CODE
+	    AND E.EQUIPMENT_GROUP_ID NOT IN ('MCS')
+	    UNION
+	    SELECT DISTINCT ''                   AS EQPTID
+	    , E.EQUIPMENT_GROUP_ID AS EQGRID
+	    , ''                   AS Code
+	    , ''                   AS Sto_Desc
+	    FROM TB_EGN_EQUIP_SPEC_MST E
+	    INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM
+	    ON E.REPRESENTATIVE_FACTORY_CODE = TEFAM.REPRESENTATIVE_FACTORY_CODE
+	    AND E.FACTORY_AREA_ID = TEFAM.FACTORY_AREA_ID
+	    WHERE TEFAM.FACILITY_CODE = @AREA_ID -- option1
+	    AND E.EQUIPMENT_GROUP_ID = 'PKG'
+	</MainSQL>
+	<Option>
+		<Option1 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
         <Option2 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
     </Option>
     <AdditionalVariable/>

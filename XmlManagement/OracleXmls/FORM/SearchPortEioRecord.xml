@@ -17,17 +17,15 @@
         GROUP BY TO_EQPTID, TO_PORT_ID
         ) CE ON EI.EQUIPMENT_ID = CE.TO_PORT_ID
         WHERE EI.EQUIPMENT_ID LIKE @PORT_ID    -- option1
-        ORDER BY EIO_DTTM DESC
-        FETCH FIRST 40 ROWS ONLY
+        
+        <![CDATA[AND ROWNUM < 100]]>
 <!--        TODO 개수제한 로직 1~2번 적용 확인필요-->
         +Option2
-
+ORDER BY EIO_DTTM DESC
     </MainSQL>
     <Option>
         <Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
-        <Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
-            FETCH FIRST @TOPNUMBER ROWS ONLY
-        </Option2>
+        <Option2 type="VAR" condition="not_equal" key="TOPNUMBER" dataType="int" default="0"/>
     </Option>
     <AdditionalVariable/>
     <Coloring/>

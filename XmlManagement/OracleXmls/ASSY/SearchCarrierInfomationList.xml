@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<SearchCarrierInfomation>
+<SearchCarrierInfomationList>
     <MainSQL>
 SELECT DURB.DURABLE_ID
      , DURB.DURABLE_STATUS_CODE
@@ -36,10 +36,10 @@ ORDER BY DURB.LAST_TRANSACTION_DATE DESC, DURB.CST_LOAD_LOCATION_CODE DESC
 	</MainSQL>
 	<Option>
 		<Option1 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">
-		           AND (DURB.LOAD_REP_CSTID LIKE @DURABLE_ID OR DURB.DURABLE_ID LIKE @DURABLE_ID)
+		           AND DURB.DURABLE_ID IN (@DURABLE_ID)
         </Option1>
     </Option>
     <AdditionalVariable/>
     <Coloring/>
     <EventValues/>
-</SearchCarrierInfomation>
+</SearchCarrierInfomationList>

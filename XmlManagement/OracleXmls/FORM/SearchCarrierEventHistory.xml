@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SearchCarrierEventHistory>
     <MainSQL>
-        SELECT
-        CSTID
-        , CSTSTAT AS 상태
-        , LOTID
-        , PROCID
-        , EQPTID
-        , PORT_ID
-        , RACK_ID
-        , EVENT_CODE
-        , EVENT_TYPE_CODE AS ETC
-        , TRF_END_CODE AS TEC
-        , FINL_TO_EQPTID AS TO_EQPT_ID
-        , FINL_TO_PORT_ID AS TO_PORT_ID
-        , INSUSER
-        , TO_CHAR(INSDTTM, 'YYYY-MM-DD HH24:MI:SS') AS INSDTTM
-        , TO_CHAR(UPDDTTM, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM
-        FROM TB_MHS_TRF_EVENT_HIST
-        WHERE 1=1
-        +Option1
-        +Option2
-        AND INSDTTM BETWEEN @StartTime AND @EndTime
-        ORDER BY INSDTTM DESC
-    </MainSQL>
+		SELECT
+		CSTID
+		, CSTSTAT AS 상태
+		, LOTID
+		, PROCID
+		, EQPTID
+		, PORT_ID
+		, RACK_ID
+		, EVENT_CODE
+		, EVENT_TYPE_CODE AS ETC
+		, TRF_END_CODE AS TEC
+		, FINL_TO_EQPTID AS TO_EQPT_ID
+		, FINL_TO_PORT_ID AS TO_PORT_ID
+		, INSUSER
+		, INSDTTM
+		, UPDDTTM
+		FROM TB_MHS_TRF_EVENT_HIST
+		WHERE 1=1
+		+Option1
+		+Option2
+		AND INSDTTM BETWEEN TO_DATE(@StartTime,'YYYY-MM-DD') AND TO_DATE(@EndTime,'YYYY-MM-DD HH24:MI:SS')
+		ORDER BY INSDTTM DESC
+	</MainSQL>
     <Option>
         <Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
             AND CSTID IN (@CSTID)

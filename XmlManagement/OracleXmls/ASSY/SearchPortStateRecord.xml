@@ -8,13 +8,14 @@
         , TRANSACTION_CODE
         from TB_EGN_PORT_HIST
         where PORT_ID like @PORT_ID  -- option1
-        ORDER BY TRANSACTION_DATE desc
+        
         +Option2
+		ORDER BY TRANSACTION_DATE desc
     </MainSQL>
     <Option>
         <Option1 type="VAR" condition="not_equal" key="PORT_ID" dataType="string" default=""/>
         <Option2 type="IF" condition="not_equal" key="TOPNUMBER" dataType="int" default="0">
-            FETCH FIRST @TOPNUMBER ROWS ONLY
+            <![CDATA[AND ROWNUM < @TOPNUMBER]]>
         </Option2>
     </Option>
     <AdditionalVariable/>

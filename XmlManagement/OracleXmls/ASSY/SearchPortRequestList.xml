@@ -3,7 +3,7 @@
     <MainSQL>
 		SELECT
 		REQ.REQ_SEQNO as 번호,
-		REQ.CSTID AS CSTID,
+		REQ.CSTID AS DURABLE_ID,
 		REQ.CSTSTAT as 상태,
 		--EA.ELTR_TYPE_CODE AS 극성, 테이블 구조가 상이하여 옵션으로 전극, 조립, 활성화 쿼리를 나눠야 할 필요성이 있음
 		REQ.EQPTID AS 설비명,
@@ -67,7 +67,7 @@
         </상태>
     </Coloring>
     <EventValues>
-        <CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
+		<DURABLE_ID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
         <REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
         <RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = '' EventType='Click'/>
     </EventValues>

@@ -225,8 +225,56 @@ namespace RTD_DataViewer
         {
             DateTime utcNow = DateTime.Now;
             TimeZoneInfo localTzInfo = TimeZoneInfo.Local;
-            string? timeName = localTzInfo.IsDaylightSavingTime(utcNow) ? localTzInfo.DaylightName : localTzInfo.StandardName;
+            string? timeName = localTzInfo.IsDaylightSavingTime(utcNow)
+                ? localTzInfo.DaylightName
+                : localTzInfo.StandardName;
             lb_KorTime.Text = @$"{timeName} : {utcNow:yyyy-MM-dd HH:mm:ss}";
+        }
+
+        private void MainViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 사용자 확인
+            var result = MessageBox.Show("애플리케이션을 종료하시겠습니까?", "종료 확인", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // 종료 취소
+                return;
+            }
+
+            // 안전한 종료 작업 수행
+            PerformSafeShutdown();
+        }
+
+        private void PerformSafeShutdown()
+        {
+            try
+            {
+                // 타이머 중지
+                timer1?.Stop();
+                timer2?.Stop();
+
+                // 데이터베이스 연결 해제
+                if (correntConnectionStringSetting != null && correntConnectionStringSetting.IsConnection)
+                {
+                    // 연결 테스트 후 해제
+                    //correntConnectionStringSetting.TestConnection();
+                    // 연결 해제 로직 추가 (필요 시)
+                }
+
+                // XML 데이터 저장 (필요 시)
+                //xml?.XmlSync();
+
+                // 로그 저장 (필요 시)
+                AppendLog("애플리케이션 종료 중...");
+
+                // 기타 리소스 정리
+                Dispose(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"종료 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

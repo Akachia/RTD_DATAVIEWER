@@ -37,7 +37,7 @@ namespace XmlManagement
                 }
                 foreach (XmlNode childNode in xmlNode[EventValues.ClassName].ChildNodes)
                 {
-                    EventValueDic.Add(childNode.Name, new EventValue(childNode));
+                    EventValueDic.Add(childNode.Attributes[1].Value, new EventValue(childNode));
                 }
 
             }
@@ -248,7 +248,9 @@ namespace XmlManagement
             {
                 ColumnName = xmlNode.Name;
                 try { this.Type = xmlNode.Attributes.GetNamedItem(EventValues.TYPE).Value; } catch (Exception) { this.Type = ""; }
-                try { this.CallSQL = xmlNode.Attributes.GetNamedItem(EventValues.CallSQL).Value; } catch (Exception) { this.CallSQL = ""; }
+
+                try { this.CallSQL =  xmlNode.Attributes.GetNamedItem(EventValues.CallSQL).Value; } catch (Exception) { this.CallSQL = ""; }
+
                 try { this.EventType = xmlNode.Attributes.GetNamedItem(EventValues.EventType).Value; } catch (Exception) { this.EventType = ""; }
             }
             catch (Exception ex)

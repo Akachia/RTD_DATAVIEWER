@@ -14,8 +14,8 @@
         , LOT.PROCESS_CODE
         , LOT.LOT_DETAIL_STATUS_CODE
         , LOT.PRODUCTION_TYPE_CODE
-        , INSDTTM
-        , UPDDTTM
+        , H.INSDTTM
+        , H.UPDDTTM
         , DURB.ABNORM_TRF_RSN_CODE
         , LOT.HOLD_STATUS_CODE
         , H.RTD_RULE_ID
@@ -81,8 +81,8 @@
         </HOLD>
     </Coloring>
     <EventValues>
-        <CSTID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
+		<DURABLE_ID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
         <TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
-        <ROUT TYPE='string' CallSQL = 'SearchRouteInfo' EventType='Click'/>
+		<ROUTE_ID TYPE='string' CallSQL = 'SearchRouteInfo' EventType='Click'/>
     </EventValues>
 </SearchCurrentTransportJobList>
