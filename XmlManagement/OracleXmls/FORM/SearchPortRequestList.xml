@@ -71,4 +71,5 @@
         <REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
         <RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = 'MakeRuleResult' EventType='Click'/>
     </EventValues>
+	<ColumnCount/>
 </SearchPortRequestList>

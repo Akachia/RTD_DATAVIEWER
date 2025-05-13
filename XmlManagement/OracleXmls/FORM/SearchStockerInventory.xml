@@ -118,4 +118,7 @@
 	    </RACK_STAT_CODE>
     </Coloring>
     <EventValues/>
+	<ColumnCount>
+		<TRF_STAT_CODE Name="반송상태" />
+	</ColumnCount>
 </SearchStockerInventory>

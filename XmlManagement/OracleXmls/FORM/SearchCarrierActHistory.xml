@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SearchCarrierActHistory>
     <MainSQL>
-	    SELECT
-	    DURABLE_ID
-	    , LOAD_REP_CSTID
-	    , TRANSACTION_CODE
-	    , TRANSACTION_DATE
-	    , DURABLE_STATUS_CODE
-	    , EQUIPMENT_ID
-	    , PORT_ID
-	    , RACK_ID
-	    , TRF_STAT_CODE
-	    , ABNORM_TRF_RSN_CODE
-	    , CST_LOAD_LOCATION_CODE
-	    , USE_FLAG
-	    FROM TB_EGN_DURB_HIST
-	    WHERE 1=1
+		SELECT
+		DURABLE_ID
+		, LOAD_REP_CSTID
+		, TRANSACTION_CODE
+		, TRANSACTION_DATE
+		, DURABLE_STATUS_CODE
+		, EQUIPMENT_ID
+		, PORT_ID
+		, RACK_ID
+		, TRF_STAT_CODE
+		, ABNORM_TRF_RSN_CODE
+		, CST_LOAD_LOCATION_CODE
+		, USE_FLAG
+		FROM TB_EGN_DURB_HIST
+		WHERE 1=1
 		+Option1
 		+Option2
 		AND TRANSACTION_DATE BETWEEN TO_DATE(@StartTime,'YYYY-MM-DD') AND TO_DATE(@EndTime,'YYYY-MM-DD HH24:MI:SS')
@@ -34,4 +34,5 @@
     <AdditionalVariable/>
     <Coloring/>
     <EventValues/>
+    <ColumnCount/>
 </SearchCarrierActHistory>

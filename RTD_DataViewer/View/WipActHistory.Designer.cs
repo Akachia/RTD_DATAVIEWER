@@ -32,9 +32,10 @@
             dgv_WipActHistory = new UserWinfromControl.UWC_DataGridView();
             lAtb_CarrierId = new UserWinfromControl.UWC_LabelAndTextBox();
             bt_Search = new Button();
+            lAtb_LotId = new UserWinfromControl.UWC_LabelAndTextBox();
             lAdtp_StartTime = new UserWinfromControl.UWC_LabelAndDateTimePicker();
             lAdtp_EndTime = new UserWinfromControl.UWC_LabelAndDateTimePicker();
-            lAtb_LotId = new UserWinfromControl.UWC_LabelAndTextBox();
+            uwC_LabelAndTextBox1 = new UserWinfromControl.UWC_LabelAndTextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,18 +46,19 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6F));
             tableLayoutPanel1.Controls.Add(dgv_WipActHistory, 0, 1);
             tableLayoutPanel1.Controls.Add(lAtb_CarrierId, 8, 0);
             tableLayoutPanel1.Controls.Add(bt_Search, 9, 0);
-            tableLayoutPanel1.Controls.Add(lAdtp_StartTime, 5, 0);
-            tableLayoutPanel1.Controls.Add(lAdtp_EndTime, 6, 0);
             tableLayoutPanel1.Controls.Add(lAtb_LotId, 7, 0);
+            tableLayoutPanel1.Controls.Add(lAdtp_StartTime, 4, 0);
+            tableLayoutPanel1.Controls.Add(lAdtp_EndTime, 5, 0);
+            tableLayoutPanel1.Controls.Add(uwC_LabelAndTextBox1, 6, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -102,30 +104,6 @@
             bt_Search.UseVisualStyleBackColor = true;
             bt_Search.Click += bt_Search_Click;
             // 
-            // lAdtp_StartTime
-            // 
-            lAdtp_StartTime.Dock = DockStyle.Fill;
-            lAdtp_StartTime.Dtp_Value = new DateTime(2024, 2, 15, 15, 43, 57, 729);
-            lAdtp_StartTime.IsChecked = true;
-            lAdtp_StartTime.Lb_Text = "시작 시간";
-            lAdtp_StartTime.Location = new Point(479, 3);
-            lAdtp_StartTime.Name = "lAdtp_StartTime";
-            lAdtp_StartTime.Size = new Size(274, 24);
-            lAdtp_StartTime.TabIndex = 5;
-            lAdtp_StartTime.VariableName = "StartTime";
-            // 
-            // lAdtp_EndTime
-            // 
-            lAdtp_EndTime.Dock = DockStyle.Fill;
-            lAdtp_EndTime.Dtp_Value = new DateTime(2024, 2, 15, 15, 44, 3, 251);
-            lAdtp_EndTime.IsChecked = false;
-            lAdtp_EndTime.Lb_Text = "종료 시간";
-            lAdtp_EndTime.Location = new Point(759, 3);
-            lAdtp_EndTime.Name = "lAdtp_EndTime";
-            lAdtp_EndTime.Size = new Size(274, 24);
-            lAdtp_EndTime.TabIndex = 6;
-            lAdtp_EndTime.VariableName = "EndTime";
-            // 
             // lAtb_LotId
             // 
             lAtb_LotId.Dock = DockStyle.Fill;
@@ -137,6 +115,42 @@
             lAtb_LotId.TabIndex = 7;
             lAtb_LotId.Tb_Text = "";
             lAtb_LotId.VariableName = "LOTID";
+            // 
+            // lAdtp_StartTime
+            // 
+            lAdtp_StartTime.Dock = DockStyle.Fill;
+            lAdtp_StartTime.Dtp_Value = new DateTime(2024, 2, 15, 15, 43, 57, 729);
+            lAdtp_StartTime.IsChecked = true;
+            lAdtp_StartTime.Lb_Text = "시작 시간";
+            lAdtp_StartTime.Location = new Point(339, 3);
+            lAdtp_StartTime.Name = "lAdtp_StartTime";
+            lAdtp_StartTime.Size = new Size(274, 24);
+            lAdtp_StartTime.TabIndex = 5;
+            lAdtp_StartTime.VariableName = "StartTime";
+            // 
+            // lAdtp_EndTime
+            // 
+            lAdtp_EndTime.Dock = DockStyle.Fill;
+            lAdtp_EndTime.Dtp_Value = new DateTime(2024, 2, 15, 15, 44, 3, 251);
+            lAdtp_EndTime.IsChecked = false;
+            lAdtp_EndTime.Lb_Text = "종료 시간";
+            lAdtp_EndTime.Location = new Point(619, 3);
+            lAdtp_EndTime.Name = "lAdtp_EndTime";
+            lAdtp_EndTime.Size = new Size(274, 24);
+            lAdtp_EndTime.TabIndex = 6;
+            lAdtp_EndTime.VariableName = "EndTime";
+            // 
+            // uwC_LabelAndTextBox1
+            // 
+            uwC_LabelAndTextBox1.Dock = DockStyle.Fill;
+            uwC_LabelAndTextBox1.IsMultiInputTextControl = false;
+            uwC_LabelAndTextBox1.Lb_Text = "TR_CODE";
+            uwC_LabelAndTextBox1.Location = new Point(899, 3);
+            uwC_LabelAndTextBox1.Name = "uwC_LabelAndTextBox1";
+            uwC_LabelAndTextBox1.Size = new Size(134, 24);
+            uwC_LabelAndTextBox1.TabIndex = 8;
+            uwC_LabelAndTextBox1.Tb_Text = "";
+            uwC_LabelAndTextBox1.VariableName = "TRANSACTION_CODE";
             // 
             // WipActHistory
             // 
@@ -158,5 +172,6 @@
         private UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_StartTime;
         private UserWinfromControl.UWC_LabelAndDateTimePicker lAdtp_EndTime;
         private UserWinfromControl.UWC_LabelAndTextBox lAtb_LotId;
+        private UserWinfromControl.UWC_LabelAndTextBox uwC_LabelAndTextBox1;
     }
 }

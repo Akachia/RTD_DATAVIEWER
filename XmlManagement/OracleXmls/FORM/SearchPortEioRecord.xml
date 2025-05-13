@@ -30,4 +30,5 @@ ORDER BY EIO_DTTM DESC
     <AdditionalVariable/>
     <Coloring/>
     <EventValues/>
+    <ColumnCount/>
 </SearchPortEioRecord>

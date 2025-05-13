@@ -51,12 +51,12 @@
 		EQ.USE_FLAG               AS 사용,
 		E.EQUIPMENT_STATE_CODE    AS EIOSTAT,
 		E.EIOIFMODE               AS EIOIF,
-		EQ.LANE_ID                AS LANE_ID,
-		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
-		E.LAST_TRANSACTION_DATE   AS UPDDATE,
 		NVL(Q.MAX_QTY, 0)         AS MAX_CMD,
 		NVL(Q.CMD_USING_QTY, 0)   AS 실반송,
-		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송
+		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송,
+		EQ.LANE_ID                AS LANE_ID,
+		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
+		E.LAST_TRANSACTION_DATE   AS UPDDATE
 		FROM TB_EGN_EQUIP_SPEC_MST EQ
 		INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM
 		ON TEFAM.REPRESENTATIVE_FACTORY_CODE = EQ.REPRESENTATIVE_FACTORY_CODE
@@ -70,19 +70,19 @@
 		AND EQ.REPRESENTATIVE_FACTORY_CODE = @AREA_ID
 		AND EQ.USE_FLAG = 'Y'
 		AND EQ.EQUIPMENT_GROUP_ID IN (@EQP_GROUP_ID_LIST) -- option1
-		AND EQ.EQUIPMENT_GROUP_ID IN ('CNV', 'STO', 'EOL', 'FOR', 'LAM', 'NND', 'STK')
+		AND EQ.EQUIPMENT_GROUP_ID IN ('CNV', 'STO', 'EOL', 'FOR', 'LAM', 'NND', 'STK','DEG')
 		AND LENGTH(EQ.EQUIPMENT_ID) = 11
 		UNION ALL
 		SELECT EQ.EQUIPMENT_ID,
 		EQ.USE_FLAG               AS 사용,
 		E.EQUIPMENT_STATE_CODE    AS EIOSTAT,
 		E.EIOIFMODE               AS EIOIF,
-		EQ.LANE_ID                AS LANE_ID,
-		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
-		E.LAST_TRANSACTION_DATE   AS UPDDATE,
 		NVL(Q.MAX_QTY, 0)         AS MAX_CMD,
 		NVL(Q.CMD_USING_QTY, 0)   AS 실반송,
-		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송
+		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송,
+		EQ.LANE_ID                AS LANE_ID,
+		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
+		E.LAST_TRANSACTION_DATE   AS UPDDATE
 		FROM TB_EGN_EQUIP_SPEC_MST EQ
 		INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM
 		ON TEFAM.REPRESENTATIVE_FACTORY_CODE = EQ.REPRESENTATIVE_FACTORY_CODE
@@ -95,19 +95,19 @@
 		AND EQ.REPRESENTATIVE_FACTORY_CODE = @AREA_ID
 		AND EQ.USE_FLAG = 'Y'
 		AND EQ.EQUIPMENT_GROUP_ID IN (@EQP_GROUP_ID_LIST)
-		AND EQ.EQUIPMENT_GROUP_ID IN ('SEL', 'HPC', 'DEG', 'JGF', 'DIS', 'OCV', 'ROL', 'COT')
+		AND EQ.EQUIPMENT_GROUP_ID IN ('SEL', 'HPC', 'DEG', 'JGF', 'DIS', 'OCV', 'ROL', 'COT','EOL')
 		AND LENGTH(EQ.EQUIPMENT_ID) = 9
 		UNION ALL
 		SELECT EQ.EQUIPMENT_ID,
 		EQ.USE_FLAG               AS 사용,
 		E.EQUIPMENT_STATE_CODE    AS EIOSTAT,
 		E.EIOIFMODE               AS EIOIF,
-		EQ.LANE_ID                AS LANE_ID,
-		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
-		E.LAST_TRANSACTION_DATE   AS UPDDATE,
 		NVL(Q.MAX_QTY, 0)         AS MAX_CMD,
 		NVL(Q.CMD_USING_QTY, 0)   AS 실반송,
-		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송
+		NVL(Q.CMD_EMPTY_QTY, 0)   AS 공반송,
+		EQ.LANE_ID                AS LANE_ID,
+		EQ.EQPT_GR_DETL_TYPE_CODE AS EGDTC,
+		E.LAST_TRANSACTION_DATE   AS UPDDATE
 		FROM TB_EGN_EQUIP_SPEC_MST EQ
 		INNER JOIN TB_EGN_FCTRY_AREA_MST TEFAM
 		ON TEFAM.REPRESENTATIVE_FACTORY_CODE = EQ.REPRESENTATIVE_FACTORY_CODE
@@ -137,10 +137,10 @@
             <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
             <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
         </EIOSTAT>
-        <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+		<EIOIF Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
             <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
             <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
-        </EIOIFMODE>
+        </EIOIF>
         <CSTTYPE Red="255" Green="254" Blue="196" IsColoringColumn="true" IsTimeCompare="false">
             <TRAY Red="255" Green="155" Blue="155" IsColoringRow="false"/>
             <TKAE Red="255" Green="214" Blue="165" IsColoringRow="false"/>
@@ -156,4 +156,5 @@
 		<EQUIPMENT_ID TYPE='string' CallSQL = "SearchEquipmentStateHistory" EventType='Click'/>
 		<EQUIPMENT_ID TYPE='string' CallSQL = "SearchEquipmentEioHistory" EventType='Click'/>
     </EventValues>
+    <ColumnCount/>
 </SearchEquipmentCurrentState>

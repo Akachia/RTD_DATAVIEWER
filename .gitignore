@@ -130,3 +130,7 @@ XmlManagement/obj/Debug/net6.0/XmlManagement.AssemblyInfoInputs.cache
 *.cache
 /CustomUtills/bin
 /CustomUtills/obj
+/CustomUtills/bin
+/DBManagement/obj
+/RTD_DataViewer/.vs
+*.pdb

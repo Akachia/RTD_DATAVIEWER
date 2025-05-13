@@ -85,4 +85,5 @@
         <TRF_CODE TYPE='string' CallSQL = 'SearchTransportJobHistory' EventType='Click'/>
 		<ROUTE_ID TYPE='string' CallSQL = 'SearchRouteInfo' EventType='Click'/>
     </EventValues>
+	<ColumnCount/>
 </SearchCurrentTransportJobList>

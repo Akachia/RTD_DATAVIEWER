@@ -1,16 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ConnectionStrings>
-	<ESHD_AMES_MGR>
-		<Server>10.228.113.36:3521</Server>
-		<Database>HDAMESP</Database>
-		<DatabaseProvider>ORACLE</DatabaseProvider>
-		<UserId>AMES_MGR</UserId>
-		<Password>!MESdnsdud2024</Password>
-		<AreaID>AJ</AreaID>
-		<PlantID>G831</PlantID>
-		<TrayID>LHAD,LHAE</TrayID>
-		<SystemTypeCode>A</SystemTypeCode>
-	</ESHD_AMES_MGR>
 	<ESHD_FMES_MGR>
 		<Server>10.228.113.41:3521</Server>
 		<Database>HDFMESP</Database>
@@ -22,6 +11,28 @@
 		<TrayID>LHAD,LHAE</TrayID>
 		<SystemTypeCode>F</SystemTypeCode>
 	</ESHD_FMES_MGR>
+	<ESHD_EMES_MGR>
+		<Server>10.228.113.31:3521</Server>
+		<Database>HDEMESP</Database>
+		<DatabaseProvider>ORACLE</DatabaseProvider>
+		<UserId>EMES_MGR</UserId>
+		<Password>!MESdnsdud2024</Password>
+		<AreaID>EU</AreaID>
+		<PlantID>G831</PlantID>
+		<TrayID>LHAD,LHAE</TrayID>
+		<SystemTypeCode>E</SystemTypeCode>
+	</ESHD_EMES_MGR>
+	<ESHD_AMES_MGR>
+		<Server>10.228.113.36:3521</Server>
+		<Database>HDAMESP</Database>
+		<DatabaseProvider>ORACLE</DatabaseProvider>
+		<UserId>AMES_MGR</UserId>
+		<Password>!MESdnsdud2024</Password>
+		<AreaID>AJ</AreaID>
+		<PlantID>G831</PlantID>
+		<TrayID>LHAD,LHAE</TrayID>
+		<SystemTypeCode>A</SystemTypeCode>
+	</ESHD_AMES_MGR>
 	<SFMES_APP>
 		<Server>10.99.60.156:2521</Server>
 		<Database>OCMESGT1</Database>

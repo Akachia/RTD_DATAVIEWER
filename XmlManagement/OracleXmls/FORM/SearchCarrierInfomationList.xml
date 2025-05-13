@@ -42,4 +42,5 @@ ORDER BY DURB.LAST_TRANSACTION_DATE DESC, DURB.CST_LOAD_LOCATION_CODE DESC
     <AdditionalVariable/>
     <Coloring/>
     <EventValues/>
+    <ColumnCount/>
 </SearchCarrierInfomationList>

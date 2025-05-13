@@ -25,9 +25,9 @@
 		ORDER BY INSDTTM DESC
 	</MainSQL>
     <Option>
-        <Option1 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-            AND CSTID IN (@CSTID)
-        </Option1>
+        <Option1 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">
+			AND CSTID IN (@DURABLE_ID)
+		</Option1>
         <Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
             AND PORT_ID LIKE @PORT_ID
         </Option2>
@@ -37,4 +37,5 @@
     <AdditionalVariable/>
     <Coloring/>
     <EventValues/>
+    <ColumnCount/>
 </SearchCarrierEventHistory>
