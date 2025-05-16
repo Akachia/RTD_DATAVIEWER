@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SearchEquipmentStateHistory>
     <MainSQL>
-        SELECT
-        PORT_ID,
-        PORT_STATE_CODE AS 상태,
-        TRANSACTION_DATE,
-        TRANSACTION_CODE
-        FROM TB_EGN_PORT_HIST
-        WHERE PORT_ID LIKE @PORT_ID    -- option2
-        ORDER BY TRANSACTION_DATE DESC
-        +Option1
+		SELECT
+		PORT_ID,
+		PORT_STATE_CODE AS 상태,
+		TRANSACTION_DATE,
+		TRANSACTION_CODE
+		FROM TB_EGN_PORT_HIST
+		WHERE PORT_ID LIKE @PORT_ID    -- option2
+		+Option1
+		ORDER BY TRANSACTION_DATE DESC
     </MainSQL>
-    <Option>
+<Option>
         <Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
-            FETCH FIRST @TOPNUMBER ROWS ONLY
+			<![CDATA[AND ROWNUM < @TOPNUMBER]]>
         </Option1>
         <Option2 type="VAR" condition="" key="PORT_ID" dataType="string" default="0"/>
     </Option>
@@ -22,4 +22,5 @@
     </AdditionalVariable>
     <Coloring/>
     <EventValues/>
+    <ColumnCount/>
 </SearchEquipmentStateHistory>

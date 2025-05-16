@@ -1,82 +1,74 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SearchStockerInventory>
     <MainSQL>
-        SELECT
-        DURB.DURABLE_ID,
-        NVL(DURB.LOAD_REP_CSTID, DURB.DURABLE_ID) AS 대표CST,
-        CST_LOAD_LOCATION_CODE AS 단,
-        DURB.DURABLE_STATUS_CODE AS 유형,
-        DURB.TRF_STAT_CODE,
-        DURB.EQUIPMENT_ID,
-        TO_CHAR(WA.AGING_ISS_SCHD_DTTM, 'YYYY-MM-DD HH24:MI:SS') AS AGING_ISS_SCHD_DTTM,
-        LOT.LOT_DETAIL_STATUS_CODE,
-        LOT.REWORK_FLAG_CODE,
-        LOT.HOLD_STATUS_CODE AS HOLD,
-        LOT.LANE_ID, 삭제
-        LOT.ROUT_ID AS ROUT,
-        LOT.PROCESS_CODE,
-        LOT.PRODUCT_SPECIFICATION_ID,
-        B.FINL_HOLD_FLAG AS GQMS_FINL_HOLD_FLAG,
-        NVL(RP2.PROCID, '') AS NEXT_PROCID,
-        NVL(RP2.LANE_ID, '') AS NEXT_LANEID,
-        LOT.LOT_ID,
-        DURB.PORT_ID,
-        R.RACK_ID,
-        R.RACK_STAT_CODE,
-        R.ABNORM_STAT_CODE,
-        LOT.SMPL_ISS_TYPE_CODE,
-        TO_CHAR(r.UPDDTTM, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM_S,
-        TO_CHAR(DURB.LAST_TRANSACTION_DATE, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM_C,
-        AGING_ISS_PRIORITY_NO,  -- TODO 어떤테이블에서 가지고 오는 변수인지 확인필요
-        CASE WHEN (SYSDATE - AGING_ISS_SCHD_DTTM) * 1440 > 0 THEN '1' ELSE '0' END AS OUTFLAG, -- TODO 어떤테이블에서 가지고 오는 변수인지 확인필요
-        FROM (
-        SELECT
-        DURB1.DURABLE_ID,
-        DURB1.LOAD_REP_CSTID,
-        --              DURB2.CURR_LOTID,  삭제
-        DURB1.DURABLE_STATUS_CODE,
-        DURB1.TRF_STAT_CODE,
-        DURB1.EQUIPMENT_ID,
-        DURB1.PORT_ID,
-        DURB1.CST_LOAD_LOCATION_CODE,
-        DURB1.LAST_TRANSACTION_DATE
-        FROM (
-        SELECT DURB.DURABLE_ID,
-        NVL(DURB.LOAD_REP_CSTID, DURB.DURABLE_ID) AS LOAD_REP_CSTID,
-        --                          DURB.CURR_LOTID,   삭제
-        DURB.DURABLE_STATUS_CODE,
-        DURB.TRF_STAT_CODE,
-        DURB.EQUIPMENT_ID,
-        DURB.PORT_ID,
-        DURB.CST_LOAD_LOCATION_CODE,
-        DURB.LAST_TRANSACTION_DATE
-        FROM TB_EGN_DURB_INFO DURB
-        INNER JOIN TB_EGN_EQUIP_SPEC_MST ESM ON DURB.EQUIPMENT_ID = ESM.EQUIPMENT_ID
-        WHERE DURB.CURR_FACILITY_CODE = :AREA_ID
-        AND ESM.EQUIPMENT_ID IN (:StockerList)
-        ) DURB1
-        INNER JOIN TB_EGN_DURB_INFO DURB2 ON DURB1.LOAD_REP_CSTID = DURB2.DURABLE_ID
-        ) DURB
-        LEFT JOIN TB_MHS_RACK R ON R.MCS_CST_ID = DURB.LOAD_REP_CSTID
-        LEFT JOIN TB_EGN_LOT_INFO LOT ON DURB.DURABLE_ID = LOT.LOT_ID
-        LEFT JOIN TB_SFC_WIP_BLOCK_RSLT B ON LOT.LOT_ID = B.LOTID AND B.BLOCK_TYPE_CODE = 'MOVE_SHOP'
-        LEFT JOIN TB_MMD_FORM_ROUT_PROC RP ON RP.ROUT_ID = LOT.ROUT_ID AND RP.PROCESS_CODE = LOT.PROCESS_CODE AND RP.USE_FLAG = 'Y'
-        LEFT JOIN TB_MMD_FORM_ROUT_PROC RP2 ON RP2.ROUT_ID = RP.ROUT_ID AND RP2.PROC_SEQNO = RP.PROC_SEQNO + 1 AND RP2.USE_FLAG = 'Y'
-        WHERE 1=1
-        +Option1
-        +Option2
-        +Option3
-        +Option4
-        +Option5
-        +Option6
-        ORDER BY
-        CASE
-        WHEN NVL(LOT.LOT_ID,'') ='' THEN '1'
-        WHEN R.RACK_STAT_CODE ='DISABLE' THEN '2'
-        WHEN (AGING_ISS_PRIORITY_NO='8' OR AGING_ISS_PRIORITY_NO='9') THEN '3'
-        ELSE '4' END ASC, LOT.AGING_ISS_SCHD_DTTM, NVL(DURB.LOAD_REP_CSTID, DURB.DURABLE_ID), DURB.CST_LOAD_LOCATION_CODE
+		SELECT DURB.DURABLE_ID,
+		NVL(DURB.LOAD_REP_CSTID, DURB.DURABLE_ID)                                  AS 대표CST,
+		CST_LOAD_LOCATION_CODE                                                     AS 단,
+		DURB.DURABLE_STATUS_CODE                                                   AS 유형,
+		DURB.TRF_STAT_CODE,
+		DURB.EQUIPMENT_ID,
+		TO_CHAR(LOT.AGING_ISS_SCHD_DTTM, 'YYYY-MM-DD HH24:MI:SS')                  AS AGING_ISS_SCHD_DTTM,
+		LOT.LOT_DETAIL_STATUS_CODE                                                 AS WIPSTAT,
+		LOT.REWORK_FLAG_CODE,
+		LOT.HOLD_STATUS_CODE                                                       AS HOLD,
+		LOT.LANE_ID,
+		LOT.ROUTE_ID                                                               AS ROUT,
+		LOT.PROCESS_CODE                                                           AS PROCID,
+		LOT.PRODUCT_SPECIFICATION_ID,
+		B.FINL_HOLD_FLAG                                                           AS GQMS_FINL_HOLD_FLAG,
+		NVL(RP2.PROCESS_CODE, '')                                                  AS NEXT_PROCID,
+		NVL(RP2.LANE_ID, '')                                                       AS NEXT_LANEID,
+		LOT.LOT_ID,
+		DURB.PORT_ID,
+		R.RACK_ID,
+		R.RACK_STAT_CODE,
+		R.ABNORM_STAT_CODE,
+		LOT.SMPL_ISS_TYPE_CODE,
+		TO_CHAR(r.UPDDTTM, 'YYYY-MM-DD HH24:MI:SS')                                AS UPDDTTM_S,
+		TO_CHAR(DURB.LAST_TRANSACTION_DATE, 'YYYY-MM-DD HH24:MI:SS')               AS UPDDTTM_C,
+		AGING_ISS_PRIORITY_NO, -- TODO 어떤테이블에서 가지고 오는 변수인지 확인필요
+		CASE WHEN (SYSDATE - AGING_ISS_SCHD_DTTM) * 1440 > 0 THEN '1' ELSE '0' END AS OUTFLAG
+		FROM TB_EGN_DURB_INFO DURB
+		INNER JOIN TB_EGN_EQUIP_SPEC_MST ESM
+		ON ESM.REPRESENTATIVE_FACTORY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND ESM.EQUIPMENT_ID = DURB.EQUIPMENT_ID
+		INNER JOIN TB_MHS_RACK R
+		ON R.FACILITY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND R.MCS_CST_ID = DURB.LOAD_REP_CSTID
+		AND R.RACK_ID = DURB.RACK_ID
+		LEFT JOIN TB_EGN_LOT_INFO LOT
+		ON LOT.REPRESENTATIVE_FACTORY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND DURB.DURABLE_ID = LOT.DURABLE_ID
+		LEFT JOIN TB_SFC_WIP_BLOCK_RSLT B
+		ON B.FACILITY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND LOT.LOT_ID = B.LOTID
+		AND B.BLOCK_TYPE_CODE = 'MOVE_SHOP'
+		LEFT JOIN TB_EGN_RT_PRCS_MAP RP
+		ON RP.FACILITY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND RP.ROUTE_ID = LOT.ROUTE_ID
+		AND RP.PROCESS_CODE = LOT.PROCESS_CODE
+		AND RP.USE_FLAG = 'Y'
+		LEFT JOIN TB_EGN_RT_PRCS_MAP RP2
+		ON RP2.FACILITY_CODE = DURB.REPRESENTATIVE_FACTORY_CODE
+		AND RP2.ROUTE_ID = RP.ROUTE_ID
+		AND RP2.PROC_SEQNO = RP.PROC_SEQNO + 1
+		AND RP2.USE_FLAG = 'Y'
+		WHERE 1 = 1
+		AND DURB.EQUIPMENT_ID IN (@StockerList)
+		+Option1
+		+Option2
+		+Option3
+		+Option4
+		+Option5
+		+Option6
+		ORDER BY
+		CASE
+		WHEN NVL(LOT.LOT_ID,'') ='' THEN '1'
+		WHEN R.RACK_STAT_CODE ='DISABLE' THEN '2'
+		WHEN (AGING_ISS_PRIORITY_NO='8' OR AGING_ISS_PRIORITY_NO='9') THEN '3'
+		ELSE '4' END ASC, LOT.AGING_ISS_SCHD_DTTM, NVL(DURB.LOAD_REP_CSTID, DURB.DURABLE_ID), DURB.CST_LOAD_LOCATION_CODE
 
-    </MainSQL>
+	</MainSQL>
     <Option>
         <Option1 type="IF" condition="not_equal" key="CSTSTAT" dataType="string" default="">
             AND DURB.DURABLE_STATUS_CODE = :CSTSTAT
@@ -84,9 +76,9 @@
         <Option2 type="IF" condition="not_equal" key="TransportState" dataType="string" default="">
             AND DURB.TRF_STAT_CODE = :TransportState
         </Option2>
-        <Option3 type="IF" condition="not_equal" key="CSTID" dataType="string" default="">
-            AND DURB.DURABLE_ID IN (:CSTID)
-        </Option3>
+        <Option3 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">
+			AND DURB.DURABLE_ID IN (:DURABLE_ID)
+		</Option3>
         <Option4 type="IF" condition="not_equal" key="AGING_ISS_PRIORITY_NO" dataType="string" default="">
             AND AGING_ISS_PRIORITY_NO = @AGING_ISS_PRIORITY_NO
         </Option4>
@@ -121,6 +113,12 @@
             <END Red="246" Green="247" Blue="196" IsColoringRow="false"/>
             <TERM Red="246" Green="214" Blue="214" IsColoringRow="false"/>
         </WIPSTAT>
+		<RACK_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<DISABLE Red="102" Green="178" Blue="255" IsColoringRow="true"/>
+	    </RACK_STAT_CODE>
     </Coloring>
     <EventValues/>
+	<ColumnCount>
+		<TRF_STAT_CODE Name="반송상태" />
+	</ColumnCount>
 </SearchStockerInventory>

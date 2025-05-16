@@ -54,6 +54,7 @@
 		AND RP2.PROC_SEQNO = RP.PROC_SEQNO + 1
 		AND RP2.USE_FLAG = 'Y'
 		WHERE 1 = 1
+		AND DURB.EQUIPMENT_ID IN (@StockerList)
 		+Option1
 		+Option2
 		+Option3
@@ -112,6 +113,12 @@
             <END Red="246" Green="247" Blue="196" IsColoringRow="false"/>
             <TERM Red="246" Green="214" Blue="214" IsColoringRow="false"/>
         </WIPSTAT>
+		<RACK_STAT_CODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+			<DISABLE Red="102" Green="178" Blue="255" IsColoringRow="true"/>
+	    </RACK_STAT_CODE>
     </Coloring>
     <EventValues/>
+	<ColumnCount>
+		<TRF_STAT_CODE Name="반송상태" />
+	</ColumnCount>
 </SearchStockerInventory>

@@ -35,7 +35,7 @@
 		ORDER BY REQ.CSTID, REQ.UPDDTTM DESC
 	</MainSQL>
     <Option>
-        <Option1 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">
+        <Option1 type="IF" condition="equal" key="DURABLE_ID" dataType="string" default="">
             AND (REQ.CSTID IN @DURABLE_ID OR REQ.CSTID IN @DURABLE_ID)
         </Option1>
         <Option2 type="IF" condition="not_equal" key="PORT_ID" dataType="string" default="">
@@ -69,6 +69,7 @@
     <EventValues>
 		<DURABLE_ID TYPE='string' CallSQL = 'SearchCarrierInfomation' EventType='Click'/>
         <REQ_SEQNO TYPE='Bigint' CallSQL = 'SearchTransportJobInfomation' EventType='Click'/>
-        <RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = '' EventType='Click'/>
+        <RTD_EXEC_LOG_CNTT TYPE='string' CallSQL = 'MakeRuleResult' EventType='Click'/>
     </EventValues>
+	<ColumnCount/>
 </SearchPortRequestList>

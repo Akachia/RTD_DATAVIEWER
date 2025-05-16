@@ -14,8 +14,8 @@
 		, INSUSER
 		, TRF_CLSS_CODE AS 반송주체
 		, TRF_CODE
-		, TO_DATE(INSDTTM, 'YYYY-MM-DD HH24:MI:SS') AS INSDTTM
-		, TO_DATE(UPDDTTM, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM
+		, INSDTTM
+		, UPDDTTM
 		, (CASE WHEN (SYSDATE - INSDTTM) * 24 * 60 >= 60 THEN '1' ELSE 'O' END) AS CMDCHK
 		FROM TB_MHS_TRF_CMD_HIST
 		WHERE INSDTTM BETWEEN TO_DATE(@StartTime, 'YYYY-MM-DD') AND TO_DATE(@EndTime, 'YYYY-MM-DD HH24:MI:SS')
@@ -59,4 +59,5 @@
         </CSTSTAT>
     </Coloring>
     <EventValues/>
+    <ColumnCount/>
 </SearchTransportJobRecord>
