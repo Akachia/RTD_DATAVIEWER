@@ -15,13 +15,13 @@
         , FINL_TO_EQPTID AS TO_EQPT_ID
         , FINL_TO_PORT_ID AS TO_PORT_ID
         , INSUSER
-        , TO_CHAR(INSDTTM, 'YYYY-MM-DD HH24:MI:SS') AS INSDTTM
-        , TO_CHAR(UPDDTTM, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM
+        , INSDTTM
+        , UPDDTTM
         FROM TB_MHS_TRF_EVENT_HIST
         WHERE 1=1
         +Option1
         +Option2
-        AND INSDTTM BETWEEN @StartTime AND @EndTime
+        AND INSDTTM BETWEEN TO_DATE(@StartTime, 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(@EndTime, 'YYYY-MM-DD HH24:MI:SS')
         ORDER BY INSDTTM DESC
     </MainSQL>
     <Option>

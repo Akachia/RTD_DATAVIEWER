@@ -5,7 +5,7 @@
         DURABLE_ID
         , LOAD_REP_CSTID
         , TRANSACTION_CODE
-        , TO_CHAR(TRANSACTION_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ACTDTTM
+        , TRANSACTION_DATE
         , DURABLE_STATUS_CODE
         , EQUIPMENT_ID
 <!--        , PROCID    삭제-->
@@ -17,13 +17,13 @@
         , USE_FLAG
 <!--        , INSUSER   삭제-->
 <!--        , TO_CHAR(INSDTTM, 'YYYY-MM-DD HH24:MI:SS') AS INSDTTM 삭제-->
-        , TO_CHAR(TRANSACTION_DATE, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM
+        , TO_DATE(TRANSACTION_DATE, 'YYYY-MM-DD HH24:MI:SS') AS UPDDTTM
         FROM TB_EGN_DURB_HIST
         WHERE 1=1
         +Option1
         +Option2
-        AND ACTDTTM BETWEEN @StartTime AND @EndTime
-        ORDER BY ACTDTTM DESC
+        AND TRANSACTION_DATE BETWEEN TO_DATE(@StartTime, 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(@EndTime, 'YYYY-MM-DD HH24:MI:SS')
+        ORDER BY TRANSACTION_DATE DESC
     </MainSQL>
     <Option>
         <Option1 type="IF" condition="not_equal" key="DURABLE_ID" dataType="string" default="">

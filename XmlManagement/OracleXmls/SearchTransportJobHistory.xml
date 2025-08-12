@@ -10,7 +10,7 @@
         FROM TB_MHS_TRF_EVENT_HIST
         WHERE 1=1
         AND TRF_CODE = @TRF_CODE
-        ORDER BY INSDTTM DESC;
+        ORDER BY INSDTTM DESC
     </MainSQL>
     <Option>
         <Option1 type="VAR" condition="" key="TRF_CODE" dataType="string" default=""/>

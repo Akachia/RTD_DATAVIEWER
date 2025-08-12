@@ -790,44 +790,34 @@ namespace RTD_DataViewer
             dataGridView.Lb_Text = methodName;
             
             string areaID = main.correntConnectionStringSetting.AreaID;
-            main.AppendLog($@"{methodName} : \n Set AreaID : {main.correntConnectionStringSetting.AreaID}");
             string plantId = main.correntConnectionStringSetting.PlantID;
-            main.AppendLog($@"{methodName} : \n Set PlantID : {main.correntConnectionStringSetting.PlantID}");
             string systemTypeCode = main.correntConnectionStringSetting.SystemTypeCode;
-            main.AppendLog($@"{methodName} : \n Set SystemTypeCode : {main.correntConnectionStringSetting.SystemTypeCode}");
             paramaterDic.Add("SYSTEM_TYPE_CODE", systemTypeCode);
             paramaterDic.Add("PLANT_ID", plantId);
             paramaterDic.Add("AREA_ID", areaID);
 
 
             data.DataSource = null;
-            main.AppendLog($@"{methodName} : \n data.DataSource");
             data.Rows.Clear();
-            main.AppendLog($@"{methodName} : \n data.Rows.Clear()");
             data.Columns.Clear();
-            main.AppendLog($@"{methodName} : \n data.Columns.Clear()");
+
             try
             {
                 Type type = typeof(SqlResultDataImpl);
 
                 if (sqlResultData == null)
                 {
-                    main.AppendLog($@"{methodName} : \n (sqlResultData == null)");
                     sqlResultData = new DefaultSqlData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
-                    main.AppendLog($@"{methodName} : \n Start ExcuteSql : {main.correntConnectionStringSetting.ConnectionString()}");
+
                     data.DataSource = sqlResultData.ExcuteSql();
-                    main.AppendLog($@"{methodName} : \n Start EndSql");
                 }
                 else
                 {
-                    main.AppendLog($@"{methodName} : \n Start ExcuteSql");
                     data.DataSource = sqlResultData.ExcuteSql(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
-                    main.AppendLog($@"{methodName} : \n Start EndSql");
                 }
 
                 if (sqlResultData.ErrMsg == string.Empty)
                 {
-                    main.AppendLog($@"{methodName} : \n {sqlResultData.SqlStr}");
                     DataGridView_Coloring(data, main.sqlList[methodName]);
                 }
                 else
@@ -840,7 +830,6 @@ namespace RTD_DataViewer
             }
             catch (Exception ex)
             {
-                main.AppendLog($@"{methodName} : \n {sqlResultData.SqlStr}");
                 MessageBox.Show($"{ex.Message} : {methodName}");
                 return null;
             }

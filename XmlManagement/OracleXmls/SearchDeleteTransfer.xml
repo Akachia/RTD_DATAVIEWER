@@ -20,26 +20,6 @@
         +Option1
         +Option2
     </MainSQL>
-	<Column>
-		<CSTID type="NONE" condition="" key="" dataType="" default=""/>
-		<FROM_EQPTID type="NONE" condition="" key="" dataType="" default=""/>
-		<FROM_PORT_ID type="NONE" condition="" key="" dataType="" default=""/>
-		<TO_EQPTID type="NONE" condition="" key="" dataType="" default=""/>
-		<TO_PORT_ID type="NONE" condition="" key="" dataType="" default=""/>
-		<CSTSTAT type="NONE" condition="" key="" dataType="" default=""/>
-		<RTD_RULE_ID type="NONE" condition="" key="" dataType="" default=""/>
-		<CMD_STAT_CODE type="NONE" condition="" key="" dataType="" default=""/>
-		<INSUSER type="NONE" condition="" key="" dataType="" default=""/>
-		<LASTINSDTTM type="NONE" condition="" key="" dataType="" default="">
-			TO_CHAR(MAX(INSDTTM), 'YYYY-MM-DD HH24:MI:SS')
-		</LASTINSDTTM>
-		<CNT type="NONE" condition="" key="" dataType="" default="">
-			COUNT(CSTID)
-		</CNT>
-	</Column>
-	<Table>
-		
-	</Table>
     <Option>
         <Option1 type="NONE" condition="" key="" dataType="" default="">
 <!--            AND (EXCT_MSG LIKE :ErrText OR EXCT_TYPE LIKE :ErrText)-->

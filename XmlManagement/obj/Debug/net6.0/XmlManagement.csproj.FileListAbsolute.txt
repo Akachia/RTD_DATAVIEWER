@@ -170,3 +170,5 @@ C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\bin\Debug\net6.0\Or
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\bin\Debug\net6.0\OracleXmls\SearchWaitingWips.xml
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\obj\Debug\net6.0\XmlManagement.sourcelink.json
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\obj\Debug\net6.0\XmlManag.EAFD180B.Up2Date
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\bin\Debug\net6.0\OracleXmls\SearchRouteInfo.xml
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\XmlManagement\bin\Debug\net6.0\OracleXmls\SearchWipActHistory.xml

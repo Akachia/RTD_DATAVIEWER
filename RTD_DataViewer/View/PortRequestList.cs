@@ -25,6 +25,7 @@ namespace RTD_DataViewer.View
         MainViewer main;
         int currNum = 0;
         string errMsg;
+        string currDurable;
         WinformUtils? winformUtils = null;
         DefaultSqlData? searchPortRequestListData = null;
         DefaultSqlData? searchCarrierInfomationData = null;
@@ -100,9 +101,10 @@ namespace RTD_DataViewer.View
                     }
                 }
 
-                if (cstId != "")
+                if (cstId != "" && cstId != currDurable)
                 {
                     SearchCarrierInfomation(cstId);
+                    currDurable = cstId;
                 }
 
 

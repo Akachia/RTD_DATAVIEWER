@@ -176,3 +176,5 @@ C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\Xml
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\XmlManagement.pdb
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\obj\Debug\net6.0\DBManagement.sourcelink.json
 C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\obj\Debug\net6.0\DBManage.7AC3A4E0.Up2Date
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\SearchRouteInfo.xml
+C:\Users\carry\Documents\GitHub\RTD_DATAVIEWER\DBManagement\bin\Debug\net6.0\OracleXmls\SearchWipActHistory.xml
