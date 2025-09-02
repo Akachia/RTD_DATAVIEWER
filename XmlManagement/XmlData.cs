@@ -1,6 +1,7 @@
 ﻿using CustomUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace XmlManagement
     {
         XmlDocument? xdoc;
         XmlDirectory? xmlDirectory;
+        public string? xmlPath;
         private string? mainSql;
         private Dictionary<string, XmlOptionData>? optionSql;
         Dictionary<string, XmlOptionData>? result;
@@ -27,7 +29,10 @@ namespace XmlManagement
         {
             XmlSync(databaseProvider);
         }
-
+        public XmlData(string databaseProvider, string SystemTypeCode)
+        {
+            XmlSync(databaseProvider, SystemTypeCode);
+        }
 
         public string MainSql { get => mainSql; set => mainSql = value; }
         public Dictionary<string, XmlOptionData> OptionSql { get => optionSql; set => optionSql = value; }
@@ -114,6 +119,70 @@ namespace XmlManagement
             }
 
         }
+
+        public void XmlSync(string DatabaseProvider, string SystemTypeCode)
+        {
+            this.xdoc = new XmlDocument();
+            this.xmlDirectory = new XmlDirectory();
+            
+            try
+            {
+                //실행 시 에러가 발생하는 것을 파악하기 위해 개별 파일로 분리함
+                DirectoryInfo? directoryInfo = null;
+                if (DatabaseProvider.Equals("ORACLE"))
+                {
+                    if (SystemTypeCode.Equals("E"))
+                    {
+                        directoryInfo = new DirectoryInfo(@$"{xmlDirectory.OracleSqlDirectory.Trim()}\ELEC");
+                    }
+
+                    if (SystemTypeCode.Equals("A"))
+                    {
+                        directoryInfo = new DirectoryInfo(@$"{xmlDirectory.OracleSqlDirectory.Trim()}\ASSY");
+                    }
+
+                    if (SystemTypeCode.Equals("F"))
+                    {
+                        directoryInfo = new DirectoryInfo(@$"{xmlDirectory.OracleSqlDirectory.Trim()}\FORM");
+                    }
+                    xmlPath = @$"OracleXmls\{directoryInfo.Name}";
+                    //  directoryInfo = new DirectoryInfo($"{xmlDirectory.OracleSqlDirectory.Trim()}\\FORM");
+                }
+                else if (DatabaseProvider.Equals("MSSQL"))
+                {
+                    directoryInfo = new DirectoryInfo(xmlDirectory.MssqlSqlDirectory.Trim());
+                    xmlPath = @$"MssqlXmls\{directoryInfo.Name}";
+                }
+                else
+                {
+                    directoryInfo = new DirectoryInfo(xmlDirectory.OracleSqlDirectory.Trim());
+                }
+
+                if (directoryInfo.Exists)
+                {
+                    result = new Dictionary<string, XmlOptionData>();
+                    
+                    foreach (FileInfo file in directoryInfo.GetFiles())
+                    {
+
+                        XmlNode fileNode = ConvertFileInfoToXmlNode(file);
+                        result.Add(fileNode.Name, new XmlOptionData(fileNode));
+                    }
+                }
+                else
+                {
+                    xdoc.Load(xmlDirectory.OracleSqlDirectory);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
 
         static XmlNode ConvertFileInfoToXmlNode(FileInfo fileInfo)
         {

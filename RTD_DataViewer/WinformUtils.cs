@@ -96,31 +96,26 @@ namespace RTD_DataViewer
 
         public Dictionary<string, string> MakeParamaterDic(List<Control> variableControls)
         {
-            Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
-            string errStr = "start";
+            string? errStr = null;
+            Dictionary<string, string>? paramaterDic = new Dictionary<string, string>();
             try
             {
                 foreach (var item in variableControls)
                 {
                     if (item is UWC_LabelAndDateTimePicker)
                     {
-                        errStr = "UWC_LabelAndDateTimePicker start";
                         UWC_LabelAndDateTimePicker datePicker = item as UWC_LabelAndDateTimePicker;
                         paramaterDic.Add(datePicker.VariableName, CustomUtill.StringToDBStr(datePicker.MakeNowDateStringAndSetting()));
-                        errStr = "UWC_LabelAndDateTimePicker end";
                         continue;
                     }
 
                     if (item is UWC_LabelAndTextBox)
                     {
-                        errStr = "UWC_LabelAndTextBox start";
                         UWC_LabelAndTextBox text = item as UWC_LabelAndTextBox;                   
 
                         if (text.IsMultiInputTextControl)
                         {
-                            errStr = "UWC_LabelAndTextBox if start";
                             string carrierIds = text.TextToCarrierListByRex(text.Tb_Text, main.correntConnectionStringSetting.TrayID, main.correntConnectionStringSetting.AreaID, ref errStr);
-                            main.AppendLog($@"{this.GetType().FullName} : {errStr}");
                             paramaterDic.Add(text.VariableName, carrierIds);
                             if (text.Tb_Text.Equals(string.Empty))
                             {
@@ -130,14 +125,11 @@ namespace RTD_DataViewer
                             {
                                 text.Tb_Text = carrierIds;
                             }
-                            errStr = "UWC_LabelAndTextBox end";
                             continue;
                         }
                         else 
                         {
-                            errStr = "UWC_LabelAndTextBox else start";
                             paramaterDic.Add(text.VariableName, text.Tb_Text);
-                            errStr = "UWC_LabelAndTextBox end";
                             continue;
                         }
 
@@ -145,47 +137,37 @@ namespace RTD_DataViewer
 
                     if (item is UWC_ComboBox)
                     {
-                        errStr = "UWC_ComboBox start";
                         UWC_ComboBox comboBox = item as UWC_ComboBox;
 
                         if (comboBox.ComboBoxSelectedIndex > 0)
                         {
-                            errStr = "UWC_ComboBox if start";
                             paramaterDic.Add(comboBox.VariableName, CustomUtill.StringToDBStr(comboBox.ComboBoxSelectedItem));
-                            errStr = "UWC_ComboBox end";
                             continue;
                         }
                         else
                         {
-                            errStr = "UWC_ComboBox else start";
                             paramaterDic.Add(comboBox.VariableName, $"");
-                            errStr = "UWC_ComboBox end";
                             continue;
                         }
                     }
 
                     if (item is UWC_NumberUpDown)
                     {
-                        errStr = "UWC_NumberUpDown start";
                         UWC_NumberUpDown numberUpDown = item as UWC_NumberUpDown;
 
                         paramaterDic.Add(numberUpDown.VariableName, numberUpDown.Number.ToString());
-                        errStr = "UWC_NumberUpDown end";
                         continue;
                     }
 
                     if (item is UWC_CheckBox)
                     {
-                        errStr = "UWC_CheckBox start";
                         UWC_CheckBox checkBox = item as UWC_CheckBox;
                         paramaterDic.Add(checkBox.VariableName, checkBox.IsChecked);
-                        errStr = "UWC_CheckBox end";
                         continue;
                     }
 
                     if (item is UWC_CheckListBox)
                     {
-                        errStr = "UWC_CheckListBox start";
                         UWC_CheckListBox checkListBox = item as UWC_CheckListBox;
 
                         string CheckeditemListToString = string.Empty;
@@ -222,19 +204,21 @@ namespace RTD_DataViewer
                         //}
 
                         paramaterDic.Add(checkListBox.VariableName, CheckeditemListToString);
-                        errStr = "UWC_CheckListBox End";
                         continue;
                     }
 
                     if (item is UWC_ListBox)
                     {
-                        errStr = "UWC_ListBox Start";
                         UWC_ListBox listBox = item as UWC_ListBox;
                         StkComCodeList stkComCodes = listBox.DataObject as StkComCodeList;
-                        string stkComCode = listBox.SelectedItems[0].ToString();
 
-                        paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
-                        errStr = "UWC_ListBox End";
+                        if (listBox.SelectedItems.Count > 0)
+                        {
+                            string stkComCode = listBox.SelectedItems[0].ToString();
+                            paramaterDic.Add(listBox.VariableName, stkComCodes.StkComCodeDic[stkComCode]);
+                            continue;
+                        }
+                        paramaterDic.Add(listBox.VariableName, "");
                         continue;
                     }
                 }
@@ -912,6 +896,33 @@ namespace RTD_DataViewer
             }
         }
 
+        public void InvokeMethodDynamically(object classtype, string methodName, params object[] parameters)
+        {
+            try
+            {
+                // 현재 클래스 타입 가져오기
+                System.Type type = classtype.GetType();
+
+
+                // 메서드 검색 (메서드 이름과 매개변수 개수로 구분 가능)
+                MethodInfo method = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (method != null)
+                {
+                    // 메서드 실행
+                    method.Invoke(classtype, parameters);
+                }
+                else
+                {
+                    MessageBox.Show($"메서드 '{methodName}'를 찾을 수 없습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"메서드 실행 중 오류 발생: {ex.Message}");
+            }
+        }
+
         public CommonCodeData GetCommonCodes(string methodName, UserControl userControl, CommonCodeData sqlResultData, Dictionary<string, string> paramaterDic = null)
         {
             if (paramaterDic == null)
@@ -936,6 +947,7 @@ namespace RTD_DataViewer
                 if (sqlResultData == null)
                 {
                     sqlResultData = new CommonCodeData(paramaterDic, main.sqlList[methodName], main.correntConnectionStringSetting);
+                    // Dapper의 기본 값으로 안되는 것 같다.
                     ExcuteData = sqlResultData.ExcuteSql();
                 }
                 else
@@ -955,7 +967,11 @@ namespace RTD_DataViewer
                 if (ExcuteData is CommonCodes)
                 {
                     commonCodes = ExcuteData as CommonCodes;
-                } 
+                }
+                else
+                {
+                    return null;
+                }
 
                 if (userControl is UWC_CheckListBox)
                 {

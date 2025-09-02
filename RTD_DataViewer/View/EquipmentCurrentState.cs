@@ -42,20 +42,39 @@ namespace RTD_DataViewer.View
             winformUtils = new(main);
         }
 
+
         private void EquipmentStateHistory(object? sender, DataGridViewCellEventArgs e)
         {
-            string eqpt_Id = (sender as DataGridView).CurrentRow.Cells["EQPTID"].Value.ToString();
-            SearchEquipmentStateHistory(eqpt_Id);
-            SearchEquipmentEioHistory(eqpt_Id);
+            if (searchEquipmentCurrentStateData != null)
+            {
+                foreach (var item in searchEquipmentCurrentStateData.Sqldata.EventValueDic.Keys)
+                {
+                    EventValue eventValue = searchEquipmentCurrentStateData.Sqldata.EventValueDic[item];
+                    try
+                    {
+                        eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+
+                        // 동적으로 메서드 호출
+                        winformUtils.InvokeMethodDynamically(this, eventValue.CallSQL, eventValue.Value);
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                }
+            }
         }
 
-            private void SearchEquipmentStateHistory(string eqpt_id)
+        private void SearchEquipmentStateHistory(string eqpt_id)
         {
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
             string methodName = MethodBase.GetCurrentMethod().Name;
             string _EQP_GROUP_LIST = MakeEqpGroup();
             paramaterDic.Add("TOPNUMBER", "40");
-            paramaterDic.Add("EQPT_ID", eqpt_id);
+            paramaterDic.Add("PORT_ID", eqpt_id);
             sarchEquipmentStateHistoryData = winformUtils.ShowDgv(
                 methodName,
                 dgv_EquipmentStateHistory,
@@ -68,7 +87,7 @@ namespace RTD_DataViewer.View
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
             string methodName = MethodBase.GetCurrentMethod().Name;
             paramaterDic.Add("TOPNUMBER", "40");
-            paramaterDic.Add("EQPT_ID", eqpt_id);
+            paramaterDic.Add("EQUIPMENT_ID", eqpt_id);
             searchEquipmentEioHistoryData = winformUtils.ShowDgv(
                 methodName,
                 dgv_EquipmentEioHistory,

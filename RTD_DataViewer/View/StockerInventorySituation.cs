@@ -1,7 +1,9 @@
 ﻿using CustomUtills;
 using Dapper;
 using DBManagement;
+using DBManagemnet;
 using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,41 +71,32 @@ namespace RTD_DataViewer.View
 
 
 
-            toolTipProdid.SetToolTip(lb_Prodid, lb_Prodid.Text);
-            toolTipNextProcid.SetToolTip(lb_NextProcid, lb_NextProcid.Text);
-            toolTipRoute.SetToolTip(lb_Route, lb_Route.Text);
-            toolProcid.SetToolTip(lb_Procid, lb_Procid.Text);
-            toolProcid.SetToolTip(lb_WipStat, lb_WipStat.Text);
-            toolProcid.SetToolTip(lb_CstStat, lb_CstStat.Text);
-            toolProcid.SetToolTip(lb_RackStatCode, lb_RackStatCode.Text);
-            toolProcid.SetToolTip(lb_AgingIssPriortyNo, lb_AgingIssPriortyNo.Text) ;
+           // toolTipProdid.SetToolTip(lb_Prodid, lb_Prodid.Text);
+            //toolTipNextProcid.SetToolTip(lb_NextProcid, lb_NextProcid.Text);
+            //toolTipRoute.SetToolTip(lb_Route, lb_Route.Text);
+            //toolProcid.SetToolTip(lb_Procid, lb_Procid.Text);
+            //toolProcid.SetToolTip(lb_WipStat, lb_WipStat.Text);
+            //toolProcid.SetToolTip(lb_CstStat, lb_CstStat.Text);
+            //toolProcid.SetToolTip(lb_RackStatCode, lb_RackStatCode.Text);
+            //toolProcid.SetToolTip(lb_AgingIssPriortyNo, lb_AgingIssPriortyNo.Text) ;
 
         }
 
-        private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
+        private void TestSearchStockerList()
         {
-            ListBox listBox = (ListBox)sender;
+            XmlOptionData sqldata = main.sqlList["SearchStockerList"];
+            string cquery = sqldata.Sql;
+            string area_Id = main.correntConnectionStringSetting.AreaID;
+            StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
+            string systemTypeCode = "7";
+            DynamicParameters parameters = new DynamicParameters();
 
-            clb_StockerList.Item.Clear();
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            try
+            parameters.Add($"@AREA_ID", area_Id);
+            parameters.Add($"@StockerCommonCode", systemTypeCode);
+
+            if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
             {
-
-                if (!main.correntConnectionStringSetting.IsConnection)
-                {
-                    return;
-                }
-                XmlOptionData sqldata = main.sqlList["SearchStockerList"];
-                string cquery = sqldata.Sql;
-                string area_Id = main.correntConnectionStringSetting.AreaID;
-                StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
-                string systemTypeCode = stkComCodes.StkComCodeDic[listBox.SelectedItem.ToString()];
-                DynamicParameters parameters = new DynamicParameters();
-
-                parameters.Add($"@AREA_ID", @$"{area_Id}%");
-                parameters.Add($"@StockerCommonCode", systemTypeCode);
-
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
                 {
                     List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
                     foreach (Stocker item in list)
@@ -114,6 +107,61 @@ namespace RTD_DataViewer.View
 
                     clb_StockerList.DataObject = list;
                     main.AppendLog(cquery, parameters);
+                }
+            }
+            clb_StockerCommonCodeList.Item.Add("TEST");
+            clb_StockerList.Item.Add(new Stocker() { EQPTID = "J1FSTO12307" }.EQPTID);
+            clb_StockerList.Item.Add(new Stocker() { EQPTID = "J1FSTO12308" }.EQPTID);
+        }
+
+
+        private void ListBox_SelectedValueChanged(object? sender, EventArgs e)
+        {
+            ListBox listBox = (ListBox)sender;
+
+            clb_StockerList.Item.Clear();
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            try
+            {
+                XmlOptionData sqldata = main.sqlList["SearchStockerList"];
+                string cquery = sqldata.Sql;
+                string area_Id = main.correntConnectionStringSetting.AreaID;
+                StkComCodeList stkComCodes = clb_StockerCommonCodeList.DataObject as StkComCodeList;
+                string systemTypeCode = stkComCodes.StkComCodeDic[listBox.SelectedItem.ToString()];
+                DynamicParameters parameters = new DynamicParameters();
+
+                parameters.Add($"@AREA_ID", area_Id);
+                parameters.Add($"@StockerCommonCode", systemTypeCode);
+
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
+                {
+                    using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
+                    {
+                        List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
+                        foreach (Stocker item in list)
+                        {
+
+                            clb_StockerList.Item.Add(item.EQPTID);
+                        }
+
+                        clb_StockerList.DataObject = list;
+                        main.AppendLog(cquery, parameters);
+                    }
+                }
+                else
+                {
+                    using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                    {
+                        List<Stocker> list = connection.Query<Stocker>(cquery, parameters).ToList();
+                        foreach (Stocker item in list)
+                        {
+
+                            clb_StockerList.Item.Add(item.EQPTID);
+                        }
+
+                        clb_StockerList.DataObject = list;
+                        main.AppendLog(cquery, parameters);
+                    }
                 }
             }
             catch (Exception)
@@ -138,7 +186,7 @@ namespace RTD_DataViewer.View
         #region Events for UI Controls
         private void Dgv_StoInventory_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            string cstId = (sender as DataGridView).CurrentRow.Cells["CSTID"].Value.ToString();
+            string cstId = (sender as DataGridView).CurrentRow.Cells["DURABLE_ID"].Value.ToString();
             SearchTransportJobInfomation(cstId);
 
             //string RoutId = (sender as DataGridView).CurrentRow.Cells["ROUT"].Value.ToString();
@@ -174,10 +222,6 @@ namespace RTD_DataViewer.View
             try
             {
 
-                if (!main.correntConnectionStringSetting.IsConnection)
-                {
-                    return;
-                }
                 XmlOptionData sqldata = main.sqlList[methodName];
                 string cquery = sqldata.Sql;
                 string area_Id = main.correntConnectionStringSetting.AreaID;
@@ -185,20 +229,39 @@ namespace RTD_DataViewer.View
 
                 DynamicParameters parameters = new DynamicParameters();
 
-                parameters.Add($"@AREA_ID", @$"{area_Id}%");
+                parameters.Add($"@AREA_ID", area_Id);
                 parameters.Add($"@SYSTEM_TYPE_CODE", systemTypeCode);
 
-                using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                if (main.correntConnectionStringSetting.DatabaseProvider == "ORACLE")
                 {
-                    StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
-                    foreach (var item in stkComCodes)
+                    using (var connection = new OracleConnection(main.correntConnectionStringSetting.ConnectionString()))
                     {
-                        clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
-                    }
+                        StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
+                        foreach (var item in stkComCodes)
+                        {
+                            clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
+                        }
 
-                    clb_StockerCommonCodeList.DataObject = stkComCodes;
-                    main.AppendLog(cquery, parameters);
+                        clb_StockerCommonCodeList.DataObject = stkComCodes;
+                        main.AppendLog(cquery, parameters);
+                    }
                 }
+                else
+                {
+                    using (var connection = new SqlConnection(main.correntConnectionStringSetting.MssqlConnectionString()))
+                    {
+                        StkComCodeList stkComCodes = new(connection.Query<CustomUtills.StkComCode>(cquery, parameters).ToList());
+                        foreach (var item in stkComCodes)
+                        {
+                            clb_StockerCommonCodeList.Item.Add(item.Sto_Desc);
+                        }
+
+                        clb_StockerCommonCodeList.DataObject = stkComCodes;
+                        main.AppendLog(cquery, parameters);
+                    }
+                }
+
+               // TestSearchStockerList();
             }
             catch (Exception)
             {
@@ -219,7 +282,7 @@ namespace RTD_DataViewer.View
             //catch (Exception ex) { MessageBox.Show($"{ex.Message} : SearchTransportJobInfomation"); }
             Dictionary<string, string> paramaterDic = new Dictionary<string, string>();
 
-            paramaterDic.Add("CSTID", $"{cstid}");
+            paramaterDic.Add("DURABLE_ID", $"{cstid}");
             try
             {
                 if (SearchStockerInventoryData != null)
@@ -348,20 +411,38 @@ namespace RTD_DataViewer.View
                 }
 
                 //string eioIfMode = dgv_StoInventory.DgvData.Rows[i].Cells["EIOIFMODE"].Value.ToString();
-                // string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
+                //string agingDttm = dgv_StoInventory.DgvData.Rows[i].Cells["AGING_ISS_SCHD_DTTM"].Value.ToString();
             }
 
-            lb_WipStat.Text = winformUtils.MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
-            lb_CstStat.Text = winformUtils.MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory, "상태");
-            lb_TrayLevel.Text = winformUtils.MakeTransferStatusCountString("단", dgv_StockerInventory, "단");
-            lb_Prodid.Text = winformUtils.MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
-            lb_Route.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
-            lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory, "Rack현황");
-            lb_TrfStatCode.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
-            lb_AgingIssPriortyNo.Text = winformUtils.MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory, "출고 번호");
-            lb_NextProcid.Text = winformUtils.MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory, "다음공정");
-            lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory, "현공정");
-            lb_DateOverRowCount.Text = $"반송 대기 : {dateOverRowCount}\n";
+            for (int i = 0; i < flowLayoutPanel1.Controls.Count; i++)
+            {
+                object VARIABLE = flowLayoutPanel1.Controls[i];
+
+                if (VARIABLE is UWC_Label)
+                {
+                    UWC_Label lb_Del = VARIABLE as UWC_Label;
+                    lb_Del.Dispose();
+                }
+            }
+
+                UWC_Label lb_new = new UWC_Label();
+                //lb_new.Name = $"lb_{"TRF_STAT_CODE"}";
+                lb_new.Parent = this.flowLayoutPanel1;
+                lb_new.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
+                lb_new.AutoSize = true;
+                lb_new.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+                //lb_WipStat.Text = winformUtils.MakeTransferStatusCountString("WIPSTAT", dgv_StockerInventory);
+                //lb_CstStat.Text = winformUtils.MakeTransferStatusCountString("CSTSTAT", dgv_StockerInventory, "상태");
+                //lb_TrayLevel.Text = winformUtils.MakeTransferStatusCountString("단", dgv_StockerInventory, "단");
+                //lb_Prodid.Text = winformUtils.MakeTransferStatusCountString("PRODID", dgv_StockerInventory);
+                //lb_Route.Text = winformUtils.MakeTransferStatusCountString("ROUT", dgv_StockerInventory);
+                //lb_RackStatCode.Text = winformUtils.MakeTransferStatusCountString("RACK_STAT_CODE", dgv_StockerInventory, "Rack현황");
+                //lb_TrfStatCode.Text = winformUtils.MakeTransferStatusCountString("TRF_STAT_CODE", dgv_StockerInventory, "반송상태");
+                //lb_AgingIssPriortyNo.Text = winformUtils.MakeTransferStatusCountString("AGING_ISS_PRIORITY_NO", dgv_StockerInventory, "출고 번호");
+                //lb_NextProcid.Text = winformUtils.MakeTransferStatusCountString("NEXT_PROCID", dgv_StockerInventory, "다음공정");
+                //lb_Procid.Text = winformUtils.MakeTransferStatusCountString("PROCID", dgv_StockerInventory, "현공정");
+                //lb_DateOverRowCount.Text = $"반송 대기 : {dateOverRowCount}\n";
         }
 
 

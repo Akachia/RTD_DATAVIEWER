@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XmlManagement")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd61ec1a349ec2b6c6e618b93d1a21a42f55d75a")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6dd4cc6bb27adfcc1f693ea1f6fe20632a0c0da1")]
+>>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
 [assembly: System.Reflection.AssemblyProductAttribute("XmlManagement")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XmlManagement")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

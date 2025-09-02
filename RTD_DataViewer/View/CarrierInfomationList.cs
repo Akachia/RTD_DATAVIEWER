@@ -42,7 +42,7 @@ namespace RTD_DataViewer
         #region Events for UI Controls
         private void bt_Search_Click(object sender, EventArgs e)
         {
-            searchCarrierInfomationList();
+            SearchCarrierInfomationList();
         }
         #endregion
 
@@ -51,7 +51,7 @@ namespace RTD_DataViewer
         #endregion
 
         #region Assign SqlData to DataGrid view functuons Section 
-        private void searchCarrierInfomationList()
+        private void SearchCarrierInfomationList()
         {
             try
             {

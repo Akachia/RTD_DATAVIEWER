@@ -43,6 +43,13 @@ namespace RTD_DataViewer
             tp_LogBox.Controls.Add(logBox);
             logBox.Dock = DockStyle.Fill;
 
+            timer1.Interval = 1000;
+            timer2.Interval = 1000;
+            timer1.Tick += UsaCentralTime;
+            timer2.Tick += KoreaTime;
+            timer1.Start();
+            timer2.Start();
+
             appendTextCallback = logBox.appendTextCallback;
             appendLogWithParameterCallback = logBox.appendLogWithParameterCallback;
             appendLogWithKeyValueCallback = logBox.appendLogWithKeyValueCallback;
@@ -150,7 +157,9 @@ namespace RTD_DataViewer
                 correntConnectionStringSetting.TestConnection();
                 ChangeDBConn(cb_DBString.Text);
 
-                xml = new XmlData(correntConnectionStringSetting.DatabaseProvider);
+                xml = new XmlData(correntConnectionStringSetting.DatabaseProvider,
+                    correntConnectionStringSetting.SystemTypeCode);
+                lb_xmlPath.Text = xml.xmlPath;
                 sqlList = xml.OptionSqlListparser();
             }
             catch (Exception ex)
@@ -163,6 +172,7 @@ namespace RTD_DataViewer
         {
             lb_ServerIP.Text = strs[dbString].Server.ToString();
             lb_ServerName.Text = strs[dbString].Database.ToString();
+
             cstr = strs[dbString].ConnectionString();
         }
 
@@ -185,11 +195,85 @@ namespace RTD_DataViewer
                 {
                     correntConnectionStringSetting = strs[cb_DBString.Text];
                     correntConnectionStringSetting.TestConnection();
+                    ChangeDBConn(cb_DBString.Text);
+
+                    xml = new XmlData(correntConnectionStringSetting.DatabaseProvider,
+                        correntConnectionStringSetting.SystemTypeCode);
+                    lb_xmlPath.Text = xml.xmlPath;
+                    sqlList = xml.OptionSqlListparser();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void UsaCentralTime(object sender, EventArgs args)
+        {
+            DateTime thisTime = DateTime.Now;
+            TimeZoneInfo tst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime tstTime = TimeZoneInfo.ConvertTime(thisTime, TimeZoneInfo.Local, tst);
+
+            string? timeName = tst.IsDaylightSavingTime(tstTime) ? tst.DaylightName : tst.StandardName;
+            DateTime usaCentralTime = TimeZoneInfo.ConvertTimeToUtc(tstTime, tst);
+            lb_CurLocTime.Text = @$"{timeName} : {usaCentralTime:yyyy-MM-dd HH:mm:ss}";
+
+        }
+
+        private void KoreaTime(object sender, EventArgs args)
+        {
+            DateTime utcNow = DateTime.Now;
+            TimeZoneInfo localTzInfo = TimeZoneInfo.Local;
+            string? timeName = localTzInfo.IsDaylightSavingTime(utcNow)
+                ? localTzInfo.DaylightName
+                : localTzInfo.StandardName;
+            lb_KorTime.Text = @$"{timeName} : {utcNow:yyyy-MM-dd HH:mm:ss}";
+        }
+
+        private void MainViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 사용자 확인
+            var result = MessageBox.Show("애플리케이션을 종료하시겠습니까?", "종료 확인", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // 종료 취소
+                return;
+            }
+
+            // 안전한 종료 작업 수행
+            PerformSafeShutdown();
+        }
+
+        private void PerformSafeShutdown()
+        {
+            try
+            {
+                // 타이머 중지
+                timer1?.Stop();
+                timer2?.Stop();
+
+                // 데이터베이스 연결 해제
+                if (correntConnectionStringSetting != null && correntConnectionStringSetting.IsConnection)
+                {
+                    // 연결 테스트 후 해제
+                    //correntConnectionStringSetting.TestConnection();
+                    // 연결 해제 로직 추가 (필요 시)
+                }
+
+                // XML 데이터 저장 (필요 시)
+                //xml?.XmlSync();
+
+                // 로그 저장 (필요 시)
+                AppendLog("애플리케이션 종료 중...");
+
+                // 기타 리소스 정리
+                Dispose(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"종료 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

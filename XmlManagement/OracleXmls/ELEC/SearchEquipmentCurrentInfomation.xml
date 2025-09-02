@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentCurrentInfomation>
+    <MainSQL>
+        SELECT
+        EQP.EQUIPMENT_ID
+        , EQP.WO_DETL_ID
+        , TSFD.DEMAND_TYPE
+        , EQP.EQPT_OPER_MODE
+        , EQP.SPCL_LOT_GNRT_FLAG
+        , TECI.BUSINESS_USAGE_CODE_ID
+        --  , PILOT_PROD_DIVS_CODE AS PPDC  -- TODO 변수 없음 확인 필요
+        FROM TB_SFC_FP_DETL_PLAN TSFD
+        INNER JOIN TB_EGN_EQUIP_INFO EQP
+        ON EQP.WO_DETL_ID = TSFD.WOID
+        INNER JOIN TB_EGN_CODE_ITEM_INFO TECI
+        ON TECI.ATTRIBUTE1 = TSFD.DEMAND_TYPE
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable>
+        <CMD_STAT_CODE_LIST dataType="List" default=""/>
+    </AdditionalVariable>
+    <Coloring/>
+    <EventValues/>
+    <ColumnCount/>
+</SearchEquipmentCurrentInfomation>

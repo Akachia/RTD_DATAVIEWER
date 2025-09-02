@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchAgingUIHist>
+    <MainSQL>
+        SELECT *
+        FROM TB_SFC_UI_EVENT_HIST
+        WHERE UPDDTTM > TO_DATE('2023-12-20', 'YYYY-MM-DD')
+        AND EVENT_CNTT LIKE '%AGING%'
+        FETCH FIRST 100 ROWS ONLY;
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+    <ColumnCount/>
+</SearchAgingUIHist>

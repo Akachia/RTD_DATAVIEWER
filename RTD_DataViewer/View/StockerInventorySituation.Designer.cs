@@ -41,22 +41,10 @@
             clb_StockerList = new UserWinfromControl.UWC_CheckListBox();
             clb_StockerCommonCodeList = new UserWinfromControl.UWC_ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            lb_CstStat = new Label();
-            lb_WipStat = new Label();
-            lb_TrayLevel = new Label();
-            lb_AgingIssPriortyNo = new Label();
-            lb_RackStatCode = new Label();
-            lb_TrfStatCode = new Label();
-            lb_Prodid = new Label();
-            lb_Route = new Label();
-            lb_Procid = new Label();
-            lb_NextProcid = new Label();
-            lb_DateOverRowCount = new Label();
             cb_AgingIssPriortyNo = new UserWinfromControl.UWC_ComboBox();
             cb_WipStat = new UserWinfromControl.UWC_ComboBox();
             chb_IsDatetimeOver = new UserWinfromControl.UWC_CheckBox();
             tableLayoutPanel1.SuspendLayout();
-            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -221,144 +209,12 @@
             // flowLayoutPanel1
             // 
             tableLayoutPanel1.SetColumnSpan(flowLayoutPanel1, 8);
-            flowLayoutPanel1.Controls.Add(lb_CstStat);
-            flowLayoutPanel1.Controls.Add(lb_WipStat);
-            flowLayoutPanel1.Controls.Add(lb_TrayLevel);
-            flowLayoutPanel1.Controls.Add(lb_AgingIssPriortyNo);
-            flowLayoutPanel1.Controls.Add(lb_RackStatCode);
-            flowLayoutPanel1.Controls.Add(lb_TrfStatCode);
-            flowLayoutPanel1.Controls.Add(lb_Prodid);
-            flowLayoutPanel1.Controls.Add(lb_Route);
-            flowLayoutPanel1.Controls.Add(lb_Procid);
-            flowLayoutPanel1.Controls.Add(lb_NextProcid);
-            flowLayoutPanel1.Controls.Add(lb_DateOverRowCount);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             tableLayoutPanel1.SetRowSpan(flowLayoutPanel1, 2);
             flowLayoutPanel1.Size = new Size(876, 54);
             flowLayoutPanel1.TabIndex = 30;
-            // 
-            // lb_CstStat
-            // 
-            lb_CstStat.AutoSize = true;
-            lb_CstStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_CstStat.Location = new Point(3, 0);
-            lb_CstStat.Name = "lb_CstStat";
-            lb_CstStat.Size = new Size(43, 13);
-            lb_CstStat.TabIndex = 21;
-            lb_CstStat.Text = "CstStat";
-            lb_CstStat.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_WipStat
-            // 
-            lb_WipStat.AutoSize = true;
-            lb_WipStat.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_WipStat.Location = new Point(52, 0);
-            lb_WipStat.Name = "lb_WipStat";
-            lb_WipStat.Size = new Size(47, 13);
-            lb_WipStat.TabIndex = 26;
-            lb_WipStat.Text = "WipStat";
-            lb_WipStat.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_TrayLevel
-            // 
-            lb_TrayLevel.AutoSize = true;
-            lb_TrayLevel.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_TrayLevel.Location = new Point(105, 0);
-            lb_TrayLevel.Name = "lb_TrayLevel";
-            lb_TrayLevel.Size = new Size(53, 13);
-            lb_TrayLevel.TabIndex = 30;
-            lb_TrayLevel.Text = "TrayLevel";
-            lb_TrayLevel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_AgingIssPriortyNo
-            // 
-            lb_AgingIssPriortyNo.AutoSize = true;
-            lb_AgingIssPriortyNo.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_AgingIssPriortyNo.Location = new Point(164, 0);
-            lb_AgingIssPriortyNo.Name = "lb_AgingIssPriortyNo";
-            lb_AgingIssPriortyNo.Size = new Size(98, 13);
-            lb_AgingIssPriortyNo.TabIndex = 22;
-            lb_AgingIssPriortyNo.Text = "AgingIssPriortyNo";
-            lb_AgingIssPriortyNo.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_RackStatCode
-            // 
-            lb_RackStatCode.AutoSize = true;
-            lb_RackStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_RackStatCode.Location = new Point(268, 0);
-            lb_RackStatCode.Name = "lb_RackStatCode";
-            lb_RackStatCode.Size = new Size(78, 13);
-            lb_RackStatCode.TabIndex = 23;
-            lb_RackStatCode.Text = "RackStatCode";
-            lb_RackStatCode.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_TrfStatCode
-            // 
-            lb_TrfStatCode.AutoSize = true;
-            lb_TrfStatCode.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_TrfStatCode.Location = new Point(352, 0);
-            lb_TrfStatCode.Name = "lb_TrfStatCode";
-            lb_TrfStatCode.Size = new Size(67, 13);
-            lb_TrfStatCode.TabIndex = 24;
-            lb_TrfStatCode.Text = "TrfStatCode";
-            lb_TrfStatCode.TextAlign = ContentAlignment.MiddleLeft;
-            lb_TrfStatCode.Click += lb_TrfStatCode_Click;
-            // 
-            // lb_Prodid
-            // 
-            lb_Prodid.AutoSize = true;
-            lb_Prodid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_Prodid.Location = new Point(425, 0);
-            lb_Prodid.Name = "lb_Prodid";
-            lb_Prodid.Size = new Size(41, 13);
-            lb_Prodid.TabIndex = 25;
-            lb_Prodid.Text = "Prodid";
-            lb_Prodid.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_Route
-            // 
-            lb_Route.AutoSize = true;
-            lb_Route.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_Route.Location = new Point(472, 0);
-            lb_Route.Name = "lb_Route";
-            lb_Route.Size = new Size(37, 13);
-            lb_Route.TabIndex = 29;
-            lb_Route.Text = "Route";
-            // 
-            // lb_Procid
-            // 
-            lb_Procid.AutoSize = true;
-            lb_Procid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_Procid.Location = new Point(515, 0);
-            lb_Procid.Name = "lb_Procid";
-            lb_Procid.Size = new Size(39, 13);
-            lb_Procid.TabIndex = 27;
-            lb_Procid.Text = "Procid";
-            lb_Procid.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_NextProcid
-            // 
-            lb_NextProcid.AutoSize = true;
-            lb_NextProcid.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_NextProcid.Location = new Point(560, 0);
-            lb_NextProcid.Name = "lb_NextProcid";
-            lb_NextProcid.Size = new Size(62, 13);
-            lb_NextProcid.TabIndex = 28;
-            lb_NextProcid.Text = "NextProcid";
-            lb_NextProcid.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lb_DateOverRowCount
-            // 
-            lb_DateOverRowCount.AutoSize = true;
-            lb_DateOverRowCount.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_DateOverRowCount.Location = new Point(628, 0);
-            lb_DateOverRowCount.Name = "lb_DateOverRowCount";
-            lb_DateOverRowCount.Size = new Size(107, 13);
-            lb_DateOverRowCount.TabIndex = 31;
-            lb_DateOverRowCount.Text = "DateOverRowCount";
-            lb_DateOverRowCount.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // cb_AgingIssPriortyNo
             // 
@@ -402,8 +258,6 @@
             Name = "StockerInventorySituation";
             Size = new Size(1400, 600);
             tableLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -420,18 +274,7 @@
         private UserWinfromControl.UWC_ComboBox cb_TrfStatCode;
         private UserWinfromControl.UWC_CheckListBox clb_StockerList;
         private UserWinfromControl.UWC_ListBox clb_StockerCommonCodeList;
-        private Label lb_CstStat;
-        private Label lb_AgingIssPriortyNo;
-        private Label lb_RackStatCode;
-        private Label lb_TrfStatCode;
-        private Label lb_Prodid;
-        private Label lb_WipStat;
-        private Label lb_Procid;
-        private Label lb_NextProcid;
-        private Label lb_Route;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Label lb_TrayLevel;
-        private Label lb_DateOverRowCount;
         private UserWinfromControl.UWC_ComboBox cb_AgingIssPriortyNo;
         private UserWinfromControl.UWC_ComboBox cb_WipStat;
         private UserWinfromControl.UWC_CheckBox chb_IsDatetimeOver;

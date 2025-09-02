@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tableLayoutPanel1 = new TableLayoutPanel();
             reqATransfer_dgvReq = new TabControl();
             tp_ReqInfomation = new TabPage();
@@ -52,11 +53,14 @@
             panel1 = new Panel();
             bt_DataRefresh = new Button();
             cb_DBString = new ComboBox();
+            lb_xmlPath = new Label();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
             ss_selectionCount = new StatusStrip();
             ColumnCount = new ToolStripStatusLabel();
             RowCount = new ToolStripStatusLabel();
+            timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
             tableLayoutPanel1.SuspendLayout();
             reqATransfer_dgvReq.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -255,6 +259,7 @@
             tableLayoutPanel2.Controls.Add(lb_KorTime, 1, 0);
             tableLayoutPanel2.Controls.Add(panel1, 2, 0);
             tableLayoutPanel2.Controls.Add(cb_DBString, 5, 0);
+            tableLayoutPanel2.Controls.Add(lb_xmlPath, 3, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 3);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -340,6 +345,16 @@
             cb_DBString.TabIndex = 5;
             cb_DBString.TextChanged += cb_DBString_TextChanged;
             // 
+            // lb_xmlPath
+            // 
+            lb_xmlPath.AutoSize = true;
+            lb_xmlPath.Dock = DockStyle.Fill;
+            lb_xmlPath.Location = new Point(949, 0);
+            lb_xmlPath.Name = "lb_xmlPath";
+            lb_xmlPath.Size = new Size(214, 17);
+            lb_xmlPath.TabIndex = 6;
+            lb_xmlPath.Text = "xmlPath";
+            // 
             // menuStrip1
             // 
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
@@ -387,6 +402,7 @@
             MainMenuStrip = menuStrip1;
             Name = "MainViewer";
             Text = "RTD_DataViewer v0.8";
+            FormClosing += MainViewer_FormClosing;
             tableLayoutPanel1.ResumeLayout(false);
             reqATransfer_dgvReq.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
@@ -442,5 +458,8 @@
         private TabPage tp_BizRuleErr;
         private TabPage tp_PortRequestRecord;
         private TabPage tp_PortCurrState;
+        private Label lb_xmlPath;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
     }
 }

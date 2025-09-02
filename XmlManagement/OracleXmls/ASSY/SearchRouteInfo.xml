@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	<SearchRouteInfo>
+		<MainSQL>
+			WITH TT_EQPT_SMPL AS
+			(SELECT DISTINCT E.EQUIPMENT_GROUP_ID
+			, E.LANE_ID
+			, P.PROCESS_CODE
+			FROM TB_EGN_PRCS_EQP_MAP PE
+			INNER JOIN TB_EGN_EQUIP_SPEC_MST E
+			ON E.REPRESENTATIVE_FACTORY_CODE = PE.REPRESENTATIVE_FACTORY_CODE
+			AND E.FACILITY_CODE = PE.FACILITY_CODE
+			AND E.EQUIPMENT_ID = PE.EQUIPMENT_ID
+			INNER JOIN TB_EGN_FCTRY_AREA_MST ES
+			ON ES.REPRESENTATIVE_FACTORY_CODE = PE.REPRESENTATIVE_FACTORY_CODE
+			AND ES.FACTORY_AREA_ID = E.FACTORY_AREA_ID
+			INNER JOIN TB_EGN_PRCS_MST P
+			ON P.FACILITY_CODE = PE.REPRESENTATIVE_FACTORY_CODE
+			AND P.PROCESS_CODE = PE.PROCESS_CODE
+			WHERE 1 = 1
+			AND PE.REPRESENTATIVE_FACTORY_CODE = @AREA_ID
+			AND PE.FACILITY_CODE = @AREA_ID
+			AND PE.USE_FLAG = 'Y')
+			SELECT RP.PROC_SEQNO         AS N0
+			, T1.EQUIPMENT_GROUP_ID AS EGR
+			, RP.PROCESS_CODE       AS 공정
+			, RP.LANE_ID
+			, R.MDLLOT_ID
+			, R.ROUTE_ID            
+			FROM TB_EGN_RT_MST R
+			INNER JOIN TB_EGN_RT_PRCS_MAP RP
+			ON R.ROUTE_ID = RP.ROUTE_ID
+			INNER JOIN TT_EQPT_SMPL T1
+			ON T1.LANE_ID = RP.LANE_ID
+			AND T1.PROCESS_CODE = RP.PROCESS_CODE
+			WHERE R.ROUTE_ID = @ROUTE_ID
+			AND RP.USE_FLAG = 'Y'
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+			<Option3 type="VAR" condition="" key="ROUTE_ID" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring>
+			<ROUTE_ID Red="255" Green="155" Blue="155" IsColoringColumn="true" IsTimeCompare="false"/>
+			<LANE_ID Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+				<AEUPPER Red="246" Green="247" Blue="196" IsColoringRow="false"/>
+				<AELOWER Red="246" Green="214" Blue="214" IsColoringRow="false"/>
+			</LANE_ID>
+		</Coloring>
+		<EventValues/>
+		<ColumnCount/>
+	</SearchRouteInfo>

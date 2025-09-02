@@ -38,7 +38,7 @@
             panel3 = new Panel();
             rb_IsTrayActHist = new RadioButton();
             rb_IsEventHist = new RadioButton();
-            lAtb_CstHist_ToPort = new UserWinfromControl.UWC_LabelAndTextBox();
+            lAtb_CstHist_RepCst = new UserWinfromControl.UWC_LabelAndTextBox();
             tableLayoutPanel7.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -61,7 +61,7 @@
             tableLayoutPanel7.Controls.Add(dgv_CarrierHistory, 0, 2);
             tableLayoutPanel7.Controls.Add(uwC_DataGridView3, 0, 3);
             tableLayoutPanel7.Controls.Add(panel3, 4, 0);
-            tableLayoutPanel7.Controls.Add(lAtb_CstHist_ToPort, 5, 1);
+            tableLayoutPanel7.Controls.Add(lAtb_CstHist_RepCst, 5, 1);
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(0, 0);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -107,7 +107,7 @@
             lAtb_CstHist_CarrierId.Size = new Size(162, 24);
             lAtb_CstHist_CarrierId.TabIndex = 2;
             lAtb_CstHist_CarrierId.Tb_Text = "";
-            lAtb_CstHist_CarrierId.VariableName = "CSTID";
+            lAtb_CstHist_CarrierId.VariableName = "DURABLE_ID";
             // 
             // bt_CstHist_Search
             // 
@@ -178,17 +178,17 @@
             rb_IsEventHist.Text = "Event Hist";
             rb_IsEventHist.UseVisualStyleBackColor = true;
             // 
-            // lAtb_CstHist_ToPort
+            // lAtb_CstHist_RepCst
             // 
-            lAtb_CstHist_ToPort.Dock = DockStyle.Fill;
-            lAtb_CstHist_ToPort.IsMultiInputTextControl = false;
-            lAtb_CstHist_ToPort.Lb_Text = "목적 포트 ID";
-            lAtb_CstHist_ToPort.Location = new Point(843, 33);
-            lAtb_CstHist_ToPort.Name = "lAtb_CstHist_ToPort";
-            lAtb_CstHist_ToPort.Size = new Size(162, 24);
-            lAtb_CstHist_ToPort.TabIndex = 9;
-            lAtb_CstHist_ToPort.Tb_Text = "";
-            lAtb_CstHist_ToPort.VariableName = "PORT_ID";
+            lAtb_CstHist_RepCst.Dock = DockStyle.Fill;
+            lAtb_CstHist_RepCst.IsMultiInputTextControl = false;
+            lAtb_CstHist_RepCst.Lb_Text = "대표 DURB ID";
+            lAtb_CstHist_RepCst.Location = new Point(843, 33);
+            lAtb_CstHist_RepCst.Name = "lAtb_CstHist_RepCst";
+            lAtb_CstHist_RepCst.Size = new Size(162, 24);
+            lAtb_CstHist_RepCst.TabIndex = 9;
+            lAtb_CstHist_RepCst.Tb_Text = "";
+            lAtb_CstHist_RepCst.VariableName = "LOAD_REP_CSTID";
             // 
             // CarrierHistory
             // 
@@ -215,6 +215,6 @@
         private Panel panel3;
         internal RadioButton rb_IsTrayActHist;
         internal RadioButton rb_IsEventHist;
-        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_CstHist_ToPort;
+        internal UserWinfromControl.UWC_LabelAndTextBox lAtb_CstHist_RepCst;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
+using CustomUtils;
 using static CustomUtils.CommonXml;
 
 namespace XmlManagement
@@ -18,6 +19,7 @@ namespace XmlManagement
                 AdditionalVarDic = new Dictionary<string, AdditionalVariable>();
                 ColoringDic = new Dictionary<string, Coloring>();
                 EventValueDic = new Dictionary<string, EventValue>();
+                ColumnCountDic = new Dictionary<string, ColumnCount>();
                 Name = xmlNode.Name;
                 Sql = xmlNode.ChildNodes[0].InnerText;
 
@@ -37,9 +39,12 @@ namespace XmlManagement
                 }
                 foreach (XmlNode childNode in xmlNode[EventValues.ClassName].ChildNodes)
                 {
-                    EventValueDic.Add(childNode.Name, new EventValue(childNode));
+                    EventValueDic.Add(childNode.Attributes[1].Value, new EventValue(childNode));
                 }
-
+                foreach (XmlNode childNode in xmlNode[CommonXml.ColumnCount.ClassName].ChildNodes)
+                {
+                    ColumnCountDic.Add(childNode.Name, new ColumnCount(childNode));
+                }
             }
             catch (Exception ex)
             {
@@ -54,7 +59,7 @@ namespace XmlManagement
         public Dictionary<string, AdditionalVariable>? AdditionalVarDic { get; set; }
         public Dictionary<string, Coloring>? ColoringDic { get; set; }
         public Dictionary<string, EventValue>? EventValueDic { get; set; }
-
+        public Dictionary<string, ColumnCount>? ColumnCountDic { get; set; }
         /// <summary>
         /// 세팅 값 -> SQL명, 컬럼명
         /// 0. 지정된SQL에 세팅된 컬럼의 값을 각 객체에 있는 EventValue에 저장한다.
@@ -248,7 +253,9 @@ namespace XmlManagement
             {
                 ColumnName = xmlNode.Name;
                 try { this.Type = xmlNode.Attributes.GetNamedItem(EventValues.TYPE).Value; } catch (Exception) { this.Type = ""; }
-                try { this.CallSQL = xmlNode.Attributes.GetNamedItem(EventValues.CallSQL).Value; } catch (Exception) { this.CallSQL = ""; }
+
+                try { this.CallSQL =  xmlNode.Attributes.GetNamedItem(EventValues.CallSQL).Value; } catch (Exception) { this.CallSQL = ""; }
+
                 try { this.EventType = xmlNode.Attributes.GetNamedItem(EventValues.EventType).Value; } catch (Exception) { this.EventType = ""; }
             }
             catch (Exception ex)
@@ -264,6 +271,26 @@ namespace XmlManagement
         public string EventType { get; set; }
 
     }
+
+    public class ColumnCount
+    {
+        public ColumnCount(XmlNode xmlNode)
+        {
+            try
+            {
+                ColumnName = xmlNode.Name;
+                try { this.DisplayName = xmlNode.Attributes.GetNamedItem(CommonXml.ColumnCount.Name).Value; } catch (Exception) { this.DisplayName = ""; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string ColumnName { get; set; }
+        public string DisplayName { get; set; }
+    }
+
     //public XmlOptionData(XmlNode node)
     //{
     //    // Tag Name

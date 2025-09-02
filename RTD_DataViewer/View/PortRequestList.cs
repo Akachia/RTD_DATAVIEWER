@@ -25,7 +25,11 @@ namespace RTD_DataViewer.View
         MainViewer main;
         int currNum = 0;
         string errMsg;
+<<<<<<< HEAD
         string currDurable;
+=======
+        private string? durableId;
+>>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         WinformUtils? winformUtils = null;
         DefaultSqlData? searchPortRequestListData = null;
         DefaultSqlData? searchCarrierInfomationData = null;
@@ -81,14 +85,43 @@ namespace RTD_DataViewer.View
                     foreach (var item in searchPortRequestListData.Sqldata.EventValueDic.Keys)
                     {
                         EventValue eventValue = searchPortRequestListData.Sqldata.EventValueDic[item];
-                        eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+                        try
+                        {
+                            eventValue.Value = (sender as DataGridView).CurrentRow.Cells[eventValue.ColumnName].Value.ToString();
+
+                            if (eventValue.Value == "")
+                            {
+                                continue;
+                            }
+
+                            // 동적으로 메서드 호출
+                            winformUtils.InvokeMethodDynamically(this,eventValue.CallSQL, eventValue.Value);
+
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
                     }
                 }
+                //SearchTransportJobInfomation(1);
 
-                SearchTransportJobInfomation();
+                //string localdurableId = searchPortRequestListData.Sqldata.EventValueDic["DURABLE_ID"].Value;
 
-                string cstId = searchPortRequestListData.Sqldata.EventValueDic["DURABLE_ID"].Value;
+                //if (localdurableId == "")
+                //{
+                //    try
+                //    {
+                //        localdurableId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["DURABLE_ID"].Value.ToString();
+                //    }
+                //    catch (Exception)
+                //    {
+                //        localdurableId = "";
+                //    }
+                //}
 
+<<<<<<< HEAD
                 if (cstId == "")
                 {
                     try
@@ -106,22 +139,31 @@ namespace RTD_DataViewer.View
                     SearchCarrierInfomation(cstId);
                     currDurable = cstId;
                 }
+=======
+                //if (localdurableId != "" && localdurableId != durableId)
+                //{
+                //    SearchCarrierInfomation(localdurableId);
+                //    durableId = localdurableId;
+                //}
+>>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
 
 
-                if (ckb_IsOpenReqSituation.Checked)
-                {
-                    MakeSituations();
-                }
-                else
-                {
-                    string ruleResult = (sender as DataGridView).CurrentRow.Cells["RTD_EXEC_LOG_CNTT"].Value.ToString();
-                    MakeRuleResult(ruleResult);
-                }
+                //if (ckb_IsOpenReqSituation.Checked)
+                //{
+                //    MakeSituations();
+                //}
+                //else
+                //{
+                //    string ruleResult = (sender as DataGridView).CurrentRow.Cells["RTD_EXEC_LOG_CNTT"].Value.ToString();
+                //    MakeRuleResult(ruleResult);
+                //}
             }
             catch { 
                 
             }
         }
+
+
 
         internal void Btn_Click()
         {
@@ -251,7 +293,7 @@ namespace RTD_DataViewer.View
             }
         }
 
-        private void SearchTransportJobInfomation()
+        private void SearchTransportJobInfomation(string carrierId)
         {
             try
             {

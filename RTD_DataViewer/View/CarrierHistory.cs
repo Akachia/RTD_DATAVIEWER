@@ -40,7 +40,7 @@ namespace RTD_DataViewer.View
             variableControls.Add(lAdtp_CstHist_EndDate);
             variableControls.Add(lAdtp_CstHist_StartDate);
             variableControls.Add(lAtb_CstHist_CarrierId);
-            variableControls.Add(lAtb_CstHist_ToPort);
+            variableControls.Add(lAtb_CstHist_RepCst);
 
             winformUtils = new(main);
         }
@@ -72,11 +72,12 @@ namespace RTD_DataViewer.View
         private void SearchCarrierActHistory()
         {
             string cstid = lAtb_CstHist_CarrierId.Tb_Text;
+            string repCstId = lAtb_CstHist_RepCst.Tb_Text;
             string methodName = MethodBase.GetCurrentMethod().Name;
 
             try
             {
-                if (cstid != string.Empty)
+                if (cstid != string.Empty || repCstId != string.Empty)
                 {
                     Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
                     SearchCarrierActHistoryData =
@@ -98,10 +99,11 @@ namespace RTD_DataViewer.View
         private void SearchCarrierEventHistory()
         {
             string cstid = lAtb_CstHist_CarrierId.Tb_Text;
+            string repCstId = lAtb_CstHist_RepCst.Tb_Text;
             string methodName = MethodBase.GetCurrentMethod().Name;
             try
             {
-                if (cstid != string.Empty)
+                if (cstid != string.Empty || repCstId != string.Empty)
                 {
                     Dictionary<string, string> paramaterDic = winformUtils.MakeParamaterDic(variableControls);
 

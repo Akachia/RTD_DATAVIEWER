@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchPortCurrentState>
+    <MainSQL>
+        SELECT
+        TEPI.PORT_ID,
+        TEPI.TRANSFER_STATE_CODE AS 요청,
+        E.EQUIPMENT_STATE_CODE AS ES,
+        MAX_TRF_QTY AS 버퍼,
+        E.EIOIFMODE AS EIM,
+        E.EQPT_MAINT_FLAG AS MAINT_FLAG,
+        TEPI.ACCESS_MODE_CODE
+        FROM TB_EGN_PORT_INFO TEPI
+        INNER JOIN TB_EGN_EQUIP_INFO E ON E.EQUIPMENT_ID = SUBSTR(TEPI.PORT_ID, 1, 15)
+        INNER JOIN TB_EGN_EQUIP_SPEC_MST EM ON E.EQUIPMENT_ID = EM.EQUIPMENT_ID
+        WHERE 1=1
+        +Option1
+        +Option2
+        ORDER BY TEPI.PORT_ID
+
+    </MainSQL>
+    <Option>
+        <Option1 type="IF" condition="not_equal" key="EQUIPMENT_ID" dataType="string" default="">
+            AND E.EQUIPMENT_ID like @EQUIPMENT_ID
+        </Option1>
+        <Option2 type="IF" condition="not_equal" key="AREA_ID" dataType="string" default="">
+            AND E.EQUIPMENT_ID like @AREA_ID
+        </Option2>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring>
+        <ES Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </ES>
+        <EIM Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIM>
+        <MAINT_FLAG Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <M Red="255" Green="158" Blue="158" IsColoringRow="true"/>
+        </MAINT_FLAG>
+    </Coloring>
+    <EventValues/>
+    <ColumnCount/>
+</SearchPortCurrentState>

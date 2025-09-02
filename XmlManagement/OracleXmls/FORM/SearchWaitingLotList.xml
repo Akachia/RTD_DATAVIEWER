@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchWaitingLotList>
+    <MainSQL>
+        SELECT
+        DURB.DURABLE_ID
+        , DURB.DURABLE_STATUS_CODE AS 유형
+        , TMR.EQPTID AS 설비
+        , TMR.RACK_ID AS 위치
+        , TMR.RACK_STAT_CODE AS 상태
+        , 'RACK IN' AS 자재유형
+        , TSFD.DEMAND_TYPE
+        , LOT.PRODUCT_TYPE_CODE AS LT
+        --      , WA.LOTID 삭제
+        , LOT.WORK_ORDER_ID
+        , LOT.PRODUCT_SPECIFICATION_ID
+        , LOT.PROCESS_CODE
+        FROM TB_EGN_LOT_INFO LOT
+        INNER JOIN TB_MHS_RACK TMR
+        ON LOT.DURABLE_ID = TMR.MCS_CST_ID
+        INNER JOIN TB_EGN_DURB_INFO DURB
+        ON DURB.DURABLE_ID = TMR.MCS_CST_ID
+        --          INNER JOIN LOT L
+        --                     ON L.LOTID = LOT.LOTID
+        --          INNER JOIN WIP W
+        --                     ON W.LOTID = LOT.LOTID
+        INNER JOIN TB_SFC_FP_DETL_PLAN TSFD
+        ON TSFD.WOID = LOT.WORK_ORDER_ID
+        UNION ALL
+        SELECT
+        DURB.DURABLE_ID
+        , DURB.DURABLE_STATUS_CODE AS 유형
+        , THTR.EQPTID AS 설비
+        , THTR.PORT_ID AS 위치
+        , THTR.REQ_STAT_CODE AS 상태
+        , 'REQ IN' AS 자재유형
+        , TSFD.DEMAND_TYPE
+        , LOT.PRODUCT_TYPE_CODE AS LT
+        --      , WA.LOTID    삭제
+        , LOT.WORK_ORDER_ID
+        , LOT.PRODUCT_SPECIFICATION_ID
+        , LOT.PROCESS_CODE
+        FROM TB_EGN_LOT_INFO LOT
+        INNER JOIN TB_MHS_TRF_REQ THTR
+        ON LOT.DURABLE_ID = THTR.CSTID
+        INNER JOIN TB_EGN_DURB_INFO DURB
+        ON DURB.DURABLE_ID = THTR.CSTID
+        --          INNER JOIN LOT L
+        --                     ON L.LOTID = LOT.LOTID
+        --          INNER JOIN WIP W
+        --                     ON W.LOTID = LOT.LOTID
+        INNER JOIN TB_SFC_FP_DETL_PLAN TSFD
+        ON TSFD.WOID = LOT.WORK_ORDER_ID
+    </MainSQL>
+    <Option/>
+    <AdditionalVariable/>
+    <Coloring/>
+    <EventValues/>
+    <ColumnCount/>
+</SearchWaitingLotList>

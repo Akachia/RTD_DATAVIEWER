@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchStockerCurrentState>
+    <MainSQL>
+		SELECT e.EQUIPMENT_ID          AS EQPTID,
+		e.USE_FLAG              AS YN,
+		E.LANE_ID,
+		ei.EQUIPMENT_STATE_CODE AS EIOSTAT,
+		ei.EIOIFMODE,
+		NVL(R.RACK_MAX_QTY, 0)  AS RACK_MAX_QTY,
+		NVL(R.USABLE_QTY, 0)    AS USABLE_QTY,
+		NVL(R.USING_QTY, 0)     AS USING_QTY,
+		NVL(R.DISABLE_QTY, 0)   AS DISABLE_QTY
+		FROM TB_EGN_EQUIP_SPEC_MST e
+		INNER JOIN TB_EGN_EQUIP_INFO ei
+		ON E.REPRESENTATIVE_FACTORY_CODE = EI.REPRESENTATIVE_FACTORY_CODE
+		AND e.EQUIPMENT_ID = ei.EQUIPMENT_ID
+		LEFT JOIN (SELECT T.EQPTID,
+		T.OPTM_LOAD_RATE,
+		COUNT(T.RACK_ID)    AS RACK_MAX_QTY,
+		SUM(T.EMPTY_RACK)   AS USABLE_QTY,
+		SUM(T.USING_RACK)   AS USING_QTY,
+		SUM(T.DISABLE_RACK) AS DISABLE_QTY
+		FROM (SELECT CR.EQPTID,
+		PW.OPTM_LOAD_RATE,
+		CR.RACK_ID,
+		CASE
+		WHEN CR.RACK_STAT_CODE = 'USABLE' AND NVL(CR.MCS_CST_ID, '') = '' AND
+		CR.FIRE_OCCR_FLAG = 'N' AND CR.USE_FLAG = 'Y' THEN 1
+		ELSE 0
+		END AS EMPTY_RACK,
+		CASE
+		WHEN CR.RACK_STAT_CODE = 'USING' AND CR.FIRE_OCCR_FLAG = 'N' AND CR.USE_FLAG = 'Y'
+		THEN 1
+		ELSE 0
+		END AS USING_RACK,
+		CASE
+		WHEN CR.RACK_STAT_CODE = 'DISABLE' OR CR.FIRE_OCCR_FLAG = 'Y' OR CR.USE_FLAG = 'N'
+		THEN 1
+		ELSE 0
+		END AS DISABLE_RACK
+		FROM TB_MMD_PRDT_WH PW
+		INNER JOIN TB_MMD_RACK MR
+		ON MR.FACILITY_CODE = PW.FACILITY_CODE
+		AND PW.WH_ID = MR.WH_ID
+		AND PW.USE_FLAG = 'Y'
+		AND MR.USE_FLAG = 'Y'
+		INNER JOIN TB_MHS_RACK CR
+		ON CR.FACILITY_CODE = PW.FACILITY_CODE
+		AND CR.RACK_ID = MR.RACK_ID
+		AND CR.USE_FLAG = 'Y'
+		WHERE PW.FACILITY_CODE = @AREA_ID) T
+		GROUP BY T.EQPTID, T.OPTM_LOAD_RATE) R
+		ON e.EQUIPMENT_ID = R.EQPTID
+		WHERE E.REPRESENTATIVE_FACTORY_CODE = @AREA_ID
+		AND E.EQUIPMENT_GROUP_ID = 'STO'
+		AND E.EQPT_GR_TYPE_CODE = @StockerCommonCode
+		ORDER BY e.EQUIPMENT_ID
+	</MainSQL>
+    <Option>
+        <Option1 type="VAR" condition="" key="SYSTEM_TYPE_CODE" dataType="string" default=""/>
+        <Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+        <Option3 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
+    </Option>
+    <AdditionalVariable/>
+    <Coloring>
+        <EIOSTAT Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <F Red="255" Green="155" Blue="155" IsColoringRow="false"/>
+            <T Red="255" Green="214" Blue="165" IsColoringRow="false"/>
+            <U Red="255" Green="254" Blue="196" IsColoringRow="false"/>
+            <W Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+            <R Red="203" Green="255" Blue="169" IsColoringRow="false"/>
+        </EIOSTAT>
+        <EIOIFMODE Red="255" Green="155" Blue="155" IsColoringColumn="false" IsTimeCompare="false">
+            <OFF Red="255" Green="158" Blue="158" IsColoringRow="false"/>
+            <ON Red="185" Green="243" Blue="252" IsColoringRow="false"/>
+        </EIOIFMODE>
+    </Coloring>
+    <EventValues/>
+    <ColumnCount/>
+</SearchStockerCurrentState>

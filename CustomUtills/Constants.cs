@@ -128,6 +128,17 @@ namespace CustomUtils
             public static string EventType = "EventType";
         }
 
+        public static class ColumnCount
+        {
+            /// <summary>
+            /// ClassName = "EventVals";
+            /// </summary>
+            public static string Name = "Name";
+            /// <summary>
+            /// ClassName = "EventVals";
+            /// </summary>
+            public static string ClassName = "ColumnCount";
+        }
 
         public static string key = "key";
         public static string value = "value";
@@ -188,7 +199,7 @@ namespace CustomUtils
 
         }
 
-        public static class DB 
+        public static class DB  
         {
             public static class Data_Source
             {

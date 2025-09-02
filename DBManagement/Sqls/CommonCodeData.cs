@@ -2,6 +2,7 @@
 using Dapper;
 using DBManagemnet;
 using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,25 @@ namespace DBManagement
             base.sqlStr = cquery;
             try
             {
-                using (var connection = new SqlConnection(dBConnectionString.MssqlConnectionString()))
+                if (dBConnectionString.DatabaseProvider == "ORACLE")
                 {
-                     getCommonCode = new CommonCodes(connection.Query<CommonCode>(cquery).ToList());
+                    using (var connection = new OracleConnection(dBConnectionString.ConnectionString()))
+                    {
+                        getCommonCode = new CommonCodes(connection.Query<CommonCode>(cquery).ToList());
+                    }
+                    return getCommonCode;
                 }
-                return getCommonCode;
+
+                if (dBConnectionString.DatabaseProvider == "MSSQL")
+                {
+                    using (var connection = new SqlConnection(dBConnectionString.MssqlConnectionString()))
+                    {
+                        getCommonCode = new CommonCodes(connection.Query<CommonCode>(cquery).ToList());
+                    }
+                    return getCommonCode;
+                }
+
+                return null;
             }
             catch (Exception)
             {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchEquipmentEioHistory>
+    <MainSQL>
+	    SELECT
+	    EQUIPMENT_ID,
+	    EQUIPMENT_STATE_CODE AS EIO,
+	    OLD_EQUIPMENT_STATE_CODE AS EIO_PV,
+	    EIOIFMODE AS IF,
+	    EIOIFMODE_PV AS IF_PV,
+	    TRANSACTION_DATE,
+	    TRANSACTION_CODE AS DESC_,
+	    TRANSACTION_USER_ID AS USER_
+	    FROM TB_EGN_EQUIP_HIST
+		WHERE EQUIPMENT_ID = @EQUIPMENT_ID
+		+Option1
+		ORDER BY TRANSACTION_DATE DESC
+	</MainSQL>
+	<Option>
+		<Option1 type="IF" condition="not_equal" key="TOPNUMBER" dataType="string" default="0">
+			<![CDATA[AND ROWNUM < @TOPNUMBER]]>
+        </Option1>
+        <Option2 type="VAR" condition="" key="EQUIPMENT_ID" dataType="string" default="0"/>
+    </Option>
+    <AdditionalVariable>
+    </AdditionalVariable>
+    <Coloring/>
+    <EventValues/>
+    <ColumnCount/>
+</SearchEquipmentEioHistory>

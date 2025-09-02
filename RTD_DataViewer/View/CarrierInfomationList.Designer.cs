@@ -93,7 +93,7 @@
             uwC_CarrierId.Size = new Size(379, 24);
             uwC_CarrierId.TabIndex = 3;
             uwC_CarrierId.Tb_Text = "";
-            uwC_CarrierId.VariableName = "CSTID";
+            uwC_CarrierId.VariableName = "DURABLE_ID";
             // 
             // CarrierInfomationList
             // 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SearchStockerList>
+		<MainSQL>
+			select E.EQUIPMENT_ID AS EQPTID
+			FROM TB_EGN_EQUIP_SPEC_MST E
+			WHERE 1=1
+			AND EQUIPMENT_GROUP_ID = 'STO'
+			AND EQPT_GR_TYPE_CODE = :StockerCommonCode
+			AND REPRESENTATIVE_FACTORY_CODE = :AREA_ID
+			ORDER BY EQUIPMENT_ID
+		</MainSQL>
+		<Option>
+			<Option1 type="VAR" condition="" key="StockerCommonCode" dataType="string" default=""/>
+			<Option2 type="VAR" condition="" key="AREA_ID" dataType="string" default=""/>
+		</Option>
+		<AdditionalVariable/>
+		<Coloring/>
+		<EventValues/>
+		<ColumnCount/>
+</SearchStockerList>
