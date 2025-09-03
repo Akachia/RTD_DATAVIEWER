@@ -10,8 +10,6 @@
         "dependencies": {
           "CustomUtills": "1.0.0",
           "Dapper": "2.1.35",
-          "Microsoft.Data.SqlClient": "5.2.2",
-          "Oracle.ManagedDataAccess.Core": "23.6.1",
           "XmlManagement": "1.0.0"
         },
         "runtime": {

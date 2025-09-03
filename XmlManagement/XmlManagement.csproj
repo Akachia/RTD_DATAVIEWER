@@ -179,14 +179,11 @@
     <None Update="OracleXmls\ASSY\SearchPortStateRecord.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-<<<<<<< HEAD
+
     <None Update="OracleXmls\SearchRouteInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OracleXmls\SearchStockerCommonCodeList.xml">
-=======
-    <None Update="OracleXmls\ASSY\SearchRollCurrentSituation.xml">
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OracleXmls\ASSY\SearchRouteInfo.xml">

@@ -13,17 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <None Include="DBManagement.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.6.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CustomUtills\CustomUtills.csproj" />
     <ProjectReference Include="..\DBManagement\DBManagement.csproj" />
     <ProjectReference Include="..\UserWinfromControl\UserWinfromControl.csproj" />
-    <ProjectReference Include="..\XmlManagement\XmlManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>

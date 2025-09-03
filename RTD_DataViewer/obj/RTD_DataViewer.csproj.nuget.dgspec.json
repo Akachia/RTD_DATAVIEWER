@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj": {}
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
         "projectName": "CustomUtills",
-        "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
-        "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\obj\\",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj",
+        "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -80,28 +80,24 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         }
       }
     },
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj",
         "projectName": "DBManagement",
-        "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj",
-        "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\obj\\",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj",
+        "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -117,11 +113,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
               },
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj"
               }
             }
           }
@@ -145,14 +141,6 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.1.35, )"
-            },
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[5.2.2, )"
-            },
-            "Oracle.ManagedDataAccess.Core": {
-              "target": "Package",
-              "version": "[23.6.1, )"
             }
           },
           "imports": [
@@ -171,28 +159,24 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         }
       }
     },
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
         "projectName": "RTD_DataViewer",
-        "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
-        "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\obj\\",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\RTD_DataViewer.csproj",
+        "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\RTD_DataViewer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -208,17 +192,14 @@
           "net6.0-windows10.0.19041": {
             "targetAlias": "net6.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
               },
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\DBManagement\\DBManagement.csproj"
               },
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj"
-              },
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj"
               }
             }
           }
@@ -239,21 +220,9 @@
         "net6.0-windows10.0.19041": {
           "targetAlias": "net6.0-windows10.0.19041.0",
           "dependencies": {
-            "Dapper": {
-              "target": "Package",
-              "version": "[2.1.35, )"
-            },
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[5.2.2, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
-            },
-            "Oracle.ManagedDataAccess.Core": {
-              "target": "Package",
-              "version": "[23.6.1, )"
             }
           },
           "imports": [
@@ -284,28 +253,24 @@
               "privateAssets": "none"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         }
       }
     },
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
         "projectName": "UserWinfromControl",
-        "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
-        "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\obj\\",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\UserWinfromControl.csproj",
+        "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\UserWinfromControl\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -321,8 +286,8 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
               }
             }
           }
@@ -343,10 +308,6 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
-            "Dapper": {
-              "target": "Package",
-              "version": "[2.1.35, )"
-            },
             "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
               "version": "[23.6.1, )"
@@ -371,28 +332,24 @@
               "privateAssets": "none"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         }
       }
     },
-    "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
+    "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj",
+        "projectUniqueName": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj",
         "projectName": "XmlManagement",
-        "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj",
-        "packagesPath": "C:\\Users\\smkim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\obj\\",
+        "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\XmlManagement.csproj",
+        "packagesPath": "C:\\Users\\carry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\XmlManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\smkim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carry\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -408,8 +365,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
-                "projectPath": "C:\\Users\\smkim\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
+              "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj": {
+                "projectPath": "C:\\Users\\carry\\Documents\\GitHub\\RTD_DATAVIEWER\\CustomUtills\\CustomUtills.csproj"
               }
             }
           }
@@ -459,11 +416,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
         }
       }
     }

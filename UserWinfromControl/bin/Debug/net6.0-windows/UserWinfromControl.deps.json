@@ -9,7 +9,6 @@
       "UserWinfromControl/1.0.0": {
         "dependencies": {
           "CustomUtills": "1.0.0",
-          "Dapper": "2.1.35",
           "Oracle.ManagedDataAccess.Core": "23.6.1"
         },
         "runtime": {

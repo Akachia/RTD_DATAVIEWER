@@ -25,11 +25,8 @@ namespace RTD_DataViewer.View
         MainViewer main;
         int currNum = 0;
         string errMsg;
-<<<<<<< HEAD
-        string currDurable;
-=======
         private string? durableId;
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
+
         WinformUtils? winformUtils = null;
         DefaultSqlData? searchPortRequestListData = null;
         DefaultSqlData? searchCarrierInfomationData = null;
@@ -121,31 +118,12 @@ namespace RTD_DataViewer.View
                 //    }
                 //}
 
-<<<<<<< HEAD
-                if (cstId == "")
-                {
-                    try
-                    {
-                        cstId = dgv_TransportJobInfomation.DgvData.Rows[0].Cells["DURABLE_ID"].Value.ToString();
-                    }
-                    catch (Exception)
-                    {
-                        cstId = "";
-                    }
-                }
-
-                if (cstId != "" && cstId != currDurable)
-                {
-                    SearchCarrierInfomation(cstId);
-                    currDurable = cstId;
-                }
-=======
                 //if (localdurableId != "" && localdurableId != durableId)
                 //{
                 //    SearchCarrierInfomation(localdurableId);
                 //    durableId = localdurableId;
                 //}
->>>>>>> e7e8916ad460c5d7daf7da32142c833cd8170af0
+
 
 
                 //if (ckb_IsOpenReqSituation.Checked)

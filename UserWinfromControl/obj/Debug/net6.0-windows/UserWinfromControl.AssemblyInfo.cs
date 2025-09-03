@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c542dda7ab450ffa5700ae49bf36b4ff95e4bfd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+784e6e64860e1ef036be3ea628602459f45bc09a")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserWinfromControl")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
